@@ -4,9 +4,9 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import http from "http";
+import http from 'http';
 import { json } from 'body-parser';
-import { createHttpTerminator } from "http-terminator";
+import { createHttpTerminator } from 'http-terminator';
 
 // Internal Imports
 import createApolloServer from './graphql/createApolloServer';
@@ -18,6 +18,8 @@ const main = async () => {
     const app = express();
     const port = process.env.PORT || 4000;
 
+    // Adding CORS to allow cross-origin requests
+    // ie. running backend and frontend on the same machine
     app.use(cors());
     app.use(helmet({ contentSecurityPolicy: false }));
     app.use(json({ limit: "16mb" }));
@@ -38,7 +40,6 @@ const main = async () => {
     const httpServer = http.createServer(app);
     const httpTerminator = createHttpTerminator({ server: httpServer });
 
-
     // Create Apollo Server
     const apolloServer = createApolloServer();
 
@@ -55,6 +56,4 @@ void main().catch(async err => {
     console.error('Error starting server:', err);
     await createApolloServer().stop();
 });
-
-// main();
 

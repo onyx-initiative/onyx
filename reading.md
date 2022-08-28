@@ -2,7 +2,7 @@
 
 ## Backend
 
-deploying mongo/gql: https://www.digitalocean.com/community/tutorials/how-to-build-and-deploy-a-graphql-server-with-node-js-and-mongodb-on-ubuntu-18-04
+postgres/gql: https://www.cockroachlabs.com/docs/stable/connect-to-the-database.html?filters=javascript&
 
 Deploying to AWS: https://www.apollographql.com/docs/apollo-server/deployment/lambda
 

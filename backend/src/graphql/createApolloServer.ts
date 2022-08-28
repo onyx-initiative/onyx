@@ -2,6 +2,11 @@ import { ApolloServer } from "apollo-server-express"; // may need to switch to l
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import schema from "./typeDefs";
 
+export interface ApolloServerParams {
+    // Update to be of the db type
+    db: any;
+}
+
 const createApolloServer = () => {
     const combinedSchema = makeExecutableSchema({
         typeDefs: schema,

@@ -34,6 +34,6 @@
     "http-terminator": "^3.2.0",
     "micro": "^9.4.1",
     "micro-cors": "^0.1.1",
-    "mongodb": "^4.9.0"
+    "pg": "^8.8.0"
   }
 }
