@@ -1,4 +1,4 @@
-import { ApolloServer } from "apollo-server-lambda";
+import { ApolloServer } from "apollo-server-express"; // may need to switch to lambda for production
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import schema from "./typeDefs";
 
