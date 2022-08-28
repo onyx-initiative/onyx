@@ -1,4 +1,4 @@
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer } from "apollo-server-lambda";
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import schema from "./typeDefs";
 
@@ -13,3 +13,5 @@ const createApolloServer = () => {
         schema: combinedSchema,
     })
 }
+
+export default createApolloServer;

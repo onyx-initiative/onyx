@@ -19,6 +19,7 @@ const baseSchema = gql`
 
 const schema = [
     baseSchema,
+    // Add all typeDefs here
 ]
 
 
