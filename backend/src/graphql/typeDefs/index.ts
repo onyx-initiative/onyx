@@ -1,4 +1,8 @@
 import { gql } from "apollo-server-express";
+import { scholarTypeDef } from "./scholar.typedef";
+import { adminTypeDef } from "./admin.typedef";
+import { jobTypeDef } from "./job.typedef";
+import { employerTypeDef } from "./employer.typedef";
 
 // All typeDefs are imported here and combined into one object
 
@@ -19,7 +23,10 @@ const baseSchema = gql`
 
 const schema = [
     baseSchema,
-    // Add all typeDefs here
+    scholarTypeDef,
+    adminTypeDef,
+    jobTypeDef,
+    employerTypeDef
 ]
 
 

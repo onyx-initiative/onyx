@@ -60,6 +60,7 @@ type Job = {
     feature: boolean; // True if featured on the landing page, false if not
     additionalInstructions?: string; 
     howToApply?: "email" | "link" | "form"; // Others can be added as they come up
+    archived: boolean; // True if archived, false if not
 }
 
 type Employer = {
