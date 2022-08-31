@@ -1,10 +1,18 @@
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
-const client = new Client(process.env.DATABASE_URL);
-
-// Include client.end() when used
+/*
+* connection to the DB
+* All CRUD operations are done through this connection
+*/
 const getDB = () => {
-    // Add: await client.connect();
-    // and client.end() when used
+    const client = new Pool({
+        user: "postgres",
+        password: process.env.DB_PASSWORD,
+        database: "onyx_jobs",
+        host: process.env.DEV_HOST,
+        port: process.env.PORT,
+    })
     return client;
 }
+
+export default getDB;
