@@ -86,5 +86,6 @@ export const scholarTypeDef = gql`
             skills: [String]
             notifications: Boolean
         ): Scholar;
+        archiveScholar(id: ID!): Scholar;
     }
 `
