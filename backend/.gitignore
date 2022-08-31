@@ -9,3 +9,6 @@
 # local env files
 .env*.local
 .env
+
+# Other
+/sqltools_20220830185057_9248.log
