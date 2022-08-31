@@ -1,0 +1,6 @@
+- [ ] Outline scholar, admin, employer and job tables in database.sql
+- [ ] Initialize each ^ in postgres
+- [ ] Add resolvers for 4 typedefs to offer basic CRUD functionality
+    - [ ] Define permissions (e.g. to ensure only admins add jobs)
+- [ ] Write tests for server/database w/ mock data
+- [ ] Add authentication (maybe, look into SSO and if it's server or third party)
