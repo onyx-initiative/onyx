@@ -40,8 +40,13 @@ CREATE TABLE job (
     description text NOT NULL,
     created_at timestamp NOT NULL,
     updated_at timestamp NOT NULL,
+    application_deadline timestamp NOT NULL,
+    contact_email varchar(255) NOT NULL,
     status varchar(255) NOT NULL,
-    scholar_id integer NOT NULL,
+    festure boolean NOT NULL,
+    additional_info text,
+    how_to_apply varchar(255) NOT NULL,
+    archived boolean NOT NULL,
     FOREIGN KEY (employer_id) REFERENCES employer (employer_id)
 );
 
