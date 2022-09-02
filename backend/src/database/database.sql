@@ -13,6 +13,7 @@ CREATE TABLE scholar (
     scholar_id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
+    
 );
 
 -- Create a table for employers
@@ -20,6 +21,13 @@ CREATE TABLE employer (
     employer_id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
+    logo varbinary(255) NOT NULL,
+    city varchar(255) NOT NULL,
+    province varchar(255) NOT NULL,
+    websiteUrl varchar(255) NOT NULL,
+    description varchar(255) NOT NULL,
+    -- May not need
+    FOREIGN KEY (job_id) REFERENCES job(job_id),
 );
 
 CREATE TABLE job (
@@ -33,8 +41,10 @@ CREATE TABLE job (
     total_applications integer NOT NULL,
     job_status boolean NOT NULL,
     job_type varchar(255) NOT NULL,
+    job_industry varchar(255) NOT NULL,
     job_category varchar(255) NOT NULL,
     job_skills [varchar(255)] NOT NULL,
+    applicant_year varchar(255) NOT NULL,
     salary_range varchar(255) NOT NULL,
     job_length varchar(255) NOT NULL,
     description text NOT NULL,
