@@ -17,7 +17,7 @@ type Scholar = {
     id: number;
     name: string;
     email: string;
-    jobApplications: string;
+    jobApplications: string[];
     workHistory?: string[];
     status: "current" | "alumni" | "new graduate" | "intern"; 
     views: View[]; // The specific sets of filters the specific scholar has saved
@@ -47,7 +47,7 @@ type Job = {
     jobSource: string; // where the job came from (ie. initially website and later (p1/p2) linkedin, etc.)
     totalViews: number; // total number of views the job has received (p1/p2)
     totalApplications: number; // total number of applications the job has received
-    jobStatus: "open" | "closed"; // open if the job is still accepting applications, closed if not
+    jobStatus: boolean; // true if the job is still accepting applications, closed if not
     jobType: "full time" | "part time" | "contract" | "internship"; 
     jobCategory: "software" | "hardware" | "design" | "marketing" | "business" | "other"; // Can add more as they come up
     jobSkills: string[]; // Specific skills/interests the job has

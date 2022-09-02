@@ -1,10 +1,6 @@
 import { gql } from "apollo-server-express"
 
 export const jobTypeDef = gql`
-    enum JobStatus {
-        OPEN
-        CLOSED
-    }
 
     enum JobType {
         FULL_TIME
@@ -38,7 +34,7 @@ export const jobTypeDef = gql`
         jobSource: String! 
         totalViews: Int! 
         totalApplications: Int!
-        jobStatus: JobStatus! 
+        jobStatus: Boolean!
         jobType: JobType!
         jobCategory: jobCategory!
         jobSkills: [String!]!

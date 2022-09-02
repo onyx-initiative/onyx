@@ -4,3 +4,11 @@
     - [ ] Define permissions (e.g. to ensure only admins add jobs)
 - [ ] Write tests for server/database w/ mock data
 - [ ] Add authentication (maybe, look into SSO and if it's server or third party)
+
+
+Hours:
+- Sat, Aug 27 - 1.5hrs
+- Sun, Aug 28 - 6 hrs
+- Mon, Aug 29 - 1 hr
+- Tues, Aug 30 - 3 hrs
+- Wed, Aug 31 - 1.5hrs + 
