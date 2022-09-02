@@ -12,3 +12,5 @@ Hours:
 - Mon, Aug 29 - 1 hr
 - Tues, Aug 30 - 3 hrs
 - Wed, Aug 31 - 1.5hrs + 
+- Thurs, Sept 1 - 1 hr
+- Fri, Sept 2 - 1 hr

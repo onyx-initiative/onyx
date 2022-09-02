@@ -18,7 +18,7 @@ type Scholar = {
     name: string;
     email: string;
     jobApplications: string[];
-    workHistory?: string[];
+    workHistory?: string[]; // May remove
     status: "current" | "alumni" | "new graduate" | "intern"; 
     views: View[]; // The specific sets of filters the specific scholar has saved
     profilePicture?: string;
