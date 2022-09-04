@@ -23,10 +23,13 @@ const baseSchema = gql`
 
 const schema = [
     baseSchema,
-    scholarTypeDef,
+
+    // Need to fix typeDefs
+
+    // scholarTypeDef,
     adminTypeDef,
     jobTypeDef,
-    employerTypeDef
+    // employerTypeDef
 ]
 
 

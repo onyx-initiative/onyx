@@ -2,7 +2,29 @@ import { gql } from "apollo-server-express";
 
 export const employerTypeDef = gql`
     # Modularize Job TypeDef
-    type Job {
+    enum JobType {
+        FULL_TIME
+        PART_TIME
+        CONTRACT
+        INTERNSHIP
+    }
+
+    enum jobCategory {
+        SOFTWARE
+        HARDWARE
+        DESIGN
+        MARKETING
+        BUSINESS
+        OTHER
+    }
+
+    enum ApplicationFormat {
+        EMAIL
+        LINK
+        FORM
+    }
+
+    input Job {
         id: ID!
         jobTitle: String!
         jobDescription: String!
@@ -12,7 +34,7 @@ export const employerTypeDef = gql`
         jobSource: String! 
         totalViews: Int! 
         totalApplications: Int!
-        jobStatus: JobStatus! 
+        jobStatus: Boolean! 
         jobType: JobType!
         jobCategory: jobCategory!
         jobSkills: [String!]!
@@ -29,24 +51,23 @@ export const employerTypeDef = gql`
     }
 
     type Employer {
-        id: number;
-        name: String!;
-        logo: String!;
-        city: String!;
-        province: String!;
-        websiteUrl: String!;
-        description: String!;
-        availableJobs: [Job!]!;
-
-        // P1+
-        videos: [String!];
+        id: ID!
+        name: String!
+        logo: String!
+        city: String!
+        province: String!
+        websiteUrl: String!
+        description: String!
+        availableJobs: [Job]
+        videos: [String!]
     }
 
     type Query {
-        getEmployerById(id: ID!): Employer!;
-        getEmployerById(name: String!): Employer!;
-        getEmployers: [Employer!]!;
+        getEmployerById(id: ID!): Employer!
+        getEmployerById(name: String!): Employer!
+        getEmployers: [Employer!]!
     }
+
     type Mutation {
         createEmployer(
             name: String!
@@ -55,9 +76,10 @@ export const employerTypeDef = gql`
             province: String!
             websiteUrl: String!
             description: String!
-            availableJobs: [Job!]!
+            availableJobs: [Job]
             videos: [String!]
-        ): Employer!;
-        removeEmployer(id: ID!): Boolean!;
+        ): Employer!
+        removeEmployer(id: ID!): Boolean!
+        addJobToEmployer(id: ID!, job: Job!): Employer!
     }
 `

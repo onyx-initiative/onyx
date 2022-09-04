@@ -57,7 +57,7 @@ export const jobTypeDef = gql`
         getJobByProvince(province: String!): [Job!]!
         getJobByJobCategory(jobCategory: jobCategory!): [Job!]!
         getJobByJobType(jobType: JobType!): [Job!]!
-        getJobByJobStatus(jobStatus: JobStatus!): [Job!]!
+        getJobByJobStatus(jobStatus: Boolean!): [Job!]!
 
         # Add more queries as they come up
     }
@@ -72,7 +72,7 @@ export const jobTypeDef = gql`
             jobSource: String!
             totalViews: Int!
             totalApplications: Int!
-            jobStatus: JobStatus!
+            jobStatus: Boolean!
             jobType: JobType!
             jobCategory: jobCategory!
             jobSkills: [String!]!
