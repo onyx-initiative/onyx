@@ -24,7 +24,33 @@ export const employerTypeDef = gql`
         FORM
     }
 
-    input Job {
+    type Job {
+        id: ID!
+        jobTitle: String!
+        jobDescription: String!
+        company: String! 
+        city: String!
+        province: String!
+        jobSource: String! 
+        totalViews: Int! 
+        totalApplications: Int!
+        jobStatus: Boolean! 
+        jobType: JobType!
+        jobCategory: jobCategory!
+        jobSkills: [String!]!
+        salaryRange: String! 
+        jobLength: Int! 
+        postDate: String! 
+        applicationDeadline: String!
+        description: String! 
+        contactEmail: String!
+        feature: Boolean!
+        additionalInstructions: String! 
+        howToApply: ApplicationFormat!
+        archived: Boolean!
+    }
+
+    input JobInput {
         id: ID!
         jobTitle: String!
         jobDescription: String!
@@ -76,10 +102,10 @@ export const employerTypeDef = gql`
             province: String!
             websiteUrl: String!
             description: String!
-            availableJobs: [Job]
+            availableJobs: [JobInput]
             videos: [String!]
         ): Employer!
         removeEmployer(id: ID!): Boolean!
-        addJobToEmployer(id: ID!, job: Job!): Employer!
+        addJobToEmployer(id: ID!, job: JobInput!): Employer!
     }
 `

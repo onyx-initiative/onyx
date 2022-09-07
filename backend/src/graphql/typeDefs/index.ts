@@ -26,10 +26,10 @@ const schema = [
 
     // Need to fix typeDefs
 
-    // scholarTypeDef,
+    scholarTypeDef,
     adminTypeDef,
     jobTypeDef,
-    // employerTypeDef
+    employerTypeDef
 ]
 
 

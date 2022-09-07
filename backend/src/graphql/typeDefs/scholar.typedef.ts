@@ -14,7 +14,22 @@ export const scholarTypeDef = gql`
         filters: [Filter!]!
     }
 
+    input ViewInput {
+        id: ID
+        viewName: String!
+        filters: [FilterInput!]!
+    }
+
     type Filter {
+        id: ID!
+        industryFilter: String
+        provinceFilter: String
+        cityFilter: String
+        yearFilter: String
+        durationFilter: String
+    }
+
+    input FilterInput {
         id: ID!
         industryFilter: String
         provinceFilter: String
@@ -57,7 +72,7 @@ export const scholarTypeDef = gql`
             jobApplications: String
             workHistory: [String]
             status: Status!
-            views: [View]
+            views: [ViewInput]
             profilePicture: String
             year: String!
             school: String!
@@ -75,7 +90,7 @@ export const scholarTypeDef = gql`
             jobApplications: String
             workHistory: [String]
             status: Status
-            views: [View]
+            views: [ViewInput]
             profilePicture: String
             year: String
             school: String
