@@ -1,4 +1,4 @@
-- [ ] Outline scholar, admin, employer and job tables in database.sql
+- [X] Outline scholar, admin, employer and job tables in database.sql
 - [ ] Initialize each ^ in postgres
 - [ ] Add resolvers for 4 typedefs to offer basic CRUD functionality
     - [ ] Define permissions (e.g. to ensure only admins add jobs)
