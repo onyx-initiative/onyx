@@ -1,0 +1,20 @@
+# serverless.yml
+
+service: apollo-lambda
+provider:
+  name: aws
+  runtime: nodejs18.8.0
+functions:
+  graphql:
+    # this is formatted as <FILENAME>.<HANDLER>
+    # Update this once gql server is finished
+    handler: graphql.graphqlHandler
+    events:
+    - http:
+        path: /
+        method: post
+        cors: true
+    - http:
+        path: /
+        method: get
+        cors: true

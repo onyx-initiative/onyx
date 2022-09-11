@@ -1,12 +1,15 @@
+-- Onyx Jobs Schema
+
 CREATE DATABASE onyx_jobs;
 
 --\c into onyx_jobs;
 
-CREATE TABLE view (
+CREATE TABLE filterView (
     view_id serial PRIMARY KEY,
     view_name varchar(255) NOT NULL,
     FOREIGN KEY (job_id) REFERENCES job (job_id),
     FOREIGN KEY (scholar_id) REFERENCES scholar (scholar_id),
+    FOREIGN KEY (employer_id) REFERENCES employer (employer_id)
 );
 
 -- Sample, not used in development

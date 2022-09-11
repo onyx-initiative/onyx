@@ -4,8 +4,6 @@ import { adminTypeDef } from "./admin.typedef";
 import { jobTypeDef } from "./job.typedef";
 import { employerTypeDef } from "./employer.typedef";
 
-// All typeDefs are imported here and combined into one object
-
 const baseSchema = gql`
   """
   The queries available in this schema
@@ -23,9 +21,6 @@ const baseSchema = gql`
 
 const schema = [
     baseSchema,
-
-    // Need to fix typeDefs
-
     scholarTypeDef,
     adminTypeDef,
     jobTypeDef,
