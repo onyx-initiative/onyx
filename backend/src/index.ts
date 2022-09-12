@@ -11,6 +11,7 @@ import { createHttpTerminator } from 'http-terminator';
 // Internal Imports
 import createApolloServer from './graphql/createApolloServer';
 import { CORS_CONFIG } from './lib/config';
+import client from './database';
 
 
 const main = async () => {
@@ -40,20 +41,21 @@ const main = async () => {
     const httpServer = http.createServer(app);
     const httpTerminator = createHttpTerminator({ server: httpServer });
 
-    // Create Apollo Server
-    const apolloServer = createApolloServer();
+    // Create Apollo Server with the connection to the db
+    const apolloServer = createApolloServer({ db: client });
 
     // Start Apollo Server
     await apolloServer.start();
     apolloServer.applyMiddleware({
         app,
+        // Adds CORS to stop errors when running frontend and backend on the same machine   
         cors: CORS_CONFIG,
       });
 }
 
-// Runs the server
+// Runs the server with a catch block to handle errors
 void main().catch(async err => {
     console.error('Error starting server:', err);
-    await createApolloServer().stop();
+    await createApolloServer({ db: client }).stop();
 });
 
