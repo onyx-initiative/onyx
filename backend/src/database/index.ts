@@ -6,7 +6,7 @@ const { Pool } = require("pg");
 */
 
 const client = new Pool({
-    user: "postgres",
+    user: "mdawes",
     password: process.env.DB_PASSWORD,
     database: "onyx_jobs",
     host: process.env.DEV_HOST,

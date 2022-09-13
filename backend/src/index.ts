@@ -11,18 +11,20 @@ import { createHttpTerminator } from 'http-terminator';
 // Internal Imports
 import createApolloServer from './graphql/createApolloServer';
 import { CORS_CONFIG } from './lib/config';
-import client from './database';
+import { graphqlHTTP } from 'express-graphql';
+import schema from './graphql/typeDefs';
 
 
 const main = async () => {
     // Configure Express server
     const app = express();
-    const port = process.env.PORT || 4000;
+    const port = process.env.PORT || 8000;
 
     // Adding CORS to allow cross-origin requests
     // ie. running backend and frontend on the same machine
     app.use(cors());
-    app.use(helmet({ contentSecurityPolicy: false }));
+    app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }))
+
     app.use(json({ limit: "16mb" }));
 
     // Express server endpoints
@@ -42,7 +44,7 @@ const main = async () => {
     const httpTerminator = createHttpTerminator({ server: httpServer });
 
     // Create Apollo Server with the connection to the db
-    const apolloServer = createApolloServer({ db: client });
+    const apolloServer = createApolloServer();
 
     // Start Apollo Server
     await apolloServer.start();
@@ -50,12 +52,13 @@ const main = async () => {
         app,
         // Adds CORS to stop errors when running frontend and backend on the same machine   
         cors: CORS_CONFIG,
+        path: "/graphql"
       });
 }
 
 // Runs the server with a catch block to handle errors
 void main().catch(async err => {
     console.error('Error starting server:', err);
-    await createApolloServer({ db: client }).stop();
+    await createApolloServer().stop();
 });
 
