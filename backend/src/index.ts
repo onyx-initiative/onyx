@@ -5,19 +5,19 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import http from 'http';
+import dotenv from 'dotenv';
 import { json } from 'body-parser';
 import { createHttpTerminator } from 'http-terminator';
 
 // Internal Imports
 import createApolloServer from './graphql/createApolloServer';
 import { CORS_CONFIG } from './lib/config';
-import { graphqlHTTP } from 'express-graphql';
-import schema from './graphql/typeDefs';
 
 
 const main = async () => {
     // Configure Express server
     const app = express();
+    dotenv.config()
     const port = process.env.PORT || 8000;
 
     // Adding CORS to allow cross-origin requests
@@ -37,7 +37,7 @@ const main = async () => {
     });
 
     app.listen(port, () => {
-        console.log(`Onyx jobs API is running on ${port}.`);
+        console.log(`Onyx jobs API is running at http://localhost:4000${apolloServer.graphqlPath}.`);
       });
 
     const httpServer = http.createServer(app);
