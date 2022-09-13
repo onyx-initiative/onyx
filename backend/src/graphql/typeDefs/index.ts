@@ -19,7 +19,7 @@ const baseSchema = gql`
   }
 `;
 
-const schema = [
+const typeDefs = [
     baseSchema,
     scholarTypeDef,
     adminTypeDef,
@@ -28,4 +28,4 @@ const schema = [
 ]
 
 
-export default schema;
+export default typeDefs;

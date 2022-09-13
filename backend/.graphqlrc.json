@@ -1,4 +1,4 @@
 {
-    "schema": "https://localhost:8000",
+    "schema": "https://localhost:4000",
     "introspection": true
 }

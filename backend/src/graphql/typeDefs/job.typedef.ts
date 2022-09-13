@@ -25,7 +25,7 @@ export const jobTypeDef = gql`
     }
 
     type Job {
-        id: ID!
+        job_id: ID!
         jobTitle: String!
         jobDescription: String!
         company: String! 
@@ -52,7 +52,7 @@ export const jobTypeDef = gql`
 
     type Query {
         getJobs: [Job!]!
-        getJobById(id: ID!): Job!
+        getJobById(job_id: ID!): Job!
         getJobByCity(city: String!): [Job!]!
         getJobByProvince(province: String!): [Job!]!
         getJobByJobCategory(jobCategory: jobCategory!): [Job!]!
@@ -87,6 +87,6 @@ export const jobTypeDef = gql`
             howToApply: ApplicationFormat!
             archived: Boolean!
         ): Job!
-        archiveJob(id: ID!): Job!
+        archiveJob(job_id: ID!): Job!
     }
 `

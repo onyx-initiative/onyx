@@ -9,19 +9,19 @@ export const scholarTypeDef = gql`
     }
 
     type View {
-        id: ID!
+        view_id: ID!
         viewName: String!
         filters: [Filter!]!
     }
 
     input ViewInput {
-        id: ID
+        view_id: ID
         viewName: String!
         filters: [FilterInput!]!
     }
 
     type Filter {
-        id: ID!
+        filter_id: ID!
         industryFilter: String
         provinceFilter: String
         cityFilter: String
@@ -30,7 +30,7 @@ export const scholarTypeDef = gql`
     }
 
     input FilterInput {
-        id: ID!
+        filter_id: ID!
         industryFilter: String
         provinceFilter: String
         cityFilter: String
@@ -39,7 +39,7 @@ export const scholarTypeDef = gql`
     }
 
     type Scholar {
-        id: ID!
+        scholar_id: ID!
         name: String!
         email: String!
         jobApplications: String
@@ -59,7 +59,7 @@ export const scholarTypeDef = gql`
 
     type Query {
         getScholars: [Scholar!]!
-        getScholar(id: ID!): Scholar
+        getScholar(scholar_id: ID!): Scholar
         getScholarByEmail(email: String!): Scholar!
         getScholarByStatus(status: Status!): [Scholar!]!
         getScholarByYear(year: String!): [Scholar!]!
@@ -84,7 +84,7 @@ export const scholarTypeDef = gql`
             notifications: Boolean!
         ): Scholar
         updateScholar(
-            id: ID!
+            scholar_id: ID!
             name: String
             email: String
             jobApplications: String
@@ -101,6 +101,6 @@ export const scholarTypeDef = gql`
             skills: [String]
             notifications: Boolean
         ): Scholar
-        archiveScholar(id: ID!): Scholar
+        archiveScholar(scholar_id: ID!): Scholar
     }
 `

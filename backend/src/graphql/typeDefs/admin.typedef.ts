@@ -2,7 +2,7 @@ import { gql } from "apollo-server-express";
 
 export const adminTypeDef = gql`
     type Admin {
-        id: ID!
+        admin_id: ID!
         name: String!
         email: String!
     }
@@ -18,11 +18,11 @@ export const adminTypeDef = gql`
             email: String!
         ): Boolean!
         updateAdmin(
-            id: ID!
+            admin_id: ID!
             name: String!
             email: String!
         ): Boolean!
         # Might switch this to delete by name
-        removeAdmin(id: ID!): Boolean!
+        removeAdmin(admin_id: ID!): Boolean!
     }
 `

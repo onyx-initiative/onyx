@@ -25,7 +25,7 @@ export const employerTypeDef = gql`
     }
 
     type Job {
-        id: ID!
+        job_id: ID!
         jobTitle: String!
         jobDescription: String!
         company: String! 
@@ -51,7 +51,7 @@ export const employerTypeDef = gql`
     }
 
     input JobInput {
-        id: ID!
+        job_id: ID!
         jobTitle: String!
         jobDescription: String!
         company: String! 
@@ -77,7 +77,7 @@ export const employerTypeDef = gql`
     }
 
     type Employer {
-        id: ID!
+        employer_id: ID!
         name: String!
         logo: String!
         city: String!
@@ -89,7 +89,7 @@ export const employerTypeDef = gql`
     }
 
     type Query {
-        getEmployerById(id: ID!): Employer!
+        getEmployerById(employer_id: ID!): Employer!
         getEmployerById(name: String!): Employer!
         getEmployers: [Employer!]!
     }
@@ -105,7 +105,7 @@ export const employerTypeDef = gql`
             availableJobs: [JobInput]
             videos: [String!]
         ): Employer!
-        removeEmployer(id: ID!): Boolean!
-        addJobToEmployer(id: ID!, job: JobInput!): Employer!
+        removeEmployer(employer_id: ID!): Boolean!
+        addJobToEmployer(employer_id: ID!, job: JobInput!): Employer!
     }
 `

@@ -24,6 +24,7 @@
   "dependencies": {
     "@graphql-tools/schema": "^9.0.4",
     "apollo-server": "^3.10.2",
+    "apollo-server-core": "^3.10.2",
     "apollo-server-express": "^3.10.2",
     "apollo-server-lambda": "^3.10.2",
     "apollo-server-micro": "^3.10.2",

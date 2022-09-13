@@ -1,24 +1,28 @@
 import { ApolloServer } from "apollo-server-express"; // may need to switch to lambda for production    
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import schema from "./typeDefs";
+import typeDefs from "./typeDefs";
 import client from "../database";
-import adminResolver from "./resolvers/admin.resolver";
+import resolvers from "./resolvers";
 import dotenv from 'dotenv';
+
+// To diagnose problems: npx diagnose-endpoint@1.1.0 --endpoint=http://localhost:4000/graphql
 
 const createApolloServer = () => {
     dotenv.config();
     const combinedSchema = makeExecutableSchema({
-        typeDefs: schema,
-        // resolvers: {}, // Update this once made
-        resolvers: adminResolver,
+        typeDefs: typeDefs,
+        resolvers: resolvers,
         inheritResolversFromInterfaces: true,
     });
 
     return new ApolloServer({
-        introspection: true,
-        // introspection: process.env.NODE_ENV !== "production",
+        introspection: process.env.NODE_ENV !== "production",
         schema: combinedSchema,
-        dataSources: () => client,
+        dataSources: () => {
+            return {
+                db: client,
+            };
+        },
         context: ({ req, res }) => {
             return {
               req,
