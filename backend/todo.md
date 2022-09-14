@@ -4,6 +4,9 @@
     - [ ] Define permissions (e.g. to ensure only admins add jobs)
 - [ ] Write tests for server/database w/ mock data
 - [ ] Add authentication (maybe, look into SSO and if it's server or third party)
+- [ ] Deploy to AWS
+- [ ] Write query hooks on the frontend
+
 
 
 Hours:
@@ -14,5 +17,5 @@ Hours:
 - Wed, Aug 31 - 1.5hrs + 
 - Thurs, Sept 1 - 1 hr
 - Fri, Sept 2 - 1 hr
-- Mon, Sept 12 - 9
-- Tues, Sept 12 - 
+- Mon, Sept 12 - 9 hrs
+- Tues, Sept 12 - 2 hrs

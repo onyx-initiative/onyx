@@ -1,8 +1,4 @@
 const { Pool } = require("pg");
-// import dotenv from 'dotenv';
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 /*
 * connection to the DB
@@ -18,6 +14,9 @@ const client = new Pool({
 });
 
 // For testing during develpoement
+
+// const dotenv = require('dotenv');
+// dotenv.config();
 
 // const testCall = async () => {
 //     const db = await client.connect();

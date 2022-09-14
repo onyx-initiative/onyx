@@ -78,34 +78,34 @@ export const employerTypeDef = gql`
 
     type Employer {
         employer_id: ID!
+        job_id: [ID!]!
         name: String!
-        logo: String!
+        logo: String
         city: String!
         province: String!
         websiteUrl: String!
         description: String!
-        availableJobs: [Job]
         videos: [String!]
     }
 
     type Query {
         getEmployerById(employer_id: ID!): Employer!
-        getEmployerById(name: String!): Employer!
+        getEmployerByName(name: String!): Employer!
         getEmployers: [Employer!]!
+        getJobs: [Job!]!
     }
 
     type Mutation {
         createEmployer(
             name: String!
-            logo: String!
+            logo: String
             city: String!
             province: String!
             websiteUrl: String!
             description: String!
-            availableJobs: [JobInput]
-            videos: [String!]
+            videos: [String]
         ): Employer!
         removeEmployer(employer_id: ID!): Boolean!
-        addJobToEmployer(employer_id: ID!, job: JobInput!): Employer!
+        addJob(employer_id: ID!, job_id: ID!): Employer!
     }
 `
