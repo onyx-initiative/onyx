@@ -1,6 +1,7 @@
 - [X] Outline scholar, admin, employer and job tables in database.sql
 - [X] Initialize each ^ in postgres
 - [ ] Add resolvers for 4 typedefs to offer basic CRUD functionality
+    - [ ] Add relational resolvers
     - [ ] Define permissions (e.g. to ensure only admins add jobs)
 - [ ] Write tests for server/database w/ mock data
 - [ ] Add authentication (maybe, look into SSO and if it's server or third party)
@@ -9,7 +10,7 @@
 
 
 
-Hours:
+Michael's Hours:
 - Sat, Aug 27 - 1.5hrs
 - Sun, Aug 28 - 6 hrs
 - Mon, Aug 29 - 1 hr
@@ -19,3 +20,4 @@ Hours:
 - Fri, Sept 2 - 1 hr
 - Mon, Sept 12 - 9 hrs
 - Tues, Sept 12 - 2 hrs
+- Thurs, Sept 14 - 3

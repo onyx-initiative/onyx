@@ -17,8 +17,9 @@ CREATE TABLE employer (
     logo BYTEA NOT NULL,
     city varchar(255) NOT NULL,
     province varchar(255) NOT NULL,
-    websiteUrl varchar(255) NOT NULL,
-    description varchar(255) NOT NULL
+    website_url varchar(255) NOT NULL,
+    description varchar(255) NOT NULL,
+    videos varchar(255)[]
     -- May not need
     -- FOREIGN KEY (job_id) REFERENCES job(job_id)
 );
@@ -33,7 +34,6 @@ CREATE TABLE job (
     job_source varchar(255) NOT NULL,
     total_views integer NOT NULL,
     total_applications integer NOT NULL,
-    job_status boolean NOT NULL,
     job_type varchar(255) NOT NULL,
     job_industry varchar(255) NOT NULL,
     job_category varchar(255) NOT NULL,

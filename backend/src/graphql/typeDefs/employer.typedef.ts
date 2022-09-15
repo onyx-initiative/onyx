@@ -78,12 +78,12 @@ export const employerTypeDef = gql`
 
     type Employer {
         employer_id: ID!
-        job_id: [ID!]!
+        job_id: [ID]
         name: String!
         logo: String
         city: String!
         province: String!
-        websiteUrl: String!
+        website_url: String!
         description: String!
         videos: [String!]
     }
@@ -99,13 +99,14 @@ export const employerTypeDef = gql`
         createEmployer(
             name: String!
             logo: String
+            email: String!
             city: String!
             province: String!
-            websiteUrl: String!
+            website_url: String!
             description: String!
             videos: [String]
-        ): Employer!
+        ): Boolean!
         removeEmployer(employer_id: ID!): Boolean!
-        addJob(employer_id: ID!, job_id: ID!): Employer!
+        addJob(employer_id: ID!, job_id: ID!): Boolean!                                             
     }
 `

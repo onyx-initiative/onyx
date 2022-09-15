@@ -34,15 +34,17 @@ const employerResolver = {
             });
             client.release()
             return resp.rows;
-        }
+        },
+
+        // Add the get jobs once the job relation is implemented
     },
 
     Mutation: {
-        createEmployer: async (_: any, { name, email, logo, city, province, websiteUrl, description, videos }: any, { dataSources }: any) => {
+        createEmployer: async (_: any, { name, email, logo, city, province, website_url, description, videos }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
             const query = `INSERT INTO employer (name, email, logo, city, province, website_url, description, videos) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
-            await client.query(query, [name, email, logo, city, province, websiteUrl, description, videos]).catch((err: any) => {
+            await client.query(query, [name, email, logo, city, province, website_url, description, videos]).catch((err: any) => {
                 console.log(err);
                 client.release()
                 return false

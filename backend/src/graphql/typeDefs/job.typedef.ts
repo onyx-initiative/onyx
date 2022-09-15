@@ -26,6 +26,7 @@ export const jobTypeDef = gql`
 
     type Job {
         job_id: ID!
+        employer_id: Int!
         jobTitle: String!
         jobDescription: String!
         company: String! 
@@ -34,7 +35,6 @@ export const jobTypeDef = gql`
         jobSource: String! 
         totalViews: Int! 
         totalApplications: Int!
-        jobStatus: Boolean!
         jobType: JobType!
         jobCategory: jobCategory!
         jobSkills: [String!]!
@@ -42,7 +42,6 @@ export const jobTypeDef = gql`
         jobLength: Int! 
         postDate: String! 
         applicationDeadline: String!
-        description: String! 
         contactEmail: String!
         feature: Boolean!
         additionalInstructions: String! 
@@ -53,18 +52,20 @@ export const jobTypeDef = gql`
     type Query {
         getJobs: [Job!]!
         getJobById(job_id: ID!): Job!
-        getJobByCity(city: String!): [Job!]!
-        getJobByProvince(province: String!): [Job!]!
-        getJobByJobCategory(jobCategory: jobCategory!): [Job!]!
-        getJobByJobType(jobType: JobType!): [Job!]!
-        getJobByJobStatus(jobStatus: Boolean!): [Job!]!
-
+        getJobsByEmployerId(employer_id: ID!): [Job!]!
+        getJobByFilter(column: String!, filter: String! ): [Job!]!
         # Add more queries as they come up
+    }
+
+    type Return {
+        message: String!
+        job: Job!
     }
 
     type Mutation {
         createJob(
             jobTitle: String!
+            employer_id: Int!
             jobDescription: String!
             company: String!
             city: String!
@@ -72,7 +73,6 @@ export const jobTypeDef = gql`
             jobSource: String!
             totalViews: Int!
             totalApplications: Int!
-            jobStatus: Boolean!
             jobType: JobType!
             jobCategory: jobCategory!
             jobSkills: [String!]!
@@ -80,13 +80,13 @@ export const jobTypeDef = gql`
             jobLength: Int!
             postDate: String!
             applicationDeadline: String!
-            description: String!
             contactEmail: String!
             feature: Boolean!
             additionalInstructions: String!
             howToApply: ApplicationFormat!
-            archived: Boolean!
-        ): Job!
-        archiveJob(job_id: ID!): Job!
+        ): Job
+        archiveJob(job_id: ID!): Boolean!
+        incrementViews(job_id: ID!): Boolean!
+        incrementApplications(job_id: ID!): Boolean!
     }
 `
