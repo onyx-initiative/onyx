@@ -5,12 +5,14 @@ import adminResolver from "./admin.resolver";
 import employerResolver from "./employer.resolver";
 import jobResolver from "./job.resolver";
 import scholarResolver from "./scholar.resolver";
+import viewResolver from "./view.resolver";
 
 const resolvers = mergeResolvers([
     adminResolver,
     employerResolver,
     jobResolver,
-    scholarResolver
+    scholarResolver,
+    viewResolver
 ])
 
 export default resolvers;
