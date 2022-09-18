@@ -66,7 +66,8 @@ const jobResolver = {
             contactEmail,
             feature,
             additionalInstructions,
-            howToApply }: any, { dataSources }: any) => {
+            howToApply,
+            applicantYear }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
             const query = `INSERT INTO job (
@@ -89,10 +90,12 @@ const jobResolver = {
                 contact_email,
                 feature,
                 additional_info,
-                how_to_apply
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) RETURNING *`;
-            const resp = await client.query(query, [jobTitle,
-                jobTitle,
+                how_to_apply,
+                applicant_year,
+                archived
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) RETURNING *`;
+            const resp = await client.query(query, 
+                [jobTitle,
                 employer_id,
                 jobDescription,
                 company,
@@ -111,8 +114,9 @@ const jobResolver = {
                 contactEmail,
                 feature,
                 additionalInstructions,
-                howToApply
-                ]).catch((err: any) => {
+                howToApply,
+                applicantYear,
+                false]).catch((err: any) => {
                 console.log(err);
                 client.release()
                 return 

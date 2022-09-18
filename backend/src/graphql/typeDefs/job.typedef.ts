@@ -25,20 +25,22 @@ export const jobTypeDef = gql`
     }
 
     type Job {
-        job_id: ID!
-        employer_id: Int!
-        jobTitle: String!
-        jobDescription: String!
-        company: String! 
-        city: String!
-        province: String!
-        jobSource: String! 
-        totalViews: Int! 
-        totalApplications: Int!
-        jobType: JobType!
-        jobCategory: jobCategory!
-        jobSkills: [String!]!
-        salaryRange: String! 
+        job_id: ID! #
+        employer_id: Int! #
+        jobTitle: String! #
+        jobDescription: String! #
+        company: String! #
+        city: String!#
+        province: String!#
+        jobSource: String! #
+        totalViews: Int! #
+        totalApplications: Int!#
+        jobType: JobType! #
+        jobIndustry: String! #
+        jobCategory: jobCategory! #
+        jobSkills: [String!]! #
+        applicantYear: [String!]! #
+        salaryRange: String! #
         jobLength: Int! 
         postDate: String! 
         applicationDeadline: String!
@@ -74,8 +76,10 @@ export const jobTypeDef = gql`
             totalViews: Int!
             totalApplications: Int!
             jobType: JobType!
+            jobIndustry: String!
             jobCategory: jobCategory!
             jobSkills: [String!]!
+            applicantYear: [String!]! #
             salaryRange: String!
             jobLength: Int!
             postDate: String!
