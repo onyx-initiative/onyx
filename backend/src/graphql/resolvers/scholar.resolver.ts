@@ -76,6 +76,10 @@ const scholarResolver = {
                 query = `UPDATE scholar SET ${column} = ${column} || $1`;
             }
 
+            if (column === 'notifications') {
+                new_value = (new_value === 'true');
+            }
+
             const resp = await client.query(query, [new_value]).catch((err: any) => {
                 console.error(err);
                 client.release()

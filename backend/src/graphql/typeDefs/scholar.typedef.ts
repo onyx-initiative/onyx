@@ -8,8 +8,6 @@ export const scholarTypeDef = gql`
         INTERN
     }
 
-    union Update = String | Int | Boolean | Status
-
     type Scholar {
         scholar_id: ID!
         name: String!
@@ -51,7 +49,7 @@ export const scholarTypeDef = gql`
             skills: [String]
             notifications: Boolean!
         ): Scholar
-        updateScholar(column: String!, new_value: Update!): Scholar
+        updateScholar(column: String!, new_value: String!): Scholar
         archiveScholar(scholar_id: ID!): Scholar
     }
 `

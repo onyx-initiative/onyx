@@ -10,7 +10,7 @@ export const viewTypeDef = gql`
 
     type Query {
         getScholarsViews(scholar_id: ID!): [View!]!
-        getRelevantJobs(view: View!): [Job!]!
+        getRelevantJobs(scholar_id: ID!, view_id: [ID!]!): [Job!]!
     }
 
     type Mutation {
@@ -19,7 +19,8 @@ export const viewTypeDef = gql`
             view_name: String!
             criteria: [String!]!
         ): View!
-        updateView(criteria: [String!]): View!
+        addCriteria(view_id: ID!, criteria: [String!]): View!
+        removeCriteria(view_id: ID!, criteria: [String!]): View!
         deleteView(view_id: ID!): View!
     }
 `;

@@ -37,8 +37,14 @@ const main = async () => {
     });
 
     app.listen(port, () => {
-        console.log(`Onyx jobs API is running at http://localhost:4000${apolloServer.graphqlPath}.`);
-      });
+        // Added try catch block to handle errors on server start
+        try {
+            const path = apolloServer.graphqlPath;
+            console.log(`Onyx jobs API is running at http://localhost:4000${apolloServer.graphqlPath}.`);
+        } catch (err) {
+            console.error('Error starting server:', err);
+        }
+    });
 
     const httpServer = http.createServer(app);
     const httpTerminator = createHttpTerminator({ server: httpServer });
