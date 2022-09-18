@@ -106,7 +106,6 @@ export const employerTypeDef = gql`
             description: String!
             videos: [String]
         ): Boolean!
-        removeEmployer(employer_id: ID!): Boolean!
-        addJob(employer_id: ID!, job_id: ID!): Boolean!                                             
+        removeEmployer(employer_id: ID!): Boolean!                                          
     }
 `

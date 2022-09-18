@@ -56,7 +56,6 @@ export const jobTypeDef = gql`
         getJobById(job_id: ID!): Job!
         getJobsByEmployerId(employer_id: ID!): [Job!]!
         getJobByFilter(column: String!, filter: String! ): [Job!]!
-        # Add more queries as they come up
     }
 
     type Return {

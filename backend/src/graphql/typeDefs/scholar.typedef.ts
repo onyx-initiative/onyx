@@ -8,35 +8,7 @@ export const scholarTypeDef = gql`
         INTERN
     }
 
-    type View {
-        view_id: ID!
-        viewName: String!
-        filters: [Filter!]!
-    }
-
-    input ViewInput {
-        view_id: ID
-        viewName: String!
-        filters: [FilterInput!]!
-    }
-
-    type Filter {
-        filter_id: ID!
-        industryFilter: String
-        provinceFilter: String
-        cityFilter: String
-        yearFilter: String
-        durationFilter: String
-    }
-
-    input FilterInput {
-        filter_id: ID!
-        industryFilter: String
-        provinceFilter: String
-        cityFilter: String
-        yearFilter: String
-        durationFilter: String
-    }
+    union Update = String | Int | Boolean | Status
 
     type Scholar {
         scholar_id: ID!
@@ -44,8 +16,7 @@ export const scholarTypeDef = gql`
         email: String!
         jobApplications: String
         workHistory: [String]
-        status: Status! 
-        views: [View] 
+        status: Status!
         profilePicture: String
         year: String!
         school: String!
@@ -59,10 +30,8 @@ export const scholarTypeDef = gql`
 
     type Query {
         getScholars: [Scholar!]!
-        getScholar(scholar_id: ID!): Scholar
-        getScholarByEmail(email: String!): Scholar!
-        getScholarByStatus(status: Status!): [Scholar!]!
-        getScholarByYear(year: String!): [Scholar!]!
+        getScholar(scholar_id: ID!): Scholar!
+        getScholarByFilter(column: String!, filter: String! ): [Scholar]!
     }
 
     type Mutation {
@@ -72,7 +41,6 @@ export const scholarTypeDef = gql`
             jobApplications: String
             workHistory: [String]
             status: Status!
-            views: [ViewInput]
             profilePicture: String
             year: String!
             school: String!
@@ -83,24 +51,7 @@ export const scholarTypeDef = gql`
             skills: [String]
             notifications: Boolean!
         ): Scholar
-        updateScholar(
-            scholar_id: ID!
-            name: String
-            email: String
-            jobApplications: String
-            workHistory: [String]
-            status: Status
-            views: [ViewInput]
-            profilePicture: String
-            year: String
-            school: String
-            major: String
-            city: String
-            province: String
-            registrationDate: String
-            skills: [String]
-            notifications: Boolean
-        ): Scholar
+        updateScholar(column: String!, new_value: Update!): Scholar
         archiveScholar(scholar_id: ID!): Scholar
     }
 `

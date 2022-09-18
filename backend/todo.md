@@ -19,5 +19,7 @@ Michael's Hours:
 - Thurs, Sept 1 - 1 hr
 - Fri, Sept 2 - 1 hr
 - Mon, Sept 12 - 9 hrs
-- Tues, Sept 12 - 2 hrs
-- Thurs, Sept 14 - 3
+- Tues, Sept 13 - 2 hrs
+- Thurs, Sept 15 - 3 hr
+- Fri, Sept 16 - 1 hr
+- Sat, Sept 17 - 4 hrs

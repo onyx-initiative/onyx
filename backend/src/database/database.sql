@@ -35,7 +35,6 @@ CREATE TABLE job (
     total_views integer NOT NULL,
     total_applications integer NOT NULL,
     job_type varchar(255) NOT NULL,
-    job_industry varchar(255) NOT NULL,
     job_category varchar(255) NOT NULL,
     job_skills varchar(255)[] NOT NULL,
     applicant_year varchar(255) NOT NULL,
@@ -47,7 +46,7 @@ CREATE TABLE job (
     application_deadline timestamp NOT NULL,
     contact_email varchar(255) NOT NULL,
     status varchar(255) NOT NULL,
-    festure boolean NOT NULL,
+    feature boolean NOT NULL,
     additional_info text,
     how_to_apply varchar(255) NOT NULL,
     archived boolean NOT NULL,
@@ -56,19 +55,15 @@ CREATE TABLE job (
 
 CREATE TABLE filterView (
     view_id serial PRIMARY KEY,
-    job_id integer NOT NULL,
     scholar_id integer NOT NULL,
-    employer_id integer NOT NULL,
     view_name varchar(255) NOT NULL,
-    FOREIGN KEY (job_id) REFERENCES job (job_id),
-    -- FOREIGN KEY (scholar_id) REFERENCES scholar (scholar_id),
-    FOREIGN KEY (employer_id) REFERENCES employer (employer_id)
+    criteria varchar(255)[] NOT NULL,
+    FOREIGN KEY (scholar_id) REFERENCES scholar (scholar_id),
 );
 
 CREATE TABLE scholar (
     scholar_id serial PRIMARY KEY,
     job_id integer NOT NULL,
-    view_id integer NOT NULL,
     name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     year varchar(255) NOT NULL,

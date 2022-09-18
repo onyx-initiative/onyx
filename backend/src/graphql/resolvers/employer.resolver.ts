@@ -63,18 +63,6 @@ const employerResolver = {
             });
             client.release()
             return true;
-        },
-        addJob: async (_: any, { employer_id, job_id }: any, { dataSources }: any) => {
-            const { db } = dataSources;
-            const client = await db.connect()
-            const query = `UPDATE employer SET job_id = array_append(job_id, $1) WHERE employer_id = $2`;
-            await client.query(query, [job_id, employer_id]).catch((err: any) => {
-                console.log(err)
-                client.release()
-                return false;
-            });
-            client.release()
-            return true;
         }
     }
 }
