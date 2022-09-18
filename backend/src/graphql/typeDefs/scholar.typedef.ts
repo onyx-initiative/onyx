@@ -1,12 +1,6 @@
 import { gql } from "apollo-server-express";
 
 export const scholarTypeDef = gql`
-    enum Status {
-        CURRENT,
-        ALUMNI,
-        NEW_GRADUATE,
-        INTERN
-    }
 
     type Scholar {
         scholar_id: ID!
@@ -14,9 +8,9 @@ export const scholarTypeDef = gql`
         email: String!
         jobApplications: String
         workHistory: [String]
-        status: Status!
+        current: Boolean!
         profilePicture: String
-        year: String!
+        gradYear: String!
         school: String!
         major: String!
         city: String!
@@ -38,9 +32,9 @@ export const scholarTypeDef = gql`
             email: String!
             jobApplications: String
             workHistory: [String]
-            status: Status!
+            current: Boolean!
             profilePicture: String
-            year: String!
+            gradYear: String!
             school: String!
             major: String!
             city: String!
@@ -49,7 +43,7 @@ export const scholarTypeDef = gql`
             skills: [String]
             notifications: Boolean!
         ): Scholar
-        updateScholar(column: String!, new_value: String!): Scholar
-        archiveScholar(scholar_id: ID!): Scholar
+        updateScholar(scholar_id: ID!, column: String!, new_value: String!): Scholar
+        archiveScholar(scholar_id: ID!): Boolean!
     }
 `
