@@ -18,6 +18,7 @@ const jobResolver = {
             const resp = await client.query(query, [job_id]).catch((err: any) => {
                 console.error(err);
                 client.release()
+                return [];
             });
             client.release()
             return resp.rows[0];
@@ -29,6 +30,7 @@ const jobResolver = {
             const resp = await client.query(query, [employer_id]).catch((err: any) => {
                 console.error(err);
                 client.release()
+                return [];
             });
             client.release()
             return resp.rows;
@@ -40,6 +42,7 @@ const jobResolver = {
             const resp = await client.query(query, [filter]).catch((err: any) => {
                 console.error(err);
                 client.release()
+                return [];
             });
             client.release()
             return resp.rows;
@@ -47,27 +50,29 @@ const jobResolver = {
     },
     Mutation: {
         createJob: async (_: any, { 
-            jobTitle,
             employer_id,
-            jobDescription,
+            job_title,
+            description,
             company,
-            city,
-            province,
-            jobSource,
-            totalViews,
-            totalApplications,
-            jobType,
-            jobCategory,
-            jobSkills,
-            salaryRange,
-            jobLength,
-            postDate,
-            applicationDeadline,
-            contactEmail,
+            city,            
+            province,            
+            job_source,
+            total_views,
+            total_applications,
+            job_type,
+            job_industry,
+            job_category,
+            job_skills,
+            applicant_year,
+            salary_range,
+            job_length, 
+            post_date,           
+            application_deadline,           
+            contact_email,           
             feature,
-            additionalInstructions,
-            howToApply,
-            applicantYear }: any, { dataSources }: any) => {
+            additional_instructions,            
+            how_to_apply,
+            archived }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
             const query = `INSERT INTO job (
@@ -95,31 +100,33 @@ const jobResolver = {
                 archived
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) RETURNING *`;
             const resp = await client.query(query, 
-                [jobTitle,
-                employer_id,
-                jobDescription,
+                [employer_id,
+                job_title,
+                description,
                 company,
-                city,
-                province,
-                jobSource,
-                totalViews,
-                totalApplications,
-                jobType,
-                jobCategory,
-                jobSkills,
-                salaryRange,
-                jobLength,
-                postDate,
-                applicationDeadline,
-                contactEmail,
+                city,            
+                province,            
+                job_source,
+                total_views,
+                total_applications,
+                job_type,
+                job_industry,
+                job_category,
+                job_skills,
+                applicant_year,
+                salary_range,
+                job_length, 
+                post_date,           
+                application_deadline,           
+                contact_email,           
                 feature,
-                additionalInstructions,
-                howToApply,
-                applicantYear,
+                additional_instructions,            
+                how_to_apply,
+                archived,
                 false]).catch((err: any) => {
                 console.log(err);
                 client.release()
-                return 
+                return [];
             });
             client.release()
             return resp.rows[0];

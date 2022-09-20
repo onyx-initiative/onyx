@@ -1,4 +1,27 @@
-const createScholarData = {
+// Queries
+
+export const getScholar = {
+    "scholarId": "4"
+}
+
+export const getScholarByFilter = {
+    "column": "city",
+    "filter": "Toronto"
+}
+
+export const updateScholar = {
+        "column": "email",
+        "newValue": "mdawes28@gmail.com",
+        "scholarId": "4"
+}
+
+export const archiveScholar = {
+    "scholarId": "4"
+}
+
+// Mutations
+
+export const createScholarData = {
     1: {
         "name": "Michael Dawes",
         "email": "michaelanthony.dawes@mail.utoronto.ca",

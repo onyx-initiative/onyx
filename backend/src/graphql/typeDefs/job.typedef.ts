@@ -27,27 +27,27 @@ export const jobTypeDef = gql`
     type Job {
         job_id: ID! #
         employer_id: Int! #
-        jobTitle: String! #
-        jobDescription: String! #
+        job_title: String! #
+        description: String! #
         company: String! #
         city: String!#
         province: String!#
-        jobSource: String! #
-        totalViews: Int! #
-        totalApplications: Int!#
-        jobType: JobType! #
-        jobIndustry: String! #
-        jobCategory: jobCategory! #
-        jobSkills: [String!]! #
-        applicantYear: [String!]! #
-        salaryRange: String! #
-        jobLength: Int! 
-        postDate: String! 
-        applicationDeadline: String!
-        contactEmail: String!
+        job_source: String! #
+        total_views: Int! #
+        total_applications: Int!#
+        job_type: JobType! #
+        job_industry: String! #
+        job_category: jobCategory! #
+        job_skills: [String!]! #
+        applicant_year: [String!]! #
+        salary_range: String! #
+        job_length: Int! 
+        post_date: String! 
+        application_deadline: String!
+        contact_email: String!
         feature: Boolean!
-        additionalInstructions: String! 
-        howToApply: ApplicationFormat!
+        additional_instructions: String! 
+        how_to_apply: ApplicationFormat!
         archived: Boolean!
     }
 
@@ -65,28 +65,29 @@ export const jobTypeDef = gql`
 
     type Mutation {
         createJob(
-            jobTitle: String!
-            employer_id: Int!
-            jobDescription: String!
-            company: String!
-            city: String!
-            province: String!
-            jobSource: String!
-            totalViews: Int!
-            totalApplications: Int!
-            jobType: JobType!
-            jobIndustry: String!
-            jobCategory: jobCategory!
-            jobSkills: [String!]!
-            applicantYear: [String!]! #
-            salaryRange: String!
-            jobLength: Int!
-            postDate: String!
-            applicationDeadline: String!
-            contactEmail: String!
+            employer_id: Int! #
+            job_title: String! #
+            description: String! #
+            company: String! #
+            city: String!#
+            province: String!#
+            job_source: String! #
+            total_views: Int! #
+            total_applications: Int!#
+            job_type: JobType! #
+            job_industry: String! #
+            job_category: jobCategory! #
+            job_skills: [String!]! #
+            applicant_year: [String!]! #
+            salary_range: String! #
+            job_length: Int! 
+            post_date: String! 
+            application_deadline: String!
+            contact_email: String!
             feature: Boolean!
-            additionalInstructions: String!
-            howToApply: ApplicationFormat!
+            additional_instructions: String! 
+            how_to_apply: ApplicationFormat!
+            archived: Boolean!
         ): Job
         archiveJob(job_id: ID!): Boolean!
         incrementViews(job_id: ID!): Boolean!
