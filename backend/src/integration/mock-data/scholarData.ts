@@ -9,19 +9,9 @@ export const getScholarByFilter = {
     "filter": "Toronto"
 }
 
-export const updateScholar = {
-        "column": "email",
-        "newValue": "mdawes28@gmail.com",
-        "scholarId": "4"
-}
-
-export const archiveScholar = {
-    "scholarId": "4"
-}
-
 // Mutations
 
-export const createScholarData = {
+export const createScholar = {
     1: {
         "name": "Michael Dawes",
         "email": "michaelanthony.dawes@mail.utoronto.ca",
@@ -48,4 +38,15 @@ export const createScholarData = {
         "notifications": true,
         "skills": ["PowerPoint", "Excel", "Python"]
       }
+}
+
+export const updateScholar = {
+    "column": "email",
+    "newValue": "mdawes28@gmail.com",
+    "scholarId": "4"
+}
+
+
+export const archiveScholar = {
+    "scholarId": "4"
 }
