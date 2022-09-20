@@ -42,7 +42,7 @@ const adminResolver = {
         updateAdmin: async (_: any, { id, name, email }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
-            const query = `UPDATE admin SET name = $1, email = $2 WHERE id = $3`;
+            const query = `UPDATE admin SET name = $1, email = $2 WHERE admin_id = $3`;
             await client.query(query, [name, email, id]).catch((err: any) => {
                 console.log(err)
                 client.release()
@@ -54,7 +54,7 @@ const adminResolver = {
         removeAdmin: async (_: any, { id }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
-            const query = `DELETE FROM admin WHERE id = $1`;
+            const query = `DELETE FROM admin WHERE admin_id = $1`;
             await client.query(query, [id]).catch((err: any) => {
                 console.error(err);
                 client.release()

@@ -11,7 +11,7 @@ export const createAdmin = {
 }
 
 export const updateAdmin = {
-    "adminId": "11",
+    "adminId": "4",
     "name": "Wayne Purboo",
     "email": "wayne@onyx.com",
 }
