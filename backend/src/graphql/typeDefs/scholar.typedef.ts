@@ -42,8 +42,9 @@ export const scholarTypeDef = gql`
             registrationDate: String!
             skills: [String]
             notifications: Boolean!
-        ): Scholar
-        updateScholar(scholar_id: ID!, column: String!, new_value: String!): Scholar
+        ): Scholar!
+        updateScholar(scholar_id: ID!, column: String!, new_value: String!): Scholar!
         archiveScholar(scholar_id: ID!): Boolean!
+        deleteScholar(scholar_id: ID!): Boolean!
     }
 `

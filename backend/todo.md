@@ -3,6 +3,7 @@
 - [X] Add resolvers for 4 typedefs to offer basic CRUD functionality
     - [X] Add relational resolvers
     - [ ] Define permissions (e.g. to ensure only admins add jobs)
+    - [ ] Add checks to avoid duplicant entries
 - [ ] Write tests for server/database w/ mock data
 - [ ] Add authentication (maybe, look into SSO and if it's server or third party)
 - [ ] Deploy to AWS
@@ -25,3 +26,4 @@ Michael's Hours:
 - Sat, Sept 17 - 4 hrs
 - Sun, Sept 18 - 3 hrs
 - Mon, Sept 19 - 4 hrs
+- Tues, Sept 20 - 5 hrs

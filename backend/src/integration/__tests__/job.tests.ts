@@ -39,15 +39,14 @@ it("Get a job by id", async () => {
 //                 }
 //             }
 //         `,
-//         variables: {
-//             employerId: "14"
-//         }
+//         variables: getJobsByEmployerId
 //     });
 //     console.log(res);
 //     expect(res.data?.getJobsByEmployerId.job_id).toEqual("5");
+//     expect(res.data?.getJobsByEmployerId.job_title).toEqual("Sample Job");
 //     expect(res.errors).toBeUndefined();
 //     apolloServer.stop();
-// });
+// })
 
 // it("Get jobs by filter", async () => {
 //     const apolloServer = createApolloServer();

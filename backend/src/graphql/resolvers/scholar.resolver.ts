@@ -102,6 +102,18 @@ const scholarResolver = {
             });
             client.release()
             return true;
+        },
+        deleteScholar: async (_: any, { scholar_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await db.connect()
+            const query = `DELETE FROM scholar WHERE scholar_id = $1`;
+            const resp = await client.query(query, [scholar_id]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return false;
+            });
+            client.release()
+            return true;
         }
     }
 }
