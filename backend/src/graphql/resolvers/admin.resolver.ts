@@ -30,14 +30,14 @@ const adminResolver = {
         createAdmin: async (_: any, { name, email }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
-            const query = `INSERT INTO admin (name, email) VALUES ($1, $2)`;
-            await client.query(query, [name, email]).catch((err: any) => {
+            const query = `INSERT INTO admin (name, email) VALUES ($1, $2) RETURNING *`;
+            const resp = await client.query(query, [name, email]).catch((err: any) => {
                 console.log(err);
                 client.release()
-                return false
+                return [];
             });
             client.release()
-            return true;
+            return resp.rows[0];
         },
         updateAdmin: async (_: any, { id, name, email }: any, { dataSources }: any) => {
             const { db } = dataSources;
