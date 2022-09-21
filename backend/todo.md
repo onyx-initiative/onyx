@@ -4,7 +4,7 @@
     - [X] Add relational resolvers
     - [ ] Define permissions (e.g. to ensure only admins add jobs)
     - [ ] Add checks to avoid duplicant entries
-- [ ] Write tests for server/database w/ mock data
+- [X] Write tests for server/database w/ mock data
 - [ ] Add authentication (maybe, look into SSO and if it's server or third party)
 - [ ] Deploy to AWS
 - [ ] Write query hooks on the frontend
@@ -27,3 +27,4 @@ Michael's Hours:
 - Sun, Sept 18 - 3 hrs
 - Mon, Sept 19 - 4 hrs
 - Tues, Sept 20 - 5 hrs
+- Wed, Sept 21 - 1.5
