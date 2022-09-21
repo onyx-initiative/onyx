@@ -1,3 +1,5 @@
+import { response } from "express";
+
 const employerResolver = {
     Query: {
         getEmployerById: async (_: any, { employer_id }: any, { dataSources }: any) => {
@@ -44,14 +46,14 @@ const employerResolver = {
         createEmployer: async (_: any, { name, email, logo, city, province, website_url, description, videos }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
-            const query = `INSERT INTO employer (name, email, logo, city, province, website_url, description, videos) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
-            await client.query(query, [name, email, logo, city, province, website_url, description, videos]).catch((err: any) => {
+            const query = `INSERT INTO employer (name, email, logo, city, province, website_url, description, videos) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+            const resp = await client.query(query, [name, email, logo, city, province, website_url, description, videos]).catch((err: any) => {
                 console.log(err);
                 client.release()
-                return false
+                return [];
             });
             client.release()
-            return true;
+            return resp.rows[0];
         },
         removeEmployer: async (_: any, { employer_id }: any, { dataSources }: any) => {
             const { db } = dataSources;

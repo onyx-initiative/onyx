@@ -105,7 +105,7 @@ export const employerTypeDef = gql`
             website_url: String!
             description: String!
             videos: [String]
-        ): Boolean!
+        ): Employer!
         removeEmployer(employer_id: ID!): Boolean!                                          
     }
 `

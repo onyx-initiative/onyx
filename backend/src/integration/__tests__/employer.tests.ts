@@ -45,34 +45,19 @@ it("Get an employer by name", async () => {
 it("Create an employer", async () => {
     const apolloServer = createApolloServer();
 
-    const res = await apolloServer.executeOperation({
+    const create = await apolloServer.executeOperation({
         query: gql`
             mutation CreateEmployer($name: String!, $email: String!, $city: String!, $province: String!, $websiteUrl: String!, $description: String!, $logo: String) {
-                createEmployer(name: $name, email: $email, city: $city, province: $province, website_url: $websiteUrl, description: $description, logo: $logo)
+                createEmployer(name: $name, email: $email, city: $city, province: $province, website_url: $websiteUrl, description: $description, logo: $logo) {
+                    employer_id
+                    name
+                }
             }
         `,
         variables: createEmployer
     });
-    expect(res.data?.createEmployer).toEqual(true);
-    expect(res.errors).toBeUndefined();
-    apolloServer.stop();
-});
-
-it("Remove an employer", async () => {
-    const apolloServer = createApolloServer();
-
-    // Add a sample employer with no jobs to test deletion
-    const init = await apolloServer.executeOperation({
-        query: gql`
-            query GetEmployers {
-                getEmployers {
-                    employer_id
-                }
-            }
-        `
-    })
-
-    const testId = init.data?.getEmployers[init.data.getEmployers.length - 1].employer_id;
+    expect(create.data?.createEmployer.name).toEqual(createEmployer.name);
+    expect(create.errors).toBeUndefined();
 
     const res = await apolloServer.executeOperation({
         query: gql`
@@ -81,10 +66,9 @@ it("Remove an employer", async () => {
             }
         `,
         variables: {
-            employerId: testId  
+            employerId: create.data?.createEmployer.employer_id 
         }
     });
-    
     expect(res.data?.removeEmployer).toEqual(true);
     expect(res.errors).toBeUndefined();
     apolloServer.stop();
