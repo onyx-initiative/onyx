@@ -60,7 +60,6 @@ const jobResolver = {
             total_views,
             total_applications,
             job_type,
-            job_industry,
             job_category,
             job_skills,
             applicant_year,
@@ -76,8 +75,8 @@ const jobResolver = {
             const { db } = dataSources;
             const client = await db.connect()
             const query = `INSERT INTO job (
-                job_title,
                 employer_id,
+                job_title,
                 description,
                 company,
                 city,
@@ -88,6 +87,7 @@ const jobResolver = {
                 job_type,
                 job_category,
                 job_skills,
+                applicant_year,
                 salary_range,
                 job_length,
                 created_at,
@@ -96,7 +96,6 @@ const jobResolver = {
                 feature,
                 additional_info,
                 how_to_apply,
-                applicant_year,
                 archived
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) RETURNING *`;
             const resp = await client.query(query, 
@@ -110,7 +109,6 @@ const jobResolver = {
                 total_views,
                 total_applications,
                 job_type,
-                job_industry,
                 job_category,
                 job_skills,
                 applicant_year,
@@ -122,8 +120,7 @@ const jobResolver = {
                 feature,
                 additional_instructions,            
                 how_to_apply,
-                archived,
-                false]).catch((err: any) => {
+                archived]).catch((err: any) => {
                 console.log(err);
                 client.release()
                 return [];
@@ -160,6 +157,18 @@ const jobResolver = {
             const { db } = dataSources;
             const client = await db.connect()
             const query = `UPDATE job SET totalApplications = totalApplications + 1 WHERE job_id = $1`;
+            await client.query(query, [job_id]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false
+            });
+            client.release()
+            return true;
+        },
+        deleteJob: async (_: any, { job_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await db.connect()
+            const query = `DELETE FROM job WHERE job_id = $1`;
             await client.query(query, [job_id]).catch((err: any) => {
                 console.log(err);
                 client.release()

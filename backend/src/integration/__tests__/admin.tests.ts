@@ -51,7 +51,6 @@ it("Create an admin", async () => {
             adminId: create.data?.createAdmin.admin_id
         }
     });
-    console.log(res);
     expect(res.data?.removeAdmin).toEqual(true);
     expect(res.errors).toBeUndefined();
     apolloServer.stop();

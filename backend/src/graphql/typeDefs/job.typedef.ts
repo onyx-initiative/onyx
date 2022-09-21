@@ -36,7 +36,6 @@ export const jobTypeDef = gql`
         total_views: Int! #
         total_applications: Int!#
         job_type: JobType! #
-        job_industry: String! #
         job_category: jobCategory! #
         job_skills: [String!]! #
         applicant_year: [String!]! #
@@ -75,7 +74,6 @@ export const jobTypeDef = gql`
             total_views: Int! #
             total_applications: Int!#
             job_type: JobType! #
-            job_industry: String! #
             job_category: jobCategory! #
             job_skills: [String!]! #
             applicant_year: [String!]! #
@@ -88,9 +86,10 @@ export const jobTypeDef = gql`
             additional_instructions: String! 
             how_to_apply: ApplicationFormat!
             archived: Boolean!
-        ): Job
+        ): Job!
         archiveJob(job_id: ID!): Boolean!
         incrementViews(job_id: ID!): Boolean!
         incrementApplications(job_id: ID!): Boolean!
+        deleteJob(job_id: ID!): Boolean!
     }
 `

@@ -30,8 +30,8 @@ export const createJob = {
     "applicantYear": ["2023", "2024"],
     "salaryRange": "80K",
     "jobLength": 4,
-    "postDate": Date(), // Fix
-    "applicationDeadline": Date(), // Fix
+    "postDate": "Today",
+    "applicationDeadline": "Today",
     "contactEmail": "recruiter@sample.com",
     "feature": true,
     "additionalInstructions": "Please reach out if you have any questions!",
