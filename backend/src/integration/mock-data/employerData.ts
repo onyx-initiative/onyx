@@ -16,9 +16,6 @@ export const createEmployer = {
     "city": "Toronto",
     "province": "Ontario",
     "websiteUrl": "mckinsey.com",
-    "description": "Leading management consulting firm"
-}
-
-export const removeEmployer = {
-    "employerId": "14"
+    "description": "Leading management consulting firm",
+    "logo": "mckinselogo.png"
 }
