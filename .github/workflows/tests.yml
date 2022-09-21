@@ -8,10 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Test using Node.js
-        working-directory: ./backend
         uses: actions/setup-node@v1
         with:
           node-version: '18'
+        working-directory: ./backend
       - run: npm install
       - run: npm run test
 
