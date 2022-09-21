@@ -5,13 +5,15 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - uses: actions/checkout@v2
       - name: Test using Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '18'
-        working-directory: ./backend
       - run: npm install
       - run: npm run test
 
