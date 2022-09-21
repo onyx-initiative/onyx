@@ -3,6 +3,7 @@ import {
     getScholarByFilter,
     createScholar,
     updateScholar,
+    sampleScholar,
 } from "../mock-data/scholarData";
 import { gql } from "apollo-server-core";
 import createApolloServer from "../../graphql/createApolloServer";
@@ -29,6 +30,17 @@ it("Gets a scholar by their id", async () => {
 it("Gets a scholar based on a filter", async () => {
     const apolloServer = createApolloServer();
 
+    const makeSampleScholar = await apolloServer.executeOperation({
+        query: gql`
+            mutation CreateScholar($name: String!, $email: String!, $current: Boolean!, $gradYear: String!, $school: String!, $major: String!, $city: String!, $province: String!, $registrationDate: String!, $notifications: Boolean!, $skills: [String]) {
+                createScholar(name: $name, email: $email, current: $current, gradYear: $gradYear, school: $school, major: $major, city: $city, province: $province, registrationDate: $registrationDate, notifications: $notifications, skills: $skills) {
+                    scholar_id
+                }
+            }
+        `,
+        variables: sampleScholar
+    });
+
     const res = await apolloServer.executeOperation({
         query: gql`
             query GetScholarByFilter($column: String!, $filter: String!) {
@@ -40,9 +52,20 @@ it("Gets a scholar based on a filter", async () => {
         `,
         variables: getScholarByFilter
     });
-    console.log(res);
-    expect(res.data?.getScholarByFilter[0].name).toEqual("Cole Purboo");
+    expect(res.data?.getScholarByFilter[0].name).toEqual("Sample Guy");
     expect(res.errors).toBeUndefined();
+
+    const deleteScholar = await apolloServer.executeOperation({
+        query: gql`
+            mutation CreateScholar($scholarId: ID!) {
+                deleteScholar(scholar_id: $scholarId)
+            }
+        `,
+        variables: {
+            "scholarId": makeSampleScholar.data?.createScholar.scholar_id
+        }
+    });
+    expect(deleteScholar.data?.deleteScholar).toEqual(true);
     apolloServer.stop();
 })
 

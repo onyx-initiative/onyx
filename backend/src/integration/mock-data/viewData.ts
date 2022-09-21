@@ -12,22 +12,13 @@ export const getScholarViews = {
 
 // Mutations
 
-export const createViewData = {
+export const createView = {
     "scholarId": 4,
-    "viewName": "Internships",
-    "criteria": "INTERNSHIP"
+    "viewName": "Test View",
+    "criteria": ["INTERNSHIP", "SOFTWARE"]
 }
 
 export const addViewCriteria = {
     "viewId": "3",
-    "criteria": "SOFTWARE"
-}
-
-export const removeCriteria = {
-    "viewId": "3",
-    "criteria": "BUSINESS"
-}
-
-export const deleteView = {
-    "viewId": "3"
+    "criteria": ["High Paying", "Startup"]
 }

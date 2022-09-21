@@ -5,8 +5,8 @@ export const getScholar = {
 }
 
 export const getScholarByFilter = {
-    "column": "city",
-    "filter": "Toronto"
+    "column": "email",
+    "filter": "thisisnotarealemailpurelyfortesting@ihopenoonecopies.com"
 }
 
 // Mutations
@@ -25,18 +25,18 @@ export const createScholar = {
         "skills": ["PowerPoint", "Excel", "Python"]
 }
 
-export const createScholar2 ={
-    "name": "Cole Purboo",
-    "email": "cpurbs@icloud.com",
+export const sampleScholar ={
+    "name": "Sample Guy",
+    "email": "thisisnotarealemailpurelyfortesting@ihopenoonecopies.com",
     "current": true,
-    "gradYear": "2024",
-    "school": "University of Toronto",
-    "major": "Business",
-    "city": "Toronto",
-    "province": "Ontario",
+    "gradYear": "2080",
+    "school": "University of the Metaverse",
+    "major": "Metaverse",
+    "city": "Metaverse",
+    "province": "Internet",
     "registrationDate": "2022-09-18",
     "notifications": true,
-    "skills": ["PowerPoint", "Excel", "Python"]
+    "skills": ["Blender", "C++", "Python"]
 }
 
 export const updateScholar = {

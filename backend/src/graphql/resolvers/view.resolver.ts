@@ -77,7 +77,7 @@ const viewResolver = {
         removeCriteria: async (_: any, { view_id, criteria }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
-            const query = `UPDATE filterView SET criteria = array_remove(criteria, $1) WHERE view_id = $2 RETURNING *`;
+            const query = `UPDATE filterView SET criteria = array(select unnest(criteria) except select unnest($1::varchar[])) WHERE view_id = $2 RETURNING *`;
             const resp = await client.query(query, [criteria, view_id]).catch((err: any) => {
                 console.error(err);
                 client.release()

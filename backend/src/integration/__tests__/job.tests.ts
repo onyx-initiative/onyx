@@ -27,47 +27,45 @@ it("Get a job by id", async () => {
 });
 
 // TODO: Fix this test
-// it("Get jobs by employer id", async () => {
-//     const apolloServer = createApolloServer();
+it("Get jobs by employer id", async () => {
+    const apolloServer = createApolloServer();
 
-//     const res = await apolloServer.executeOperation({
-//         query: gql`
-//             query GetJobsByEmployerId($employerId: ID!) {
-//                 getJobsByEmployerId(employer_id: $employerId) {
-//                     job_id
-//                     job_title
-//                 }
-//             }
-//         `,
-//         variables: getJobsByEmployerId
-//     });
-//     console.log(res);
-//     expect(res.data?.getJobsByEmployerId.job_id).toEqual("5");
-//     expect(res.data?.getJobsByEmployerId.job_title).toEqual("Sample Job");
-//     expect(res.errors).toBeUndefined();
-//     apolloServer.stop();
-// })
+    const res = await apolloServer.executeOperation({
+        query: gql`
+            query GetJobsByEmployerId($employerId: ID!) {
+                getJobsByEmployerId(employer_id: $employerId) {
+                    job_id
+                    job_title
+                }
+            }
+        `,
+        variables: getJobsByEmployerId
+    });
+    expect(res.data?.getJobsByEmployerId[0].job_id).toEqual("5");
+    expect(res.data?.getJobsByEmployerId[0].job_title).toEqual("Sample Job");
+    expect(res.errors).toBeUndefined();
+    apolloServer.stop();
+})
 
-// it("Get jobs by filter", async () => {
-//     const apolloServer = createApolloServer();
+it("Get jobs by filter", async () => {
+    const apolloServer = createApolloServer();
 
-//     const res = await apolloServer.executeOperation({
-//         query: gql`
-//             query GetJobByFilter($column: String!, $filter: String!) {
-//                 getJobByFilter(column: $column, filter: $filter) {
-//                     job_id
-//                     job_title
-//                 }
-//             }
-//         `,
-//         variables: getJobByFilter
-//     });
-//     console.log(res);
-//     expect(res.data?.getJobsByFilter.job_id).toEqual("5");
-//     expect(res.data?.getJobsByFilter.job_title).toEqual("Sample Job");
-//     expect(res.errors).toBeUndefined();
-//     apolloServer.stop();
-// });
+    const res = await apolloServer.executeOperation({
+        query: gql`
+            query GetJobByFilter($column: String!, $filter: String!) {
+                getJobByFilter(column: $column, filter: $filter) {
+                    job_id
+                    job_title
+                }
+            }
+        `,
+        variables: getJobByFilter
+    });
+    expect(res.data?.getJobByFilter[0].job_id).toEqual("5");
+    expect(res.data?.getJobByFilter[0].job_title).toEqual("Sample Job");
+    expect(res.errors).toBeUndefined();
+    apolloServer.stop();
+});
 
 it("Create a job, archive it, then delete it", async () => {
     const apolloServer = createApolloServer();
