@@ -40,6 +40,7 @@ const employerResolver = {
     },
 
     Mutation: {
+        // Need to add the URL path to the logo or an empty string OR remove from db and store locally
         createEmployer: async (_: any, { name, email, logo, city, province, website_url, description, videos }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
