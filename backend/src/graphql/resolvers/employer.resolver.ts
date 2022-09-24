@@ -46,6 +46,18 @@ const employerResolver = {
         createEmployer: async (_: any, { name, email, logo, city, province, website_url, description, videos }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
+
+            // Fix and add later
+            // if (await client.query(`SELECT EXISTS(SELECT FROM employer WHERE name = $1 AND city = $2 AND province = $3`, [name, city, province])) {
+            //     const query = `SELECT FROM employer WHERE name = $1 AND city = $2 AND province = $3`;
+            //     const resp = await client.query(query, [name, city, province]).catch((err: any) => {
+            //         console.error(err);
+            //         client.release()
+            //     });
+            //     client.release()
+            //     console.log("Employer already exists");
+            //     return resp.rows[0];
+            // }
             const query = `INSERT INTO employer (name, email, logo, city, province, website_url, description, videos) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
             const resp = await client.query(query, [name, email, logo, city, province, website_url, description, videos]).catch((err: any) => {
                 console.log(err);

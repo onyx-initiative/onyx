@@ -6,8 +6,8 @@ export const getAdminByName = {
 // Mutations
 
 export const createAdmin = {
-    "name": "Cole Purboo",
-    "email": "cole@gmail.com"
+    "name": "Roger Federer",
+    "email": "rogerthetennismaster@gmail.com"
 }
 
 export const updateAdmin = {

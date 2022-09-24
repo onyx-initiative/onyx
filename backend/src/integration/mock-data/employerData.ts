@@ -11,7 +11,7 @@ export const getEmployerByName = {
 // Mutations
 
 export const createEmployer = {
-    "name": "McKinsey",
+    "name": "Offset",
     "email": "info@mckinsey.com",
     "city": "Toronto",
     "province": "Ontario",

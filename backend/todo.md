@@ -10,7 +10,6 @@
 - [ ] Write query hooks on the frontend
 
 
-
 Michael's Hours:
 - Sat, Aug 27 - 1.5hrs
 - Sun, Aug 28 - 6 hrs

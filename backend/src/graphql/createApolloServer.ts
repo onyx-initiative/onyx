@@ -1,4 +1,5 @@
 import { ApolloServer } from "apollo-server-express"; // may need to switch to lambda for production    
+// import { ApolloServer } from "apollo-server-lambda"; // may need to switch to lambda for production    
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import typeDefs from "./typeDefs";
 import client from "../database";
@@ -23,12 +24,13 @@ const createApolloServer = () => {
                 db: client,
             };
         },
-        context: ({ req, res }) => {
-            return {
-              req,
-              res,
-            };
-        }
+        // Added to allow for AWS deployment
+        // context: ({ event, context, express }) => ({
+        //     headers: event.headers,
+        //     functionName: context.functionName,
+        //     context,
+        //     expressRequest: express.req,
+        // }),
     })
 }
 

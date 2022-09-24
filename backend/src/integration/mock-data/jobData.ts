@@ -16,7 +16,7 @@ export const getJobByFilter = {
 
 export const createJob = {
     "employerId": 14,
-    "jobTitle": "Business Analyst",
+    "jobTitle": "Innovation Analyst",
     "description": "As a business analyst, you'll work to make business decisions",
     "company": "Sample Company",
     "city": "Montreal",

@@ -1,20 +1,21 @@
 # serverless.yml
 
 service: apollo-lambda
+plugins:
+  - serverless-plugin-typescript
 provider:
   name: aws
-  runtime: nodejs18.8.0
+  runtime: nodejs16.x
+  region: ca-central-1
 functions:
   graphql:
-    # this is formatted as <FILENAME>.<HANDLER>
-    # Update this once gql server is finished
-    handler: graphql.graphqlHandler
+    handler: src/index.handler
     events:
     - http:
-        path: /graphql
+        path: /
         method: post
         cors: true
     - http:
-        path: /graphql
+        path: /
         method: get
         cors: true

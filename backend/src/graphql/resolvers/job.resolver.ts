@@ -74,6 +74,18 @@ const jobResolver = {
             archived }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
+
+            // Fix later
+            // if (await client.query(`SELECT EXISTS(SELECT FROM job WHERE employer_id = $1 AND job_title = $2 AND city = $3`, [employer_id, job_title, city])) {
+            //     const query = `SELECT FROM job WHERE employer_id = $1 AND job_title = $2 AND city = $3`;
+            //     const resp = await client.query(query, [employer_id, job_title, city]).catch((err: any) => {
+            //         console.error(err);
+            //         client.release()
+            //     });
+            //     client.release()
+            //     console.log("Job already exists");
+            //     return resp.rows[0];
+            // }
             const query = `INSERT INTO job (
                 employer_id,
                 job_title,

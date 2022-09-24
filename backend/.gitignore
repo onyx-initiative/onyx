@@ -6,6 +6,8 @@
 
 # Build
 /build
+/.build
+/.serverless
 
 # local env files
 .env*.local

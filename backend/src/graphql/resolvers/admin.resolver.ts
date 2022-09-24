@@ -30,6 +30,18 @@ const adminResolver = {
         createAdmin: async (_: any, { name, email }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await db.connect()
+
+            // Edit and fix later
+            // if (await client.query(`SELECT EXISTS(SELECT FROM admin WHERE name = $1 OR email = $2`, [name, email])) {
+            //     const query = `SELECT FROM admin WHERE name = $1 OR email = $2`;
+            //     const resp = await client.query(query, [name, email]).catch((err: any) => {
+            //         console.error(err);
+            //         client.release()
+            //     });
+            //     client.release()
+            //     console.log("Admin already exists");
+            //     return resp.rows[0];
+            // }
             const query = `INSERT INTO admin (name, email) VALUES ($1, $2) RETURNING *`;
             const resp = await client.query(query, [name, email]).catch((err: any) => {
                 console.log(err);
