@@ -2,7 +2,7 @@ import React from 'react'
 import scholarData from '../../mockData/scholarData'
 import employerData from '../../mockData/employerData'
 
-export default function Navbar(props: any) {
+export default function Navbar() {
 
   return (
     <div className=''>
