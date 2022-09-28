@@ -1,22 +1,23 @@
 const { Pool } = require("pg");
-
+require('dotenv').config();
+import serverlessInfo from "../../serverlessAuth";
+// import dotenv from 'dotenv';
 /*
 * connection to the DB
 * All CRUD operations are done through this connection
 */
 
 const client = new Pool({
-    user: "mdawes",
-    password: process.env.DB_PASSWORD,
-    database: "onyx_jobs",
-    host: process.env.DEV_HOST,
-    port: process.env.DB_PORT,
+    user: serverlessInfo.DB_USER,
+    password: serverlessInfo.DB_PASSWORD,
+    database: serverlessInfo.PROD_DB_NAME,
+    host: serverlessInfo.PROD_HOST,
+    port: serverlessInfo.DB_PORT
 });
 
-// For testing during develpoement
+export default client;
 
-// const dotenv = require('dotenv');
-// dotenv.config();
+// For testing during develpoement
 
 // const testCall = async () => {
 //     const db = await client.connect();
@@ -28,5 +29,3 @@ const client = new Pool({
 // }
 
 // void testCall();
-
-export default client;

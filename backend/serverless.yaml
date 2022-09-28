@@ -3,19 +3,58 @@
 service: apollo-lambda
 plugins:
   - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-dotenv-plugin
+useDotenv: true
 provider:
   name: aws
   runtime: nodejs16.x
   region: ca-central-1
+  environment:
+    #postgre
+    PSQL_HOST: ${self:custom.PSQL.HOST}
+    PSQL_PORT: ${self:custom.PSQL.PORT}
+    #common
+    DB_NAME: ${self:custom.DB_NAME}
+    USERNAME: ${self:custom.USERNAME}
+    PASSWORD: ${self:custom.PASSWORD}
+    DB_USER: ${env:DB_USER}
+    DB_ID: ${env:DB_ID}
+    DB_PASSWORD: ${env:DB_PASSWORD}
+    PROD_DB_NAME: ${env:PROD_DB_NAME}
+    PROD_HOST: ${env:PROD_HOST}
+    DB_PORT: ${env:DB_PORT}
+custom:
+  path: src/database/.env
+  serverless-offline:
+    httpPort: 4000
+  DB_NAME: ${DB_NAME}
+  USERNAME: ${DB_USER}
+  PASSWORD: ${DB_PASSWORD}
+  PSQL:
+    HOST:
+      Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Address]
+    PORT:
+      Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Port]
+resources:
+  Resources:
+    PostgreSqlRDSInstance: ${file(./resources/PostgreSqlRDSInstance.yml)}
+    ServerlessSubnetGroup: ${file(./resources/serverlessSubnetGroup.yml)}
+    ServerlessVPCGA: ${file(./resources/serverlessVPCGA.yml)}
+    ServerlessVPC: ${file(./resources/serverlessVPC.yml)}
 functions:
   graphql:
-    handler: src/index.handler
+    handler: src/handler.handler
+    environment:
+      SLS_DEBUG: true
     events:
     - http:
-        path: /
+        path: /graphql
         method: post
         cors: true
+        integration: lambda-proxy
     - http:
-        path: /
+        path: /graphql
         method: get
         cors: true
+        integration: lambda-proxy

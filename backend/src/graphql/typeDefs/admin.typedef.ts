@@ -1,4 +1,5 @@
-import { gql } from "apollo-server-express";
+// import { gql } from "apollo-server-express";
+import { gql } from "apollo-server-lambda";
 
 export const adminTypeDef = gql`
     type Admin {

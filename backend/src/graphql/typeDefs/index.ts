@@ -1,4 +1,5 @@
-import { gql } from "apollo-server-express";
+// import { gql } from "apollo-server-express";
+import { gql } from "apollo-server-lambda";
 import { scholarTypeDef } from "./scholar.typedef";
 import { adminTypeDef } from "./admin.typedef";
 import { jobTypeDef } from "./job.typedef";

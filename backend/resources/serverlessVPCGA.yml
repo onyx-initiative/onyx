@@ -1,0 +1,4 @@
+Type: AWS::EC2::VPCGatewayAttachment
+Properties:
+  VpcId: "vpc-08ec5606cc0386712"
+  InternetGatewayId: "igw-0899db06544eb5adf"

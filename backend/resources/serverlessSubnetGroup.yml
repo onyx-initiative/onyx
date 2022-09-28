@@ -1,0 +1,11 @@
+Type: AWS::RDS::DBSubnetGroup
+Properties:
+  DBSubnetGroupDescription: "RDS Subnet Group"
+  SubnetIds:
+    - "subnet-0f567ca065939403a"
+    - "subnet-0cc8461fade8e95b8"
+    - "subnet-056d4db879ef9b4c4"
+  Tags: 
+    - 
+      Key: "Name"
+      Value: "ServerlessSubnetGroup"

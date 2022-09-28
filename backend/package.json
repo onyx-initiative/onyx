@@ -7,7 +7,8 @@
     "dev": "nodemon index.ts",
     "build": "rimraf ./build && tsc",
     "start:prod": "npm run build && node build/index.js",
-    "test": "jest --config jest.config.ts ./src/integration/__tests__/"
+    "test": "jest --config jest.config.ts ./src/integration/__tests__/",
+    "db": "node ./src/db/index.ts"
   },
   "author": "Michael Dawes, Cole Purboo",
   "license": "MIT",
@@ -18,7 +19,8 @@
     "@types/node": "^18.7.13",
     "nodemon": "^2.0.19",
     "rimraf": "^3.0.2",
-    "serverless-offline": "^10.1.0",
+    "serverless-dotenv-plugin": "^4.0.2",
+    "serverless-offline": "^10.3.0",
     "serverless-plugin-typescript": "^2.1.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
@@ -46,6 +48,7 @@
     "pg": "^8.8.0",
     "serverless": "^3.22.0",
     "serverless-http": "^3.0.2",
+    "serverless-postgres": "^1.10.3",
     "ts-jest": "^29.0.1"
   }
 }

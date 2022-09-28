@@ -1,0 +1,12 @@
+DependsOn: ServerlessVPCGA
+Type: AWS::RDS::DBInstance
+Properties:
+  MasterUsername: "mdawes"
+  MasterUserPassword: ${DB_PASSWORD}
+  AllocatedStorage: 20
+  DBInstanceIdentifier: "onyx-db-prod"
+  DBInstanceClass: db.t3.micro
+  DBSubnetGroupName:
+    Ref: ServerlessSubnetGroup
+  Engine: postgres
+  PubliclyAccessible: true
