@@ -5,8 +5,10 @@
     - [ ] Define permissions (e.g. to ensure only admins add jobs)
     - [ ] Add checks to avoid duplicant entries
 - [X] Write tests for server/database w/ mock data
+    - [ ] Figure out how to make tests work with serverless
 - [ ] Add authentication (maybe, look into SSO and if it's server or third party)
-- [ ] Deploy to AWS
+- [X] Deploy to AWS
+- [X] Establish connection on frontend
 - [ ] Write query hooks on the frontend
 
 
@@ -29,3 +31,4 @@ Michael's Hours:
 - Wed, Sept 21 - 1.5
 - Monday, Sept 26 - 7 hrs
 - Tuesday, Sept 27 - 6 hrs
+- Wed, Sept 28 - 2 hrs

@@ -14,10 +14,12 @@ export default function ServerCheck() {
             }
         }
     `
-    
+
     const {loading, error, data } = useQuery(GET_EMPLOYER_BY_ID, {
         variables: { employerId: '14' }
     })
+
+    console.log(data)
 
     return (
         <div>

@@ -1,13 +1,13 @@
 import { 
     ApolloClient,
     InMemoryCache,
-    HttpLink,
     ApolloProvider
 } from '@apollo/client';
+import React from 'react';
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    uri: 'https://netgbz47ie.execute-api.ca-central-1.amazonaws.com/dev/graphql'
+    uri: process.env.NEXT_PUBLIC_URI
 })
 
 export const ApolloContextProvider = ({ children }: any) => {
