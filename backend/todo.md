@@ -28,3 +28,4 @@ Michael's Hours:
 - Tues, Sept 20 - 5 hrs
 - Wed, Sept 21 - 1.5
 - Monday, Sept 26 - 7 hrs
+- Tuesday, Sept 27 - 6 hrs
