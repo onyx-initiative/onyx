@@ -1,6 +1,6 @@
 Type: AWS::EC2::VPC
 Properties:
-  CidrBlock: "172.30.0.0/16"
+  CidrBlock: ${env:CDIR_BLOCK}
   EnableDnsSupport: true
   EnableDnsHostnames: true
   InstanceTenancy: default

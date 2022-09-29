@@ -18,3 +18,5 @@ Working References:
 
 ## Frontend
 gql: https://www.apollographql.com/docs/react/get-started
+
+apollo client: https://egghead.io/lessons/apollo-connecting-a-todo-app-to-a-serverless-graphql-api-using-apollo-client-and-solving-cors
