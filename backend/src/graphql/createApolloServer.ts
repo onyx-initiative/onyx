@@ -28,7 +28,7 @@ const createApolloServer = () => {
         // For some reason, this doesn't work with the tests
         context: ({ event, context, express }: any) => ({
             headers: event.headers,
-            requsetContext: event.requestContext || context,
+            requestContext: event.requestContext || context,
             functionName: context.functionName,
             event,
             context,
