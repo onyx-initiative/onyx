@@ -1,19 +1,11 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import { GET_EMPLOYER_BY_ID } from '../graphql/queries/employerQueries'
 
 
 // This is only for testing, delete after
 
 export default function ServerCheck() {
-
-    const GET_EMPLOYER_BY_ID = gql`
-        query GetEmployerById($employerId: ID!) {
-            getEmployerById(employer_id: $employerId) {
-                employer_id
-                name
-            }
-        }
-    `
 
     const {loading, error, data } = useQuery(GET_EMPLOYER_BY_ID, {
         variables: { employerId: '14' }
