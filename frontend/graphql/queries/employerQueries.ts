@@ -9,4 +9,4 @@ export const GET_EMPLOYER_BY_ID = gql`
         }
     `
 
-// Other queriesß
+// Other queries
