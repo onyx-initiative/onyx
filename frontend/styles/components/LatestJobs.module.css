@@ -1,0 +1,70 @@
+
+.jobContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+    padding-bottom: 1rem;
+}
+
+.jobContainer > h2 {
+    margin-top: 2rem;
+}
+
+.snippetContainer {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    margin-top: 2rem;
+    width: 80%;
+    background-color: white;
+    height: 10rem;
+    border-radius: 1rem;
+}
+
+.jobInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 2rem;
+    color: black;
+}
+
+.jobInfo > h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding: 0;
+    color: #806E53;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.info > h4 {
+    padding-right: 1rem;
+    padding-left: 0.5rem;
+}
+
+.deadline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    margin-top: 0.5rem;
+    padding: 0;
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+.deadline > h3 {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    padding-bottom: 0;
+}

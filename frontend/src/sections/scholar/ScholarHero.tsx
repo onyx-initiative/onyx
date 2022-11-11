@@ -31,6 +31,8 @@ export default function ScholarHero() {
                 controlSize={22}
                 slideSize="25%"
                 loop
+                withIndicators
+                styles={{ indicators: { position: 'relative', top: 20, marginBottom: 20 } }}
             >
                 {employers}
             </Carousel>
