@@ -1,0 +1,58 @@
+.box {
+    display: flex;
+    background-color: #806E53;
+    width: 100%;
+    height: 4rem;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    height: 80%;
+    width: 40%;
+    border-radius: 999px;
+    padding: 0 1rem;
+}
+
+.icon {
+    height: 2rem;
+    width: 2rem;
+    margin-right: 0.5rem;
+}
+
+.input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    background-color: #F2E9E1;
+    outline: none;
+    color: black;
+}
+
+.searchButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 5%;
+    background-color: #F2E9E1;
+    margin-left: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.searchButton button {
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+}

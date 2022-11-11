@@ -1,0 +1,4 @@
+- Set up an Onyx account on AWS and deploy
+- Look into Zapier integration for sending emails based on how views update
+    - One notification with X jobs from TD / weekly, monthly, interns/newgrads, etc.
+- Notifications key
