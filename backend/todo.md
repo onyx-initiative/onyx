@@ -2,14 +2,24 @@
 - [X] Initialize each ^ in postgres
 - [X] Add resolvers for 4 typedefs to offer basic CRUD functionality
     - [X] Add relational resolvers
-    - [ ] Define permissions (e.g. to ensure only admins add jobs)
     - [ ] Add checks to avoid duplicant entries
 - [X] Write tests for server/database w/ mock data
     - [ ] Figure out how to make tests work with serverless
 - [ ] Add authentication (maybe, look into SSO and if it's server or third party)
 - [X] Deploy to AWS
 - [X] Establish connection on frontend
-- [ ] Write query hooks on the frontend
+
+# New TODOs
+- [X] Re-write db schema in a ddl file to have less redundancy
+    - [ ] Set up db in postgres
+    - [ ] Edit/delete data dictionary - might be useful as reference when getting
+          data from the db into ts objects
+- [ ] Fix query/mutations based on new schema
+- [ ] Add more robust querys
+- [ ] Write all query hooks for frontend
+- [ ] Define permissions (e.g. to ensure only admins add jobs)
+- [ ] Add authentication (Can I use SSO? or maybe next auth?)
+- [ ] Redeploy to AWS
 
 
 Michael's Hours:
@@ -34,3 +44,4 @@ Michael's Hours:
 - Wed, Sept 28 - 2 hrs
 - Wed, Nov 9 - 2 hrs
 - Thurs, Nov 10 - 3 hrs
+- Sat, Dec 17 - 1 hr

@@ -1,8 +1,11 @@
 ## Database docs
 
-### Instructions
+## Entity Relationship Diagram
+![ER Diagram for the Onyx schema](assets/onyx_erd.png)
 
-To enter into the db:
+## Instructions
+
+To enter into the db locally:
 
 ```shell
 # Switch to pqsl command line
@@ -14,6 +17,3 @@ psql postgres
 # View all tables
 \dt
 ```
-
-### Reference materials:
-- https://www.codementor.io/@engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb

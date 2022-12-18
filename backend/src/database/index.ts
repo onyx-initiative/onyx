@@ -1,6 +1,6 @@
 const { Pool } = require("pg");
 require('dotenv').config();
-import serverlessInfo from "../../serverlessAuth";
+import serverlessInfo from "../serverlessAuth";
 // import dotenv from 'dotenv';
 /*
 * connection to the DB

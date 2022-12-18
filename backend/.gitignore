@@ -14,5 +14,5 @@
 .env
 
 # Other
-/serverlessAuth.ts
+/src/serverlessAuth.ts
 /resources
