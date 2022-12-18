@@ -10,9 +10,7 @@ import { createHttpTerminator } from 'http-terminator';
 import createApolloServer from './graphql/createApolloServer';
 import { CORS_CONFIG } from './lib/config';
 
-/*
-    Made for running locally
-*/
+// Made for running locally
 
 const main = async () => {
     // Configure Express server
