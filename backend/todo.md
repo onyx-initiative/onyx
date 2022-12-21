@@ -11,14 +11,19 @@
 
 # New TODOs
 - [X] Re-write db schema in a ddl file to have less redundancy
-    - [ ] Set up db in postgres
+    - [X] Set up db in postgres
     - [ ] Edit/delete data dictionary - might be useful as reference when getting
           data from the db into ts objects
+    - [ ] Add a function that adds a job to featured/archived
 - [ ] Fix query/mutations based on new schema
+    - [ ] Add a function that adds a job to the db and include a trigger to look through
+          views and sends emails when they align with scholar views
+        - [ ] Use pg full text search to find jobs that align with scholar views
 - [ ] Add more robust querys
 - [ ] Write all query hooks for frontend
 - [ ] Define permissions (e.g. to ensure only admins add jobs)
 - [ ] Add authentication (Can I use SSO? or maybe next auth?)
+    - [ ] See if its possible to do SSO with hubspot/use hubspot auth 
 - [ ] Redeploy to AWS
 
 
@@ -45,3 +50,4 @@ Michael's Hours:
 - Wed, Nov 9 - 2 hrs
 - Thurs, Nov 10 - 3 hrs
 - Sat, Dec 17 - 1 hr
+- Wed, Dec 21 - 

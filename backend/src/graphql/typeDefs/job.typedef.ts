@@ -27,36 +27,23 @@ export const jobTypeDef = gql`
     }
 
     type Job {
-        job_id: ID! #
-        employer_id: Int! #
-        job_title: String! #
-        description: String! #
-        company: String! #
-        city: String!#
-        province: String!#
-        job_source: String! #
-        total_views: Int! #
-        total_applications: Int!#
-        job_type: JobType! #
-        job_category: jobCategory! #
-        job_skills: [String!]! #
-        applicant_year: [String!]! #
-        salary_range: String! #
-        job_length: Int! 
-        post_date: String! 
-        application_deadline: String!
-        contact_email: String!
-        feature: Boolean!
-        additional_instructions: String! 
-        how_to_apply: ApplicationFormat!
-        archived: Boolean!
+        job_id: ID!
+        employer_id: ID!
+        added_by: ID!
+        job_title: String!
+        job_description: String!
+        job_type: JobType!
+        applicant_years: [Int!]!
+        deadline: String!
+        total_views: Int!
+        tags: [String!]!
     }
 
     type Query {
         getJobs: [Job!]!
         getJobById(job_id: ID!): Job!
         getJobsByEmployerId(employer_id: ID!): [Job!]!
-        getJobByFilter(column: String!, filter: String! ): [Job!]!
+        getJobByFilter(column: String!, filter: String!): [Job!]!
     }
 
     type Return {
@@ -66,28 +53,16 @@ export const jobTypeDef = gql`
 
     type Mutation {
         createJob(
-            employer_id: Int! #
-            job_title: String! #
-            description: String! #
-            company: String! #
-            city: String!#
-            province: String!#
-            job_source: String! #
-            total_views: Int! #
-            total_applications: Int!#
-            job_type: JobType! #
-            job_category: jobCategory! #
-            job_skills: [String!]! #
-            applicant_year: [String!]! #
-            salary_range: String! #
-            job_length: Int! 
-            post_date: String! 
-            application_deadline: String!
-            contact_email: String!
-            feature: Boolean!
-            additional_instructions: String! 
-            how_to_apply: ApplicationFormat!
-            archived: Boolean!
+            job_id: ID!
+            employer_id: ID!
+            added_by: ID!
+            job_title: String!
+            job_description: String!
+            job_type: JobType!
+            applicant_years: [Int!]!
+            deadline: String!
+            total_views: Int!
+            tags: [String!]!
         ): Job!
         archiveJob(job_id: ID!): Boolean!
         incrementViews(job_id: ID!): Boolean!

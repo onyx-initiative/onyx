@@ -1,3 +1,14 @@
+
+// Sets the search path to onyx
+// This is to avoid having to write onyx.table_name or setting
+// the search path in each function
+const establishConnection = async (db: any) => {
+    const client = db.connect()
+    await db.query('SET search_path TO onyx;')
+    return client;
+}
+
+
 const adminResolver = {
     // Create types for the resolvers
     Query: {

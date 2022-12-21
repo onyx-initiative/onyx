@@ -12,16 +12,16 @@ SET search_path TO onyx;
 CREATE TABLE Admin (
     adminID SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL
 );
 
 /*
-    Domain for scholar types. Allows scholars to specify
-    if they are a current student or alumni.
+  Domain for scholar types. Allows scholars to specify
+  if they are a current student or alumni.
 */
 DROP DOMAIN IF EXISTS scholar_status;
 CREATE DOMAIN scholar_status AS VARCHAR(50) CHECK (
-    VALUE IN ('current', 'alumni');
+    VALUE IN ('current', 'alumni')
 );
 
 /*
@@ -36,7 +36,7 @@ CREATE TABLE Scholar (
     year INTEGER NOT NULL,
     school VARCHAR(50) NOT NULL,
     major VARCHAR(50) NOT NULL,
-    status scholar_status NOT NULL,
+    status scholar_status NOT NULL
 );
 
 /*
@@ -69,9 +69,10 @@ CREATE TABLE Job (
     title VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
     job_type VARCHAR(50) NOT NULL,
-    applicant_year INTEGER NOT NULL,
-    deadline datetime NOT NULL,
+    applicant_year INTEGER[] NOT NULL,
+    deadline TIMESTAMP NOT NULL,
     total_views INTEGER NOT NULL DEFAULT 0,
+    tags TEXT[] NOT NULL
 );
 
 /*
@@ -112,6 +113,6 @@ CREATE TABLE Application (
     applicationID SERIAL PRIMARY KEY,
     jobID INTEGER NOT NULL REFERENCES Job,
     scholarID INTEGER NOT NULL REFERENCES Scholar,
-    date_applied datetime NOT NULL
+    date_applied TIMESTAMP NOT NULL
 );
 
