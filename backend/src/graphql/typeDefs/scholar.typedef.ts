@@ -4,22 +4,19 @@ import { gql } from "apollo-server-lambda";
 
 export const scholarTypeDef = gql`
 
+    enum Status {
+        current
+        alumni
+    }
+
     type Scholar {
         scholar_id: ID!
         name: String!
         email: String!
-        jobApplications: String
-        workHistory: [String]
-        current: Boolean!
-        profilePicture: String
-        gradYear: String!
+        year: Int!
         school: String!
         major: String!
-        city: String!
-        province: String!
-        registrationDate: String!
-        skills: [String]
-        notifications: Boolean!
+        status: Status!
     }
 
     type Query {
@@ -30,20 +27,13 @@ export const scholarTypeDef = gql`
 
     type Mutation {
         createScholar(
+            scholar_id: ID!
             name: String!
             email: String!
-            jobApplications: String
-            workHistory: [String]
-            current: Boolean!
-            profilePicture: String
-            gradYear: String!
+            year: Int!
             school: String!
             major: String!
-            city: String!
-            province: String!
-            registrationDate: String!
-            skills: [String]
-            notifications: Boolean!
+            status: Status!
         ): Scholar!
         updateScholar(scholar_id: ID!, column: String!, new_value: String!): Scholar!
         archiveScholar(scholar_id: ID!): Boolean!

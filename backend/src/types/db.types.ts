@@ -1,3 +1,10 @@
+/*
+  This file contains typescript types that represent the database schema.
+  This is meant to make it easier to work with the database and to ensure
+  that the database is consistent. Additionally, it will make it easier
+  to migrate to a different database in the future if needed.
+*/
+
 type View = {
     id: number;
     viewName: string;

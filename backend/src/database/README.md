@@ -8,12 +8,18 @@
 To enter into the db locally:
 
 ```shell
+# cd into the database directory
+cd backend/src/database 
+
 # Switch to pqsl command line
 psql postgres
 
-# Connect to onyx_jobs
-\c onyx_jobs
+# load schema
+\i schema.ddl
 
-# View all tables
+# Or if schema already loaded
+SET search_path TO onyx;
+
+# View all relations
 \dt
 ```

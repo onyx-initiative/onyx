@@ -28,66 +28,38 @@ export const employerTypeDef = gql`
 
     type Job {
         job_id: ID!
-        jobTitle: String!
-        jobDescription: String!
-        company: String! 
-        city: String!
-        province: String!
-        jobSource: String! 
-        totalViews: Int! 
-        totalApplications: Int!
-        jobStatus: Boolean! 
-        jobType: JobType!
-        jobCategory: jobCategory!
-        jobSkills: [String!]!
-        salaryRange: String! 
-        jobLength: Int! 
-        postDate: String! 
-        applicationDeadline: String!
-        description: String! 
-        contactEmail: String!
-        feature: Boolean!
-        additionalInstructions: String! 
-        howToApply: ApplicationFormat!
-        archived: Boolean!
+        employer_id: ID!
+        added_by: ID!
+        job_title: String!
+        job_description: String!
+        job_type: JobType!
+        applicant_years: [Int!]!
+        deadline: String!
+        total_views: Int!
+        tags: [String!]!
     }
 
     input JobInput {
         job_id: ID!
-        jobTitle: String!
-        jobDescription: String!
-        company: String! 
-        city: String!
-        province: String!
-        jobSource: String! 
-        totalViews: Int! 
-        totalApplications: Int!
-        jobStatus: Boolean! 
-        jobType: JobType!
-        jobCategory: jobCategory!
-        jobSkills: [String!]!
-        salaryRange: String! 
-        jobLength: Int! 
-        postDate: String! 
-        applicationDeadline: String!
-        description: String! 
-        contactEmail: String!
-        feature: Boolean!
-        additionalInstructions: String! 
-        howToApply: ApplicationFormat!
-        archived: Boolean!
+        employer_id: ID!
+        added_by: ID!
+        job_title: String!
+        job_description: String!
+        job_type: JobType!
+        applicant_years: [Int!]!
+        deadline: String!
+        total_views: Int!
+        tags: [String!]!
     }
 
     type Employer {
         employer_id: ID!
-        job_id: [ID]
+        added_by: ID!
         name: String!
-        logo: String
-        city: String!
-        province: String!
+        contect_email: String!
+        address: String!
         website_url: String!
         description: String!
-        videos: [String!]
     }
 
     type Query {
@@ -99,14 +71,13 @@ export const employerTypeDef = gql`
 
     type Mutation {
         createEmployer(
+            employer_id: ID!
+            added_by: ID!
             name: String!
-            logo: String
-            email: String!
-            city: String!
-            province: String!
+            contect_email: String!
+            address: String!
             website_url: String!
             description: String!
-            videos: [String]
         ): Employer!
         removeEmployer(employer_id: ID!): Boolean!                                          
     }

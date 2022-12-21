@@ -1,12 +1,11 @@
-const { Pool } = require("pg");
+const { Pool, PoolConfig } = require("pg");
 require('dotenv').config();
 import serverlessInfo from "../serverlessAuth";
-// import dotenv from 'dotenv';
+
 /*
 * connection to the DB
 * All CRUD operations are done through this connection
 */
-
 const client = new Pool({
     user: serverlessInfo.DB_USER,
     password: serverlessInfo.DB_PASSWORD,
@@ -17,14 +16,16 @@ const client = new Pool({
 
 export default client;
 
+
 // For testing during develpoement
 
 // const testCall = async () => {
 //     const db = await client.connect();
-//     const resp = await db.query(`SELECT * FROM admin WHERE name = $1`, ["Michael Dawes"]);
+//     await db.query('SET search_path TO onyx;')
+//     const resp = await db.query(`SELECT * FROM Scholar`);
 //     db.release()
 //     console.log(`DB connection successful with ${db.database} on ${db.host}`);
-//     console.log(resp.rows);
+//     console.log(resp);
 //     return resp;
 // }
 
