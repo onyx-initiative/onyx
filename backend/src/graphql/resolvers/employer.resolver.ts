@@ -1,10 +1,10 @@
-import { response } from "express";
+import { establishConnection } from '../utils';
 
 const employerResolver = {
     Query: {
         getEmployerById: async (_: any, { employer_id }: any, { dataSources }: any) => {
             const { db } = dataSources;
-            const client = await db.connect()
+            const client = await establishConnection(db);
             const query = `SELECT * FROM employer WHERE employer_id = $1`;
             const resp = await client.query(query, [employer_id]).catch((err: any) => {
                 console.error(err);
@@ -16,7 +16,7 @@ const employerResolver = {
         },
         getEmployerByName: async (_: any, { name }: any, { dataSources }: any) => {
             const { db } = dataSources;
-            const client = await db.connect()
+            const client = await establishConnection(db);
             const query = `SELECT * FROM employer WHERE name = $1`;
             const resp = await client.query(query, [name]).catch((err: any) => {
                 console.error(err);
@@ -28,7 +28,7 @@ const employerResolver = {
         },
         getEmployers: async (_: any, __: any, { dataSources }: any) => {
             const { db } = dataSources;
-            const client = await db.connect()
+            const client = await establishConnection(db);
             const query = `SELECT * FROM employer`;
             const resp = await client.query(query).catch((err: any) => {
                 console.error(err);
@@ -43,23 +43,29 @@ const employerResolver = {
 
     Mutation: {
         // Need to add the URL path to the logo or an empty string OR remove from db and store locally
-        createEmployer: async (_: any, { name, email, logo, city, province, website_url, description, videos }: any, { dataSources }: any) => {
+        createEmployer: async (_: any, { 
+            admin_id, name, contact_email, address, website, description
+        }: any, { dataSources }: any) => {
             const { db } = dataSources;
-            const client = await db.connect()
+            const client = await establishConnection(db);
 
-            // Fix and add later
-            // if (await client.query(`SELECT EXISTS(SELECT FROM employer WHERE name = $1 AND city = $2 AND province = $3`, [name, city, province])) {
-            //     const query = `SELECT FROM employer WHERE name = $1 AND city = $2 AND province = $3`;
-            //     const resp = await client.query(query, [name, city, province]).catch((err: any) => {
-            //         console.error(err);
-            //         client.release()
-            //     });
-            //     client.release()
-            //     console.log("Employer already exists");
-            //     return resp.rows[0];
-            // }
-            const query = `INSERT INTO employer (name, email, logo, city, province, website_url, description, videos) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
-            const resp = await client.query(query, [name, email, logo, city, province, website_url, description, videos]).catch((err: any) => {
+            // Check if employer already exists
+            const currentEmployers = await client.query(`SELECT * FROM employer`).catch((err: any) => {
+                console.error(err);
+                client.release()
+            });
+
+            if (currentEmployers.rows.length > 0) {
+                console.log("Employer already exists");
+                return currentEmployers.rows[0];
+            }
+
+            // If employer doesn't exist, create a new one
+            const query = `INSERT INTO employer (admin_id, name, contact_email, 
+                           address, website, description)
+                           VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+            const resp = await client.query(query, [admin_id, name, 
+                contact_email, address, website, description]).catch((err: any) => {
                 console.log(err);
                 client.release()
                 return [];
@@ -69,7 +75,7 @@ const employerResolver = {
         },
         removeEmployer: async (_: any, { employer_id }: any, { dataSources }: any) => {
             const { db } = dataSources;
-            const client = await db.connect()
+            const client = await establishConnection(db);
             const query = `DELETE FROM employer WHERE employer_id = $1`;
             await client.query(query, [employer_id]).catch((err: any) => {
                 console.error(err);

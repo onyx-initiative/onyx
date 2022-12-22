@@ -17,23 +17,24 @@ export const scholarTypeDef = gql`
         school: String!
         major: String!
         status: Status!
+        notifications: Boolean!
     }
 
     type Query {
         getScholars: [Scholar!]!
         getScholar(scholar_id: ID!): Scholar!
-        getScholarByFilter(column: String!, filter: String! ): [Scholar]!
+        checkViews(scholar_id: ID!, view_id: ID!): [Scholar]!
     }
 
     type Mutation {
         createScholar(
-            scholar_id: ID!
             name: String!
             email: String!
             year: Int!
             school: String!
             major: String!
             status: Status!
+            notifications: Boolean!
         ): Scholar!
         updateScholar(scholar_id: ID!, column: String!, new_value: String!): Scholar!
         archiveScholar(scholar_id: ID!): Boolean!

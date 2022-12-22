@@ -1,5 +1,5 @@
-// import { ApolloServer } from "apollo-server-express"; // may need to switch to lambda for production    
-import { ApolloServer } from "apollo-server-lambda"; // may need to switch to lambda for production    
+import { ApolloServer } from "apollo-server-express"; // for development   
+// import { ApolloServer } from "apollo-server-lambda"; // for production  
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import typeDefs from "./typeDefs";
 import client from "../database";
@@ -17,7 +17,7 @@ const createApolloServer = () => {
     });
 
     return new ApolloServer({
-        introspection: process.env.NODE_ENV !== "production",
+        introspection: process.env.NODE_ENV !== "production",   
         schema: combinedSchema,
         csrfPrevention: true,
         dataSources: () => {
@@ -26,14 +26,15 @@ const createApolloServer = () => {
             };
         },
         // For some reason, this doesn't work with the tests
-        context: ({ event, context, express }: any) => ({
-            headers: event.headers,
-            requestContext: event.requestContext || context,
-            functionName: context.functionName,
-            event,
-            context,
-            expressRequest: express.req
-        }),
+        // Need to uncomment this out for production
+        // context: ({ event, context, express }: any) => ({
+        //     headers: event.headers,
+        //     requestContext: event.requestContext || context,
+        //     functionName: context.functionName,
+        //     event,
+        //     context,
+        //     expressRequest: express.req
+        // }),
     })
 }
 
