@@ -1,14 +1,3 @@
-- [X] Outline scholar, admin, employer and job tables in database.sql
-- [X] Initialize each ^ in postgres
-- [X] Add resolvers for 4 typedefs to offer basic CRUD functionality
-    - [X] Add relational resolvers
-    - [ ] Add checks to avoid duplicant entries
-- [X] Write tests for server/database w/ mock data
-    - [ ] Figure out how to make tests work with serverless
-- [ ] Add authentication (maybe, look into SSO and if it's server or third party)
-- [X] Deploy to AWS
-- [X] Establish connection on frontend
-
 # New TODOs
 - [X] Re-write db schema in a ddl file to have less redundancy
     - [X] Set up db in postgres
@@ -20,6 +9,8 @@
           views and sends emails when they align with scholar views
         - [ ] Use pg full text search to find jobs that align with scholar views
         - [ ] Implement the count page views function
+    - [X] Write tests for server/database w/ mock data
+        - [ ] Figure out how to make tests work with serverless
 - [ ] Add more robust querys
 - [ ] Write all query/mutation hooks for frontend
     - Note: For some of the mutations (e.g. adding jobs), will likely need to combine
@@ -54,4 +45,4 @@ Michael's Hours:
 - Wed, Nov 9 - 2 hrs
 - Thurs, Nov 10 - 3 hrs
 - Sat, Dec 17 - 1 hr
-- Wed, Dec 21 - 
+- Wed, Dec 21 - 8 hrs
