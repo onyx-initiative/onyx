@@ -19,8 +19,12 @@
     - [ ] Add a function that adds a job to the db and include a trigger to look through
           views and sends emails when they align with scholar views
         - [ ] Use pg full text search to find jobs that align with scholar views
+        - [ ] Implement the count page views function
 - [ ] Add more robust querys
-- [ ] Write all query hooks for frontend
+- [ ] Write all query/mutation hooks for frontend
+    - Note: For some of the mutations (e.g. adding jobs), will likely need to combine
+            querys to allow for a better user experience. E.g. inputting an employer name
+            when adding a job rather than an employer id.
 - [ ] Define permissions (e.g. to ensure only admins add jobs)
 - [ ] Add authentication (Can I use SSO? or maybe next auth?)
     - [ ] See if its possible to do SSO with hubspot/use hubspot auth 

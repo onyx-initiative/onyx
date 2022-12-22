@@ -17,10 +17,9 @@ export const adminTypeDef = gql`
         createAdmin(
             name: String!
             email: String!
-        ): Admin!
+        ): Boolean!
         updateAdmin(
             admin_id: ID!
-            name: String!
             email: String!
         ): Boolean!
         # Might switch this to delete by name

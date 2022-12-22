@@ -29,11 +29,12 @@ export const jobTypeDef = gql`
     type Job {
         job_id: ID!
         employer_id: ID!
-        added_by: ID!
-        job_title: String!
-        job_description: String!
+        admin_id: ID!
+        title: String!
+        description: String!
         job_type: JobType!
-        applicant_years: [Int!]!
+        location: String!
+        applicant_year: [Int!]!
         deadline: String!
         total_views: Int!
         tags: [String!]!
@@ -53,17 +54,16 @@ export const jobTypeDef = gql`
 
     type Mutation {
         createJob(
-            job_id: ID!
             employer_id: ID!
-            added_by: ID!
-            job_title: String!
-            job_description: String!
+            admin_id: ID!
+            title: String!
+            description: String!
             job_type: JobType!
-            applicant_years: [Int!]!
+            location: String!
+            applicant_year: [Int!]!
             deadline: String!
-            total_views: Int!
             tags: [String!]!
-        ): Job!
+        ): Boolean!
         archiveJob(job_id: ID!): Boolean!
         incrementViews(job_id: ID!): Boolean!
         incrementApplications(job_id: ID!): Boolean!

@@ -29,11 +29,11 @@ export const employerTypeDef = gql`
     type Job {
         job_id: ID!
         employer_id: ID!
-        added_by: ID!
-        job_title: String!
-        job_description: String!
+        admin_id: ID!
+        title: String!
+        description: String!
         job_type: JobType!
-        applicant_years: [Int!]!
+        applicant_year: [Int!]!
         deadline: String!
         total_views: Int!
         tags: [String!]!
@@ -42,11 +42,11 @@ export const employerTypeDef = gql`
     input JobInput {
         job_id: ID!
         employer_id: ID!
-        added_by: ID!
-        job_title: String!
-        job_description: String!
+        admin_id: ID!
+        title: String!
+        description: String!
         job_type: JobType!
-        applicant_years: [Int!]!
+        applicant_year: [Int!]!
         deadline: String!
         total_views: Int!
         tags: [String!]!
@@ -54,11 +54,11 @@ export const employerTypeDef = gql`
 
     type Employer {
         employer_id: ID!
-        added_by: ID!
+        admin_id: ID!
         name: String!
-        contect_email: String!
+        contact_email: String!
         address: String!
-        website_url: String!
+        website: String!
         description: String!
     }
 
@@ -71,12 +71,11 @@ export const employerTypeDef = gql`
 
     type Mutation {
         createEmployer(
-            employer_id: ID!
-            added_by: ID!
+            admin_id: ID!
             name: String!
-            contect_email: String!
+            contact_email: String!
             address: String!
-            website_url: String!
+            website: String!
             description: String!
         ): Employer!
         removeEmployer(employer_id: ID!): Boolean!                                          

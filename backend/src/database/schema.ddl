@@ -10,7 +10,7 @@ SET search_path TO onyx;
   are in this table.
 */
 CREATE TABLE Admin (
-    adminID SERIAL PRIMARY KEY,
+    admin_id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL
 );
@@ -30,13 +30,14 @@ CREATE DOMAIN scholar_status AS VARCHAR(50) CHECK (
   and handled by the Onyx server
 */
 CREATE TABLE Scholar (
-    scholarID SERIAL PRIMARY KEY,
+    scholar_id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     year INTEGER NOT NULL,
     school VARCHAR(50) NOT NULL,
     major VARCHAR(50) NOT NULL,
-    status scholar_status NOT NULL
+    status scholar_status NOT NULL,
+    notifications BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 /*
@@ -47,8 +48,8 @@ CREATE TABLE Scholar (
   more contact information is needed.
 */
 CREATE TABLE Employer (
-    employerID SERIAL PRIMARY KEY,
-    added_by INTEGER NOT NULL REFERENCES Admin,
+    employer_id SERIAL PRIMARY KEY,
+    admin_id INTEGER NOT NULL REFERENCES Admin,
     name VARCHAR(50) NOT NULL,
     contact_email VARCHAR(100) NOT NULL,
     address VARCHAR(50) NOT NULL,
@@ -63,12 +64,13 @@ CREATE TABLE Employer (
   is a foreign key to the Employer table.
 */
 CREATE TABLE Job (
-    jobID SERIAL PRIMARY KEY,
-    employerID INTEGER NOT NULL REFERENCES Employer,
-    added_by INTEGER NOT NULL REFERENCES Admin,
+    job_id SERIAL PRIMARY KEY,
+    employer_id INTEGER NOT NULL REFERENCES Employer,
+    admin_id INTEGER NOT NULL REFERENCES Admin,
     title VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
     job_type VARCHAR(50) NOT NULL,
+    location VARCHAR(50) NOT NULL,
     applicant_year INTEGER[] NOT NULL,
     deadline TIMESTAMP NOT NULL,
     total_views INTEGER NOT NULL DEFAULT 0,
@@ -79,25 +81,25 @@ CREATE TABLE Job (
   All featured jobs on the website
 */
 CREATE TABLE Featured (
-    jobID INTEGER NOT NULL REFERENCES Job,
-    PRIMARY KEY (jobID)
+    job_id INTEGER NOT NULL REFERENCES Job,
+    PRIMARY KEY (job_id)
 );
 
 /*
   Views based on the scholars preferences
 */
 CREATE TABLE FilterView (
-    viewID INTEGER NOT NULL,
-    scholarID INTEGER NOT NULL REFERENCES Scholar,
-    viewName VARCHAR(50) NOT NULL,
+    view_id INTEGER NOT NULL,
+    scholar_id INTEGER NOT NULL REFERENCES Scholar,
+    view_name VARCHAR(50) NOT NULL,
     criteria TEXT[] NOT NULL,
-    PRIMARY KEY (viewID, scholarID)
+    PRIMARY KEY (view_id, scholar_id)
 );
 
 CREATE TABLE Archive (
-    jobID INTEGER NOT NULL REFERENCES Job,
-    scholarID INTEGER NOT NULL REFERENCES Scholar,
-    PRIMARY KEY (jobID, scholarID)
+    job_id INTEGER NOT NULL REFERENCES Job,
+    scholar_id INTEGER NOT NULL REFERENCES Scholar,
+    PRIMARY KEY (job_id, scholar_id)
 );
 
 /*
@@ -110,9 +112,9 @@ CREATE TABLE Archive (
   foreign key to the Scholar table.
 */
 CREATE TABLE Application (
-    applicationID SERIAL PRIMARY KEY,
-    jobID INTEGER NOT NULL REFERENCES Job,
-    scholarID INTEGER NOT NULL REFERENCES Scholar,
+    application_id SERIAL PRIMARY KEY,
+    job_id INTEGER NOT NULL REFERENCES Job,
+    scholar_id INTEGER NOT NULL REFERENCES Scholar,
     date_applied TIMESTAMP NOT NULL
 );
 
