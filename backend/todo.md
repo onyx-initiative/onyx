@@ -7,7 +7,7 @@
 - [ ] Fix query/mutations based on new schema
     - [ ] Add a function that adds a job to the db and include a trigger to look through
           views and sends emails when they align with scholar views
-        - [ ] Use pg full text search to find jobs that align with scholar views
+        - [X] Use pg full text search to find jobs that align with scholar views
         - [ ] Implement the count page views function
     - [X] Write tests for server/database w/ mock data
         - [ ] Figure out how to make tests work with serverless
@@ -19,8 +19,15 @@
 - [ ] Define permissions (e.g. to ensure only admins add jobs)
 - [ ] Add authentication (Can I use SSO? or maybe next auth?)
     - [ ] See if its possible to do SSO with hubspot/use hubspot auth 
+    - [ ] Add to the serverless server
 - [ ] Redeploy to AWS
 
+# Goals for tomorrow
+- [ ] Add a function to add a job to reatured
+- [ ] Figure out if its possible to do SSO with hubspot/use hubspot auth
+    - [ ] See if its possible to send emails as well
+- [ ] Figure out the best way to do permissions
+ 
 
 Michael's Hours:
 - Sat, Aug 27 - 1.5hrs
@@ -45,4 +52,4 @@ Michael's Hours:
 - Wed, Nov 9 - 2 hrs
 - Thurs, Nov 10 - 3 hrs
 - Sat, Dec 17 - 1 hr
-- Wed, Dec 21 - 8 hrs
+- Wed, Dec 21 - 14 hrs
