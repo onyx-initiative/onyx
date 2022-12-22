@@ -1,7 +1,7 @@
 # New TODOs
 - [X] Re-write db schema in a ddl file to have less redundancy
     - [X] Set up db in postgres
-    - [ ] Edit/delete data dictionary - might be useful as reference when getting
+    - [X] Edit/delete data dictionary - might be useful as reference when getting
           data from the db into ts objects
     - [ ] Add a function that adds a job to featured/archived
 - [ ] Fix query/mutations based on new schema

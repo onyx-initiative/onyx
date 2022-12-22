@@ -116,10 +116,35 @@ const jobResolver = {
             client.release()
             return true;
         },
-        // @todo: Add an indert into archived jobs table
-        // This ideally is done automatically when when the deadline is passed
+        // @todo: Make this a cron to run sunday every 2 weeks
         archiveJob: async (_: any, { job_id }: any, { dataSources }: any) => {
-            return 'Not implemented';
+            const date = new Date();
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+
+            // Find all of the jobs past the deadline
+            const query = `SELECT job_id
+                           FROM job
+                           WHERE job_id = $1 AND deadline < $2`;
+            const resp = await client.query(query, [job_id, date]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false;
+            });
+            if (resp.rows.length === 0) {
+                client.release()
+                return false;
+            }
+
+            // Archive the job
+            const archiveQuery = `INSERT INTO archive(job_id) VALUES ($1)`;
+            await client.query(archiveQuery, [job_id]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false;
+            });
+            client.release()
+            return true;
         },
         // @todo: Need to implement server side logging with express. Need to
         // figure out the best implementation
