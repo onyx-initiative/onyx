@@ -104,7 +104,6 @@ const main = async () => {
             createdAt: Date.now(),
             updatedAt: Date.now(),
         };
-        // console.log('Updated tokens', tokenStore);
         
         if (tokenStore) {
             // Update the access token
@@ -164,9 +163,6 @@ const main = async () => {
         }
 
         if (isTokenExpired()) await refreshToken();
-        // Create OAuth 2.0 Access Token and Refresh Tokens
-        // POST /oauth/v1/token
-        // https://developers.hubspot.com/docs/api/working-with-oauth
         if (isAuthorized()) {
             res.redirect('/');
             return;
@@ -192,8 +188,8 @@ const main = async () => {
         });
         const email = info.data.user;
       
-        // Set token for the
-        // https://www.npmjs.com/package/@hubspot/api-client
+        // Set the token and redirect to the home page
+        // @todo: Change this to just return the token with email for frontend
         if (tokenStore) {
             hubspotClient.setAccessToken(tokenStore.accessToken);
             tokenStore.email = email;

@@ -57,6 +57,21 @@ const jobResolver = {
             client.release()
             return resp.rows;
         },
+        getFeaturedJobs: async (_: any, __: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `SELECT *
+                           FROM job, featured
+                           WHERE job.job_id = featured.job_id 
+                           AND job.job_id NOT IN (SELECT job_id FROM archive)`;
+            const resp = await client.query(query ).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            client.release()
+            return resp.rows;
+        }
     },
     Mutation: {
         createJob: async (_: any, { 
@@ -167,7 +182,21 @@ const jobResolver = {
             });
             client.release()
             return true;
-        }
+        },
+        addToFeatured: async (_: any, { job_ids }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `INSERT INTO featured(job_id) VALUES ($1)`;
+            for (let i = 0; i < job_ids.length; i++) {
+                await client.query(query, [job_ids[i]]).catch((err: any) => {
+                    console.log(err);
+                    client.release()
+                    return false
+                });
+            }
+            client.release()
+            return true;
+        }       
     }
 };
 
