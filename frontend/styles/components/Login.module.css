@@ -1,0 +1,29 @@
+.footerContainer {
+    display: flex;
+    height: 10%;
+    width: 100%;
+    background-color: #111111;
+    position: absolute;
+    bottom: 0;
+}
+
+.footerInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    margin-left: 4rem;
+}
+
+.footerInfo p {
+    color: #ffffff;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 0.5rem;
+}
+
+.email {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
