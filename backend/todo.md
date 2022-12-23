@@ -3,7 +3,7 @@
     - [X] Set up db in postgres
     - [X] Edit/delete data dictionary - might be useful as reference when getting
           data from the db into ts objects
-    - [ ] Add a function that adds a job to featured/archived
+    - [X] Add a function that adds a job to featured/archived
 - [ ] Fix query/mutations based on new schema
     - [ ] Add a function that adds a job to the db and include a trigger to look through
           views and sends emails when they align with scholar views
@@ -17,14 +17,14 @@
             querys to allow for a better user experience. E.g. inputting an employer name
             when adding a job rather than an employer id.
 - [ ] Define permissions (e.g. to ensure only admins add jobs)
-- [ ] Add authentication (Can I use SSO? or maybe next auth?)
-    - [ ] See if its possible to do SSO with hubspot/use hubspot auth 
+- [X] Add authentication (Can I use SSO? or maybe next auth?)
+    - [X] See if its possible to do SSO with hubspot/use hubspot auth 
     - [ ] Add to the serverless server
 - [ ] Redeploy to AWS
 
 # Goals for tomorrow
 - [ ] Add a function to add a job to reatured
-- [ ] Figure out if its possible to do SSO with hubspot/use hubspot auth
+- [X] Figure out if its possible to do SSO with hubspot/use hubspot auth
     - [ ] See if its possible to send emails as well
 - [ ] Figure out the best way to do permissions
  
@@ -53,3 +53,5 @@ Michael's Hours:
 - Thurs, Nov 10 - 3 hrs
 - Sat, Dec 17 - 1 hr
 - Wed, Dec 21 - 14 hrs
+- Thurs, Dec 22 - 3 hrs
+- Fri, Dec 23 - 1 hr
