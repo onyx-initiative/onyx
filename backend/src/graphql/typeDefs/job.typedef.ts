@@ -45,6 +45,7 @@ export const jobTypeDef = gql`
         getJobById(job_id: ID!): Job!
         getJobsByEmployerId(employer_id: ID!): [Job!]!
         getJobByFilter(column: String!, filter: String!): [Job!]!
+        getFeaturedJobs: [Job!]!
     }
 
     type Return {
@@ -68,5 +69,6 @@ export const jobTypeDef = gql`
         incrementViews(job_id: ID!): Boolean!
         incrementApplications(job_id: ID!): Boolean!
         deleteJob(job_id: ID!): Boolean!
+        addToFeatured(job_ids: [ID!]!): Boolean!
     }
 `
