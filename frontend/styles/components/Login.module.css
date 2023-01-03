@@ -1,3 +1,60 @@
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.loginLogo {
+    align-self: center;
+    display: flex;
+    margin-top: 12rem;
+    margin-left: 10rem;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: #806E53;
+    border-radius: 1rem;
+    width: 35rem;
+    height: 30rem;
+    margin-left: 10rem;
+    margin-top: 10rem;
+    align-items: center;
+    padding-top: 4rem;
+}
+
+.loginContainer > h3 {
+    margin-top: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.loginButton {
+    width: 20rem;
+    height: 3rem;
+    border-radius: 1rem;
+    background-color: black;
+    font-size: large;
+    border: none;
+}
+
+.scholarLogin {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    width: 20rem;
+    height: 3rem;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+.scholarLogin > button {
+    color: white;
+    background-color: black;
+    border: none;
+    font-size: large;
+}
+
 .footerContainer {
     display: flex;
     height: 10%;
@@ -26,4 +83,17 @@
 .email {
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.socials {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 5rem;
+}
+
+.socials a {
+    padding: 0.5rem;
 }
