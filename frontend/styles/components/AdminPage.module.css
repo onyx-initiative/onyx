@@ -1,0 +1,4 @@
+.adminActions {
+    display: flex;
+    justify-content: space-around;
+}

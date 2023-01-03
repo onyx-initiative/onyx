@@ -2,10 +2,14 @@
     display: flex;
     width: 80%;
     align-items: center;
+    justify-content: space-between;
     background-color: white;
     height: 10rem;
     border-radius: 1rem;
     color: black;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 2px;
 }
 
 .employerInfo {

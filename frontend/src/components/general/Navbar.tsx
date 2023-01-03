@@ -7,6 +7,8 @@ import styles from '../../../styles/components/Navbar.module.css'
 
 export default function Navbar(props: any) {
 
+  const admin = true;
+
   return (
     <div className={styles.navbar}>
       <div className={styles.navbarLogo}>
@@ -34,8 +36,12 @@ export default function Navbar(props: any) {
         <li>
           <Link href="/Jobs">Contact Us</Link>
         </li>
+          <li>
+            <Link href ="/Admin">Admin</Link>
+          </li>
       </ul>
       <ProfilePhoto name='Michael Dawes'/>
+      
     </div>
   )
 }

@@ -5,6 +5,7 @@ import ScholarHero from '../src/sections/scholar/ScholarHero'
 import LatestJobs from '../src/sections/scholar/LatestJobs'
 
 
+
 export default function Scholar() {
   return (
     <div>
