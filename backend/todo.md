@@ -51,3 +51,5 @@ Michael's Hours:
 - Wed, Dec 21 - 14 hrs
 - Thurs, Dec 22 - 3 hrs
 - Fri, Dec 23 - 1 hr
+- Mon, Jan 2 - 3 hrs
+- Tues, Jan 3 - 5 hrs
