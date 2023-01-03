@@ -23,7 +23,7 @@ export default function Navbar(props: any) {
       </div>
       <ul className={styles.navbarItems}>
         <li>
-          <Link href="/Jobs">All Jobs</Link>
+          <Link href="/Jobs">Open Jobs</Link>
         </li>
         <li>
           <Link href="/Employers">Employers</Link>
