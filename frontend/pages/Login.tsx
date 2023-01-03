@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from '../styles/components/Login.module.css'
 
 type Login = {
@@ -8,8 +8,25 @@ type Login = {
 export default function Login(props: Login) {
     const { setToken } = props
 
+    // Call an external API endpoint to get posts.
+    // You can use any data fetching library
+    const authenticate = async () => {
+        const res = await fetch('http://localhost:4000/oauth',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                }
+            })
+                    
+        const data = await res.json()
+        console.log(data)
+    }
+
     return (
         <div>
+            <button onClick={() => authenticate()}>Login</button>
             <Footer />
         </div>
     )

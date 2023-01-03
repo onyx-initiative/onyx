@@ -4,7 +4,7 @@ Properties:
   MasterUsername: "postgres"
   MasterUserPassword: ${DB_PASSWORD}
   AllocatedStorage: 20
-  DBInstanceIdentifier: "onyx-db-prod"
+  DBInstanceIdentifier: "onyx-db"
   DBInstanceClass: db.t3.micro
   DBSubnetGroupName:
     Ref: ServerlessSubnetGroup
