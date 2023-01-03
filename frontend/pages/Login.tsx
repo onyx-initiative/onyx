@@ -8,6 +8,7 @@ type Login = {
     setToken: (token: string) => void
 }
 
+// @ todo: connect this to the backend
 export default function Login(props: Login) {
     const { setToken } = props
 
@@ -44,7 +45,7 @@ export default function Login(props: Login) {
                     <div className={styles.scholarLogin}>
                         <FaHubspot size={28} />
                         <button 
-                            onClick={() => alert("Logged In!")}
+                            onClick={() => setToken("hubspot")}
                         >
                             Login with Hubspot
                         </button>
@@ -52,7 +53,7 @@ export default function Login(props: Login) {
                     <h3 className={styles.loginHeader}>Admin Login</h3>
                     <button 
                         className={styles.loginButton} 
-                        onClick={() => alert("Logged In!")}
+                        onClick={() => setToken("admin")}
                     >
                         Scholar Login
                     </button>
