@@ -1,7 +1,7 @@
 DependsOn: ServerlessVPCGA
 Type: AWS::RDS::DBInstance
 Properties:
-  MasterUsername: "mdawes"
+  MasterUsername: "postgres"
   MasterUserPassword: ${DB_PASSWORD}
   AllocatedStorage: 20
   DBInstanceIdentifier: "onyx-db-prod"
