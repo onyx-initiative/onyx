@@ -59,7 +59,6 @@ export default function Login(props: Login) {
                     </button>
                 </div>
             </div>
-            {/* <button onClick={() => alert("Logged In!")}>Login</button> */}
             <Footer />
         </div>
     )
