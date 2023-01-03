@@ -137,8 +137,7 @@ const main = async () => {
             res.redirect('/error');
         }
     });
-
-    app.use('/oauth', async (req, res) => {
+    app.get('/oauth', async (req, res) => {
         // Use the client to get authorization Url
         // https://www.npmjs.com/package/@hubspot/api-client#obtain-your-authorization-url
         console.log('Creating authorization Url');
@@ -152,8 +151,8 @@ const main = async () => {
         res.redirect(authorizationUrl);
         return;
     });
-
-    app.use('/callback', async (req, res) => {
+    
+    app.get('/callback', async (req, res) => {
         const code: string = req.query.code as string;
 
         // Error if no code is provided

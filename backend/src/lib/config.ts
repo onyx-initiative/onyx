@@ -2,7 +2,7 @@ import corsMiddleware from "cors";
 
 export const CORS_CONFIG: corsMiddleware.CorsOptions = {
     credentials: false,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: ['GET', 'POST', 'OPTIONS'],
     // Add specific orgins once deployed to production
     origin: "*",
     allowedHeaders: [
