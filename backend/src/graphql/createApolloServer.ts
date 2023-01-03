@@ -1,5 +1,5 @@
-import { ApolloServer } from "apollo-server-express"; // for development   
-// import { ApolloServer } from "apollo-server-lambda"; // for production  
+// import { ApolloServer } from "apollo-server-express"; // for development   
+import { ApolloServer } from "apollo-server-lambda"; // for production  
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import typeDefs from "./typeDefs";
 import client from "../database";
