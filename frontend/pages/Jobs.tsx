@@ -3,6 +3,7 @@ import Navbar from '../src/components/general/Navbar'
 import Filter from '../src/sections/jobs/Filter'
 import styles from '../styles/components/Jobs.module.css'
 import { job_type } from '../../backend/src/types/db.types'
+import { AiOutlineSearch } from "react-icons/ai";
 
 export enum sort {
   'Newest',
@@ -33,6 +34,7 @@ export type selected = {
 }
 
 export default function Jobs() {
+  const [search, setSearch] = useState('')
   const [filters, setFilters] = useState({
     location: [],
     job_type: [],
@@ -68,6 +70,34 @@ export default function Jobs() {
           selected={selected} 
           setSelected={setSelected}
         />
+        <div className={styles.jobList}>
+          <SearchBar search={search} setSearch={setSearch} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// @todo: implement search. On press, there should be a loading animation
+// Find the best way to handle searching with the backend
+const SearchBar = (props: any) => {
+  const { search, setSearch } = props
+  return (
+    <div className={styles.searchBar}>
+      <input
+        type="text"
+        placeholder="Search jobs, companies, and more..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <div className={styles.searchButton}>
+        <AiOutlineSearch size={18}/>
+        <button
+          type="button"
+          onClick={() => alert('search')}
+        >
+          Search
+        </button>
       </div>
     </div>
   )
