@@ -1,0 +1,12 @@
+.addJobForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.textinput {
+    color: white;
+    background-color: black;
+    width: 80%;
+    
+
+}

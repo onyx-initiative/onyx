@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import Scholar from './Scholar'
 import ServerCheck from './ServerCheck'
 import Login from './Login'
+import Admin from './Admin'
 
 const serverResponse = {
     applicationDeadline: '2021-12-31',
@@ -13,6 +14,14 @@ const serverResponse = {
 
 const Home: NextPage = () => {
   const [token, setToken] = useState('')
+  
+  if (token === "admin") {
+    return (
+      <Admin/>
+    )
+    
+  }
+
 
   if (!token) {
     return <Login setToken={setToken}/>

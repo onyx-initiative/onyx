@@ -55,7 +55,7 @@ export default function Login(props: Login) {
                         className={styles.loginButton} 
                         onClick={() => setToken("admin")}
                     >
-                        Scholar Login
+                        Admin Login
                     </button>
                 </div>
             </div>

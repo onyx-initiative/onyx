@@ -12,7 +12,7 @@ export default function Admin() {
             <Navbar/>
             <h1>Welcome to the Admin page! What would you like to do?</h1>
             <div className={styles.adminActions}>
-                <AddJobButton/>
+                <AddJobButton />
                 <AddEmployerButton/>
                 <RemoveJobButton/>
             </div>

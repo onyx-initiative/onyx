@@ -4,7 +4,7 @@ import Navbar from "../general/Navbar";
 export default function AddEmployerButton() {
     return (
         <div>
-            <button >Add Employer</button>
+            <button className="adminFunctionButton">Add Employer</button>
         </div>
     )
     
