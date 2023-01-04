@@ -4,6 +4,7 @@ import Filter from '../src/sections/jobs/Filter'
 import styles from '../styles/components/Jobs.module.css'
 import { job_type } from '../../backend/src/types/db.types'
 import { AiOutlineSearch } from "react-icons/ai";
+import ListedJobs from '../src/sections/jobs/ListedJobs'
 
 export enum sort {
   'Newest',
@@ -60,6 +61,9 @@ export default function Jobs() {
     tags: []
   } as selected)
 
+  // @todo: Add call to the api to get the jobs
+  const [jobs, setJobs] = useState([])
+
   return (
     <div>
       <Navbar />
@@ -72,6 +76,7 @@ export default function Jobs() {
         />
         <div className={styles.jobList}>
           <SearchBar search={search} setSearch={setSearch} />
+          <ListedJobs jobs={jobs} />
         </div>
       </div>
     </div>
