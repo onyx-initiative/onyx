@@ -34,13 +34,20 @@ export type Employer = {
     description: string;
 }
 
+export enum job_type {
+    FULL_TIME,
+    PART_TIME,
+    CONTRACT,
+    INTERNSHIP
+}
+
 export type Job = {
     job_id: string;
     employer_id: string;
     admin_id: string;
     title: string;
     description: string;
-    job_type: string;
+    job_type: job_type;
     location: string;
     applicant_year: number[];
     deadline: string;
