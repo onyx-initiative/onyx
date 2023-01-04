@@ -37,7 +37,6 @@ export type Employer = {
 export enum job_type {
     FULL_TIME,
     PART_TIME,
-    CONTRACT,
     INTERNSHIP
 }
 
