@@ -19,8 +19,8 @@ export default function AddJob() {
         <input {...register("Description")} />
         <input {...register("Province")} />
         <select {...register("Category")}>
-            <option value="female">female</option>
-            <option value="male">male</option>
+            <option value="Scotiabank">Scotiabank</option>
+            <option value="RBC">RBC</option>
             <option value="other">other</option>
             <option value="other">other</option>
             <option value="other">other</option>
