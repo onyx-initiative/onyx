@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import onyx_logo from '../../assets/onyx_logo.png' // Logo looks a bit grainy, replace with higher quality image
 import ProfilePhoto from '../navbar/ProfilePhoto'
 import styles from '../../../styles/components/Navbar.module.css'
 
@@ -16,10 +15,10 @@ export default function Navbar(props: any) {
           href='/'
         >
           <Image
-            src={onyx_logo} 
+            src="https://onyxinitiative.org/assets/img/onyxlogo_nav.png" 
             alt="Onyx Logo" 
-            width={184} // make dynamic
-            height={52} // make dynamic
+            width={184} 
+            height={52} 
           />
         </Link>
       </div>
