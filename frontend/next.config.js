@@ -9,7 +9,8 @@ const nextConfig = {
       "onyxinitiative.org",
       "www.mckinsey.com",
       "media.licdn.com",
-      "asset.brandfetch.io"
+      "asset.brandfetch.io",
+      "logo.clearbit.com"
     ],
   }
 }

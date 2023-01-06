@@ -76,7 +76,6 @@ const JobCard = (props: any) => {
   const { job } = props;
   const [bookmarked, setBookmarked] = useState(false);
   const [opened, setOpened] = useState(false);
-  const [logo, setLogo] = useState('');
 
   // @todo: Add a call to get the employer name based on the id
   // const company = GET_EMPLOYER_BY_ID(employer_id);
@@ -84,25 +83,10 @@ const JobCard = (props: any) => {
 
   // @todo: Add a call to get the employer website
   // let website = GET_EMPLOYER_WEBSITE(job.employer_id);
-  let website = 'https://www.mckinsey.com/careers';
+  let website = 'https://www.scotiabank.com/careers';
   website = removeProtocol(website)
 
-  // @todo: this should store the logo in the database if not already there
-  const fetchLogo = () => {
-    fetch(`https://api.brandfetch.io/v2/brands/${website}`, {
-      "method": "GET",
-      "headers": {
-        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_LOGO_API_KEY}`
-      }
-  })
-  .then(response => response.json()).then(resp => setLogo(resp['logos'][0]['formats'][0]['src']))
-  .catch(err => console.log(err));
-  }
-
-  useEffect(() => {
-    fetchLogo();
-    console.log(logo)
-  }, [job])
+  const logo = fetchLogo(website);
 
   return (
     <>
@@ -147,7 +131,7 @@ const JobCard = (props: any) => {
       >
         <div className={styles.jobCardHeader}>
         <Image 
-          src="https://media.licdn.com/dms/image/C560BAQHP1XsqU9L_XQ/company-logo_200_200/0/1656621713859?e=1680739200&v=beta&t=w9XMy8bqM8H4k_mdmvbaF_tI477gZ7HprwXLkRB2EhQ"
+          src={logo}
           alt="Company Logo"
           width={60}
           height={60}
@@ -197,4 +181,10 @@ const removeProtocol = (url: string) => {
   } else {
     return "";
   }
+}
+
+// Helper function to get logos dynamically
+// @todo: try to update this to get higher quality logos
+export const fetchLogo = (websiteURL: string) => {
+  return `https://logo.clearbit.com/${websiteURL}`;
 }
