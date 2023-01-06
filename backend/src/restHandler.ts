@@ -150,7 +150,7 @@ app.get('/oauth', async (req, res) => {
     return;
 });
 
-app.post('/callback', async (req, res) => {
+app.get('/callback', async (req, res) => {
     const code: string = req.query.code as string;
 
     // Error if no code is provided
@@ -191,7 +191,7 @@ app.post('/callback', async (req, res) => {
         hubspotClient.setAccessToken(tokenStore.accessToken);
         tokenStore.email = email;
         res.redirect('/dev/test');
-        return tokenStore;
+        // return tokenStore;
     } else {
         // This should redirect to an error page
         console.error('No token store');

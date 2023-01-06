@@ -172,7 +172,7 @@ const createHandler = (event: any, context: any, callback: any) => {
         
                 if (isTokenExpired()) await refreshToken();
                 if (isAuthorized()) {
-                    res.redirect('/');
+                    res.redirect('/dev/test');
                     return;
                 }
                 const getTokensResponse = await hubspotClient.oauth.tokensApi.createToken(
@@ -201,7 +201,7 @@ const createHandler = (event: any, context: any, callback: any) => {
                 if (tokenStore) {
                     hubspotClient.setAccessToken(tokenStore.accessToken);
                     tokenStore.email = email;
-                    res.redirect('/');
+                    res.redirect('/dev/test');
                     return tokenStore;
                 } else {
                     // This should redirect to an error page
