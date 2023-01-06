@@ -37,6 +37,8 @@ export const scholarTypeDef = gql`
             notifications: Boolean!
         ): Scholar!
         updateScholar(scholar_id: ID!, column: String!, new_value: String!): Scholar!
+        addToFavourites(scholar_id: ID!, job_id: ID!): Boolean!
+        removeFromFavourites(scholar_id: ID!, job_id: ID!): Boolean!
         archiveScholar(scholar_id: ID!): Boolean!
         deleteScholar(scholar_id: ID!): Boolean!
     }

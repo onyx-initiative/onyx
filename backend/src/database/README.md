@@ -23,3 +23,13 @@ SET search_path TO onyx;
 # View all relations
 \dt
 ```
+
+Or, to SSH into the db:
+
+```shell
+chmod 400 onyx_server.pem 
+
+ssh -i "onyx_server.pem" {EC2_URL}
+
+psql -h {ONYX_DB_ENDPOINT} -U postgres
+```

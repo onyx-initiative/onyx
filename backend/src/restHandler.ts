@@ -178,6 +178,7 @@ app.get('/callback', async (req, res) => {
         updatedAt: Date.now(),
     };
 
+
     // @todo: Check that they're an onyx scholar
     const infoUrl = `https://api.hubapi.com/oauth/v1/access-tokens/${tokenStore?.accessToken}`;
     const info = await axios.get(infoUrl, {

@@ -10,8 +10,36 @@ const jobResolver = {
                                 SELECT job_id 
                                 FROM Archive 
                                 WHERE job.job_id = Archive.job_id
-                        )`;
+                            )
+                            AND live = true`;
             const resp = await client.query(query).catch((err: any) => {
+                console.error(err);
+                client.release()
+            });
+            client.release()
+            return resp.rows;
+        },
+        getJobsAdmin: async (_: any, { active, live }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+
+            let query;
+
+            // If live is false, youll see your draft jobs
+
+            if (active) {
+                query = `SELECT * FROM job
+                        WHERE NOT EXISTS (
+                            SELECT job_id 
+                            FROM Archive 
+                            WHERE job.job_id = Archive.job_id
+                        )
+                        AND live = $1`;
+
+            } else {
+                query = `SELECT * FROM job WHERE live = $1`;
+            }
+            const resp = await client.query(query, [live]).catch((err: any) => {
                 console.error(err);
                 client.release()
             });
@@ -79,7 +107,10 @@ const jobResolver = {
             admin_id,
             title,
             description,
+            long_description,
+            contact_email,
             job_type,
+            term,
             location,
             applicant_year,
             deadline,
@@ -101,33 +132,138 @@ const jobResolver = {
                 return false;
             }
 
-            const query = `INSERT INTO job(
-                employer_id,
-                admin_id,
-                title,
-                description,
-                job_type,
-                location,
-                applicant_year,
-                deadline,
-                tags
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;`;
-            const resp = await client.query(query, 
-                [
-                employer_id,
-                admin_id,
-                title,
-                description,
-                job_type,
-                location,   
-                applicant_year,
-                deadline,
-                tags
-            ]).catch((err: any) => {
-                console.log(err);
-                client.release()
-                return false;
-            });
+            let query;
+            
+            if (long_description === undefined && contact_email === undefined) {
+                query = `INSERT INTO job(
+                    employer_id,
+                    admin_id,
+                    title,
+                    description,
+                    job_type,
+                    term,
+                    location,
+                    applicant_year,
+                    deadline,
+                    tags
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;`;
+                await client.query(query, 
+                    [
+                    employer_id,
+                    admin_id,
+                    title,
+                    description,
+                    job_type,
+                    term,
+                    location,   
+                    applicant_year,
+                    deadline,
+                    tags
+                ]).catch((err: any) => {
+                    console.log(err);
+                    client.release()
+                    return false;
+                });
+            } else if (long_description === undefined) {
+                query = `INSERT INTO job(
+                    employer_id,
+                    admin_id,
+                    title,
+                    description,
+                    contact_email,
+                    job_type,
+                    term,
+                    location,
+                    applicant_year,
+                    deadline,
+                    tags
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;`;
+                    await client.query(query, 
+                        [
+                        employer_id,
+                        admin_id,
+                        title,
+                        description,
+                        contact_email,
+                        job_type,
+                        term,
+                        location,   
+                        applicant_year,
+                        deadline,
+                        tags
+                    ]).catch((err: any) => {
+                        console.log(err);
+                        client.release()
+                        return false;
+                    });
+            } else if (contact_email === undefined) {
+                query = `INSERT INTO job(
+                    employer_id,
+                    admin_id,
+                    title,
+                    description,
+                    long_description,
+                    job_type,
+                    term,
+                    location,
+                    applicant_year,
+                    deadline,
+                    tags
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;`;
+                await client.query(query, 
+                    [
+                    employer_id,
+                    admin_id,
+                    title,
+                    description,
+                    long_description,
+                    job_type,
+                    term,
+                    location,   
+                    applicant_year,
+                    deadline,
+                    tags
+                ]).catch((err: any) => {
+                    console.log(err);
+                    client.release()
+                    return false;
+                });
+            } else {
+                query = `INSERT INTO job(
+                    employer_id,
+                    admin_id,
+                    title,
+                    description,
+                    long_description,
+                    contact_email,
+                    job_type,
+                    term,
+                    location,
+                    applicant_year,
+                    deadline,
+                    tags
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *;`;
+                await client.query(query, 
+                    [
+                    employer_id,
+                    admin_id,
+                    title,
+                    description,
+                    long_description,
+                    contact_email,
+                    job_type,
+                    term,
+                    location,   
+                    applicant_year,
+                    deadline,
+                    tags
+                ]).catch((err: any) => {
+                    console.log(err);
+                    client.release()
+                    return false;
+                });
+            }
+            
             client.release()
             return true;
         },
@@ -196,7 +332,45 @@ const jobResolver = {
             }
             client.release()
             return true;
-        }       
+        },
+        removeFromFeatured: async (_: any, { job_ids }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `DELETE FROM featured WHERE job_id = $1`;
+            for (let i = 0; i < job_ids.length; i++) {
+                await client.query(query, [job_ids[i]]).catch((err: any) => {
+                    console.log(err);
+                    client.release()
+                    return false
+                });
+            }
+            client.release()
+            return true;
+        },
+        setLive: async (_: any, { job_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `UPDATE job SET live = true WHERE job_id = $1`;
+            await client.query(query, [job_id]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false
+            });
+            client.release()
+            return true;
+        },
+        makePrivate: async (_: any, { job_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `UPDATE job SET live = false WHERE job_id = $1`;
+            await client.query(query, [job_id]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false
+            });
+            client.release()
+            return true;
+        }
     }
 };
 

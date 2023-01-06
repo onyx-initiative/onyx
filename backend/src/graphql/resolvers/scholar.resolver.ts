@@ -109,7 +109,33 @@ const scholarResolver = {
             });
             client.release()
             return true;
-        }
+        },
+        addToFavourites: async (_: any, { scholar_id, job_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `INSERT INTO favourites (job_id, scholar_id) VALUES ($1, $2)`;
+            const resp = await client.query(query, [job_id
+                , scholar_id]).catch((err: any) => {
+                console.error(err); 
+                client.release()
+                return false;
+            });
+            client.release()
+            return true;
+        },
+        removeFromFavourites: async (_: any, { scholar_id, job_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `DELETE FROM Favourites WHERE job_id = $1 AND scholar_id = $2`;
+            const resp = await client.query(query, [job_id
+                , scholar_id]).catch((err: any) => {
+                console.error(err); 
+                client.release()
+                return false;
+            });
+            client.release()
+            return true;
+        },
     }
 }
 
