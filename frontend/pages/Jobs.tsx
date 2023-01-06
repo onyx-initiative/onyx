@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../src/components/general/Navbar'
 import Filter from '../src/sections/jobs/Filter'
 import styles from '../styles/components/Jobs.module.css'
-import { job_type } from '../../backend/src/types/db.types'
+import { job_type, Job } from '../../backend/src/types/db.types'
 import { AiOutlineSearch } from "react-icons/ai";
 import ListedJobs from '../src/sections/jobs/ListedJobs'
 
@@ -28,6 +28,7 @@ export type selected = {
     full_time: boolean;
     part_time: boolean;
     internship: boolean;
+    new_grad: boolean;
   };
   applicant_year: number[];
   sort: sort;
@@ -54,7 +55,8 @@ export default function Jobs() {
     job_type: {
       full_time: false,
       part_time: false,
-      internship: false
+      internship: false,
+      new_grad: false
     },
     applicant_year: [],
     sort: sort.Newest,
@@ -62,7 +64,10 @@ export default function Jobs() {
   } as selected)
 
   // @todo: Add call to the api to get the jobs
-  const [jobs, setJobs] = useState([])
+  // const [jobs, setJobs] = useState([])
+
+  // For development to avoid changing variables
+  const jobs = sampleJob
 
   return (
     <div>
@@ -107,3 +112,46 @@ const SearchBar = (props: any) => {
     </div>
   )
 }
+
+// Sample data
+const sampleJob: Job[] = [
+  {
+  job_id: '123',
+  employer_id: '123',
+  admin_id: '123',
+  title: 'Software Engineer',
+  description: "This is a sample job description for a software engineer in Toronto. Please visit www.mckinsey.com/careers to apply.",
+  job_type: 'Full Time',
+  location: 'Toronto, ON',
+  applicant_year: [2023, 2024],
+  deadline: new Date(),
+  total_views: 0,
+  tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
+  },
+  {
+    job_id: '456',
+    employer_id: '456',
+    admin_id: '456',
+    title: 'Business Analyst',
+    description: "This is a sample job description for a software engineer in Toronto. Please visit www.mckinsey.com/careers to apply.",
+    job_type: 'Full Time',
+    location: 'Toronto, ON',
+    applicant_year: [2023, 2024],
+    deadline: new Date(),
+    total_views: 0,
+    tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
+  },
+  // {
+  //   job_id: '2',
+  //   employer_id: '2',
+  //   admin_id: '2',
+  //   title: 'Software Engineer',
+  //   description: "This is a sample job description for a software engineer in Toronto. Please visit www.mckinsey.com/careers to apply.",
+  //   job_type: 'Full Time',
+  //   location: 'Toronto, ON',
+  //   applicant_year: [2023, 2024],
+  //   deadline: new Date(),
+  //   total_views: 0,
+  //   tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
+  // },
+]

@@ -34,11 +34,7 @@ export type Employer = {
     description: string;
 }
 
-export enum job_type {
-    FULL_TIME,
-    PART_TIME,
-    INTERNSHIP
-}
+export type job_type = "Full Time" | "Part Time" | "Internship" | "New Grad";
 
 export type Job = {
     job_id: string;
@@ -49,7 +45,7 @@ export type Job = {
     job_type: job_type;
     location: string;
     applicant_year: number[];
-    deadline: string;
+    deadline: Date;
     total_views: number;
     tags: string[];
 }

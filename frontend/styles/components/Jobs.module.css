@@ -165,12 +165,14 @@
     padding: 1rem;
     border-radius: 0.2rem;
     width: 100%;
+    margin-bottom: 1rem;
 }
 
 .jobCardHeader {
     display: flex;
     color: black;
     align-items: center;
+    cursor: pointer;
 }
 
 .jobHeader {
@@ -181,6 +183,7 @@
     margin-right: 10rem;
     margin-left: 1.5rem;
     font-size: large;
+    cursor: pointer;
 }
 
 .jobHeader > h3 {
@@ -217,6 +220,7 @@
 
 .jobCardBody {
     color: black;
+    cursor: pointer;
 }
 
 .jobCardBody > h4 {

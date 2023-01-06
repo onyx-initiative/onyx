@@ -83,9 +83,26 @@ export default function Filter(props: FilterProps) {
               )}
             />
           </div>
+          <div className={styles.checkbox}>
+            <Checkbox
+              checked={selected.job_type.new_grad} 
+              label='New Grad'
+              color='dark'
+              size='md'
+              onChange={() => (
+                setSelected({
+                  ...selected,
+                  job_type: {
+                    ...selected.job_type,
+                    new_grad: !selected.job_type.new_grad
+                  }
+                })
+              )}
+            />
+          </div>
       </div>
       <div className={styles.applicantYear}>
-        <h4 className={styles.title}>Applicant Year</h4>
+        <h4 className={styles.title}>Graduation Year</h4>
         {
           filters.applicant_year.map((year: number) => (
             <div className={styles.checkbox}>
@@ -124,7 +141,7 @@ export default function Filter(props: FilterProps) {
         }
       </div>
       <div className={styles.tags}>
-        <h4 className={styles.title}>Tags</h4>
+        <h4 className={styles.title}>Categories</h4>
         <MultiSelect
           data={filters.tags}
           placeholder="Select tags to filter by"

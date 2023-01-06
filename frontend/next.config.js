@@ -8,9 +8,10 @@ const nextConfig = {
       'www.google.com', 
       "onyxinitiative.org",
       "www.mckinsey.com",
-      "media.licdn.com"
+      "media.licdn.com",
+      "asset.brandfetch.io"
     ],
-  },
+  }
 }
 
 module.exports = nextConfig
