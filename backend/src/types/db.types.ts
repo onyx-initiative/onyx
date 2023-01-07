@@ -5,6 +5,8 @@
   to migrate to a different database in the future if needed.
 */
 
+// @todo: Update this to use the new database schema
+
 export type Admin = {
     admin_id: string;
     name: string;

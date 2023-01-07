@@ -15,19 +15,19 @@ export default function Login(props: Login) {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
     // @todo: Fix CORS issue
-    // const authenticate = async () => {
-    //     const res = await fetch('http://localhost:4000/oauth',
-    //         {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Access-Control-Allow-Origin': '*',
-    //             }
-    //         })
+    const authenticate = async () => {
+        const res = await fetch('http://localhost:4000/dev/oauth',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
                     
-    //     const data = await res.json()
-    //     console.log(data)
-    // }
+        const data = await res.json()
+        console.log(data)
+    }
 
     return (
         <div>
@@ -45,7 +45,7 @@ export default function Login(props: Login) {
                     <div className={styles.scholarLogin}>
                         <FaHubspot size={28} />
                         <button 
-                            onClick={() => setToken("hubspot")}
+                            onClick={() => authenticate()}
                         >
                             Login with Hubspot
                         </button>

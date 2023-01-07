@@ -8,6 +8,7 @@
 /build
 /.build
 /.serverless
+/src/index.ts
 
 # local env files
 .env*.local
@@ -15,6 +16,7 @@
 
 # Other
 /src/serverlessAuth.ts
+/src/integration/
 /resources
 
 # AWS Key Pair

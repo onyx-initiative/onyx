@@ -6,6 +6,8 @@ import { job_type, Job } from '../../backend/src/types/db.types'
 import { AiOutlineSearch } from "react-icons/ai";
 import ListedJobs from '../src/sections/jobs/ListedJobs'
 
+// Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
+
 export enum sort {
   'Newest',
   'Oldest',
