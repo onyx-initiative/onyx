@@ -4,9 +4,10 @@ import Navbar from '../src/components/general/Navbar'
 import SearchBar from '../src/components/general/SearchBar'
 import AllEmployers from '../src/sections/employer/AllEmployers'
 
+
 export default function Employers() {
   return (
-    <div>
+    <div >
       <Navbar/>
       <SearchBar/>
       <AllEmployers/>

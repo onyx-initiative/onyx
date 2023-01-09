@@ -1,12 +1,21 @@
 .addJobForm {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .textinput {
     color: white;
     background-color: black;
     width: 80%;
+    margin-top: 1rem;
+    height: 2.5rem;
     
 
+}
+
+.submitButton {
+    color: white;
+    margin-top: 2rem;
+    
 }

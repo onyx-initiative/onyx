@@ -13,19 +13,18 @@ export default function AddJob() {
 
     return (
       <form className={styles.addJobForm} onSubmit={handleSubmit(onSubmit)}>
-        <input className={styles.textinput} {...register("Company Name")} />
-        <input {...register("Position")} />
-        <input {...register("Location")} />
-        <input {...register("Description")} />
-        <input {...register("Province")} />
-        <select {...register("Category")}>
-            <option value="Scotiabank">Scotiabank</option>
-            <option value="RBC">RBC</option>
-            <option value="other">other</option>
-            <option value="other">other</option>
-            <option value="other">other</option>
+        <input placeholder="Company Name" className={styles.textinput} {...register("Company Name")} />
+        <input placeholder="Position" className={styles.textinput} {...register("Position")} />
+        <input placeholder="Location"  className={styles.textinput} {...register("Location")} />
+        <input placeholder="Company Name" className={styles.textinput} {...register("Description")} />
+        <select  placeholder="Category"  className={styles.textinput} {...register("Category")}>
+            <option value="Scotiabank">Finance</option>
+            <option value="RBC">Consulting</option>
+            <option value="other">Investment Banking</option>
+            <option value="other">Human Resources</option>
+            <option value="other">Business Analyst</option>
         </select>
-        <input type="submit" />
+        <input type="submit" className={styles.submitButton} />
       </form>
     )
   }
