@@ -32,7 +32,10 @@ export const jobTypeDef = gql`
         admin_id: ID!
         title: String!
         description: String!
+        long_description: String
+        contact_email: String
         job_type: JobType!
+        term: String!
         location: String!
         applicant_year: [Int!]!
         deadline: String!
@@ -42,6 +45,7 @@ export const jobTypeDef = gql`
 
     type Query {
         getJobs: [Job!]!
+        getJobsAdmin(active: Boolean!, live: Boolean!): [Job!]!
         getJobById(job_id: ID!): Job!
         getJobsByEmployerId(employer_id: ID!): [Job!]!
         getJobByFilter(column: String!, filter: String!): [Job!]!
@@ -59,7 +63,10 @@ export const jobTypeDef = gql`
             admin_id: ID!
             title: String!
             description: String!
+            long_description: String
+            contact_email: String
             job_type: JobType!
+            term: String!
             location: String!
             applicant_year: [Int!]!
             deadline: String!
@@ -70,5 +77,8 @@ export const jobTypeDef = gql`
         incrementApplications(job_id: ID!): Boolean!
         deleteJob(job_id: ID!): Boolean!
         addToFeatured(job_ids: [ID!]!): Boolean!
+        removeFromFeatured(job_id: ID!): Boolean!
+        setLive(job_id: ID!): Boolean!
+        makePrivate(job_id: ID!): Boolean!
     }
 `

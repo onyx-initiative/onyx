@@ -140,3 +140,119 @@
     flex-direction: column;
     margin-top: 15rem;
 }
+
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.job {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+}
+
+.jobCard {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    background-color: white;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 0.2rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.jobCardHeader {
+    display: flex;
+    color: black;
+    align-items: center;
+    cursor: pointer;
+}
+
+.jobHeader {
+    display: flex;
+    align-items: left;
+    /* margin-left: auto; */
+    flex-direction: column;
+    margin-right: 10rem;
+    margin-left: 1.5rem;
+    font-size: large;
+    cursor: pointer;
+}
+
+.jobHeader > h3 {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 0.3rem;
+}
+
+.additionalInfo {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    color: gray;
+}
+
+.additionalInfo > h6 {
+    padding: 0;
+    margin: 0;
+    margin-left: 0.3rem;
+}
+
+.bookmarkContainer {
+    background-color: white;
+    border-color: gray;
+    display: flex;
+    align-items: center;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    margin-left: auto;
+    margin-right: 2rem;
+}
+
+.jobCardBody {
+    color: black;
+    cursor: pointer;
+}
+
+.jobCardBody > h4 {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.8rem;
+    margin-bottom: 0.5rem;
+    font-size: medium;
+
+}
+
+.deadline {
+    font-weight: bold;
+    color: gray;
+}
+
+.tag {
+    color: rgb(140, 140, 140);
+    background-color: #f5e9d9;
+    width: 7%;
+    font-size: small;
+    font-weight: bold;
+    padding: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.2rem;
+    margin-right: 0.7rem;
+}
+
+.jobTags {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

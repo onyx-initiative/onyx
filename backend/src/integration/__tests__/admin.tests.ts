@@ -4,7 +4,7 @@ import createApolloServer from "../../graphql/createApolloServer";
 import { getAdminByName, createAdmin, updateAdmin, removeAdmin  } from "../mock-data/adminData";
 
 
-
+// @todo: Update tests to reflect more queries
 
 it("Get an admin by name", async () => {
     const apolloServer = createApolloServer();

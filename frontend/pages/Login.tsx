@@ -1,33 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useMemo } from 'react'
 import styles from '../styles/components/Login.module.css'
 import onyx_logo from '../public/onyx_logo.png'
 import { FaLinkedinIn, FaTwitter, FaInstagram, FaHubspot } from "react-icons/fa";
 import Image from 'next/image'
 
-type Login = {
-    setToken: (token: string) => void
-}
+import { useSession, signIn, signOut } from 'next-auth/react';
 
-// @ todo: connect this to the backend
-export default function Login(props: Login) {
-    const { setToken } = props
-
-    // Call an external API endpoint to get posts.
-    // You can use any data fetching library
-    // @todo: Fix CORS issue
-    // const authenticate = async () => {
-    //     const res = await fetch('http://localhost:4000/oauth',
-    //         {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Access-Control-Allow-Origin': '*',
-    //             }
-    //         })
-                    
-    //     const data = await res.json()
-    //     console.log(data)
-    // }
+export default function Login() {
+    const { data: session, status } = useSession()
 
     return (
         <div>
@@ -45,7 +25,7 @@ export default function Login(props: Login) {
                     <div className={styles.scholarLogin}>
                         <FaHubspot size={28} />
                         <button 
-                            onClick={() => setToken("hubspot")}
+                            onClick={() => signIn('hubspot')}
                         >
                             Login with Hubspot
                         </button>
@@ -53,7 +33,7 @@ export default function Login(props: Login) {
                     <h3 className={styles.loginHeader}>Admin Login</h3>
                     <button 
                         className={styles.loginButton} 
-                        onClick={() => setToken("admin")}
+                        onClick={() => alert('Not yet implemented')}
                     >
                         Admin Login
                     </button>
