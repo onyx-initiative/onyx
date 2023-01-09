@@ -21,7 +21,7 @@ const createApolloServer = () => {
     });
 
     return new ApolloServer({
-        introspection: process.env.NODE_ENV !== "production",
+        introspection: false,
         // plugins: [ApolloServerPluginLandingPageDisabled()],
         schema: combinedSchema,
         csrfPrevention: false,

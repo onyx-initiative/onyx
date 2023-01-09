@@ -6,16 +6,17 @@ import styles from '../styles/Home.module.css'
 import Scholar from './Scholar'
 import ServerCheck from './ServerCheck'
 import Login from './Login'
+import { useSession } from 'next-auth/react';
 
 const serverResponse = {
     applicationDeadline: '2021-12-31',
 }
 
 const Home: NextPage = () => {
-  const [token, setToken] = useState('')
+  const { status } = useSession({ required: true })
 
-  if (!token) {
-    return <Login setToken={setToken}/>
+  if (status != 'authenticated') {
+    return <Login />
   }
 
   return (

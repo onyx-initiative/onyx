@@ -50,23 +50,9 @@ const createHandler = (event: any, context: any, callback: any) => {
                 res.status(200).send('Server is healthy!');
             });
         
-            /*
-              Authentication with hubspot
-              docs: https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart
-              sample: https://github.com/HubSpot/sample-apps-oauth/blob/main/node/src/index.js
-        
-              @todo:
-              When implementing this on the frontend, we'll need to have /callback
-              return true or false depending on if the user is authenticated
-            */
-            // Initialize the hubspot client
-            // 
-        
             app.get('/error', (req, res) => {
                 return { error: 'Error' };
             });
-
-            // End: Express Server Endpoints
             
             return app;
         },

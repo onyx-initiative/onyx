@@ -6,6 +6,9 @@ import { job_type, Job } from '../../backend/src/types/db.types'
 import { AiOutlineSearch } from "react-icons/ai";
 import ListedJobs from '../src/sections/jobs/ListedJobs'
 
+// To ensure unauthenticated people don't access
+import getServerProps from "../src/utils/getServerProps";
+
 // Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
 
 export enum sort {
@@ -157,3 +160,5 @@ const sampleJob: Job[] = [
   //   tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
   // },
 ]
+
+export { getServerProps };

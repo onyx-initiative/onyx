@@ -7,12 +7,21 @@ import {
   HttpLink,
   InMemoryCache,
 } from '@apollo/client';
+import { SessionProvider } from 'next-auth/react';
 
-function MyApp({ Component, pageProps }: AppProps) {
+type AuthProps = {
+  Component: any;
+  pageProps: any;
+  session: any;
+};
+
+function MyApp({ Component, pageProps, session }: AuthProps) {
   return (
-    <ApolloContextProvider>
-      <Component {...pageProps} />
-    </ApolloContextProvider>
+    <SessionProvider session={session}>
+      <ApolloContextProvider>
+        <Component {...pageProps} />
+      </ApolloContextProvider>
+    </SessionProvider>
   )
 }
 

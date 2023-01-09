@@ -5,13 +5,7 @@ plugins:
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-dotenv-plugin
-  - serverless-ignore
 useDotenv: true
-package:
-  patterns:
-    - '!integration'
-    - '!types'
-    - '!backend/src/index.ts'
 provider:
   name: aws
   runtime: nodejs16.x
@@ -49,46 +43,6 @@ resources:
     ServerlessVPCGA: ${file(./resources/serverlessVPCGA.yml)}
     ServerlessVPC: ${file(./resources/serverlessVPC.yml)}
 functions:
-  api:
-    handler: src/restHandler.handler
-    environment:
-      SLS_DEBUG: true
-    events:
-    - http:
-        path: /
-        method: get
-        cors: true
-        integration: lambda-proxy
-    - http:
-        path: /test
-        method: get
-        cors: true
-        integration: lambda-proxy
-    - http:
-        path: /healthcheck
-        method: get
-        cors: true
-        integration: lambda-proxy
-    - http:
-        path: /oauth
-        method: get
-        cors: true
-        integration: lambda-proxy
-    - http:
-        path: /callback
-        method: get
-        cors: true
-        integration: lambda-proxy
-    - http:
-        path: /refresh
-        method: get
-        cors: true
-        integration: lambda-proxy
-    - http:
-        path: /logout
-        method: get
-        cors: true
-        integration: lambda-proxy
   graphql:
     handler: src/handler.handler
     environment:
