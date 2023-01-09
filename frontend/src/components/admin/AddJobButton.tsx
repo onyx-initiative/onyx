@@ -1,12 +1,13 @@
 import React from "react";
 import Navbar from "../general/Navbar";
-import Link from 'next/link'
+import Link from 'next/link';
+import styles from "../../../styles/components/AdminPageButtons.module.css";
 
 export default function AddJobButton() {
     return (
         <div>
-            <Link href="/frontend/src/sections/admin/AddJob.tsx">
-                <button> Add Job</button>
+            <Link href="/AddJob">
+                <button className={styles.adminFunctionButton}> Add Job</button>
             </Link>
         </div>
     )

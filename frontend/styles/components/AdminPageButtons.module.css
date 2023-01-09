@@ -1,0 +1,24 @@
+.adminActions {
+    display: flex;
+    justify-content: space-around;
+
+    
+
+}
+
+.title {
+    text-align: center;
+
+}
+
+.adminFunctionButton {
+    color: #806E53;
+    background-color: white;
+    height: 5rem;
+    font-weight: bold;
+    font-size: 2rem;
+    border-radius: 10px;
+
+
+
+}
