@@ -9,7 +9,7 @@ import getServerProps from "../src/utils/getServerProps";
 
 export default function Employers() {
   return (
-    <div>
+    <div >
       <Navbar/>
       <SearchBar/>
       <AllEmployers/>

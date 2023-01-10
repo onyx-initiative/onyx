@@ -13,23 +13,18 @@ type EmployerBlock = {
 export default function EmployerBlock({logo, companyName, link, info}: EmployerBlock) {
     return (
         <div className={styles.employerContainer}>
-
+            
             <div>
                 <Image src={logo} 
                 alt="Company Logo" 
                 width={200}
-                height={100} />
+                height={120} />
             </div>
             <div className={styles.employerInfo}>
-                <h4>{companyName}</h4>
+                <h4 className={styles.companyName}>{companyName}</h4>
                 <p>{info}</p>
             </div>
-            <div>
-                <a href={link}>Click here for their job board</a>
-            </div>
-            <div>
-                <a> Add to Favourites?</a>
-            </div>
+            
         </div>
     )
 }

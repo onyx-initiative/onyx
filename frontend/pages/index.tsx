@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import Scholar from './Scholar'
 import ServerCheck from './ServerCheck'
 import Login from './Login'
+
 import { useSession } from 'next-auth/react';
 
 const serverResponse = {
@@ -13,6 +14,7 @@ const serverResponse = {
 }
 
 const Home: NextPage = () => {
+
   const { status } = useSession({ required: true })
 
   if (status != 'authenticated') {
