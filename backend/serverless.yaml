@@ -44,7 +44,7 @@ resources:
     ServerlessVPC: ${file(./resources/serverlessVPC.yml)}
 functions:
   graphql:
-    handler: src/handler.handler
+    handler: src/index.handler
     environment:
       SLS_DEBUG: true
     events:

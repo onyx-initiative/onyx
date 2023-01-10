@@ -21,10 +21,10 @@ const createApolloServer = () => {
     });
 
     return new ApolloServer({
-        introspection: false,
+        introspection: true,
         // plugins: [ApolloServerPluginLandingPageDisabled()],
         schema: combinedSchema,
-        csrfPrevention: false,
+        csrfPrevention: true,
         dataSources: () => {
             return {
                 db: client,
