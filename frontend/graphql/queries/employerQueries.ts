@@ -9,4 +9,13 @@ export const GET_EMPLOYER_BY_ID = gql`
         }
     `
 
+// Get employers
+export const GET_EMPLOYERS = gql`
+        query GetEmployers {
+            getEmployers {
+                name
+        }
+    }
+`
+
 // Other queries

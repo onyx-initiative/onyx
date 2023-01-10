@@ -30,6 +30,18 @@ const scholarResolver = {
         // criteria
         checkViews: async (_: any, { scholar_id, view_id }: any, { dataSources }: any) => {
             return 'Not implemented'
+        },
+        getScholarByEmail: async (_: any, { email }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `SELECT * FROM scholar WHERE email = $1`;
+            const resp = await client.query(query, [email]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            client.release()
+            return resp.rows[0];
         }
     },
     Mutation: {
