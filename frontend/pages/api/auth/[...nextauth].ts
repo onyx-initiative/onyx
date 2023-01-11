@@ -10,4 +10,10 @@ export default NextAuth({
         })
     ],
     secret: process.env.NEXT_PUBLIC_JWT_SECRET as string,
+    pages: {
+        signIn: "/Login",
+        signOut: "/",
+        error: "/Login",
+        verifyRequest: "/Login",
+    },
 });
