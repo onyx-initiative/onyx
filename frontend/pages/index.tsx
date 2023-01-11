@@ -21,6 +21,8 @@ const Home: NextPage = () => {
     return <Login />
   }
 
+  console.log(status)
+
   return (
     <div>
       <Scholar />

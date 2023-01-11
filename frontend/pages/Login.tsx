@@ -4,7 +4,7 @@ import onyx_logo from '../public/onyx_logo.png'
 import { FaLinkedinIn, FaTwitter, FaInstagram, FaHubspot } from "react-icons/fa";
 import Image from 'next/image'
 
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
 
 export default function Login() {
     const { data: session, status } = useSession()
@@ -25,7 +25,7 @@ export default function Login() {
                     <div className={styles.scholarLogin}>
                         <FaHubspot size={28} />
                         <button 
-                            onClick={() => signIn('hubspot')}
+                            onClick={() => signIn('hubspot', { callbackUrl: '/Scholar' })}
                         >
                             Login with Hubspot
                         </button>
