@@ -1,15 +1,13 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { GET_EMPLOYER_BY_ID } from '../graphql/queries/employerQueries'
+import { GET_ADMINS } from '../graphql/queries/adminQueries'
 
 
 // This is only for testing, delete after
 
 export default function ServerCheck() {
 
-    const {loading, error, data } = useQuery(GET_EMPLOYER_BY_ID, {
-        variables: { employerId: '14' }
-    })
+    const {loading, error, data } = useQuery(GET_ADMINS)
 
     console.log(data)
 
@@ -17,7 +15,7 @@ export default function ServerCheck() {
         <div>
             {!loading && !error ?
             <div>
-                <h1>{data.getEmployerById.name}</h1>
+                <h1>{data.getAdmins.name} + {data.getAdmins.email}</h1>
                 <button onClick={() => console.log(data)}>Click me</button>
             </div>
             : 

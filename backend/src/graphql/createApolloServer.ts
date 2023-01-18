@@ -40,6 +40,7 @@ const createApolloServer = () => {
             context,
             expressRequest: express.req
         }),
+        cache: "bounded",
     })
 }
 

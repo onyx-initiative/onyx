@@ -1,21 +1,27 @@
 const { Pool, PoolConfig } = require("pg");
-const dotenv = require('dotenv').config().parsed;
+// This should be used locally
+// const dotenv = require('dotenv').config().parsed;
+const dotenv = require('dotenv')
 const path = require('path');
+const express = require('express');
+
+// // Create an express app
+const app = express();
 
 
 /*
 * connection to the DB
 * All CRUD operations are done through this connection
 */
-const host = dotenv.NODE_ENV === "production" ? dotenv.PROD_HOST : "localhost";
-const password = dotenv.NODE_ENV === "production" ? dotenv.DB_PASSWORD : dotenv.DEV_PASSWORD;
 
 const client = new Pool({
-    user: dotenv.DB_USER as string,
-    password: password as string,
-    database: dotenv.PROD_DB_NAME as string,
-    host: host as string,
-    port: dotenv.DB_PORT as number,
+    user: process.env.DB_USER as string,
+    password: process.env.DB_PASSWORD as string,
+    host: process.env.PROD_HOST as string,
+    // host: 'localhost',
+    port: 5432,
 });
 
 export default client;
+
+
