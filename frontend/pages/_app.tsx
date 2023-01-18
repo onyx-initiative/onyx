@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps, session }: AuthProps) {
       <ApolloContextProvider>
         <Component {...pageProps} />
       </ApolloContextProvider>
-    </SessionProvider>
+    </SessionProvider> 
   )
 }
 

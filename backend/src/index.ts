@@ -7,7 +7,6 @@ import helmet from 'helmet';
 import http from 'http';
 import dotenv from 'dotenv';
 import { json } from 'body-parser';
-import serverless from 'serverless-http';
 import { createHttpTerminator } from 'http-terminator';
 const bodyParser = require('body-parser');
 

@@ -11,34 +11,19 @@ provider:
   runtime: nodejs16.x
   region: ca-central-1
   environment:
-    #postgre  
-    PSQL_HOST: ${self:custom.PSQL.HOST}
-    PSQL_PORT: ${self:custom.PSQL.PORT}
-    #common
-    DB_NAME: ${self:custom.DB_NAME}
-    USERNAME: ${self:custom.USERNAME}
-    PASSWORD: ${self:custom.PASSWORD}
     DB_USER: ${env:DB_USER}
     DB_ID: ${env:DB_ID}
     DB_PASSWORD: ${env:DB_PASSWORD}
-    PROD_DB_NAME: ${env:PROD_DB_NAME}
+    DB_NAME: ${env:DB_NAME}
     PROD_HOST: ${env:PROD_HOST}
     DB_PORT: ${env:DB_PORT}
+    NODE_ENV: ${env:NODE_ENV}
 custom:
-  path: src/database/.env
   serverless-offline:
     httpPort: 4000
-  DB_NAME: ${DB_NAME}
-  USERNAME: ${DB_USER}
-  PASSWORD: ${DB_PASSWORD}
-  PSQL:
-    HOST:
-      Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Address]
-    PORT:
-      Fn::GetAtt: [PostgreSqlRDSInstance, Endpoint.Port]
 resources:
   Resources:
-    PostgreSqlRDSInstance: ${file(./resources/PostgreSqlRDSInstance.yml)}
+    # PostgreSqlRDSInstance: ${file(./resources/PostgreSqlRDSInstance.yml)}
     ServerlessSubnetGroup: ${file(./resources/serverlessSubnetGroup.yml)}
     ServerlessVPCGA: ${file(./resources/serverlessVPCGA.yml)}
     ServerlessVPC: ${file(./resources/serverlessVPC.yml)}

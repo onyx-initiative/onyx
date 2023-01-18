@@ -1,7 +1,7 @@
 import corsMiddleware from "cors";
 
 export const CORS_CONFIG: corsMiddleware.CorsOptions = {
-    credentials: false,
+    credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
     // Add specific orgins once deployed to production
     origin: "*",
@@ -10,4 +10,4 @@ export const CORS_CONFIG: corsMiddleware.CorsOptions = {
         'Origin',
         'Accept'
     ]
-  };
+};
