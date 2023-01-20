@@ -36,7 +36,7 @@ const adminResolver = {
             const client = await establishConnection(db);
 
             // Check if admin already exists
-            const currentAdmins = await client.query(`SELECT * FROM admin;`).catch((err: any) => {
+            const currentAdmins = await client.query(`SELECT * FROM admin WHERE name = $1 AND email = $2;`, [name, email]).catch((err: any) => {
                 console.error(err);
                 client.release()
             });
