@@ -15,6 +15,7 @@ type JobSnippet = {
 }
 
 export default function JobSnippet({logo, positionTitle, companyName, location, type, deadline}: JobSnippet) {
+
     return (
         <div className={styles.snippetContainer}>
             <Image 

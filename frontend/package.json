@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.4",
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
     "@hubspot/api-client": "^8.3.2",

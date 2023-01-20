@@ -6,6 +6,7 @@ export default function AllEmployers(props: any) {
     const employer = sampleData.map(employer => {
         return (
             <EmployerBlock 
+                key={employer.companyName}
                 logo={employer.logo}
                 companyName={employer.companyName}
                 link={employer.link}
