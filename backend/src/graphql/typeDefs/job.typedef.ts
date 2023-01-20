@@ -4,13 +4,6 @@ import { gql } from "apollo-server-lambda";
 
 export const jobTypeDef = gql`
 
-    enum JobType {
-        FULL_TIME
-        PART_TIME
-        CONTRACT
-        INTERNSHIP
-    }
-
     enum jobCategory {
         SOFTWARE
         HARDWARE
@@ -34,7 +27,25 @@ export const jobTypeDef = gql`
         description: String!
         long_description: String
         contact_email: String
-        job_type: JobType!
+        job_type: String!
+        term: String!
+        location: String!
+        applicant_year: [Int!]!
+        deadline: String!
+        total_views: Int!
+        tags: [String!]!
+    }
+
+    type JobSearch {
+        job_id: ID!
+        name: String!
+        employer_id: ID!
+        admin_id: ID!
+        title: String!
+        description: String!
+        long_description: String
+        contact_email: String
+        job_type: String!
         term: String!
         location: String!
         applicant_year: [Int!]!
@@ -48,8 +59,8 @@ export const jobTypeDef = gql`
         getJobsAdmin(active: Boolean!, live: Boolean!): [Job!]!
         getJobById(job_id: ID!): Job!
         getJobsByEmployerId(employer_id: ID!): [Job!]!
-        getJobByFilter(column: String!, filter: String!): [Job!]!
         getFeaturedJobs: [Job!]!
+        searchJobs(search: String!): [JobSearch!]!
     }
 
     type Return {
@@ -65,7 +76,7 @@ export const jobTypeDef = gql`
             description: String!
             long_description: String
             contact_email: String
-            job_type: JobType!
+            job_type: String!
             term: String!
             location: String!
             applicant_year: [Int!]!

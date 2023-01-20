@@ -3,54 +3,6 @@ import { gql } from "apollo-server-lambda";
 
 
 export const employerTypeDef = gql`
-    # Modularize Job TypeDef
-    enum JobType {
-        FULL_TIME
-        PART_TIME
-        CONTRACT
-        INTERNSHIP
-    }
-
-    enum jobCategory {
-        SOFTWARE
-        HARDWARE
-        DESIGN
-        MARKETING
-        BUSINESS
-        OTHER
-    }
-
-    enum ApplicationFormat {
-        EMAIL
-        LINK
-        FORM
-    }
-
-    type Job {
-        job_id: ID!
-        employer_id: ID!
-        admin_id: ID!
-        title: String!
-        description: String!
-        job_type: JobType!
-        applicant_year: [Int!]!
-        deadline: String!
-        total_views: Int!
-        tags: [String!]!
-    }
-
-    input JobInput {
-        job_id: ID!
-        employer_id: ID!
-        admin_id: ID!
-        title: String!
-        description: String!
-        job_type: JobType!
-        applicant_year: [Int!]!
-        deadline: String!
-        total_views: Int!
-        tags: [String!]!
-    }
 
     type Employer {
         employer_id: ID!
@@ -66,7 +18,6 @@ export const employerTypeDef = gql`
         getEmployerById(employer_id: ID!): Employer!
         getEmployerByName(name: String!): Employer!
         getEmployers: [Employer!]!
-        getJobs: [Job!]!
     }
 
     type Mutation {
