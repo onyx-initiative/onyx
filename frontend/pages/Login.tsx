@@ -53,13 +53,13 @@ const Footer = () => {
                 <p>Copyright ONYX INITIATIVE. All Rights Reserved</p>
             </div>
             <div className={styles.socials}>
-                <a href='https://www.linkedin.com/company/onyx-initiative/' target="_blank">
+                <a href='https://www.linkedin.com/company/onyx-initiative/' target="_blank" rel="noreferrer">
                     <FaLinkedinIn size={28} />
                 </a>
-                <a href='https://twitter.com/onyxinitiative' target="_blank">
+                <a href='https://twitter.com/onyxinitiative' target="_blank" rel="noreferrer">
                     <FaTwitter size={28} />
                 </a>
-                <a href='https://www.instagram.com/onyxinitiative/' target="_blank">
+                <a href='https://www.instagram.com/onyxinitiative/' target="_blank" rel="noreferrer">
                     <FaInstagram size={28} />
                 </a>
             </div>
