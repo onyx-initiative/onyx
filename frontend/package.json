@@ -21,7 +21,6 @@
     "@mantine/modals": "^5.7.1",
     "@mantine/next": "^5.7.1",
     "@mantine/notifications": "^5.7.1",
-    "@next/swc-darwin-arm64": "^12.2.5",
     "dayjs": "^1.11.6",
     "dotenv": "^16.0.2",
     "embla-carousel-react": "^7.0.5",

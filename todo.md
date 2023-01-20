@@ -60,3 +60,4 @@ Michael's Hours:
 - Wed, Jan 11 - 1 hr
 - Mon, Jan 16 - 2 hr
 - Tues, Jan 17 - 2 hr
+- Fri, Jan 20 - 7 hrs
