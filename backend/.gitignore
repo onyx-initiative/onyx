@@ -16,6 +16,7 @@
 # Other
 /src/serverlessAuth.ts
 /resources
+src/database/db.ts
 
 # AWS Key Pair
 *.pem
