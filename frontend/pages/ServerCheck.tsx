@@ -9,20 +9,23 @@ export default function ServerCheck() {
 
     const {loading, error, data } = useQuery(GET_ADMINS)
 
-    console.log(data)
-
     return (
         <div>
-            {!loading && !error ?
-            <div>
-                <h1>{data.getAdmins.name} + {data.getAdmins.email}</h1>
-                <button onClick={() => console.log(data)}>Click me</button>
-            </div>
-            : 
-            <div>
-                <h1>Loading...</h1>
-            </div>
-            }
+            <button
+                onClick={() => {
+                    console.log(data)
+                }}
+            >
+                Make Admin
+            </button>
+            <button
+                onClick={() => {
+                    GET_ADMINS
+                    console.log(data)
+                }}
+            >
+                Check Admins
+            </button>
         </div>
     )
 }
