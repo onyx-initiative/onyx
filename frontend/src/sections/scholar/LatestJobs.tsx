@@ -8,14 +8,16 @@ import JobSnippet from '../../components/scholar/JobSnippet';
 export default function LatestJobs() {
     const jobs = sampleData.map(job => {
         return (
-            <JobSnippet 
-                logo={job.logo}
-                positionTitle={job.positionTitle}
-                companyName={job.companyName}
-                location={job.location}
-                type={job.type}
-                deadline={job.deadline}
-            />
+            <div key={job.jobId}>
+                <JobSnippet 
+                    logo={job.logo}
+                    positionTitle={job.positionTitle}
+                    companyName={job.companyName}
+                    location={job.location}
+                    type={job.type}
+                    deadline={job.deadline}
+                />
+            </div>
         )
     })
 
@@ -29,7 +31,8 @@ export default function LatestJobs() {
 }
 
 const sampleData = [
-    {
+    {   
+        jobId: '1',
         logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
         positionTitle: 'Software Engineer',
         companyName: 'RBC',
@@ -38,6 +41,7 @@ const sampleData = [
         deadline: '2021-12-31'
     },
     {
+        jobId: '2',
         logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
         positionTitle: 'Software Engineer',
         companyName: 'RBC',
@@ -46,6 +50,7 @@ const sampleData = [
         deadline: '2021-12-31'
     },
     {
+        jobId: '3',
         logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
         positionTitle: 'Software Engineer',
         companyName: 'RBC',
@@ -54,6 +59,7 @@ const sampleData = [
         deadline: '2021-12-31'
     },
     {
+        jobId: '4',
         logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
         positionTitle: 'Software Engineer',
         companyName: 'RBC',

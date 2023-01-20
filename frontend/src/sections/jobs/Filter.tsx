@@ -105,7 +105,7 @@ export default function Filter(props: FilterProps) {
         <h4 className={styles.title}>Graduation Year</h4>
         {
           filters.applicant_year.map((year: number) => (
-            <div className={styles.checkbox}>
+            <div className={styles.checkbox} key={year}>
               <Checkbox
                 checked={selected.applicant_year.includes(year)}
                 label={year}
