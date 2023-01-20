@@ -37,8 +37,6 @@ const employerResolver = {
             client.release()
             return resp.rows;
         },
-
-        // Add the get jobs once the job relation is implemented
     },
 
     Mutation: {

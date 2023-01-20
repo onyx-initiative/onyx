@@ -72,19 +72,6 @@ const jobResolver = {
         },
         // @todo: Re-implement this function. It should check the filterview table and return
         // the jobs with relevant tags/locations/types, etc.
-        getJobByFilter: async (_: any, { column, filter }: any, { dataSources }: any) => {
-            const { db } = dataSources;
-            const client = await establishConnection(db);
-
-            const query = `SELECT * FROM job WHERE ${column} = $1 AND archived = false`;
-            const resp = await client.query(query, [filter]).catch((err: any) => {
-                console.error(err);
-                client.release()
-                return [];
-            });
-            client.release()
-            return resp.rows;
-        },
         getFeaturedJobs: async (_: any, __: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
@@ -93,6 +80,23 @@ const jobResolver = {
                            WHERE job.job_id = featured.job_id 
                            AND job.job_id NOT IN (SELECT job_id FROM archive)`;
             const resp = await client.query(query ).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            client.release()
+            return resp.rows;
+        },
+        searchJobs: async (_: any, { search }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `
+                SELECT *
+                FROM employer JOIN job ON employer.employer_id = job.employer_id 
+                JOIN job_search ON job_search.job_id = job.job_id
+                WHERE document @@ to_tsquery($1);
+            `;
+            const resp = await client.query(query, [search]).catch((err: any) => {
                 console.error(err);
                 client.release()
                 return [];
