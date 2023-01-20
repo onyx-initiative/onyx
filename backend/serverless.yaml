@@ -11,16 +11,21 @@ provider:
   runtime: nodejs16.x
   region: ca-central-1
   environment:
-    DB_USER: ${env:DB_USER}
+    DB_USER: ${self:custom.DB_USER}
     DB_ID: ${env:DB_ID}
-    DB_PASSWORD: ${env:DB_PASSWORD}
-    DB_NAME: ${env:DB_NAME}
-    PROD_HOST: ${env:PROD_HOST}
+    DB_PASSWORD: ${self:custom.DB_PASSWORD}
+    DB_NAME: ${self:custom.DB_NAME}
+    PROD_HOST: ${self:custom.PROD_HOST}
     DB_PORT: ${env:DB_PORT}
     NODE_ENV: ${env:NODE_ENV}
 custom:
+  path: src/database/.env
   serverless-offline:
     httpPort: 4000
+  DB_NAME: ${DB_NAME}
+  DB_USER: ${DB_USER}
+  DB_PASSWORD: ${DB_PASSWORD}
+  PROD_HOST: ${PROD_HOST}
 resources:
   Resources:
     # PostgreSqlRDSInstance: ${file(./resources/PostgreSqlRDSInstance.yml)}

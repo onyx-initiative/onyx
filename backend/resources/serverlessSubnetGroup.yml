@@ -5,6 +5,9 @@ Properties:
     - ${env:SUBNET_ONE}
     - ${env:SUBNET_TWO}
     - ${env:SUBNET_THREE}
+    - ${env:SUBNET_FOUR}
+    - ${env:SUBNET_FIVE}
+    - ${env:SUBNET_SIX}
   Tags: 
     - 
       Key: "Name"

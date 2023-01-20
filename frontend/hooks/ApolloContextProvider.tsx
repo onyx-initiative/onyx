@@ -8,14 +8,7 @@ import React from 'react';
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    link: new HttpLink({
-        uri: "",
-        // uri: "http://localhost:4000/dev/graphql",
-        fetchOptions: {
-            mode: 'no-cors'
-        }
-    }),
-    // uri: "http://localhost:4000/dev/graphql"
+    uri: process.env.NEXT_PUBLIC_URI
 })
 
 export const ApolloContextProvider = ({ children }: any) => {
