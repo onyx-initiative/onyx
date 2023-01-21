@@ -48,8 +48,10 @@ export type Job = {
     location: string;
     applicant_year: number[];
     deadline: Date;
+    date_posted: Date;
     total_views: number;
     tags: string[];
+    live: boolean;
 }
 
 export type Featured = {

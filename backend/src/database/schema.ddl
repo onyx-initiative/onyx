@@ -47,6 +47,7 @@ CREATE TABLE Job (
     location VARCHAR(50) NOT NULL,
     applicant_year INTEGER[] NOT NULL,
     deadline TIMESTAMP NOT NULL,
+    date_posted TIMESTAMP NOT NULL DEFAULT NOW(),
     total_views INTEGER NOT NULL DEFAULT 0,
     tags VARCHAR(255)[] NOT NULL,
     live BOOLEAN NOT NULL DEFAULT FALSE

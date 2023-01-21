@@ -11,7 +11,7 @@ import getServerProps from "../src/utils/getServerProps";
 import SearchBar from '../src/components/jobs/SearchBar'
 import { GET_JOBS } from '../graphql/queries/jobQueries'
 import { useQuery } from '@apollo/client'
-import { GET_EMPLOYER_BY_ID } from '../graphql/queries/employerQueries'
+
 
 // Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
 
@@ -102,45 +102,22 @@ export default function Jobs() {
   )
 }
 
-// // @todo: implement search. On press, there should be a loading animation
-// // Find the best way to handle searching with the backend
-// const SearchBar = (props: any) => {
-//   const { search, setSearch } = props
-//   return (
-//     <div className={styles.searchBar}>
-//       <input
-//         type="text"
-//         placeholder="Search jobs, companies, and more..."
-//         value={search}
-//         onChange={(e) => setSearch(e.target.value)}
-//       />
-//       <div className={styles.searchButton}>
-//         <AiOutlineSearch size={18}/>
-//         <button
-//           type="button"
-//           onClick={() => alert('search')}
-//         >
-//           Search
-//         </button>
-//       </div>
-//     </div>
-//   )
-// }
-
 // Sample data
 const sampleJob: Job[] = [
   {
-  job_id: '123',
-  employer_id: '123',
-  admin_id: '123',
-  title: 'Software Engineer',
-  description: "This is a sample job description for a software engineer in Toronto. Please visit www.mckinsey.com/careers to apply.",
-  job_type: 'Full Time',
-  location: 'Toronto, ON',
-  applicant_year: [2023, 2024],
-  deadline: new Date(),
-  total_views: 0,
-  tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
+    job_id: '123',
+    employer_id: '123',
+    admin_id: '123',
+    title: 'Software Engineer',
+    description: "This is a sample job description for a software engineer in Toronto. Please visit www.mckinsey.com/careers to apply.",
+    job_type: 'Full Time',
+    location: 'Toronto, ON',
+    applicant_year: [2023, 2024],
+    deadline: new Date(),
+    date_posted: new Date(),
+    total_views: 0,
+    tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
+    live: true,
   },
   {
     job_id: '456',
@@ -152,22 +129,11 @@ const sampleJob: Job[] = [
     location: 'Toronto, ON',
     applicant_year: [2023, 2024],
     deadline: new Date(),
+    date_posted: new Date(),
     total_views: 0,
     tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
+    live: true,
   },
-  // {
-  //   job_id: '2',
-  //   employer_id: '2',
-  //   admin_id: '2',
-  //   title: 'Software Engineer',
-  //   description: "This is a sample job description for a software engineer in Toronto. Please visit www.mckinsey.com/careers to apply.",
-  //   job_type: 'Full Time',
-  //   location: 'Toronto, ON',
-  //   applicant_year: [2023, 2024],
-  //   deadline: new Date(),
-  //   total_views: 0,
-  //   tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
-  // },
 ]
 
 export { getServerProps };
