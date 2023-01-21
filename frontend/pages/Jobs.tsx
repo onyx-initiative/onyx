@@ -44,6 +44,7 @@ export type selected = {
   tags: string[];
 }
 
+//@todo: fix filtering, add side menu, bookmarking, and fix double click to search
 export default function Jobs() {
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState({
@@ -81,8 +82,6 @@ export default function Jobs() {
       setJobs(jobData?.getJobs)
     }
   }, [jobData, jobLoading])
-
-  console.log(jobs)
 
   return (
     <div>

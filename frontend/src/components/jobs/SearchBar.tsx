@@ -9,7 +9,6 @@ type SearchBarProps = {
     setJobs: any;
 }
 
-//@todo: fix full text search from postgres
 export default function SearchBar({ setJobs }: SearchBarProps) {
     const [query, setSearch] = useState('')
     const [getJobs, { data }] = useLazyQuery(SEARCH_JOBS, {
@@ -33,7 +32,6 @@ export default function SearchBar({ setJobs }: SearchBarProps) {
                 if (data) {
                     setJobs(data.searchJobs)
                 }
-                console.log(formatQuery(query))
             }}
           >
             Search
