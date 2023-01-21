@@ -15,13 +15,13 @@ const serverResponse = {
 
 const Home: NextPage = () => {
 
-  // const { status } = useSession({ required: true })
+  const { data, status } = useSession({ required: true })
 
-  // if (status != 'authenticated') {
-  //   return <Login />
-  // }
+  if (status != 'authenticated') {
+    return <Login />
+  }
 
-  // console.log(status)
+  console.log(data)
 
   return (
     <div>

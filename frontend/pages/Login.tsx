@@ -1,14 +1,13 @@
 import React, { useMemo } from 'react'
 import styles from '../styles/components/Login.module.css'
 import onyx_logo from '../public/onyx_logo.png'
-import { FaLinkedinIn, FaTwitter, FaInstagram, FaHubspot } from "react-icons/fa";
+import { FaLinkedinIn, FaTwitter, FaInstagram, FaGoogle } from "react-icons/fa";
 import Image from 'next/image'
 
 import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
 
 export default function Login() {
     const { data: session, status } = useSession()
-
     return (
         <div>
             <div className={styles.container}>
@@ -23,11 +22,11 @@ export default function Login() {
                 <div className={styles.loginContainer}>
                     <h3>Scholar Login/Signup</h3>
                     <div className={styles.scholarLogin}>
-                        <FaHubspot size={28} />
-                        <button 
-                            onClick={() => signIn('hubspot', { callbackUrl: '/Scholar' })}
+                        <FaGoogle size={28} />
+                        <button
+                            onClick={() => signIn('google', { callbackUrl: '/Scholar' })}
                         >
-                            Login with Hubspot
+                            Login with Google
                         </button>
                     </div>
                     <h3 className={styles.loginHeader}>Admin Login</h3>
