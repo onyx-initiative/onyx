@@ -11,7 +11,6 @@ export default NextAuth({
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET as string,
         })
     ],
-    secret: process.env.NEXT_PUBLIC_JWT_SECRET as string,
     pages: {
         signIn: "/Login",
         signOut: "/",
