@@ -10,7 +10,7 @@ const nextConfig = {
       "www.mckinsey.com",
       "media.licdn.com",
       "asset.brandfetch.io",
-      "logo.clearbit.com"
+      "logo.clearbit.com",
     ],
   }
 }

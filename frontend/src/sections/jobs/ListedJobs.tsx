@@ -7,6 +7,8 @@ import loading_svg from '../../assets/loading_svg.svg';
 import Image from 'next/image';
 import { IoLocationSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
 
 type ListedJobsProps = {
     jobs: Job[];
@@ -26,7 +28,7 @@ export default function ListedJobs(props: ListedJobsProps) {
   const [loading, setLoading] = useState(false);
 
   // @todo: Change this to 10 for production
-  const jobsPerPage = 1;
+  const jobsPerPage = 4;
 
   // Uncomment this when backend is connected
   const numPages = loading ? 1 : Math.ceil(jobs.length / jobsPerPage);
@@ -49,12 +51,9 @@ export default function ListedJobs(props: ListedJobsProps) {
     <div className={styles.cardContainer}>
       {/* For the job listing */}
       <div className={styles.job}>
-        {display.map((job: any) => {
+        {display.map((job: any, index: number) => {
           return (
-            <JobCard 
-              job={job} 
-              key={job.job_id}
-            />
+              <JobCard job={job} key={index} />
           )
         })}
       </div>
@@ -76,20 +75,27 @@ const JobCard = (props: any) => {
   const { job } = props;
   const [bookmarked, setBookmarked] = useState(false);
   const [opened, setOpened] = useState(false);
-
-  // @todo: Add a call to get the employer name based on the id
-  // const company = GET_EMPLOYER_BY_ID(employer_id);
-  const company = 'McKinsey & Company';
+  const { data, loading } = useQuery(GET_EMPLOYER_BY_ID, {
+    variables: { employerId: job.employer_id }
+  });
 
   // @todo: Add a call to get the employer website
-  // let website = GET_EMPLOYER_WEBSITE(job.employer_id);
-  let website = 'https://www.scotiabank.com/careers';
-  website = removeProtocol(website)
-
-  const logo = fetchLogo(website);
+  let website: string;
+  if (job.name) {
+    website = websiteURL(job.name)
+  } else {
+    if (loading) {
+      website = 'www.onyxinitiative.org/'
+    } else {
+      website = websiteURL(data.getEmployerById.name);
+    }
+  }
+3
+  let logo = fetchLogo(website);
+  const date = new Date(parseInt(job.deadline)).toDateString();
 
   return (
-    <>
+    <div key={job.job_id} className={styles.mainContainer}>
     <div className={styles.jobCard}>
       <div className={styles.jobCardHeader}>
         <Image 
@@ -113,13 +119,13 @@ const JobCard = (props: any) => {
       <div className={styles.jobCardBody}
         onClick={() => setOpened(!opened)}
       >
-        <h4>{'Targetted Years: ' + job.applicant_year}</h4>
+        <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4>
         <p>{job.description}</p>
       </div>
       <div className={styles.jobTags}>
         {job.tags.map((tag: string) => Tag(tag))}
       </div>
-      <p className={styles.deadline}>{'Deadline: ' + job.deadline.toDateString()}</p>
+      <p className={styles.deadline}>{'Deadline: ' + date}</p>
     </div>
     {/* @todo: add other necessary info */}
     <Drawer
@@ -145,7 +151,7 @@ const JobCard = (props: any) => {
         </div>
       </div>
       </Drawer>
-    </>
+    </div>
   )
 }
 
@@ -173,13 +179,15 @@ const Bookmarked = (props: any) => {
   )
 }
 
-// Helper regex 
-const removeProtocol = (url: string) => {
-  const match = /https?:\/\/([\w.-]+)/i.exec(url);
-  if (match) {
-    return match[1];
+//@todo: Pull logos programmatically
+const websiteURL = (company: string) => {
+  // Temp fix
+  if (company == 'Facebook') {
+    return 'www.facebook.com';
+  } else if (company === '') {
+    return 'www.onyxinitiative.org/';
   } else {
-    return "";
+    return "www." + company.toLowerCase().replace(/ /g, "-") + ".com";
   }
 }
 
@@ -187,4 +195,17 @@ const removeProtocol = (url: string) => {
 // @todo: try to update this to get higher quality logos
 export const fetchLogo = (websiteURL: string) => {
   return `https://logo.clearbit.com/${websiteURL}`;
+}
+
+const formatYears = (years: string[]) => {
+  let formattedYears: string = '';
+  const currentYear = new Date().getFullYear();
+  for (let i = 0; i < years.length; i++) {
+    if (i === years.length - 1) {
+      formattedYears += (currentYear +parseInt(years[i]));
+    } else {
+      formattedYears += (currentYear +parseInt(years[i])) + ', ';
+    }
+  }
+  return formattedYears;
 }
