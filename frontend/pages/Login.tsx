@@ -24,7 +24,7 @@ export default function Login() {
                     <div className={styles.scholarLogin}>
                         <FaGoogle size={28} />
                         <button
-                            onClick={() => signIn('google')}
+                            onClick={() => signIn('google', { callbackUrl: 'https://onyx-jobs.vercel.app/Scholar' })}
                         >
                             Login with Google
                         </button>
