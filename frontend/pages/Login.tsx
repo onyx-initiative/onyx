@@ -6,6 +6,7 @@ import Image from 'next/image'
 
 import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
 
+// @todo: If email not in db, redirect to sign up page
 export default function Login() {
     const { data: session, status } = useSession()
     return (
