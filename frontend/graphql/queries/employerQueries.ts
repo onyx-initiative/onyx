@@ -2,18 +2,12 @@ import { gql } from '@apollo/client'
 
 // This function is commonly needed
 export const GET_EMPLOYER_BY_ID = gql`
-        query GetEmployerById($employerId: ID!) {
-            getEmployerById(employer_id: $employerId) {
-                address
-                admin_id
-                contact_email
-                description
-                employer_id
-                name
-                website
-            }
+    query GetEmployerById($employerId: ID!) {
+        getEmployerById(employer_id: $employerId) {
+            name
         }
-    `
+    }
+`
 
 export const GET_EMPLOYER_BY_NAME = gql`
     query GetEmployerByName($name: String!) {

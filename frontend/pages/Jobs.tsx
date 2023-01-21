@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../src/components/general/Navbar'
 import Filter from '../src/sections/jobs/Filter'
 import styles from '../styles/components/Jobs.module.css'
@@ -8,6 +8,10 @@ import ListedJobs from '../src/sections/jobs/ListedJobs'
 
 // To ensure unauthenticated people don't access
 import getServerProps from "../src/utils/getServerProps";
+import SearchBar from '../src/components/jobs/SearchBar'
+import { GET_JOBS } from '../graphql/queries/jobQueries'
+import { useQuery } from '@apollo/client'
+import { GET_EMPLOYER_BY_ID } from '../graphql/queries/employerQueries'
 
 // Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
 
@@ -69,10 +73,16 @@ export default function Jobs() {
   } as selected)
 
   // @todo: Add call to the api to get the jobs
-  // const [jobs, setJobs] = useState([])
+  const [jobs, setJobs] = useState([])
+  const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
 
-  // For development to avoid changing variables
-  const jobs = sampleJob
+  useEffect(() => {
+    if (!jobLoading) {
+      setJobs(jobData?.getJobs)
+    }
+  }, [jobData, jobLoading])
+
+  console.log(jobs)
 
   return (
     <div>
@@ -85,38 +95,38 @@ export default function Jobs() {
           setSelected={setSelected}
         />
         <div className={styles.jobList}>
-          <SearchBar search={search} setSearch={setSearch} />
-          <ListedJobs jobs={jobs} />
+          <SearchBar setJobs={setJobs}/>
+          {jobLoading ? <div>Loading...</div> : <ListedJobs jobs={jobs} />}
         </div>
       </div>
     </div>
   )
 }
 
-// @todo: implement search. On press, there should be a loading animation
-// Find the best way to handle searching with the backend
-const SearchBar = (props: any) => {
-  const { search, setSearch } = props
-  return (
-    <div className={styles.searchBar}>
-      <input
-        type="text"
-        placeholder="Search jobs, companies, and more..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <div className={styles.searchButton}>
-        <AiOutlineSearch size={18}/>
-        <button
-          type="button"
-          onClick={() => alert('search')}
-        >
-          Search
-        </button>
-      </div>
-    </div>
-  )
-}
+// // @todo: implement search. On press, there should be a loading animation
+// // Find the best way to handle searching with the backend
+// const SearchBar = (props: any) => {
+//   const { search, setSearch } = props
+//   return (
+//     <div className={styles.searchBar}>
+//       <input
+//         type="text"
+//         placeholder="Search jobs, companies, and more..."
+//         value={search}
+//         onChange={(e) => setSearch(e.target.value)}
+//       />
+//       <div className={styles.searchButton}>
+//         <AiOutlineSearch size={18}/>
+//         <button
+//           type="button"
+//           onClick={() => alert('search')}
+//         >
+//           Search
+//         </button>
+//       </div>
+//     </div>
+//   )
+// }
 
 // Sample data
 const sampleJob: Job[] = [

@@ -25,8 +25,8 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      {/* <Scholar /> */}
-      <ServerCheck />
+      <Scholar />
+      {/* <ServerCheck /> */}
     </div>
   )
 }
