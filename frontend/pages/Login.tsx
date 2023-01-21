@@ -24,7 +24,7 @@ export default function Login() {
                     <div className={styles.scholarLogin}>
                         <FaGoogle size={28} />
                         <button
-                            onClick={() => signIn()}
+                            onClick={() => signIn('google')}
                         >
                             Login with Google
                         </button>
