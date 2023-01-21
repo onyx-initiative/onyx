@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Job } from '../../../../backend/src/types/db.types';
 import { useLazyQuery } from '@apollo/client';
 import { AiOutlineSearch } from "react-icons/ai";
@@ -15,6 +15,12 @@ export default function SearchBar({ setJobs }: SearchBarProps) {
         variables: { search: query },
     })
 
+    useEffect(() => {
+        if (data) {
+            setJobs(data.searchJobs)
+        }
+    }, [data, setJobs])
+
     return (
       <div className={styles.searchBar}>
         <input
@@ -27,12 +33,7 @@ export default function SearchBar({ setJobs }: SearchBarProps) {
           <AiOutlineSearch size={18}/>
           <button
             type="button"
-            onClick={() => {
-                getJobs({ variables: { search: formatQuery(query)  } })
-                if (data) {
-                    setJobs(data.searchJobs)
-                }
-            }}
+            onClick={() => getJobs({ variables: { search: formatQuery(query) } })}
           >
             Search
           </button>
