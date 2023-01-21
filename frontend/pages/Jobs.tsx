@@ -3,7 +3,6 @@ import Navbar from '../src/components/general/Navbar'
 import Filter from '../src/sections/jobs/Filter'
 import styles from '../styles/components/Jobs.module.css'
 import { job_type, Job } from '../../backend/src/types/db.types'
-import { AiOutlineSearch } from "react-icons/ai";
 import ListedJobs from '../src/sections/jobs/ListedJobs'
 
 // To ensure unauthenticated people don't access
@@ -11,6 +10,8 @@ import getServerProps from "../src/utils/getServerProps";
 import SearchBar from '../src/components/jobs/SearchBar'
 import { GET_JOBS } from '../graphql/queries/jobQueries'
 import { useQuery } from '@apollo/client'
+import loading from '../src/assets/loading.svg'
+import Image from 'next/image'
 
 
 // Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
@@ -95,7 +96,12 @@ export default function Jobs() {
         />
         <div className={styles.jobList}>
           <SearchBar setJobs={setJobs}/>
-          {jobLoading ? <div>Loading...</div> : <ListedJobs jobs={jobs} />}
+          {jobLoading ? 
+            <div className={styles.loading}>
+              <Image src={loading} alt="Loading..." width={80} height={80}/>
+            </div> : 
+            <ListedJobs jobs={jobs} />
+          }
         </div>
       </div>
     </div>

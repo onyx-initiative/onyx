@@ -3,7 +3,7 @@ import { Select, Pagination, Slider, RangeSlider, Drawer } from '@mantine/core';
 import { DatePicker, DateRangePicker } from '@mantine/dates';
 import { Job } from '../../../../backend/src/types/db.types';
 import styles from '../../../styles/components/Jobs.module.css'
-import loading_svg from '../../assets/loading_svg.svg';
+import loading_svg from '../../assets/loading.svg';
 import Image from 'next/image';
 import { IoLocationSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
