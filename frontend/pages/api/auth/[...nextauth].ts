@@ -37,4 +37,7 @@ export default NextAuth({
             return randomUUID?.() ?? randomBytes(32).toString("hex")
         }
     },
+    jwt: {
+        maxAge: 60 * 60 * 24, // 1 day
+    }
 });
