@@ -120,7 +120,23 @@ const jobResolver = {
             });
             client.release()
             return resp.rows;
-        }
+        },
+        getFavourites: async (_: any, { scholar_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `
+                SELECT *
+                FROM Saved
+                WHERE scholar_id = $1;
+            `;
+            const resp = await client.query(query, [scholar_id]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            client.release()
+            return resp.rows;
+        },
     },
     Mutation: {
         createJob: async (_: any, { 
