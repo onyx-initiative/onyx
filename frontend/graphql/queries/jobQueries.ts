@@ -192,3 +192,25 @@ export const GET_NEW_JOBS = gql`
         }
     }
 `
+
+export const GET_FAVOURITES = gql`
+    query GetFavourites($scholarId: ID!) {
+        getFavourites(scholar_id: $scholarId) {
+            job_id
+            employer_id
+            admin_id
+            title
+            description
+            long_description
+            contact_email
+            job_type
+            term
+            location
+            applicant_year
+            deadline
+            date_posted
+            total_views
+            tags
+        }
+    }
+`

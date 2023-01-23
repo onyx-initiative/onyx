@@ -64,6 +64,7 @@ export const jobTypeDef = gql`
         getFeaturedJobs: [Job!]!
         searchJobs(search: String!): [JobSearch!]!
         getNewJobs: [Job!]!
+        getFavourites(scholar_id: ID!): [Job!]!
     }
 
     type Return {
