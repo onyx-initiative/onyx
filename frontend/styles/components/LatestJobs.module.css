@@ -8,6 +8,8 @@
     height: 100%;
     padding: 0 1rem;
     padding-bottom: 1rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
 }
 
 .jobContainer > h2 {
@@ -67,4 +69,11 @@
     font-weight: 700;
     margin-bottom: 0.25rem;
     padding-bottom: 0;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
 }

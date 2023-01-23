@@ -32,6 +32,7 @@ export const jobTypeDef = gql`
         location: String!
         applicant_year: [Int!]!
         deadline: String!
+        date_posted: String!
         total_views: Int!
         tags: [String!]!
     }
@@ -50,6 +51,7 @@ export const jobTypeDef = gql`
         location: String!
         applicant_year: [Int!]!
         deadline: String!
+        date_posted: String!
         total_views: Int!
         tags: [String!]!
     }
@@ -61,6 +63,7 @@ export const jobTypeDef = gql`
         getJobsByEmployerId(employer_id: ID!): [Job!]!
         getFeaturedJobs: [Job!]!
         searchJobs(search: String!): [JobSearch!]!
+        getNewJobs: [Job!]!
     }
 
     type Return {
