@@ -17,9 +17,8 @@ import getServerProps from "../src/utils/getServerProps";
 // Session
 import { useSession } from 'next-auth/react';
 import CreateAccount from './CreateAccount'
-import Image from 'next/image'
-import loading from '../src/assets/loading.svg'
 import loadingStyles from '../styles/components/CreateAccount.module.css'
+import Loading from './Loading'
 
 export default function Scholar() {
   const { data: session, status } = useSession({ required: true })
@@ -35,13 +34,7 @@ export default function Scholar() {
   if (loadingScholar) {
     return (
       <div className={loadingStyles.loading}>
-        <Image
-            src={loading}
-            alt="Loading"
-            width={100}
-            height={100}
-        />
-        <h1>Loading...</h1>
+        <Loading />
       </div>
     )
   } 
@@ -52,10 +45,14 @@ export default function Scholar() {
 
   return ( 
     <div>
-        <Navbar />
-        <SearchBar />
-        <ScholarHero />
-        <LatestJobs />
+      {scholarData.getScholarByEmail === null ? <Loading /> : 
+        <div>
+          <Navbar />
+          <SearchBar />
+          <ScholarHero />
+          <LatestJobs />
+        </div>
+      }
     </div>
   )
 }

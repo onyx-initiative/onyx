@@ -4,16 +4,7 @@ import Image from 'next/image'
 import styles from '../styles/components/CreateAccount.module.css'
 import { useRouter } from 'next/router'
 
-type LoadingProps = {
-    sendingData: boolean;
-}
-
-export default function Loading({ sendingData }: LoadingProps) {
-    const router= useRouter()
-
-    if (!sendingData) {
-        router.push('/Scholar')
-    }
+export default function Loading() {
     return (
         <div className={styles.loading}>
             <Image
