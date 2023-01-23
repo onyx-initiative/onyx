@@ -33,7 +33,7 @@ export default function Navbar(props: any) {
           <Link href="/Favourites">Favourites</Link>
         </li>
         <li>
-          <Link href="/Jobs">Contact Us</Link>
+          <Link href="/Contact">Contact Us</Link>
         </li>
       </ul>
       <ProfilePhoto name='Michael Dawes'/>

@@ -84,10 +84,10 @@ export default function CreateAccount() {
 
 type InputElementProps = {
   label: string;
-  userInfo: UserInfo;
+  userInfo: UserInfo | {};
   setUserInfo: any;
 }
-const InputElement = ({ label, userInfo, setUserInfo }: InputElementProps) => {
+export const InputElement = ({ label, userInfo, setUserInfo }: InputElementProps) => {
   const [inputValue, setInputValue] = useState("")
 
   useEffect(() => {

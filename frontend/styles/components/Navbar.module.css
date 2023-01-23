@@ -10,6 +10,7 @@
 
 .navbarLogo {
     margin-right: auto;
+    cursor: pointer;
 }
 
 .navbarItems {

@@ -90,6 +90,7 @@ export default function Jobs() {
         setJobs(jobData?.getJobs)
       }
     }
+    // Ignore, this is intentional
   }, [jobData, jobLoading])
 
   return (
