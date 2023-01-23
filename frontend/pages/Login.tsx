@@ -1,14 +1,18 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styles from '../styles/components/Login.module.css'
 import onyx_logo from '../public/onyx_logo.png'
 import { FaLinkedinIn, FaTwitter, FaInstagram, FaGoogle } from "react-icons/fa";
 import Image from 'next/image'
-
+import { GET_SCHOLAR_BY_EMAIL } from '../graphql/queries/scholarQueries';
+import loading from '../src/assets/loading.svg'
 import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
+import { useQuery } from '@apollo/client';
+
 
 // @todo: If email not in db, redirect to sign up page
 export default function Login() {
     const { data: session, status } = useSession()
+
     return (
         <div>
             <div className={styles.container}>
@@ -25,7 +29,7 @@ export default function Login() {
                     <div className={styles.scholarLogin}>
                         <FaGoogle size={28} />
                         <button
-                            onClick={() => signIn('google', { callbackUrl: process.env.NEXT_PUBLIC_CALLBACK_URL })}
+                            onClick={() => signIn('google', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Scholar' : process.env.NEXT_PUBLIC_CALLBACK_URL + '/Scholar'})}
                         >
                             Login with Google
                         </button>

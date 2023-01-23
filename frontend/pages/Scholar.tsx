@@ -7,15 +7,42 @@ import LatestJobs from '../src/sections/scholar/LatestJobs'
 // GraphQL
 import { useQuery } from '@apollo/client'
 import { GET_EMPLOYERS } from '../graphql/queries/employerQueries'
+import { GET_SCHOLAR_BY_EMAIL } from '../graphql/queries/scholarQueries'
 
 // To ensure unauthenticated people don't access
 import getServerProps from "../src/utils/getServerProps";
 
-export default function Scholar() {
-  const {loading, error, data } = useQuery(GET_EMPLOYERS)
+// Session
+import { useSession } from 'next-auth/react';
+import CreateAccount from './CreateAccount'
+import Image from 'next/image'
+import loading from '../src/assets/loading.svg'
 
-  console.log(data)
-  return (
+export default function Scholar() {
+  const { data: session, status } = useSession({ required: true })
+
+  // const {loading: loadingEmployer, error: employerError, data: employerData } = useQuery(GET_EMPLOYERS)
+  const { data: scholarData, loading: loadingScholar, error: scholarError } = useQuery(GET_SCHOLAR_BY_EMAIL, {
+    variables: { email: "mdawes28@gmail.com" }
+  })
+
+  if (loadingScholar) {
+    return (
+      <div>
+        <Image src={loading} alt='loading'/>
+      </div>
+    )
+  } 
+
+  if (scholarData.getScholarByEmail === null) {
+    return (
+      <div>
+        <CreateAccount />
+      </div>
+    )
+  }
+  
+  return ( 
       <div>
           <Navbar />
           <SearchBar />

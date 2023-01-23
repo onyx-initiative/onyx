@@ -41,7 +41,11 @@ const scholarResolver = {
                 return [];
             });
             client.release()
-            return resp.rows[0];
+            if (resp.rows[0]) {
+                return resp.rows[0];
+            } else {
+                return null;
+            };
         }
     },
     Mutation: {

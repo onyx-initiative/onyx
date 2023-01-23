@@ -28,9 +28,9 @@ export default NextAuth({
 
         // Seconds - How long until an idle session expires and is no longer valid.
         // maxAge: 30 * 24 * 60 * 60, // 30 days
-        maxAge: 60 * 60 * 24, // 1 day
+        maxAge: 60 * 60 * 2, // 2 hours
 
-        updateAge: 24 * 60 * 60, // 24 hours
+        updateAge: 60 * 60 * 2, // 2 hours
         
         generateSessionToken: () => {
             return randomUUID?.() ?? randomBytes(32).toString("hex")

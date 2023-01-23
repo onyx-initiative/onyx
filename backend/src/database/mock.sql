@@ -26,3 +26,6 @@ INSERT INTO Job (employer_id, admin_id, title, description, long_description, co
     (1, 1, 'Hardware', 'Hardware', 'Hardware', 'test@test.com', 'Part Time', 'Permanent', 'London', '{1,2,3}', '2020-01-01', 0, '{Software, Engineer}', TRUE),
     (3, 1, 'Marketing', 'Marketing', 'Marketing', 'test@test.com', 'Part Time', 'Permanent', 'London', '{1,2,3}', '2020-01-01', 0, '{Software, Engineer}', TRUE);
 
+INSERT INTO scholar(name, email, year, school, major, status, notifications) VALUES
+    ('Michael', 'mdawes28@gmail.com', 1, 'University of Toronto', 'Computer Science', 'current', TRUE);
+

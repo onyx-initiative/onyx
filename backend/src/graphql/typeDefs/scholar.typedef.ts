@@ -23,7 +23,7 @@ export const scholarTypeDef = gql`
     type Query {
         getScholars: [Scholar!]!
         getScholar(scholar_id: ID!): Scholar!
-        getScholarByEmail(email: String!): Scholar!
+        getScholarByEmail(email: String!): Scholar
         checkViews(scholar_id: ID!, view_id: ID!): [Scholar]!
     }
 
