@@ -8,10 +8,12 @@ import ListedJobs from '../src/sections/jobs/ListedJobs'
 // To ensure unauthenticated people don't access
 import getServerProps from "../src/utils/getServerProps";
 import SearchBar from '../src/components/jobs/SearchBar'
-import { GET_JOBS } from '../graphql/queries/jobQueries'
-import { useQuery } from '@apollo/client'
+import { GET_JOBS, SEARCH_JOBS } from '../graphql/queries/jobQueries'
+import { useLazyQuery, useQuery } from '@apollo/client'
 import loading from '../src/assets/loading.svg'
 import Image from 'next/image'
+
+import { useRouter } from "next/router"
 
 
 // Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
@@ -47,6 +49,8 @@ export type selected = {
 
 //@todo: fix filtering, add side menu, bookmarking, and fix double click to search
 export default function Jobs() {
+  const router = useRouter()
+  const { query } = router
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState({
     location: [],
@@ -78,9 +82,13 @@ export default function Jobs() {
   const [jobs, setJobs] = useState([])
   const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
 
+  console.log(query)
+
   useEffect(() => {
     if (!jobLoading) {
-      setJobs(jobData?.getJobs)
+      if (!query.search) {
+        setJobs(jobData?.getJobs)
+      }
     }
   }, [jobData, jobLoading])
 
@@ -95,7 +103,7 @@ export default function Jobs() {
           setSelected={setSelected}
         />
         <div className={styles.jobList}>
-          <SearchBar setJobs={setJobs}/>
+          <SearchBar setJobs={setJobs} initialQuery={query.search as string}/>
           {jobLoading ? 
             <div className={styles.loading}>
               <Image src={loading} alt="Loading..." width={80} height={80}/>
