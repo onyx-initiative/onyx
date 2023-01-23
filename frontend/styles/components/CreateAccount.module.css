@@ -1,0 +1,79 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    margin-top: 5rem;
+    margin-bottom: 0.5rem;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    width: 40%;
+    background-color: #806E53;
+    align-self: center;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+}
+
+.inputText {
+    color: darkgray;
+    font-size: small;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 0.3rem;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width: 80%;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.inputContainer > input {
+    border: none;
+    background-color: white;
+    text-indent: none;
+    padding: 0;
+    font-size: 18px;
+    color: black;
+}
+
+.checkBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkBox > p {
+    margin-left: 0.8rem;
+}
+
+.submitButton {
+    width: 80%;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 0.2rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
