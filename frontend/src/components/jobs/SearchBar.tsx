@@ -19,6 +19,7 @@ export default function SearchBar({ setJobs, initialQuery }: SearchBarProps) {
     useEffect(() => {
     if (initialQuery) {
         getJobs({ variables: { search: formatQuery(initialQuery) } })
+        // Ignore, this is intentional
     }}, [initialQuery])
 
     useEffect(() => {
