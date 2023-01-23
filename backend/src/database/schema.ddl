@@ -21,7 +21,8 @@ CREATE TABLE Scholar (
     school VARCHAR(50) NOT NULL,
     major VARCHAR(50) NOT NULL,
     status scholar_status NOT NULL,
-    notifications BOOLEAN NOT NULL DEFAULT FALSE
+    notifications BOOLEAN NOT NULL DEFAULT FALSE,
+    UNIQUE (name, email)
 );
 
 CREATE TABLE Employer (

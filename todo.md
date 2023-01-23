@@ -26,11 +26,11 @@
  
 
 Michael's Hours:
-- Sat, Aug 27 - 1.5hrs
+- Sat, Aug 27 - 1.5 hrs
 - Sun, Aug 28 - 6 hrs
 - Mon, Aug 29 - 1 hr
 - Tues, Aug 30 - 3 hrs
-- Wed, Aug 31 - 1.5hrs + 
+- Wed, Aug 31 - 1.5 hrs 
 - Thurs, Sept 1 - 1 hr
 - Fri, Sept 2 - 1 hr
 - Mon, Sept 12 - 9 hrs
@@ -61,4 +61,7 @@ Michael's Hours:
 - Mon, Jan 16 - 2 hr
 - Tues, Jan 17 - 2 hr
 - Fri, Jan 20 - 13 hrs
-= Sat, Jan 21 - 3 hrs
+- Sat, Jan 21 - 3 hrs
+- Sun, Jan 23 - 5 hrs
+- Mon, Jan 24 - 3 hrs
+

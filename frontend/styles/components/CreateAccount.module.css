@@ -77,3 +77,17 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+.notComplete {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20rem;
+}
