@@ -1,11 +1,11 @@
 import React, { SetStateAction, useState } from 'react'
 import styles from '../../../styles/components/Searchbar.module.css'
 import { AiOutlineSearch } from 'react-icons/ai'
+import { useRouter } from 'next/router'
 
 
 export default function SearchBar(props: any) {
   const [search, setSearch] = useState('')
-
 
   return (
     <div className={styles.box}>
@@ -15,7 +15,9 @@ export default function SearchBar(props: any) {
             className={styles.input}
             type='text' 
             placeholder='Search by job title, company, etc..' // Update once finalized
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
           />
         </div>
         <div 
@@ -37,10 +39,14 @@ type Search = {
   search: string
 }
 const Search = (props: Search) => {
+  const router = useRouter()
   return (
     <button 
       onClick={() => {
-      alert("Searching for " + props.search)
+        router.push({
+          pathname: '/Jobs',
+          query: { search: props.search },
+        })
     }}>
       Search
     </button>

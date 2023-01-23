@@ -7,13 +7,19 @@ import { SEARCH_JOBS } from '../../../graphql/queries/jobQueries';
 
 type SearchBarProps = {
     setJobs: any;
+    initialQuery?: string;
 }
 
-export default function SearchBar({ setJobs }: SearchBarProps) {
+export default function SearchBar({ setJobs, initialQuery }: SearchBarProps) {
     const [query, setSearch] = useState('')
     const [getJobs, { data }] = useLazyQuery(SEARCH_JOBS, {
         variables: { search: query },
     })
+
+    useEffect(() => {
+    if (initialQuery) {
+        getJobs({ variables: { search: formatQuery(initialQuery) } })
+    }}, [initialQuery])
 
     useEffect(() => {
         if (data) {
