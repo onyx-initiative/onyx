@@ -3,17 +3,32 @@ import { Carousel } from '@mantine/carousel';
 import { createStyles, Paper, Text, Title, Button, useMantineTheme } from '@mantine/core';
 import styles from '../../../styles/components/ScholarHero.module.css'
 import Image from 'next/image';
+import { websiteURL, fetchLogo } from '../../components/jobs/JobCard';
+import { useQuery } from '@apollo/client';
+import { GET_EMPLOYERS } from '../../../graphql/queries/employerQueries';
+import { Employer } from '../../../../backend/src/types/db.types';
+import Loading from '../../../pages/Loading';
 
 export default function ScholarHero() {
+    const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
 
-    const employers = sampleData.map(
-        (employer) => {
+    if (loadingEmployers) {
+        return (
+            <Loading />
+    )}
+
+    const employers = employerData.getEmployers.map(
+        (employer: Employer) => {
             return (
-                <Carousel.Slide key={employer.companyName}>
-                    <Card 
-                        logo={employer.logo} 
-                        companyName={employer.companyName} 
-                        location={employer.location} 
+                <Carousel.Slide key={employer.name}>
+                    <EmployerCard
+                        name={employer.name}
+                        description={employer.description}
+                        employer_id={employer.employer_id}
+                        admin_id={employer.admin_id}
+                        contact_email={employer.contact_email}
+                        address={employer.address}
+                        website={employer.website}
                     />
                 </Carousel.Slide>
             )
@@ -29,8 +44,9 @@ export default function ScholarHero() {
                 mx="auto"
                 slideGap="xs"
                 controlSize={22}
-                slideSize="25%"
+                slideSize="20%"
                 loop
+                align="start"
                 withIndicators
                 styles={{ indicators: { position: 'relative', top: 20, marginBottom: 20 } }}
             >
@@ -41,13 +57,18 @@ export default function ScholarHero() {
   )
 }
 
-type card = {
-    logo: string;
-    companyName: string;
-    location: string;
-}
-
-const Card = ({logo, companyName, location}: card) => {
+const EmployerCard = (props: Employer) => {
+    const { 
+        name, 
+        description,
+        employer_id, 
+        admin_id, 
+        contact_email, 
+        address, 
+        website
+    } = props
+    const site = websiteURL(props.name)
+    const logo = fetchLogo(site)
     return (
         <Paper
             className={styles.card}
@@ -56,42 +77,12 @@ const Card = ({logo, companyName, location}: card) => {
                 <Image 
                     src={logo} 
                     alt="Company Logo" 
-                    width={150} 
+                    width={100} 
                     height={100}
                 />
-                <h2>{companyName}</h2>
-                <p>{location}</p>
+                <h2>{name}</h2>
+                <p>{description}</p>
             </div>
         </Paper>
     )
 }
-
-// Sample data for carousel
-// Fetch this from backend
-const sampleData = [
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
-        companyName: 'Royal Bank of Canada',
-        location: 'Toronto, ON',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Scotiabank-logo-500x281.png',
-        companyName: 'Scotiabank',
-        location: 'Toronto, ON',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png',
-        companyName: 'Amazon',
-        location: 'Toronto, ON',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png',
-        companyName: 'Amazon',
-        location: 'Toronto, ON',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png',
-        companyName: 'Amazon',
-        location: 'Toronto, ON',
-    }
-]

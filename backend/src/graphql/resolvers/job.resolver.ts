@@ -103,6 +103,23 @@ const jobResolver = {
             });
             client.release()
             return resp.rows;
+        },
+        getNewJobs: async (_: any, __: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `
+                SELECT *
+                FROM Job
+                WHERE date_posted > NOW() - INTERVAL '3 days'
+                LIMIT 10;
+            `;
+            const resp = await client.query(query).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            client.release()
+            return resp.rows;
         }
     },
     Mutation: {
