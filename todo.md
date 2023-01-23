@@ -63,5 +63,5 @@ Michael's Hours:
 - Fri, Jan 20 - 13 hrs
 - Sat, Jan 21 - 3 hrs
 - Sun, Jan 23 - 5 hrs
-- Mon, Jan 24 - 3 hrs
+- Mon, Jan 24 - 7 hrs
 
