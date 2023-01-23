@@ -48,15 +48,14 @@ export default function Scholar() {
 
   if (scholarData.getScholarByEmail === null && !loadingScholar) {
     router.push('/CreateAccount')
-  } else {
     return ( 
-        <div>
-            <Navbar />
-            <SearchBar />
-            <ScholarHero />
-            <LatestJobs />
-        </div>
-      )
+      <div>
+          <Navbar />
+          <SearchBar />
+          <ScholarHero />
+          <LatestJobs />
+      </div>
+    )
   }
 }
 
