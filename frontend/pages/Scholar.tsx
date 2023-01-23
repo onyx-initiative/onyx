@@ -39,7 +39,7 @@ export default function Scholar() {
     )
   } 
 
-  if (scholarData.getScholarByEmail === null && !loadingScholar) {
+  if ((scholarData.getScholarByEmail === null || scholarData === undefined) && !loadingScholar) {
     router.push('/CreateAccount')
   } 
 
