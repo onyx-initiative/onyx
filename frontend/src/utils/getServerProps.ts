@@ -12,7 +12,6 @@ const getServerProps  =  async  (context: GetServerSidePropsContext) => {
             },
         };
     }
-    
     return {
         props: {
             session,
