@@ -29,7 +29,7 @@ export default function Login() {
                     <div className={styles.scholarLogin}>
                         <FaGoogle size={28} />
                         <button
-                            onClick={() => signIn('google', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Scholar' : process.env.NEXT_PUBLIC_CALLBACK_URL + '/Scholar'})}
+                            onClick={() => signIn('google', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Scholar' : process.env.NEXT_PUBLIC_CALLBACK_URL})}
                         >
                             Login with Google
                         </button>
