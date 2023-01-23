@@ -4,7 +4,6 @@ import styles from '../styles/components/CreateAccount.module.css'
 import { Checkbox } from '@mantine/core';
 import { CREATE_SCHOLAR } from '../graphql/mutations/scholarMutations';
 import { useMutation } from '@apollo/client';
-import loading from '../src/assets/loading.svg'
 import Image from 'next/image';
 import { useRouter } from 'next/router'
 
@@ -38,7 +37,7 @@ export default function CreateAccount() {
 
   const handleSubmit = () => {
       createScholar();
-      router.push('/Loading')
+      router.push('/Scholar')
   }
 
   useEffect(() => {
