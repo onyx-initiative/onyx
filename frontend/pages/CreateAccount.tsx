@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react';
 import styles from '../styles/components/CreateAccount.module.css'
 import { Checkbox } from '@mantine/core';
 import { CREATE_SCHOLAR } from '../graphql/mutations/scholarMutations';
 import { useMutation } from '@apollo/client';
+import loading from '../src/assets/loading.svg'
 import Image from 'next/image';
+import { useRouter } from 'next/router'
 
 
 type UserInfo = {
@@ -21,16 +23,29 @@ export default function CreateAccount() {
   const { data, status } = useSession({ required: true })
   const [userInfo, setUserInfo] = useState({} as UserInfo)
   const [checked, setChecked] = useState(false)
-  const [createScholar] = useMutation(CREATE_SCHOLAR, {
+  const [createScholar, { data: scholarData, loading: sendingData, error}] = useMutation(CREATE_SCHOLAR, {
     variables: {
       name: userInfo.name,
       email: data?.user?.email,
-      year: userInfo.year,
+      year: Number(userInfo.year),
       school: userInfo.school,
       major: userInfo.major,
       status: 'current',
       notifications: checked,
     }})
+  const [completed, setCompleted] = useState(null as boolean | null)
+  const router= useRouter()
+
+  const handleSubmit = () => {
+      createScholar();
+      router.push('/Loading')
+  }
+
+  useEffect(() => {
+    if (completed) {
+      handleSubmit();
+    }
+  }, [completed])
 
   return (
     <div className={styles.container}>
@@ -50,13 +65,15 @@ export default function CreateAccount() {
         <InputElement label="School" userInfo={userInfo} setUserInfo={setUserInfo} />
         <InputElement label="Major" userInfo={userInfo} setUserInfo={setUserInfo} />
         <OnyxCheckbox checked={checked} setChecked={setChecked} />
+        {
+          completed === true || completed === null ? 
+            null : <p className={styles.notComplete}>Please fill out all fields</p>
+        }
         <button 
           className={styles.submitButton}
           onClick={() => {
             // 1. Check all fields are filled
-            // 2. Send user info to backend
-            // 3. Redirect to dashboard
-            alert("Account created!")
+            checkCompletion(userInfo, setCompleted);
           }}
         >
           Create Account
@@ -73,6 +90,12 @@ type InputElementProps = {
 }
 const InputElement = ({ label, userInfo, setUserInfo }: InputElementProps) => {
   const [inputValue, setInputValue] = useState("")
+
+  useEffect(() => {
+    setUserInfo({ ...userInfo, [label.toLowerCase()]: inputValue } as UserInfo)
+    // Ignore warning, this is intentional
+  }, [inputValue])
+
   return (
     <div className={styles.inputContainer}>
       <h3 className={styles.inputText}>{label}</h3>
@@ -83,8 +106,8 @@ const InputElement = ({ label, userInfo, setUserInfo }: InputElementProps) => {
         placeholder={label}
         value={inputValue}
         onChange={(e) => {
-          setInputValue(e.target.value); 
-          setUserInfo({ ...userInfo, [label.toLowerCase()]: inputValue } as UserInfo)}}
+          setInputValue(e.target.value);
+        }}
       />
     </div>
   )
@@ -102,4 +125,12 @@ const OnyxCheckbox = ({ checked, setChecked }: any) => {
       <p>Would you like to receive notifications about new jobs?</p>
     </div>
   )
+}
+
+const checkCompletion = async (userInfo: UserInfo, setCompleted: any) => {
+  if (userInfo.name && userInfo.year && userInfo.school && userInfo.major) {
+    setCompleted(true)
+  } else {
+    setCompleted(false)
+  }
 }
