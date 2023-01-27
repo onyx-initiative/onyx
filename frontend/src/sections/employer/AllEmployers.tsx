@@ -31,11 +31,11 @@ const text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
 //sample data for employer tag
 const sampleData = [
     {
-        logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
-        companyName: 'Royal Bank of Canada',
+        logo: 'https://1000logos.net/wp-content/uploads/2021/09/McKinsey-Logo.png',
+        companyName: 'McKinsey & Company',
         location: 'Toronto, ON',
         info: text,
-        link: 'https://jobs.rbc.com/ca/en',
+        link: '',
     },
     {
         logo: 'https://1000logos.net/wp-content/uploads/2021/05/Scotiabank-logo-500x281.png',

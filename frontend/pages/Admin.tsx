@@ -25,4 +25,4 @@ export default function Admin() {
     )
 }
 
-export { getServerProps };
+// export { getServerProps };

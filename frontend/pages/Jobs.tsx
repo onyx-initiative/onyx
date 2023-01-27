@@ -151,4 +151,4 @@ const sampleJob: Job[] = [
   },
 ]
 
-export { getServerProps };
+// export { getServerProps };
