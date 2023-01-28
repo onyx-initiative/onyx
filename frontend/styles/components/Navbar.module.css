@@ -25,6 +25,14 @@
 .navbarItems li {
     padding: 0 3rem;
     font-size: large;
+    color: gray;
+    font-weight: 700;
+}
+
+.navbarItems li:hover {
+    color: white;
+    cursor: pointer;
+    transition: 0.4s;
 }
 
 .navbarProfile {

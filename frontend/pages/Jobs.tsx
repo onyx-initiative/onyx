@@ -82,8 +82,6 @@ export default function Jobs() {
   const [jobs, setJobs] = useState([])
   const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
 
-  console.log(query)
-
   useEffect(() => {
     if (!jobLoading) {
       if (!query.search) {
