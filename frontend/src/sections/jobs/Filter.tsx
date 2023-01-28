@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../../../styles/components/Jobs.module.css'
 import { MdOutlineCancel } from "react-icons/md";
 import { Select, Checkbox, MultiSelect } from '@mantine/core';
 import { filters, sort } from '../../../pages/Jobs';
 import { cursorTo } from 'readline';
+import { SEARCH_JOBS } from '../../../graphql/queries/jobQueries';
+import { useLazyQuery } from '@apollo/client';
 
 type FilterProps = {
   filters: any;
   setFilters: (filters: filters) => void;
   selected: any;
   setSelected: (selected: any) => void;
+  setJobs: any;
 }
 
 export default function Filter(props: FilterProps) {
-  const { filters, setFilters, selected, setSelected } = props
+  const { filters, setFilters, selected, setSelected, setJobs } = props
+  const [getJobs, { data }] = useLazyQuery(SEARCH_JOBS, {
+    variables: { search: '' },
+  })
+
+  // @todo: Fix the apply filter query
+  useEffect(() => {
+    if (data) {
+        setJobs(data.searchJobs)
+    }
+}, [data, setJobs])
 
   return (
     <div className={styles.filterBar}>
@@ -28,6 +41,12 @@ export default function Filter(props: FilterProps) {
           searchable
           nothingFound="No options"
           data={filters.location}
+          onChange={(value) => {
+            setSelected({
+              ...selected,
+              location: value
+            })
+          }}
         />
       </div>
       <div className={styles.jobType}>
@@ -147,6 +166,13 @@ export default function Filter(props: FilterProps) {
           placeholder="Select tags to filter by"
           searchable
           creatable
+          onChange={(query) => {
+            const item = { value: query, label: query };
+            setSelected({
+              ...selected,
+              tags: [...selected.tags, item]
+            })
+          }}
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => {
             const item = { value: query, label: query };
@@ -158,11 +184,20 @@ export default function Filter(props: FilterProps) {
           }}
         />
       </div>
+      <button 
+        type="button" 
+        className={styles.applyFilters}
+        onClick={() => {
+          getJobs({ variables:  { search: stringifyFilters(selected) } })
+        }}
+      >
+        Apply Filters
+      </button>
     </div>
   )
 }
 
-// @todo: Add a function to reset all filters
+
 const ClearAll = (props: any) => {
   const { setSelected } = props
 
@@ -189,4 +224,43 @@ const ClearAll = (props: any) => {
       </div>
     </button>
   )
+}
+
+const stringifyFilters = (selected: any) => {
+  let filters = ''
+  for (const key in selected) {
+    if (selected[key] !== '' && selected[key].length > 0) {
+      if (key === 'job_type') {
+        for (const jobType in selected[key]) {
+          if (selected[key][jobType]) {
+            filters += ` & ${jobType}`
+          }
+        }
+      } else if (key === 'applicant_year') {
+        for (const year of selected[key]) {
+          filters += ` & ${year}`
+        }
+      } else if (key === 'tags') {
+        const tag = selected[key][selected[key].length - 1]
+        for (let i = 0; i < tag.value.length; i++) {
+          filters += ` & ${tag.value[i]}`
+        }
+      } else {
+        filters += ` & ${selected[key]}`
+      }
+    }
+  }
+
+  if (filters[filters.length - 1] === '&') {
+    if (filters[1] === '&') {
+      filters = filters.slice(3, -1)
+    } else {
+      filters = filters.slice(1, -1)
+    }
+  }
+  if (filters[0] === ' ') {
+    filters = filters.slice(3)
+  }
+
+  return filters
 }

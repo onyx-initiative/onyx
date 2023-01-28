@@ -23,6 +23,12 @@
         querys to allow for a better user experience. E.g. inputting an employer name
         when adding a job rather than an employer id.
 - [ ] Redeploy to AWS
+
+## New
+
+- Add apple MSFT and google auth bc theyre students
+- Check hubsot api yo grab student emails
+- CRON job to send emails
  
 
 Michael's Hours:
@@ -64,4 +70,5 @@ Michael's Hours:
 - Sat, Jan 21 - 3 hrs
 - Sun, Jan 23 - 5 hrs
 - Mon, Jan 24 - 7 hrs
+- Sat, Jan 28 - 2 hr
 

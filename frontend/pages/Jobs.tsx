@@ -35,7 +35,7 @@ export type filters = {
 
 // @ todo: Figure out how to handle the toggling
 export type selected = {
-  location: string;
+  location: string[];
   job_type: {
     full_time: boolean;
     part_time: boolean;
@@ -53,7 +53,7 @@ export default function Jobs() {
   const { query } = router
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState({
-    location: [],
+    location: ['Toronto', 'New York', 'London'],
     job_type: [],
     applicant_year: [
       new Date().getFullYear(),
@@ -66,7 +66,7 @@ export default function Jobs() {
     tags: []
   } as filters)
   const [selected, setSelected] = useState({
-    location: '',
+    location: [],
     job_type: {
       full_time: false,
       part_time: false,
@@ -102,9 +102,10 @@ export default function Jobs() {
           setFilters={setFilters} 
           selected={selected} 
           setSelected={setSelected}
+          setJobs={setJobs}
         />
         <div className={styles.jobList}>
-          <SearchBar setJobs={setJobs} initialQuery={query.search as string}/>
+          <SearchBar setJobs={setJobs} initialQuery={query.search as string} query={search} setSearch={setSearch}/>
           {jobLoading ? 
             <div className={styles.loading}>
               <Image src={loading} alt="Loading..." width={80} height={80}/>
@@ -116,39 +117,5 @@ export default function Jobs() {
     </div>
   )
 }
-
-// Sample data
-const sampleJob: Job[] = [
-  {
-    job_id: '123',
-    employer_id: '123',
-    admin_id: '123',
-    title: 'Software Engineer',
-    description: "This is a sample job description for a software engineer in Toronto. Please visit www.mckinsey.com/careers to apply.",
-    job_type: 'Full Time',
-    location: 'Toronto, ON',
-    applicant_year: [2023, 2024],
-    deadline: new Date(),
-    date_posted: new Date(),
-    total_views: 0,
-    tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
-    live: true,
-  },
-  {
-    job_id: '456',
-    employer_id: '456',
-    admin_id: '456',
-    title: 'Business Analyst',
-    description: "This is a sample job description for a software engineer in Toronto. Please visit www.mckinsey.com/careers to apply.",
-    job_type: 'Full Time',
-    location: 'Toronto, ON',
-    applicant_year: [2023, 2024],
-    deadline: new Date(),
-    date_posted: new Date(),
-    total_views: 0,
-    tags: ['Software', 'Engineering', 'Internship', 'DevOps', 'Backend'],
-    live: true,
-  },
-]
 
 export { getServerProps };
