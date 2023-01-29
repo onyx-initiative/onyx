@@ -7,19 +7,17 @@
 
 }
 
-.jobBlockContainer .title {
-    font-weight: bold;
-    margin-left: 1rem;
-    margin-bottom: 1px;
-}
 
-.jobDescription {
+.allEmployersList {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.additionalInfo {
+.employer {
     display: flex;
-    align-items: center;
+    justify-content: space-around;
 }
-
 

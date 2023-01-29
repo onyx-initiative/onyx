@@ -5,18 +5,31 @@ import { useState } from 'react';
 import { Drawer, Button, Group } from '@mantine/core';
 import { job_type, Job } from '../../../../backend/src/types/db.types';
 import EmployerJobList from './EmployerJobList';
+import {Employer} from '../../../../backend/src/types/db.types'
+import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
+import { useQuery } from "@apollo/client";
 
 
 
-type EmployerBlock = {
-    logo: string;
-    companyName: string;
-    link: string;
-    info: string
-}
-
-export default function EmployerBlock({logo, companyName, link, info}: EmployerBlock) {
+export const EmployerBlock = (props: any) => {
+    const {employer} = props
     const [opened, setOpened] = useState(false);
+    const { data, loading } = useQuery(GET_EMPLOYER_BY_ID, {
+        variables: { employerId: employer.employer_id }
+      });
+    
+    let website: string;
+      if (employer.name) {
+        website = websiteURL(employer.name)
+      } else {
+        if (loading) {
+          website = 'www.onyxinitiative.org/'
+        } else {
+          website = websiteURL(data.getEmployerById.name);
+        }
+      }
+    3
+      let logo = fetchLogo(website);
     
   
 
@@ -35,9 +48,8 @@ export default function EmployerBlock({logo, companyName, link, info}: EmployerB
                     width={200}
                     height={120}
             />
-            <p>{info}</p>
+            <p>{employer.description}</p>
             <h3>Job Postings</h3>
-            <EmployerJobList jobs={jobs} />
             
         </Drawer>
   
@@ -46,7 +58,7 @@ export default function EmployerBlock({logo, companyName, link, info}: EmployerB
                 <Image src={logo} 
                     alt="Company Logo" 
                     width={200}
-                    height={120} />
+                    height={160} />
             </div>
 
         </Button>
@@ -54,8 +66,28 @@ export default function EmployerBlock({logo, companyName, link, info}: EmployerB
       </>
         
     ) 
+    }
 
-}
+    export const websiteURL = (company: string) => {
+        // Temp fix
+        if (company == 'Facebook') {
+          return 'www.facebook.com';
+        } else if (company === '') {
+          return 'www.onyxinitiative.org/';
+        } else {
+          return "www." + company.toLowerCase().replace(/ /g, "-") + ".com";
+        }
+      }
+      
+      // Helper function to get logos dynamically
+      // @todo: try to update this to get higher quality logos
+      export const fetchLogo = (websiteURL: string) => {
+        return `https://logo.clearbit.com/${websiteURL}`;
+      }
+
+
+
+
 
 
 
