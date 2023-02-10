@@ -12,7 +12,7 @@ type EmployerJobList = {
 function EmployerJobList(props: EmployerJobList) {
     const { jobs } = props
     console.log(jobs)
-    const employersJobs = jobs.map((job: Job) => <JobBlock job={job}/> )
+    const employersJobs = jobs.map((job: Job, index: number) => <JobBlock job={job} key={index}/> )
 
 
     return (
