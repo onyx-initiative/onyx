@@ -115,5 +115,4 @@ export default function Jobs() {
     </div>
   )
 }
-
 export { getServerProps };

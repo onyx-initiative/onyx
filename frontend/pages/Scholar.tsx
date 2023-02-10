@@ -57,4 +57,4 @@ export default function Scholar() {
   )
 }
 
-export { getServerProps };
+// export { getServerProps };

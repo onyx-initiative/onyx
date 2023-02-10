@@ -28,7 +28,6 @@ const JobCard = (props: any) => {
         website = websiteURL(data.getEmployerById.name);
       }
     }
-    
     let logo = fetchLogo(website);
     const date = new Date(parseInt(job.deadline)).toDateString();
   

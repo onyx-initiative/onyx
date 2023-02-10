@@ -1,173 +1,57 @@
-import React from "react";
-import styles from '../../../styles/components/EmployerBlock.module.css'
-import EmployerBlock from "../../components/employer/EmployerBlock";
+import React, {useState, useEffect} from "react";
+import styles from '../../../styles/components/AllEmployers.module.css'
+import {EmployerBlock} from "../../components/employer/EmployerBlock";
+import { Employer } from "../../../../backend/src/types/db.types";
+import { Drawer, Pagination } from "@mantine/core";
+import loading_svg from '../../assets/loading.svg';
+import Image from 'next/image';
 
-export default function AllEmployers(props: any) {
-    const employer = sampleData.map(employer => {
+type ListedEmployersProps = {
+    employers: Employer[]
+}
+
+
+export default function AllEmployers(props: ListedEmployersProps) {
+    const { employers } = props;
+    const [activePage, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const employersPerPage = 2; // @todo change this to higher number later
+    const numPages = loading ? 1 : Math.ceil(employers.length / employersPerPage);
+    const display = employers.slice((activePage - 1) * employersPerPage, activePage * employersPerPage);
+    
+    if (loading) {
         return (
-            <EmployerBlock 
-                key={employer.companyName}
-                logo={employer.logo}
-                companyName={employer.companyName}
-                link={employer.link}
-                info={employer.info}
-                
-            />
+          <div className={styles.loading}>
+            <Image src={loading_svg} alt="Loading..." width={100} height={100}/>
+            <h1>Loading...</h1>
+          </div>
         )
-    })
+      }
 
 
     return (
-        <div> 
-            <div className={styles.allEmployersList}>
-                {employer}
+        <div className={styles.allEmployersList}> 
+            <div className={styles.employer}>
+                {display.map((employer: any, index: number) => {
+                return (
+                    <EmployerBlock employer={employer} key={index} />
+                )
+                })}
             </div>
+            {/* For the pages */}
+            
+            <div>
+        
+                    <Pagination 
+                page={activePage} 
+                onChange={setPage} 
+                total={numPages} 
+                color="gray"
+                position="center"
+                />
+            </div>
+            
         </div>
+    
     )
 }
-
-const text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.  "
-
-//sample data for employer tag
-const sampleData = [
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
-        companyName: 'Royal Bank of Canada',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://jobs.rbc.com/ca/en',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Scotiabank-logo-500x281.png',
-        companyName: 'Scotiabank',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://jobs.scotiabank.com/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png',
-        companyName: 'Amazon',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://www.amazon.jobs/en-gb/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png',
-        companyName: 'Google',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://careers.google.com/jobs/results/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png',
-        companyName: 'Meta',
-        location: 'Toronto, ON',
-        info: text,
-        link:'https://www.metacareers.com/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
-        companyName: 'Royal Bank of Canada',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://jobs.rbc.com/ca/en',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Scotiabank-logo-500x281.png',
-        companyName: 'Scotiabank',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://jobs.scotiabank.com/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png',
-        companyName: 'Amazon',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://www.amazon.jobs/en-gb/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png',
-        companyName: 'Google',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://careers.google.com/jobs/results/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png',
-        companyName: 'Meta',
-        location: 'Toronto, ON',
-        info: text,
-        link:'https://www.metacareers.com/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
-        companyName: 'Royal Bank of Canada',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://jobs.rbc.com/ca/en',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Scotiabank-logo-500x281.png',
-        companyName: 'Scotiabank',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://jobs.scotiabank.com/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png',
-        companyName: 'Amazon',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://www.amazon.jobs/en-gb/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png',
-        companyName: 'Google',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://careers.google.com/jobs/results/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png',
-        companyName: 'Meta',
-        location: 'Toronto, ON',
-        info: text,
-        link:'https://www.metacareers.com/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2018/10/RBC-Logo-500x281.png',
-        companyName: 'Royal Bank of Canada',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://jobs.rbc.com/ca/en',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Scotiabank-logo-500x281.png',
-        companyName: 'Scotiabank',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://jobs.scotiabank.com/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png',
-        companyName: 'Amazon',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://www.amazon.jobs/en-gb/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png',
-        companyName: 'Google',
-        location: 'Toronto, ON',
-        info: text,
-        link: 'https://careers.google.com/jobs/results/',
-    },
-    {
-        logo: 'https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png',
-        companyName: 'Meta',
-        location: 'Toronto, ON',
-        info: text,
-        link:'https://www.metacareers.com/',
-    }
-]
