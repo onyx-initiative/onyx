@@ -1,13 +1,13 @@
-import React from "react";
 import styles from "../../../styles/components/EmployerBlock.module.css";
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Drawer, Button, Group } from '@mantine/core';
 import { job_type, Job } from '../../../../backend/src/types/db.types';
 import EmployerJobList from './EmployerJobList';
 import {Employer} from '../../../../backend/src/types/db.types'
 import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
 import { useQuery } from "@apollo/client";
+import { GET_JOBS_BY_EMPLOYER_ID } from "../../../graphql/queries/jobQueries";
 
 
 
@@ -17,6 +17,15 @@ export const EmployerBlock = (props: any) => {
     const { data, loading } = useQuery(GET_EMPLOYER_BY_ID, {
         variables: { employerId: employer.employer_id }
       });
+
+    const {data: JobList, loading: jobLoading, error}  = useQuery(GET_JOBS_BY_EMPLOYER_ID, {
+      variables: { employerId: employer.employer_id}
+    });
+    
+    console.log(JobList)
+    console.log(data)
+    const [jobs, setJobs] = useState([])
+    console.log(JobList)
     
     let website: string;
       if (employer.name) {
@@ -30,6 +39,16 @@ export const EmployerBlock = (props: any) => {
       }
     3
       let logo = fetchLogo(website);
+
+      
+      useEffect(() => {
+        if (!jobLoading) {
+            console.log(error, "Error")
+            console.log("JobList", JobList)
+            setJobs(JobList?.getJobsByEmployerId)
+        }
+        // Ignore, this is intentional
+      }, [JobList, jobLoading])
     
   
 
@@ -46,10 +65,11 @@ export const EmployerBlock = (props: any) => {
             <Image src={logo} 
                     alt="Company Logo" 
                     width={200}
-                    height={120}
+                    height={150}
             />
             <p>{employer.description}</p>
             <h3>Job Postings</h3>
+            <EmployerJobList jobs={jobs} />
             
         </Drawer>
   
@@ -58,7 +78,7 @@ export const EmployerBlock = (props: any) => {
                 <Image src={logo} 
                     alt="Company Logo" 
                     width={200}
-                    height={160} />
+                    height={180} />
             </div>
 
         </Button>
@@ -84,6 +104,8 @@ export const EmployerBlock = (props: any) => {
       export const fetchLogo = (websiteURL: string) => {
         return `https://logo.clearbit.com/${websiteURL}`;
       }
+
+    
 
 
 

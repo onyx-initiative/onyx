@@ -16,7 +16,7 @@ import Image from 'next/image'
 export default function Employers() {
 
   const router = useRouter()
-  const {query} = router
+  const query = router.query
   const [search, setSearch] = useState('')
   const [employers, setEmployers] = useState([])
   const { data: employerData, loading: employerLoading } = useQuery(GET_EMPLOYERS)

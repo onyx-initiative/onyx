@@ -15,7 +15,7 @@ export default function AllEmployers(props: ListedEmployersProps) {
     const { employers } = props;
     const [activePage, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const employersPerPage = 4; // @todo change this to higher number later
+    const employersPerPage = 2; // @todo change this to higher number later
     const numPages = loading ? 1 : Math.ceil(employers.length / employersPerPage);
     const display = employers.slice((activePage - 1) * employersPerPage, activePage * employersPerPage);
     
@@ -32,13 +32,14 @@ export default function AllEmployers(props: ListedEmployersProps) {
     return (
         <div className={styles.allEmployersList}> 
             <div className={styles.employer}>
-            {display.map((employer: any, index: number) => {
+                {display.map((employer: any, index: number) => {
                 return (
                     <EmployerBlock employer={employer} key={index} />
                 )
-            })}
+                })}
             </div>
             {/* For the pages */}
+            
             <div>
         
                     <Pagination 
