@@ -33,7 +33,7 @@ export default function Navbar(props: any) {
           <Link href="/Favourites">Favourites</Link>
         </li>
         <li>
-          <Link href="/Contact">Contact Us</Link>
+          <a href="https://onyxinitiative.org/contact/" target="_blank" rel="noreferrer">Contact Us</a>
         </li>
       </ul>
       <ProfilePhoto name='Michael Dawes'/>
