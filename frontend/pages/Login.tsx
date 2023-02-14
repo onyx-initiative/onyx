@@ -48,7 +48,7 @@ export default function Login() {
     )
 }
 
-const Footer = () => {
+export const Footer = () => {
     return (
         <div className={styles.footerContainer}>
             <div className={styles.footerInfo}>

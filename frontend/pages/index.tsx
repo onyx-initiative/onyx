@@ -11,7 +11,9 @@ import loading from '../src/assets/loading.svg'
 
 import { useSession } from 'next-auth/react';
 import { useLazyQuery } from '@apollo/client'
-import CreateAccount from './CreateAccount'
+import EmailTest from './EmailTest'
+import { Email } from '../emails/jobUpdate'
+import { Job } from '../../backend/src/types/db.types'
 
 const serverResponse = {
     applicationDeadline: '2021-12-31',
@@ -29,9 +31,42 @@ const Home: NextPage = () => {
   return (
     <div>
       <Scholar />
-      {/* <ServerCheck /> */}
+      {/* <Email scholarName='Michael' jobs={sampleJobs as Job[]} />
+      <EmailTest /> */}
     </div>
   )
 }
+
+const sampleJobs = [{
+  job_id: "1",
+  employer_id: "1",
+  admin_id: "1",
+  title: "Software Engineer",
+  description: "This is a job description. This one is longer than the other one to test if it changes the style",
+  job_type: "Full Time",
+  location: "Toronto, ON",
+  applicant_year: [3],
+  deadline: new Date(),
+  date_posted: new Date(),
+  total_views: 0,
+  tags: [],
+  live: false,        
+},
+{
+  job_id: "1",
+  employer_id: "1",
+  admin_id: "1",
+  title: "Software Engineer",
+  description: "This is a job description",
+  job_type: "Full Time",
+  location: "Toronto, ON",
+  applicant_year: [3],
+  deadline: new Date(),
+  date_posted: new Date(),
+  total_views: 0,
+  tags: [],
+  live: false,        
+}
+]
 
 export default Home

@@ -55,7 +55,7 @@ export default function ListedJobs(props: ListedJobsProps) {
       <div className={styles.job}>
         {display.map((job: any, index: number) => {
           return (
-              <JobCard job={job} key={index} />
+              <JobCard job={job} email={false} key={index} />
           )
         })}
       </div>

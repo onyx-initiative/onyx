@@ -3,33 +3,25 @@ import { Select, Pagination, Slider, RangeSlider, Drawer } from '@mantine/core';
 import { DatePicker, DateRangePicker } from '@mantine/dates';
 import { IoLocationSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
-import { Job } from '../../../../backend/src/types/db.types';
 import Image from 'next/image';
-import styles from '../../../styles/components/Jobs.module.css'
+import styles from '../../styles/components/Jobs.module.css'
+import { Job } from '../../../backend/src/types/db.types';
 
-const JobCard = (props: any) => {
-    const { job, email } = props;
+type JobCardProps = {
+  job: Job;
+  email: boolean;
+  employerName: string;
+}
+
+const EmailJobCard = (props: JobCardProps) => {
+    const { job, email, employerName } = props;
     const [bookmarked, setBookmarked] = useState(false);
     const [opened, setOpened] = useState(false);
-    const { data, loading } = useQuery(GET_EMPLOYER_BY_ID, {
-      variables: { employerId: job.employer_id }
-    });
   
     // @todo: Add a call to get the employer website
-    let website: string;
-    if (job.name) {
-      website = websiteURL(job.name)
-    } else {
-      if (loading) {
-        website = 'www.onyxinitiative.org/'
-      } else {
-        website = websiteURL(data.getEmployerById.name);
-      }
-    }
+    let website: string = websiteURL(employerName);
     let logo = fetchLogo(website);
-    const date = new Date(parseInt(job.deadline)).toDateString();
+    const date = job.deadline.toDateString();
   
     return (
       <div key={job.job_id} className={styles.mainContainer}>
@@ -58,7 +50,7 @@ const JobCard = (props: any) => {
         <div className={styles.jobCardBody}
           onClick={() => setOpened(!opened)}
         >
-          <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4>
+          <h4>{'Targetted Years: ' + formatYears(job.applicant_year as unknown as string[])}</h4>
           <p>{job.description}</p>
         </div>
         <div className={styles.jobTags}>
@@ -151,4 +143,4 @@ export const websiteURL = (company: string) => {
     return formattedYears;
     }
 
-export default JobCard;
+export default EmailJobCard;

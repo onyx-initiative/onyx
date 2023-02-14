@@ -32,7 +32,7 @@ export default function LatestJobs() {
             <h2>Latest Jobs</h2>
             {jobData.getNewJobs.map((job: Job, index: number) => {
                 return (
-                    <JobCard job={job} key={index} />
+                    <JobCard job={job} email={false} key={index} />
                 )
             })}
         </div>

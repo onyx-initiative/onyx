@@ -19,6 +19,7 @@ import { useSession } from 'next-auth/react';
 import CreateAccount from './CreateAccount'
 import loadingStyles from '../styles/components/CreateAccount.module.css'
 import Loading from './Loading'
+import EmailTest from './EmailTest'
 
 export default function Scholar() {
   const { data: session, status } = useSession({ required: true })
