@@ -31,32 +31,8 @@ const Home: NextPage = () => {
   return (
     <div>
       <Scholar />
-      {/* <Email scholarName='Michael' jobs={sampleJobs as Recommendation[]} />
-      <EmailTest /> */}
     </div>
   )
 }
-
-// export const sampleJobs = [{
-//   scholar_id: "1",
-//   view_name: "Software Engineer",
-//   employer: "Google",
-//   title: "Software Engineer",
-//   description: "This is a sample job description. You can apply here: https://www.google.com",
-//   job_type: "Full Time",
-//   location: "Toronto, ON",
-//   deadline: '2021-12-31',    
-// },
-// {
-//   scholar_id: "1",
-//   view_name: "Software Engineer",
-//   employer: "Google",
-//   title: "Software Engineer",
-//   description: "This is a sample job description. You can apply here: https://www.google.com",
-//   job_type: "Full Time",
-//   location: "Toronto, ON",
-//   deadline: '2021-12-31',    
-// },
-// ]
 
 export default Home
