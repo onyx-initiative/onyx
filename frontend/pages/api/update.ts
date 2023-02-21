@@ -3,7 +3,6 @@ import { render } from '@react-email/render';
 import sendgrid from '@sendgrid/mail';
 import { Email, Recommendation } from '../../emails/jobUpdate';
 import { Job } from '../../../backend/src/types/db.types';
-import { sampleJobs } from '..';
 
 type ResponseData = {
   message: string
