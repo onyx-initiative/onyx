@@ -1,4 +1,6 @@
 {
+    "buildCommand": "next build",
+    "framework": "nextjs",
     "crons": [
       {
         "path": "/pages/api/update",
