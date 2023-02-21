@@ -8,9 +8,6 @@ type ResponseData = {
   message: string
 }
 
-// @todo: Add a cron job to run this every week
-// cron: '0 17 * * 4' # Every friday at 5pm
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
