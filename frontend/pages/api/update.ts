@@ -1,72 +1,107 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { render } from '@react-email/render';
 import sendgrid from '@sendgrid/mail';
-import { Email } from '../../emails/jobUpdate';
+import { Email, Recommendation } from '../../emails/jobUpdate';
 import { Job } from '../../../backend/src/types/db.types';
+import { sampleJobs } from '..';
 
 type ResponseData = {
   message: string
 }
 
-export default function handler(
+// @todo: Add a cron job to run this every week
+// cron: '0 17 * * 4' # Every friday at 5pm
+
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
 
     // TODO: Call the db to fetch users and send them an email
-//   res.status(200).json({ message: 'Hello from Next.js!' })
+
+    // fetch the data from the db
+    const recommendedJobs = await getRecommendedJobs();
+
+    // Format the data
+    const formattedJobs = parseRecommendedJobs(recommendedJobs.data.getRecommendedJobs as Recommendation[]);
+    // console.log(formattedJobs);
 
     // 1. Set the sendgrid api key
     sendgrid.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY as string);
 
     // 2. Render the email
-    // @todo: Loop over all users who have subscribed to the job updates
-    // and have jobs that match their filters
     // Note: Since this is a .ts file, need to send using Node syntax
-    const emailHtml = render(Email({ scholarName: 'Cole', jobs: sampleJobs as Job[] }));
+    let emailsSent = true;
+    for (let key in formattedJobs) {
+      const name = key.split(',')[0];
+      const email = key.split(',')[1];
 
-    // 3. Configure the email
-    // This should also be in the loop
-    const options = {
+      const emailHtml = render(Email({ scholarName: name, jobs: formattedJobs[key] as Recommendation[] }));
+      
+      // Configure the options for the email
+      const options = {
         from: 'mdawes28@gmail.com',
-        to: 'cole.purboo@mail.utoronto.ca',
+        to: email,
         subject: 'Onyx Job Weekly Update',
         html: emailHtml,
       };
-      
-    // 4. Send the email
-    const sent = sendgrid.send(options);
+
+      // 3. Send the email
+      const sent = await sendgrid.send(options);
+      if (!sent) {
+        emailsSent = false;
+      }
+    }
+
+    if (!emailsSent) {
+      return res.status(500).json({ message: 'Email failed to send!' });
+    }
     return res.status(200).json({ message: 'Email sent!' });
 }
 
-const sampleJobs = [{
-    job_id: "1",
-    employer_id: "1",
-    admin_id: "1",
-    title: "Software Engineer",
-    description: "This is a job description. This one is longer than the other one to test if it changes the style.",
-    job_type: "Full Time",
-    location: "Toronto, ON",
-    applicant_year: [3],
-    deadline: new Date(),
-    date_posted: new Date(),
-    total_views: 0,
-    tags: [],
-    live: false,        
-  },
-  {
-    job_id: "1",
-    employer_id: "1",
-    admin_id: "1",
-    title: "Software Engineer",
-    description: "This is a job description",
-    job_type: "Full Time",
-    location: "Toronto, ON",
-    applicant_year: [3],
-    deadline: new Date(),
-    date_posted: new Date(),
-    total_views: 0,
-    tags: [],
-    live: false,        
-  }
-  ]
+// Helper functions for parsing the data from the db
+const getRecommendedJobs = async () => {
+  const recommendedJobs = await fetch('https://3uyqf7fpea.execute-api.ca-central-1.amazonaws.com/dev/graphql', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+          query: `
+            query GetRecommendedJobs {
+              getRecommendedJobs {
+                scholar
+                email
+                scholar_id
+                view_name
+                employer
+                title
+                description
+                job_type
+                location
+                deadline
+              }
+            }
+          `
+      })
+  })
+
+  const resp = recommendedJobs.json();
+  return resp;
+}
+
+const parseRecommendedJobs = (recommendedJobs: Recommendation[]) => {
+    let emailData: any = {};
+
+    for (let i = 0; i < recommendedJobs.length; i++) {
+      const key: any = [recommendedJobs[i].scholar, recommendedJobs[i].email];
+      if (emailData[key]) {
+        emailData[key].push(recommendedJobs[i]);
+      } else {
+        emailData[key] = [recommendedJobs[i]];
+      }
+    }
+
+    return emailData;
+}

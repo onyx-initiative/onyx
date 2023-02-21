@@ -20,11 +20,25 @@ export const scholarTypeDef = gql`
         notifications: Boolean!
     }
 
+    type Recommendation {
+        scholar: String!
+        email: String!
+        scholar_id: ID!
+        view_name: String!
+        employer: String!
+        title: String!
+        description: String!
+        job_type: String!
+        location: String!
+        deadline: String!
+    }
+
     type Query {
         getScholars: [Scholar!]!
         getScholar(scholar_id: ID!): Scholar!
         getScholarByEmail(email: String!): Scholar
         checkViews(scholar_id: ID!, view_id: ID!): [Scholar]!
+        getRecommendedJobs: [Recommendation]!
     }
 
     type Mutation {

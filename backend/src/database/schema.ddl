@@ -60,7 +60,7 @@ CREATE TABLE Featured (
 );
 
 CREATE TABLE FilterView (
-    view_id INTEGER NOT NULL,
+    view_id SERIAL NOT NULL,
     scholar_id INTEGER NOT NULL REFERENCES Scholar,
     view_name VARCHAR(50) NOT NULL,
     criteria TEXT[] NOT NULL,

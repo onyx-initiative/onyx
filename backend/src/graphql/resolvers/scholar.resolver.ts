@@ -46,6 +46,53 @@ const scholarResolver = {
             } else {
                 return null;
             };
+        },
+        getRecommendedJobs: async (_: any, __: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const makeView = `
+                DROP VIEW IF EXISTS recommended_jobs;
+                CREATE VIEW recommended_jobs AS
+                SELECT scholar.name as scholar, scholar.email as email, scholar.scholar_id, view_name, 
+                employer.name as employer, job.job_id, job.title, job.description, job.job_type, 
+                job.location, job.deadline
+                FROM employer JOIN job ON employer.employer_id = job.employer_id 
+                JOIN job_search ON job_search.job_id = job.job_id,
+                scholar JOIN filterview ON filterview.scholar_id = scholar.scholar_id
+                WHERE document @@ plainto_tsquery(array_to_string(filterview.criteria, ' & '))
+                GROUP BY scholar.scholar_id, view_name, employer.name, job.title, job.description, 
+                job.job_type, job.location, job.deadline, job.job_id;
+            `
+            await client.query(makeView).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            const query = `                
+                SELECT scholar, email, scholar_id, view_name, employer, 
+                title, description, job_type, location, deadline
+                FROM recommended_jobs
+                WHERE job_id IN (
+                    SELECT job_id
+                    FROM recommended_jobs r2
+                    WHERE recommended_jobs.scholar_id = r2.scholar_id
+                    LIMIT 5
+                );
+            `;
+            
+            // Returns a list of jobs for each scholar, grouped by scholar
+            const resp = await client.query(query).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+
+            // Turn the returned rows into an obhect with the scholars name as the key
+            // and the list of jobs as the value
+            // @todo
+
+            client.release()
+            return resp.rows;
         }
     },
     Mutation: {

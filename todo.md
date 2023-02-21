@@ -24,10 +24,16 @@
         when adding a job rather than an employer id.
 - [ ] Redeploy to AWS
 
+## Emails
+- [ ] Add a BE function to look through the views of each scholar and return the jobs that align with their views
+    - Return scholar name, company, and the jobs that align with their views
+    - Limit to 5 jobs per scholar
+- [ ] Make the filters more fuzzy, ie. not all criteria has to match
+
 ## New
 
 - Add apple MSFT and google auth bc theyre students
-- Check hubsot api yo grab student emails
+- Check hubsot api to grab student emails
 - CRON job to send emails
  
 
@@ -74,4 +80,5 @@ Michael's Hours:
 - Thurs, Feb 9 - 2 hr
 - Sun, Feb 12 - 2 hr
 - Mon, Feb 13 - 2 hr
+- Tues, Feb 14 - 7 hr
 

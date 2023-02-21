@@ -27,5 +27,15 @@ INSERT INTO Job (employer_id, admin_id, title, description, long_description, co
     (3, 1, 'Marketing', 'Marketing', 'Marketing', 'test@test.com', 'Part Time', 'Permanent', 'London', '{1,2,3}', '2020-01-01', 0, '{Software, Engineer}', TRUE);
 
 INSERT INTO scholar(name, email, year, school, major, status, notifications) VALUES
-    ('Michael', 'mdawes28@gmail.com', 1, 'University of Toronto', 'Computer Science', 'current', TRUE);
+    ('Michael', 'mdawes28@gmail.com', 1, 'University of Toronto', 'Computer Science', 'current', TRUE),
+    ('Cole', 'cole@gmail.com', 1, 'University of Toronto', 'Computer Science', 'current', TRUE);
+
+INSERT INTO FilterView(scholar_id, view_name, criteria) VALUES
+    (1, 'Software Engineer', '{Robotics, Facebook, Toronto}'),
+    (1, 'Full Stack', '{Full Stack}'),
+    (2, 'NEW YORK', '{New York}');
+
+
+
+
 

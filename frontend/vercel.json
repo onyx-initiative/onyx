@@ -1,0 +1,9 @@
+{
+    "crons": [
+      {
+        "path": "/pages/api/update",
+        "schedule": "*/10 * * * *"
+      }
+    ]
+  }
+  

@@ -12,17 +12,35 @@ import { Preview } from '@react-email/preview';
 import { Column } from '@react-email/column';
 import { Row } from '@react-email/row';
 import { Body } from '@react-email/body';
-import { Job } from '../../backend/src/types/db.types';
+import { Job, job_type } from '../../backend/src/types/db.types';
 import { FaLinkedinIn, FaTwitter, FaInstagram, FaGoogle } from "react-icons/fa";
+
+export type Recommendation = {
+    scholar: string;
+    email: string;
+    scholar_id: string;
+    view_name: string;
+    employer: string;
+    title: string;
+    description: string;
+    job_type: job_type;
+    location: string;
+    deadline: string;
+}
 
 type EmailInfo = {
     scholarName: string;
-    jobs: Job[];
+    jobs: Recommendation[];
 }
 
 export function Email({ scholarName, jobs }: EmailInfo) {
 
     const previewText: string = 'Check out recently added jobs that match your filters!';
+
+    const formatDate = (date: string) => {
+        const formattedDate = new Date(parseInt(date)).toDateString() as string;
+        return formattedDate;
+    }
   
     return (
       <Html lang="en">
@@ -36,13 +54,13 @@ export function Email({ scholarName, jobs }: EmailInfo) {
                 <Section style={styles.content}>
                     <Text style={styles.text}>Hi {scholarName},</Text>
                     <Text style={{ fontSize: 16 }}>{"Here are some jobs we think you'll like:"}</Text>
-                    {jobs.map((job: Job, index: number) => (
+                    {jobs.map((recommendation: Recommendation, index: number) => (
                         <Section key={index}>
                             <Container style={styles.jobContainer}>
                                 <Row>
                                 <Column style={{ padding: '0px', width: '80px', verticalAlign: 'top' as const, }}>
                                     <Img 
-                                        src={fetchLogo('Google')} 
+                                        src={fetchLogo(recommendation.employer)} 
                                         alt="logo" 
                                         width={80} 
                                         height={80}
@@ -51,15 +69,15 @@ export function Email({ scholarName, jobs }: EmailInfo) {
                                 </Column>
                                 <Column align='right' style={styles.jobInfo}>
                                     <Container style={{ margin: 0, padding: 0, alignContent: 'top' as const }}>
-                                        <Text style={styles.title}>{job.title}</Text>
+                                        <Text style={styles.title}>{recommendation.title}</Text>
                                         <Text 
                                             style={{ padding: 0, margin: 0, fontSize: 14, color: '#666' }}
                                         >
-                                            {job.location} • {job.job_type}
+                                            {recommendation.location} • {recommendation.job_type}
                                         </Text>
                                         <Text
                                             style={{ padding: 0, margin: 0, fontSize: 16, marginTop: 10 }}
-                                        >{job.description}</Text>
+                                        >{recommendation.description}</Text>
                                     </Container>
                                 </Column>
                                 </Row>
@@ -70,7 +88,7 @@ export function Email({ scholarName, jobs }: EmailInfo) {
                                 <Text
                                     style={{ padding: 0, margin: 0, fontSize: 14, color: '#666' }}
                                 >
-                                    Deadline: {job.deadline.toDateString()}
+                                    Deadline: {formatDate(recommendation.deadline)}
                                 </Text>
                                 </Row>
                             </Container>
@@ -161,6 +179,7 @@ const styles = {
         alignItems: 'top' as const,
         backgroundColor: '#fff',
         color: 'black',
+        width: '100%',
     },
     jobInfo: {
         // textAlign: 'left' as const,
