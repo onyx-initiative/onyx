@@ -6,7 +6,7 @@ import RemoveJobButton from "../src/components/admin/RemoveJobButton";
 import styles from "../styles/components/AdminPageButtons.module.css"
 
 // To ensure unauthenticated people don't access
-import getServerProps from "../src/utils/getServerProps";
+// import getServerProps from "../src/utils/getServerProps";
 
 
 export default function Admin() {

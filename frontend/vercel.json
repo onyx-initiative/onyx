@@ -1,9 +1,9 @@
 {
-    "crons": [
-      {
-        "path": "/pages/api/update",
-        "schedule": "0 16 * * 2"
-      }
-    ]
-  }
+  "crons": [
+    {
+      "path": "/pages/api/update",
+      "schedule": "0 16 * * 5"
+    }
+  ]
+}
   

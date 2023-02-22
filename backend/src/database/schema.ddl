@@ -2,10 +2,15 @@ DROP SCHEMA IF EXISTS onyx CASCADE;
 CREATE SCHEMA onyx;
 SET search_path TO onyx;
 
+CREATE TABLE AllowedAdmins (
+    email VARCHAR(50) PRIMARY KEY NOT NULL
+);
+
 CREATE TABLE Admin (
     admin_id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL
+    email VARCHAR(50) NOT NULL REFERENCES AllowedAdmins,
+    password VARCHAR(255) NOT NULL,
+    UNIQUE (email)
 );
 
 DROP DOMAIN IF EXISTS scholar_status;
@@ -85,17 +90,3 @@ CREATE TABLE Application (
     scholar_id INTEGER NOT NULL REFERENCES Scholar,
     date_applied TIMESTAMP NOT NULL
 );
-
-DROP VIEW IF EXISTS job_search;
-CREATE VIEW job_search AS
-SELECT to_tsvector(
-    name || ' ' 
-    || title || ' ' 
-    || job.description || ' ' 
-    || COALESCE(long_description, ' ') || ' ' 
-    || job_type || ' ' 
-    || term || ' ' 
-    || location || ' ' 
-    || array_to_string(tags, ' ')) AS document, job_id
-FROM Job JOIN Employer ON Job.employer_id = Employer.employer_id
-WHERE live = TRUE;

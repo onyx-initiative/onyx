@@ -1,17 +1,22 @@
 import React, { useEffect, useMemo } from 'react'
 import styles from '../styles/components/Login.module.css'
 import onyx_logo from '../public/onyx_logo.png'
-import { FaLinkedinIn, FaTwitter, FaInstagram, FaGoogle } from "react-icons/fa";
+import { FaLinkedinIn, FaTwitter, FaInstagram, FaGoogle, FaMicrosoft, FaApple } from "react-icons/fa";
 import Image from 'next/image'
 import { GET_SCHOLAR_BY_EMAIL } from '../graphql/queries/scholarQueries';
 import loading from '../src/assets/loading.svg'
 import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
 import { useQuery } from '@apollo/client';
+import { useRouter } from 'next/router'
 
 
 // @todo: If email not in db, redirect to sign up page
 export default function Login() {
     const { data: session, status } = useSession()
+    const router = useRouter()
+
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
 
     return (
         <div>
@@ -25,22 +30,72 @@ export default function Login() {
                     />
                 </div>
                 <div className={styles.loginContainer}>
-                    <h3>Scholar Login/Signup</h3>
+                    <h3 className={styles.loginHeader}>Scholar Login/Signup</h3>
                     <div className={styles.scholarLogin}>
                         <FaGoogle size={28} />
                         <button
-                            onClick={() => signIn('google', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Scholar' : process.env.NEXT_PUBLIC_CALLBACK_URL})}
+                        className={styles.loginButton}
+                            onClick={() => signIn('google', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})}
                         >
                             Login with Google
                         </button>
                     </div>
+                    <div className={styles.scholarLogin}>
+                        <FaMicrosoft size={28} />
+                        <button
+                        className={styles.loginButton}
+                            onClick={() => alert('Microsoft auth coming soon!')}
+                        >
+                            Login with Microsoft
+                        </button>
+                    </div>
+                    <div className={styles.scholarLogin}>
+                        <FaApple size={28} />
+                        <button
+                        className={styles.loginButton}
+                            onClick={() => alert('Apple auth coming soon!')}
+                        >
+                            Login with Apple
+                        </button>
+                    </div>
+                    <div className={styles.divider}></div>
                     <h3 className={styles.loginHeader}>Admin Login</h3>
-                    <button 
-                        className={styles.loginButton} 
-                        onClick={() => alert('Not yet implemented')}
-                    >
-                        Admin Login
-                    </button>
+                    {/*  */}
+                    <div className={styles.loginFields}>
+                        <input 
+                            value={email} 
+                            className={styles.adminFields}
+                            onChange={(e) => setEmail(e.target.value)} 
+                            placeholder='email'
+                        />
+                        <input 
+                            value={password} 
+                            className={styles.adminFields}
+                            type='password'
+                            onChange={(e) => setPassword(e.target.value)} 
+                            placeholder='password'
+                        />
+                    </div>
+                    <div className={styles.scholarLogin}>
+                        <button 
+                            className={styles.loginButton} 
+                            onClick={() => signIn('credentials', { 
+                                redirect: false,
+                                callbackUrl: '/Admin',
+                                email: email,
+                                password: password
+                            }).then((res) => {
+                                if (res?.error) {
+                                    alert(res.error)
+                                } else {
+                                    router.push('/Admin')
+                                }
+                            })
+                        }
+                        >
+                            Admin Login
+                        </button>
+                    </div>
                 </div>
             </div>
             <Footer />

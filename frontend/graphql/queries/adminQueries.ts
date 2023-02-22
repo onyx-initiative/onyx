@@ -19,5 +19,11 @@ export const GET_ADMIN_BY_NAME = gql`
             email
             name
         }
-}
+    }
+`
+
+export const CHECK_ALLOWED_ADMIN = gql`
+    query Query($email: String!) {
+        checkAllowedAdmin(email: $email)
+    }
 `

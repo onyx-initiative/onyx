@@ -7,7 +7,7 @@ const getServerProps  =  async  (context: GetServerSidePropsContext) => {
     if (!session) {
       return {
             redirect: {
-                destination:  '/login' ,
+                destination:  '/Login' ,
                 permanent:  false ,
             },
         };

@@ -1,6 +1,8 @@
 import { randomBytes, randomUUID } from "crypto";
-import NextAuth from "next-auth";
+import NextAuth, { Awaitable, RequestInternal, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import Credentials from 'next-auth/providers/credentials'
+import { compare, hash } from 'bcrypt'
 
 
 export default NextAuth({
@@ -9,6 +11,111 @@ export default NextAuth({
         GoogleProvider({
             clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET as string,
+        }),
+        Credentials({
+            name: 'Credentials',
+            credentials: {
+                email: {
+                    label: 'Email',
+                    type: 'text',
+                    placeholder: 'email'
+                },
+                password: { label: 'Password', type: 'password', placeholder: 'password' }
+            },
+            authorize: async function (credentials: Record<"email" | "password", string> | undefined, req: Pick<RequestInternal, "headers" | "body" | "query" | "method">): Promise<User | null> {
+                const { email, password } = credentials as {
+                    email: string,
+                    password: string
+                  }
+
+                const checkValid = await fetch('https://3uyqf7fpea.execute-api.ca-central-1.amazonaws.com/dev/graphql', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: `
+                            query GetAdminByEmail($email: String!) {
+                                getAdminByEmail(email: $email) {
+                                admin_id
+                                email
+                                password
+                                }
+                            }
+                        `,
+                    variables: {
+                        email: email,
+                    }
+                    })
+                })
+                const valid = await checkValid.json();
+                let admin;
+                if (valid.data) {
+                    admin = valid.data.getAdminByEmail;
+                } else {
+                    admin = null;
+                }
+                if (!admin) {
+                    // Create the user
+                    // First, check if the user is a valid admin
+                    const checkValid = await fetch('https://3uyqf7fpea.execute-api.ca-central-1.amazonaws.com/dev/graphql', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            query: `
+                                query Query($email: String!) {
+                                    checkAllowedAdmin(email: $email)
+                                }
+                            `,
+                        variables: {
+                            email: email,
+                        }
+                        })
+                    })
+                    const valid = await checkValid.json();
+                    if (valid.data.checkAllowedAdmin) {
+                        // Create the user
+                        const createUser = await fetch('https://3uyqf7fpea.execute-api.ca-central-1.amazonaws.com/dev/graphql', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                query: `
+                                    mutation Mutation($email: String!, $password: String!) {
+                                        createAdmin(email: $email, password: $password) {
+                                            admin_id
+                                            email
+                                        }
+                                    }
+                                `,
+                            variables: {
+                                email: email,
+                                password: await hash(password, 12)
+                            }
+                            })
+                        })
+                        const user = await createUser.json();
+                        return { id: user.data.createAdmin.admin_id, email: email };
+                    } else {
+                        throw new Error('This email is not permitted to access the admin panel.');
+                    }
+                } else {
+                    // The user is valid
+                    const isValid = await compare(password, admin.password);
+
+                    if (!isValid) {
+                        throw new Error('Wrong credentials. Try again.')
+                    }
+              
+                    return { id: admin.admin_id, email: email };
+                }
+            }
         })
     ],
     pages: {

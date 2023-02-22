@@ -1,7 +1,10 @@
 -- DELETE
 
-INSERT INTO Admin (name, email) VALUES ('Michael', 'michael@onyx.com');
+INSERT INTO AllowedAdmins(email) VALUES
+    ('mdawes28@gmail.com'),
+    ('michaelanthony.dawes@mail.utoronto.ca');
 
+INSERT INTO Admin (email, password) VALUES ('mdawes28@gmail.com', 'password');
 
 INSERT INTO Employer (admin_id, name, contact_email, address, website, description) VALUES
     (1, 'Google', 'test@google.com', '123 Google Street', 'www.google.com', 'Google is a company'),
