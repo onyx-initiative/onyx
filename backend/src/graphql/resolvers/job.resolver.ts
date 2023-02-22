@@ -91,10 +91,18 @@ const jobResolver = {
             const { db } = dataSources;
             const client = await establishConnection(db);
             const query = `
-                SELECT *
-                FROM employer JOIN job ON employer.employer_id = job.employer_id 
-                JOIN job_search ON job_search.job_id = job.job_id
-                WHERE document @@ to_tsquery($1);
+                select * 
+                from employer join job on job.employer_id = employer.employer_id
+                where name  % $1 OR title % $1
+                OR job.description % $1 OR
+                long_description % $1
+                OR job_type % $1
+                OR term % $1
+                OR location % $1
+                OR array_to_string(tags, ' ') % $1
+                GROUP BY name, title, employer.employer_id, job.job_id
+                HAVING similarity(name || title, $1) > 0.2
+                order by similarity(name || title, $1) desc;
             `;
             const resp = await client.query(query, [search]).catch((err: any) => {
                 console.error(err);

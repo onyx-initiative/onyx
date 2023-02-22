@@ -13,28 +13,35 @@
     - [X] Write tests for server/database w/ mock data
 - [X] Add authentication (Can I use SSO? or maybe next auth?)
     - [X] See if its possible to do SSO with hubspot/use hubspot auth 
-    - [ ] Add to the serverless server
-     - [ ] Get admins to use a username and password and then give them a token (don't use hubspot auth)
+    - [ ] Get admins to use a username and password and then give them a token (don't use hubspot auth)
 ## Later
 - [ ] Figure out how to make tests work with serverless
-- [ ] Add queries beyond CRUD
-- [ ] Write all query/mutation hooks for frontend
+- [X] Add queries beyond CRUD
+- [X] Write all query/mutation hooks for frontend
     - Note: For some of the mutations (e.g. adding jobs), will likely need to combine
         querys to allow for a better user experience. E.g. inputting an employer name
         when adding a job rather than an employer id.
-- [ ] Redeploy to AWS
+- [X] Redeploy to AWS
 
 ## Emails
-- [ ] Add a BE function to look through the views of each scholar and return the jobs that align with their views
+- [X] Add a BE function to look through the views of each scholar and return the jobs that align with their views
     - Return scholar name, company, and the jobs that align with their views
     - Limit to 5 jobs per scholar
 - [ ] Make the filters more fuzzy, ie. not all criteria has to match
 
 ## New
 
-- Add apple MSFT and google auth bc theyre students
-- Check hubsot api to grab student emails
-- CRON job to send emails
+- [ ] Add apple MSFT and google auth bc theyre students <- Need onyx cc
+- [X] CRON job to send emails
+- [ ] Add password login for admins
+    - [ ] Add valid admin email list to the database
+    - [ ] Add frontend creation/login flow for admin
+    - [ ] Add a hash for the password
+    - [ ] Add a way to reset password
+    - [ ] Add a way to add a job to featured/archived
+- [X] Add semantic search
+- [ ] Link bookmarking to backend
+- [ ] Add a view creation on signup
  
 
 Michael's Hours:
@@ -81,4 +88,5 @@ Michael's Hours:
 - Sun, Feb 12 - 2 hr
 - Mon, Feb 13 - 2 hr
 - Tues, Feb 14 - 7 hr
+- Tues, Feb 21 - 6 hr
 

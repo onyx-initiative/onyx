@@ -38,4 +38,3 @@ INSERT INTO FilterView(scholar_id, view_name, criteria) VALUES
 
 
 
-
