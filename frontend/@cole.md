@@ -18,7 +18,7 @@
       - Reference the way I redirect in the search bar. It should be pretty similar.
 
 ### Favourites
-- [ ] This should use the same job cards that are used on the Scholar and Jobs page. Just make sure you
+- [X] This should use the same job cards that are used on the Scholar and Jobs page. Just make sure you
       use the GET_FAVOURITES query to get the data.
       - Just copy the code from the Scholar page and change the query.
 
