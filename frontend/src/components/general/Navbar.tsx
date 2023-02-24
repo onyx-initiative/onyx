@@ -3,16 +3,29 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ProfilePhoto from '../navbar/ProfilePhoto'
 import styles from '../../../styles/components/Navbar.module.css'
+import { useSession } from 'next-auth/react'
+import { User } from 'next-auth'
+
+interface Admin  extends User { 
+  admin: boolean
+}
 
 export default function Navbar(props: any) {
+  const { data: session } = useSession({ required: true })
 
-  const admin = true;
+  let logoLink = '/';
+  // if ((session?.user as Admin).admin === true) {
+  //     logoLink = '/Admin'
+  // } else {
+  //     logoLink = '/'
+  // }
+
 
   return (
     <div className={styles.navbar}>
       <div className={styles.navbarLogo}>
         <Link
-          href='/'
+          href={logoLink}
         >
           <Image
             src="https://onyxinitiative.org/assets/img/onyxlogo_nav.png" 

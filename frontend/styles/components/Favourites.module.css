@@ -1,0 +1,19 @@
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 15rem;
+}
+
+.noFavourites {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 15rem;
+}
+
+.jobs {
+    padding: 0 5rem;
+}

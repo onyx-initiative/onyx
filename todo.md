@@ -5,15 +5,14 @@
     - [X] Edit/delete data dictionary - might be useful as reference when getting data from the db into ts objects
     - [X] Add a function that adds a job to featured/archived
 - [X] Fix query/mutations based on new schema
-    - [ ] Add a function that adds a job to the db and include a trigger to look through views and sends emails when they align with scholar views
-        - [X] Use pg full text search to find jobs that align with scholar views
-        - [X] Implement the count page views function
-         - Everytime someone navigates to the page, call the function to increment the count
-        - [ ] Implement the send email function
+    - [X] Use pg full text search to find jobs that align with scholar views
+    - [X] Implement the count page views function
+        - Everytime someone navigates to the page, call the function to increment the count
+    - [X] Implement the send email function
     - [X] Write tests for server/database w/ mock data
 - [X] Add authentication (Can I use SSO? or maybe next auth?)
     - [X] See if its possible to do SSO with hubspot/use hubspot auth 
-    - [ ] Get admins to use a username and password and then give them a token (don't use hubspot auth)
+    - [X] Get admins to use a username and password and then give them a token (don't use hubspot auth)
 ## Later
 - [ ] Figure out how to make tests work with serverless
 - [X] Add queries beyond CRUD
@@ -40,7 +39,7 @@
     - [ ] Add a way to reset password
 - [X] Add semantic search
 - [X] Link bookmarking to backend
-- [ ] Add a view creation on signup
+- [X] Add a view creation on signup
 - [ ] Make filters grab 5 jobs per view
  
 
@@ -90,5 +89,5 @@ Michael's Hours:
 - Tues, Feb 14 - 7 hr
 - Tues, Feb 21 - 6 hr
 - Wed, Feb 22 - 9 hr
-- Thurs, Feb 23 - 6 hr
+- Thurs, Feb 23 - 12 hr
 

@@ -133,9 +133,24 @@ const jobResolver = {
             const { db } = dataSources;
             const client = await establishConnection(db);
             const query = `
-                SELECT *
-                FROM Saved
-                WHERE scholar_id = $1;
+                SELECT Saved.job_id,
+                employer_id,
+                admin_id,
+                title,
+                description,
+                long_description,
+                contact_email,
+                job_type,
+                term,
+                location,
+                applicant_year,
+                deadline,
+                date_posted,
+                total_views,
+                tags
+                FROM Saved, Job
+                WHERE scholar_id = $1
+                AND Saved.job_id = Job.job_id;
             `;
             const resp = await client.query(query, [scholar_id]).catch((err: any) => {
                 console.error(err);

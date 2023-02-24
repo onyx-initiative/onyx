@@ -4,6 +4,10 @@ import GoogleProvider from "next-auth/providers/google";
 import Credentials from 'next-auth/providers/credentials'
 import { compare, hash } from 'bcrypt'
 
+export interface Admin  extends User { 
+    admin: boolean
+}
+
 
 export default NextAuth({
     // Configure one or more authentication providers
@@ -20,9 +24,9 @@ export default NextAuth({
                     type: 'text',
                     placeholder: 'email'
                 },
-                password: { label: 'Password', type: 'password', placeholder: 'password' }
+                password: { label: 'Password', type: 'password', placeholder: 'password' },
             },
-            authorize: async function (credentials: Record<"email" | "password", string> | undefined, req: Pick<RequestInternal, "headers" | "body" | "query" | "method">): Promise<User | null> {
+            authorize: async function (credentials: Record<"email" | "password", string> | undefined, req: Pick<RequestInternal, "headers" | "body" | "query" | "method">): Promise<Admin | null> {
                 const { email, password } = credentials as {
                     email: string,
                     password: string
@@ -101,7 +105,7 @@ export default NextAuth({
                             })
                         })
                         const user = await createUser.json();
-                        return { id: user.data.createAdmin.admin_id, email: email };
+                        return { id: user.data.createAdmin.admin_id, email: email, admin: true };
                     } else {
                         throw new Error('This email is not permitted to access the admin panel.');
                     }
@@ -113,7 +117,7 @@ export default NextAuth({
                         throw new Error('Wrong credentials. Try again.')
                     }
               
-                    return { id: admin.admin_id, email: email };
+                    return { id: admin.admin_id, email: email, admin: true };
                 }
             }
         })
@@ -141,7 +145,7 @@ export default NextAuth({
         
         generateSessionToken: () => {
             return randomUUID?.() ?? randomBytes(32).toString("hex")
-        }
+        },
     },
     jwt: {
         maxAge: 60 * 60 * 24, // 1 day

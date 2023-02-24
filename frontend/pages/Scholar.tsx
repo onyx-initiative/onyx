@@ -20,6 +20,7 @@ import CreateAccount from './CreateAccount'
 import loadingStyles from '../styles/components/CreateAccount.module.css'
 import Loading from './Loading'
 import EmailTest from './EmailTest'
+import { Admin } from './api/auth/[...nextauth]'
 
 export default function Scholar() {
   const { data: session, status } = useSession({ required: true })
@@ -40,7 +41,11 @@ export default function Scholar() {
     )
   } 
 
-  if ((scholarData.getScholarByEmail === null || scholarData === undefined) && !loadingScholar) {
+  // @todo: Don't redirect to CreateAccount if the user is an admin
+  // Or change the navbar to be different for admins
+  if ((scholarData.getScholarByEmail === null 
+      || scholarData === undefined) 
+      && !loadingScholar) {
     router.push('/CreateAccount')
   } 
 
