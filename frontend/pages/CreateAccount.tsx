@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react';
 import styles from '../styles/components/CreateAccount.module.css'
-import { Checkbox } from '@mantine/core';
-import { CREATE_SCHOLAR } from '../graphql/mutations/scholarMutations';
+import { Checkbox, MultiSelect } from '@mantine/core';
+import { CREATE_SCHOLAR, CREATE_VIEW } from '../graphql/mutations/scholarMutations';
 import { useMutation } from '@apollo/client';
 import Image from 'next/image';
 import { useRouter } from 'next/router'
+import { randomUUID } from 'crypto';
 
 
 type UserInfo = {
@@ -19,13 +20,13 @@ type UserInfo = {
 }
 
 export default function CreateAccount() {
-  const { data, status } = useSession({ required: true })
+  const { data: session } = useSession({ required: true })
   const [userInfo, setUserInfo] = useState({} as UserInfo)
   const [checked, setChecked] = useState(false)
   const [createScholar, { data: scholarData, loading: sendingData, error}] = useMutation(CREATE_SCHOLAR, {
     variables: {
       name: userInfo.name,
-      email: data?.user?.email,
+      email: session?.user?.email,
       year: Number(userInfo.year),
       school: userInfo.school,
       major: userInfo.major,
@@ -33,10 +34,20 @@ export default function CreateAccount() {
       notifications: checked,
     }})
   const [completed, setCompleted] = useState(null as boolean | null)
+  const [viewInfo, setViewInfo] = useState([] as any)
+  const [createView] = useMutation(CREATE_VIEW)
   const router= useRouter()
 
   const handleSubmit = () => {
       createScholar();
+      createView({
+        variables: { 
+          viewId: (Math.round(Math.random() * 1000000)).toString(10),
+          email: session?.user?.email, 
+          viewName: 'default', 
+          criteria: formatViewInfo(viewInfo)
+        }
+      })
       router.push('/Scholar')
   }
 
@@ -63,6 +74,22 @@ export default function CreateAccount() {
         {/* @todo: implement dropdown to allow scholars to choose schools & majors */}
         <InputElement label="School" userInfo={userInfo} setUserInfo={setUserInfo} />
         <InputElement label="Major" userInfo={userInfo} setUserInfo={setUserInfo} />
+        <div className={styles.createView}>
+          <p>Enter up to 5 keywords (e.g. Toronto, Software, etc.)</p>
+          <MultiSelect
+            data={viewInfo}
+            maxSelectedValues={5}
+            placeholder="Select keywords"
+            creatable
+            searchable
+            getCreateLabel={(query) => `+ Create ${query}`}
+            onCreate={(query) => {
+              const item = { value: query, label: query };
+              setViewInfo([...viewInfo, item]);
+              return item;
+            }}
+          />
+        </div>
         <OnyxCheckbox checked={checked} setChecked={setChecked} />
         {
           completed === true || completed === null ? 
@@ -121,7 +148,7 @@ const OnyxCheckbox = ({ checked, setChecked }: any) => {
         checked={checked}
         onChange={() => setChecked(!checked)}
       />
-      <p>Would you like to receive notifications about new jobs?</p>
+      <p>Turn on notifications for new jobs</p>
     </div>
   )
 }
@@ -132,4 +159,15 @@ const checkCompletion = async (userInfo: UserInfo, setCompleted: any) => {
   } else {
     setCompleted(false)
   }
+}
+
+const formatViewInfo = (viewInfo: any) => {
+  let formattedViewInfo = [];
+  for (let i = 0; i < viewInfo.length; i++) {
+    formattedViewInfo.push(viewInfo[i].value)
+  }
+  if (formattedViewInfo.length === 0) {
+    formattedViewInfo = ['Toronto'];
+  }
+  return formattedViewInfo;
 }

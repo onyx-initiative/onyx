@@ -90,5 +90,5 @@ Michael's Hours:
 - Tues, Feb 14 - 7 hr
 - Tues, Feb 21 - 6 hr
 - Wed, Feb 22 - 9 hr
-- Thurs, Feb 23 - 3 hr
+- Thurs, Feb 23 - 6 hr
 

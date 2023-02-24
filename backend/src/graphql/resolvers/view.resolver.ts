@@ -73,9 +73,19 @@ const viewResolver = {
         }
     },
     Mutation: {
-        createView: async (_: any, { view_id, scholar_id, view_name, criteria }: any, { dataSources }: any) => {
+        createView: async (_: any, { view_id, email, view_name, criteria }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
+            
+            // Get the scholar_id
+            const scholarQuery = `SELECT scholar_id FROM scholar WHERE email = $1`;
+            const scholarResp = await client.query(scholarQuery, [email]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            const scholar_id = scholarResp.rows[0].scholar_id;
+
             const query = `INSERT INTO filterView (view_id, scholar_id, view_name, criteria) VALUES ($1, $2, $3, $4) RETURNING *`;
             const resp = await client.query(query, [view_id, scholar_id, view_name, criteria]).catch((err: any) => {
                 console.error(err);

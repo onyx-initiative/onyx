@@ -92,3 +92,14 @@
     height: 100vh;
     width: 100vw;
 }
+
+.createView {
+    color: white;
+    margin-bottom: 1rem;
+    max-width: 80%;
+    min-width: 80%;
+}
+
+.createView > p {
+    font-size: 1rem;
+}
