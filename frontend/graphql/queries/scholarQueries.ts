@@ -70,3 +70,9 @@ export const GET_SCHOLAR_VIEWS = gql`
         }
     }
 `
+
+export const CHECK_BOOKMARK = gql`
+    query Query($jobId: ID!, $email: String!) {
+        checkBookmark(job_id: $jobId, email: $email)
+    }
+`

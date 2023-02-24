@@ -2,7 +2,10 @@
 
 INSERT INTO AllowedAdmins(email) VALUES
     ('mdawes28@gmail.com'),
-    ('michaelanthony.dawes@mail.utoronto.ca');
+    ('michaelanthony.dawes@mail.utoronto.ca'),
+    ('andy.francis@onyxinitiative.org'),
+    ('wayne.purboo@me.com'),
+    ('cole.purboo@mail.utoronto.ca');
 
 INSERT INTO Admin (email, password) VALUES ('mdawes28@gmail.com', 'password');
 

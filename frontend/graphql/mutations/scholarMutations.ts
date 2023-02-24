@@ -85,3 +85,9 @@ export const DELETE_VIEW = gql`
         }
     }
 `
+
+export const BOOKMARK_JOB = gql`
+    mutation Mutation($email: String!, $jobId: ID!) {
+        bookmarkJob(email: $email, job_id: $jobId)
+    }
+`

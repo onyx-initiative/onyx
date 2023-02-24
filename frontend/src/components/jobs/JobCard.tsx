@@ -3,11 +3,14 @@ import { Select, Pagination, Slider, RangeSlider, Drawer } from '@mantine/core';
 import { DatePicker, DateRangePicker } from '@mantine/dates';
 import { IoLocationSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
 import { Job } from '../../../../backend/src/types/db.types';
 import Image from 'next/image';
 import styles from '../../../styles/components/Jobs.module.css'
+import { BOOKMARK_JOB } from '../../../graphql/mutations/scholarMutations';
+import { useSession } from 'next-auth/react';
+import { CHECK_BOOKMARK } from '../../../graphql/queries/scholarQueries';
 
 const JobCard = (props: any) => {
     const { job, email } = props;
@@ -25,7 +28,7 @@ const JobCard = (props: any) => {
       if (loading) {
         website = 'www.onyxinitiative.org/'
       } else {
-        website = websiteURL(data.getEmployerById.name);
+        website = websiteURL(data?.getEmployerById.name);
       }
     }
     let logo = fetchLogo(website);
@@ -51,9 +54,7 @@ const JobCard = (props: any) => {
               <h6>{job.location} • {job.job_type}</h6>
             </div>
           </div>
-          { email ? null :
             <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
-          }
         </div>
         <div className={styles.jobCardBody}
           onClick={() => setOpened(!opened)}
@@ -107,11 +108,27 @@ const JobCard = (props: any) => {
   
   const Bookmarked = (props: any) => {
     const { bookmarked, setBookmarked, job_id } = props;
+    const { data: session, status } = useSession({ required: true })
+    const [bookmarkJob, { data, loading }] = useMutation(BOOKMARK_JOB)
+    const { data: bookmark, loading: bookmarkLoading, refetch } = useQuery(CHECK_BOOKMARK, {
+      variables: { email: session?.user?.email, jobId: job_id }
+    });
+
+    useEffect(() => {
+      if (!bookmarkLoading) {
+        setBookmarked(bookmark?.checkBookmark);
+      }
+    }, [bookmark, bookmarkLoading])
+
     return (
       <button 
         className={styles.bookmarkContainer}
         onClick={() => {
           // @todo: This should create a relation in the favourites table of the db
+          bookmarkJob({
+            variables: { email: session?.user?.email, jobId: job_id }
+          })
+          refetch({ email: session?.user?.email, jobId: job_id })
           setBookmarked(!bookmarked)
         }}
       >
@@ -123,32 +140,31 @@ const JobCard = (props: any) => {
   //@todo: Pull logos programmatically
 export const websiteURL = (company: string) => {
     // Temp fix
-    if (company == 'Facebook') {
+    if (company === 'Facebook') {
       return 'www.facebook.com';
-    } else if (company === '') {
-      return 'www.onyxinitiative.org/';
-    } else {
+    } else if (company) {
       return "www." + company.toLowerCase().replace(/ /g, "-") + ".com";
     }
-  }
+    return 'www.onyxinitiative.org/';
+}
   
   // Helper function to get logos dynamically
   // @todo: try to update this to get higher quality logos
-  export const fetchLogo = (websiteURL: string) => {
-    return `https://logo.clearbit.com/${websiteURL}`;
+export const fetchLogo = (websiteURL: string) => {
+  return `https://logo.clearbit.com/${websiteURL}`;
+}
+
+const formatYears = (years: string[]) => {
+  let formattedYears: string = '';
+  const currentYear = new Date().getFullYear();
+  for (let i = 0; i < years.length; i++) {
+    if (i === years.length - 1) {
+      formattedYears += (currentYear +parseInt(years[i]));
+    } else {
+      formattedYears += (currentYear +parseInt(years[i])) + ', ';
+    }
   }
-  
-  const formatYears = (years: string[]) => {
-    let formattedYears: string = '';
-    const currentYear = new Date().getFullYear();
-    for (let i = 0; i < years.length; i++) {
-      if (i === years.length - 1) {
-        formattedYears += (currentYear +parseInt(years[i]));
-      } else {
-        formattedYears += (currentYear +parseInt(years[i])) + ', ';
-      }
-    }
-    return formattedYears;
-    }
+  return formattedYears;
+}
 
 export default JobCard;

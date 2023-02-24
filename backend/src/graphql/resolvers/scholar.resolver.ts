@@ -93,6 +93,48 @@ const scholarResolver = {
 
             client.release()
             return resp.rows;
+        },
+        getBookmarkedJobs: async (_: any, { scholar_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `                
+                SELECT *
+                FROM jobs
+                WHERE job_id IN (
+                    SELECT job_id
+                    FROM Saved
+                    WHERE scholar_id = $1
+                );
+            `;
+            // Returns a list of jobs for each scholar, grouped by scholar
+            const resp = await client.query(query).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            client.release()
+            return resp.rows;
+        },
+        checkBookmark: async (_: any, { job_id, email }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `                
+                SELECT *
+                FROM Saved, Scholar
+                WHERE Saved.job_id = $1 AND Scholar.email = $2
+                AND Saved.scholar_id = Scholar.scholar_id;
+            `;
+            // Returns a list of jobs for each scholar, grouped by scholar
+            const resp = await client.query(query, [job_id, email]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return null;
+            });
+            client.release()
+            if (resp.rows[0]) {
+                return true;
+            }
+            return false;
         }
     },
     Mutation: {
@@ -199,6 +241,50 @@ const scholarResolver = {
             client.release()
             return true;
         },
+        bookmarkJob: async (_: any, { email, job_id }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+
+            // Check if the job is already bookmarked
+            const query = `
+                SELECT Saved.scholar_id 
+                FROM Saved JOIN Scholar ON Saved.scholar_id = Scholar.scholar_id
+                WHERE Scholar.email = $1
+                AND job_id = $2 AND Saved.scholar_id = Scholar.scholar_id;`;
+            const inTable = await client.query(query, [email, job_id]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return null;
+            });
+            // If the job is already bookmarked, delete it from the table
+            if (inTable && inTable.rows.length > 0) {
+                const del = `DELETE FROM Saved WHERE job_id = $1 AND scholar_id = $2;`;
+                await client.query(del, [job_id, inTable.rows[0].scholar_id]).catch((err: any) => {
+                    console.error(err);
+                    client.release()
+                    return null;
+                });
+                client.release()
+                return false;
+            }
+
+            // If the job is not bookmarked, add it to the table
+            const insert = `INSERT INTO Saved (job_id, scholar_id) VALUES ($1, $2)`;
+            const scholar_id = await client.query(`SELECT scholar_id FROM Scholar WHERE email = $1`, 
+            [email]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return null;
+            });
+            await client.query(insert, [job_id, scholar_id.rows[0].scholar_id]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return null;
+            });
+
+            client.release()
+            return true;
+        }
     }
 }
 

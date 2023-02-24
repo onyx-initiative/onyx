@@ -33,15 +33,15 @@
 
 - [ ] Add apple MSFT and google auth bc theyre students <- Need onyx cc
 - [X] CRON job to send emails
-- [ ] Add password login for admins
-    - [ ] Add valid admin email list to the database
-    - [ ] Add frontend creation/login flow for admin
-    - [ ] Add a hash for the password
+- [X] Add password login for admins
+    - [X] Add valid admin email list to the database
+    - [X] Add frontend creation/login flow for admin
+    - [X] Add a hash for the password
     - [ ] Add a way to reset password
-    - [ ] Add a way to add a job to featured/archived
 - [X] Add semantic search
-- [ ] Link bookmarking to backend
+- [X] Link bookmarking to backend
 - [ ] Add a view creation on signup
+- [ ] Make filters grab 5 jobs per view
  
 
 Michael's Hours:
@@ -89,4 +89,6 @@ Michael's Hours:
 - Mon, Feb 13 - 2 hr
 - Tues, Feb 14 - 7 hr
 - Tues, Feb 21 - 6 hr
+- Wed, Feb 22 - 9 hr
+- Thurs, Feb 23 - 3 hr
 
