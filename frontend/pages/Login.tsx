@@ -6,8 +6,7 @@ import Image from 'next/image'
 import { GET_SCHOLAR_BY_EMAIL } from '../graphql/queries/scholarQueries';
 import loading from '../src/assets/loading.svg'
 import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
-import { useQuery } from '@apollo/client';
-import { useRouter } from 'next/router'
+import {useRouter } from 'next/router';
 
 
 // @todo: If email not in db, redirect to sign up page
