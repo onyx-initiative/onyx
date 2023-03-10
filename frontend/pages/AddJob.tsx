@@ -1,29 +1,26 @@
 import React, {useEffect, useState} from "react";
-import { useForm } from "react-hook-form";
 import styles from "../styles/components/AddJobForm.module.css";
 import { Checkbox } from "@mantine/core";
 import { CREATE_JOB } from "../graphql/mutations/jobMutations";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { Employer, job_type } from "../../backend/src/types/db.types";
 import Image from 'next/image';
 import {GET_EMPLOYER_BY_NAME, GET_EMPLOYERS} from "../../frontend/graphql/queries/employerQueries";
 import {Select, MultiSelect, Button} from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
 
 
 
 type JobInfo = {
-    employer_id: string,
-    admin_id: string,
+    employerId: string,
+    adminId: string,
     title: string,
     description: string,
     long_description: string
     contact_email: string
-    job_type: string,
+    jobType: string,
     term: string,
     location: string,
-    applicant_year: number[],
+    applicantYear: number[],
     deadline: string,
     tags: string[]
 }
@@ -32,30 +29,30 @@ export default function AddJob() {
     const [JobInfo, setJobInfo] = useState({} as JobInfo)
     const [checked, setChecked] = useState(false)
     const [createJob, {data: jobData, loading, error}] = useMutation(CREATE_JOB, {variables: {
-      employerId: JobInfo.employer_id,
-    adminId: JobInfo.admin_id,
-    title: JobInfo.title,
-    term: JobInfo.term,
-    description: JobInfo.description,
-    jobType: JobInfo.job_type,
-    longDescription: JobInfo.long_description,
-    contactEmail: JobInfo.contact_email,
-    location: JobInfo.location,
-    applicantYear: JobInfo.applicant_year,
-    deadline: JobInfo.deadline,
-    tags: JobInfo.tags
+      employerId: JobInfo.employerId,
+        adminId:JobInfo.adminId,
+        title:JobInfo.title,
+        description: JobInfo.description,
+        jobType: JobInfo.jobType,
+        term: JobInfo.term,
+        location: JobInfo.location,
+        applicantYear: JobInfo.applicantYear,
+        deadline: JobInfo.deadline,
+        tags: JobInfo.tags,
+        contactEmail: JobInfo.contact_email,
+        longDescription: JobInfo.long_description,
     }})
     const router = useRouter()
     const [completed, setCompleted] = useState(null as boolean | null)
 
 
     const handleSubmit = () => {
+      console.log(error)
+      console.log(loading)
       console.log(JobInfo)
       createJob();
       router.push('/Admin')
   }
-
-  const [dateValue, setDateValue] = useState<Date | null>(null);
 
   const { data: employerData, loading: employerLoading, } = useQuery(GET_EMPLOYERS)
 
@@ -92,16 +89,14 @@ export default function AddJob() {
     useEffect(() => {
       console.log(applicationYearSearchValue)
       if(!employerIdLoading && searchValue != "") {
-        JobInfo.employer_id = employerId.getEmployerByName.employer_id
-        JobInfo.admin_id = "1"
+        JobInfo.employerId = employerId.getEmployerByName.employer_id
+        JobInfo.adminId = "1"
       }
     }, [searchValue, employerIdLoading])
     const [selected, setSelected] = useState([] as any[])
 
 
 
-  
-  
 
     return (
       <div className={styles.container}>
@@ -188,8 +183,8 @@ export default function AddJob() {
           />
           <Button color="dark" onClick={() => {
             // 1. Check all fields are filled
+            console.log(checkCompletion(JobInfo, setCompleted));
             console.log(JobInfo)
-            checkCompletion(JobInfo, setCompleted);
           }}>
             Create Job
           </Button>
@@ -271,7 +266,7 @@ const formatEmpData = (empData: any[]) => {
 
 
 const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
-  if (jobInfo.title && jobInfo.description && jobInfo.job_type && jobInfo.location && jobInfo.applicant_year && jobInfo.deadline && jobInfo.tags) {
+  if (jobInfo.title && jobInfo.description && jobInfo.jobType && jobInfo.location && jobInfo.applicantYear && jobInfo.deadline && jobInfo.tags) {
     setCompleted(true)
   } else {
     setCompleted(false)

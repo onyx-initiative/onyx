@@ -72,6 +72,7 @@ export const jobTypeDef = gql`
         job: Job!
     }
 
+
     type Mutation {
         createJob(
             employer_id: ID!
