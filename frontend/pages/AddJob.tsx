@@ -27,9 +27,8 @@ type JobInfo = {
 
 export default function AddJob() {
     const [JobInfo, setJobInfo] = useState({} as JobInfo)
-    const [checked, setChecked] = useState(false)
     const [createJob, {data: jobData, loading, error}] = useMutation(CREATE_JOB, {variables: {
-      employerId: JobInfo.employerId,
+        employerId: JobInfo.employerId,
         adminId:JobInfo.adminId,
         title:JobInfo.title,
         description: JobInfo.description,
@@ -47,9 +46,6 @@ export default function AddJob() {
 
 
     const handleSubmit = () => {
-      console.log(error)
-      console.log(loading)
-      console.log(JobInfo)
       createJob();
       router.push('/Admin')
   }
@@ -149,7 +145,8 @@ export default function AddJob() {
               for (let i = 0; i < query.length; i++) {
                 x.push(parseInt(query[i]))
               }
-              setJobInfo(state => ({...state, applicant_year: x}))
+              console.log(x)
+              setJobInfo(state => ({...state, applicantYear: x}))
             }}
           />
             <InputElement label="deadline" JobInfo={JobInfo} setJobInfo={setJobInfo} />
@@ -184,7 +181,6 @@ export default function AddJob() {
           <Button color="dark" onClick={() => {
             // 1. Check all fields are filled
             console.log(checkCompletion(JobInfo, setCompleted));
-            console.log(JobInfo)
           }}>
             Create Job
           </Button>
@@ -266,6 +262,8 @@ const formatEmpData = (empData: any[]) => {
 
 
 const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
+
+  console.log(jobInfo.applicantYear)
   if (jobInfo.title && jobInfo.description && jobInfo.jobType && jobInfo.location && jobInfo.applicantYear && jobInfo.deadline && jobInfo.tags) {
     setCompleted(true)
   } else {
@@ -273,11 +271,4 @@ const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
   }
 }
 
-const createTagList = (tags: any[]) => {
-  let tagList = [];
-  for (let i = 0; i < tags.length; i++) {
-    tagList.push(tags[i].label)
-  }
-  return tagList
-}
 
