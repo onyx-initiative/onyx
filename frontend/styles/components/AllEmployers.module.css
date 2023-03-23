@@ -1,14 +1,41 @@
 .jobBlockContainer {
     display: flex;
     flex-direction: column;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
     border-radius: 10px;
-    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2)
+    border-style: solid;
+    border-color: #808080;
+    box-shadow: 2px 2px 2px 2px #dbdee3;
 
+
+}
+
+.jobTags {
+    align-items: center;
+    display: flex;
+    margin-bottom: 2px;
+}
+
+
+
+.tag {
+    color: rgb(140, 140, 140);
+    background-color: #f5e9d9;
+    width: 20%;
+    font-size: small;
+    font-weight: bold;
+    padding: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.2rem;
+    margin-right: 0.7rem;
+    margin-left: 0.5rem;
 }
 
 .title {
     margin-bottom: 1px;
+    margin-left: 1px;
 }
 
 
@@ -35,7 +62,7 @@
 
 .additionalInfo {
     display: flex;
-    align-items: center
+    align-items: center;
 
 }
 

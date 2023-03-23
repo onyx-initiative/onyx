@@ -22,10 +22,8 @@ export const EmployerBlock = (props: any) => {
       variables: { employerId: employer.employer_id}
     });
     
-    console.log(JobList)
-    console.log(data)
+    
     const [jobs, setJobs] = useState([])
-    console.log(JobList)
     
     let website: string;
       if (employer.name) {
@@ -61,15 +59,18 @@ export const EmployerBlock = (props: any) => {
           padding="xl"
           size="xl"
           position="right"
+          className={styles.employerJobList}
         >
+          
             <Image src={logo} 
                     alt="Company Logo" 
-                    width={200}
+                    width={150}
                     height={150}
             />
             <p>{employer.description}</p>
             <h3>Job Postings</h3>
             <EmployerJobList jobs={jobs} />
+          
             
         </Drawer>
   
