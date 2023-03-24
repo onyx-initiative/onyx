@@ -5,7 +5,8 @@
     border-radius: 10px;
     border-style: solid;
     border-color: #808080;
-    box-shadow: 2px 2px 2px 2px #dbdee3;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+    padding: 3px;
 
 
 }

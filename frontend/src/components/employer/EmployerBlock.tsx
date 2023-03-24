@@ -79,7 +79,7 @@ export const EmployerBlock = (props: any) => {
                 <Image src={logo} 
                     alt="Company Logo" 
                     width={200}
-                    height={180} />
+                    height={200} />
             </div>
 
         </Button>
