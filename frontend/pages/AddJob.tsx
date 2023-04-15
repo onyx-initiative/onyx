@@ -69,6 +69,8 @@ export default function AddJob() {
     // Ignore, this is intentional
   }, [empData, employerLoading])
 
+  const current_year= new Date().getFullYear()
+
   
 
   const [searchValue, onSearchChange] = useState('');
@@ -134,11 +136,11 @@ export default function AddJob() {
             nothingFound="No options"
             dropdownPosition="bottom"
             data={[
-              new Date().getFullYear().toString(),
-              (new Date().getFullYear()+1).toString(),
-              (new Date().getFullYear()+2).toString(),
-              (new Date().getFullYear()+3).toString(),
-              (new Date().getFullYear()+4).toString()
+              current_year.toString(),
+              (current_year+1).toString(),
+              (current_year+2).toString(),
+              (current_year+3).toString(),
+              (current_year+4).toString()
             ]}
             onChange={(query) => {
               let x: number[] = [];

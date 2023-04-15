@@ -15,7 +15,7 @@ export default function AllEmployers(props: ListedEmployersProps) {
     const { employers } = props;
     const [activePage, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const employersPerPage = 4; // @todo change this to higher number later
+    const employersPerPage = 8; // @todo change this to higher number later
     const numPages = loading ? 1 : Math.ceil(employers.length / employersPerPage);
     const display = employers.slice((activePage - 1) * employersPerPage, activePage * employersPerPage);
     
