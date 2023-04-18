@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+  import type { NextApiRequest, NextApiResponse } from 'next'
 import { render } from '@react-email/render';
 import sendgrid from '@sendgrid/mail';
 import { Email, Recommendation } from '../../../emails/jobUpdate';
