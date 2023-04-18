@@ -91,18 +91,7 @@ const jobResolver = {
             const { db } = dataSources;
             const client = await establishConnection(db);
             const query = `
-                select * 
-                from employer join job on job.employer_id = employer.employer_id
-                where name  % $1 OR title % $1
-                OR job.description % $1 OR
-                long_description % $1
-                OR job_type % $1
-                OR term % $1
-                OR location % $1
-                OR array_to_string(tags, ' ') % $1
-                GROUP BY name, title, employer.employer_id, job.job_id
-                HAVING similarity(name || title, $1) > 0.2
-                order by similarity(name || title, $1) desc;
+                SELECT * FROM search_jobs_trgm($1);
             `;
             const resp = await client.query(query, [search]).catch((err: any) => {
                 console.error(err);
@@ -174,7 +163,8 @@ const jobResolver = {
             location,
             applicant_year,
             deadline,
-            tags
+            tags,
+            live
             }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
@@ -194,7 +184,7 @@ const jobResolver = {
 
             let query;
             
-            if (long_description === undefined && contact_email === undefined) {
+            if (contact_email === undefined && live === undefined) {
                 query = `INSERT INTO job(
                     employer_id,
                     admin_id,
@@ -224,7 +214,7 @@ const jobResolver = {
                     client.release()
                     return false;
                 });
-            } else if (long_description === undefined) {
+            } else if (live === undefined) {
                 query = `INSERT INTO job(
                     employer_id,
                     admin_id,
@@ -268,8 +258,9 @@ const jobResolver = {
                     location,
                     applicant_year,
                     deadline,
-                    tags
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;`;
+                    tags,
+                    live
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true) RETURNING *;`;
                 await client.query(query, 
                     [
                     employer_id,
@@ -301,8 +292,9 @@ const jobResolver = {
                     location,
                     applicant_year,
                     deadline,
-                    tags
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *;`;
+                    tags,
+                    live
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true) RETURNING *;`;
                 await client.query(query, 
                     [
                     employer_id,

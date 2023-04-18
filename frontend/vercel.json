@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/pages/api/update",
+      "path": "/api/cron",
       "schedule": "0 16 * * 5"
     }
   ]

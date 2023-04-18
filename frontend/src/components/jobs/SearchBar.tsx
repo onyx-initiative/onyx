@@ -41,7 +41,8 @@ export default function SearchBar({ setJobs, initialQuery, query, setSearch }: S
           <AiOutlineSearch size={18}/>
           <button
             type="button"
-            onClick={() => getJobs({ variables: { search: formatQuery(query) } })}
+            onClick={() => {
+              getJobs({ variables: { search: formatQuery(query) } })}}
           >
             Search
           </button>

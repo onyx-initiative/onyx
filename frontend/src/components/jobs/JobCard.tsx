@@ -17,7 +17,9 @@ const JobCard = (props: any) => {
     const [bookmarked, setBookmarked] = useState(false);
     const [opened, setOpened] = useState(false);
     const { data, loading } = useQuery(GET_EMPLOYER_BY_ID, {
-      variables: { employerId: job.employer_id }
+      variables: { 
+        employerId: job.employer_id
+      }
     });
   
     // @todo: Add a call to get the employer website
@@ -159,9 +161,9 @@ const formatYears = (years: string[]) => {
   const currentYear = new Date().getFullYear();
   for (let i = 0; i < years.length; i++) {
     if (i === years.length - 1) {
-      formattedYears += (currentYear +parseInt(years[i]));
+      formattedYears += (currentYear + i);
     } else {
-      formattedYears += (currentYear +parseInt(years[i])) + ', ';
+      formattedYears += (currentYear + i) + ', ';
     }
   }
   return formattedYears;

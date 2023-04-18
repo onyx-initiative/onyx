@@ -17,16 +17,16 @@ type FilterProps = {
 
 export default function Filter(props: FilterProps) {
   const { filters, setFilters, selected, setSelected, setJobs } = props
-  const [getJobs, { data }] = useLazyQuery(SEARCH_JOBS, {
+  const [getJobs, { data, loading }] = useLazyQuery(SEARCH_JOBS, {
     variables: { search: '' },
   })
 
   // @todo: Fix the apply filter query
   useEffect(() => {
-    if (data) {
+    if (data && !loading) {
         setJobs(data.searchJobs)
     }
-}, [data, setJobs])
+  }, [data, setJobs])
 
   return (
     <div className={styles.filterBar}>
@@ -134,14 +134,14 @@ export default function Filter(props: FilterProps) {
                   if (selected.applicant_year.includes(year)) {
                     // @todo: Update this method to remove the year from the array
 
-                    // const index = selected.applicant_year.indexOf(year)
-                    // const newApplicantYear = selected.applicant_year.splice(index, 1)
-                    // return (
-                    //   setSelected({
-                    //     ...selected,
-                    //     applicant_year: newApplicantYear
-                    //   })
-                    // )
+                    const index = selected.applicant_year.indexOf(year)
+                    const newApplicantYear = selected.applicant_year.splice(index, 1)
+                    return (
+                      setSelected({
+                        ...selected,
+                        applicant_year: newApplicantYear
+                      })
+                    )
                   } else {
                     return (
                       setSelected({
@@ -188,6 +188,8 @@ export default function Filter(props: FilterProps) {
         type="button" 
         className={styles.applyFilters}
         onClick={() => {
+          console.log(selected)
+          console.log('query', stringifyFilters(selected))
           getJobs({ variables:  { search: stringifyFilters(selected) } })
         }}
       >
@@ -210,7 +212,8 @@ const ClearAll = (props: any) => {
           job_type: {
             full_time: false,
             part_time: false,
-            internship: false
+            internship: false,
+            new_grad: false
           },
           applicant_year: [],
           sort: sort.Newest,
@@ -228,18 +231,21 @@ const ClearAll = (props: any) => {
 
 const stringifyFilters = (selected: any) => {
   let filters = ''
-  for (const key in selected) {
-    if (selected[key] !== '' && selected[key].length > 0) {
+  for (let key in selected) {
+    if (selected[key] !== '' && (selected[key].length > 0 || key === 'job_type')) {
       if (key === 'job_type') {
-        for (const jobType in selected[key]) {
+        for (let jobType in selected[key]) {
           if (selected[key][jobType]) {
-            filters += ` & ${jobType}`
+            const formattedJobType = jobType.replace('_', ' ');
+            filters += ` & ${formattedJobType}`;
           }
         }
       } else if (key === 'applicant_year') {
+        filters += ' & '; // Add the '&' separator before appending years
         for (const year of selected[key]) {
-          filters += ` & ${year}`
+          filters += `${year} `; // Append the year to the filters string
         }
+        filters = filters.trim(); // Remove trailing space after the last year
       } else if (key === 'tags') {
         const tag = selected[key][selected[key].length - 1]
         for (let i = 0; i < tag.value.length; i++) {

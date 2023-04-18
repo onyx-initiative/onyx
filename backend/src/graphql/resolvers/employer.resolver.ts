@@ -48,7 +48,7 @@ const employerResolver = {
             const client = await establishConnection(db);
 
             // Check if employer already exists
-            const currentEmployers = await client.query(`SELECT * FROM employer`).catch((err: any) => {
+            const currentEmployers = await client.query(`SELECT * FROM employer WHERE name = $1`, [name]).catch((err: any) => {
                 console.error(err);
                 client.release()
             });
