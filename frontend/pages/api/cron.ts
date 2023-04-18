@@ -37,7 +37,7 @@ export default async function handler(
       // Configure the options for the email
       const options = {
         from: 'mdawes28@gmail.com',
-        to: 'michaelanthony.dawes@mail.utoronto.ca',
+        to: email,
         subject: 'Onyx Job Weekly Update',
         html: emailHtml,
       };
@@ -57,7 +57,7 @@ export default async function handler(
 
 // Helper functions for parsing the data from the db
 const getRecommendedJobs = async () => {
-  const recommendedJobs = await fetch('https://3uyqf7fpea.execute-api.ca-central-1.amazonaws.com/dev/graphql', {
+  const recommendedJobs = await fetch(process.env.NEXT_PUBLIC_URI as string, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',

@@ -91,6 +91,20 @@ CREATE TABLE Application (
     date_applied TIMESTAMP NOT NULL
 );
 
+DROP VIEW IF EXISTS job_search;
+CREATE VIEW job_search AS
+SELECT to_tsvector(
+    name || ' ' 
+    || title || ' ' 
+    || job.description || ' ' 
+    || COALESCE(long_description, ' ') || ' ' 
+    || job_type || ' ' 
+    || term || ' ' 
+    || location || ' ' 
+    || array_to_string(tags, ' ')) AS document, job_id
+FROM Job JOIN Employer ON Job.employer_id = Employer.employer_id
+WHERE live = TRUE;
+
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 CREATE OR REPLACE FUNCTION search_jobs_trgm(query VARCHAR(255))
