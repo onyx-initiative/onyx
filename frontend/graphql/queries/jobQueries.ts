@@ -82,6 +82,7 @@ export const GET_JOBS = gql`
             term
             title
             total_views
+            date_posted
         }
     }
 `

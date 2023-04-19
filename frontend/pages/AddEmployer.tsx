@@ -77,7 +77,7 @@ return (
             checkCompletion(EmployerInfo, setCompleted);
             console.log(completed)
           }}>
-            Create Job
+            Create Employer
           </Button>
 
         </div>
