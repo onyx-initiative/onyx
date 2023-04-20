@@ -79,3 +79,9 @@ export const MakePrivate = gql`
 //     }
 // `
 
+export const BATCH_CREATE_JOBS = gql`
+    mutation BatchCreateJobs($adminId: ID!, $jobs: [BatchJob!]!) {
+        batchCreateJobs(admin_id: $adminId, jobs: $jobs)
+    }
+`
+

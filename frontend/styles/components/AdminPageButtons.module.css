@@ -22,3 +22,29 @@
 
 
 }
+
+.uploadWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.upload {
+    margin-top: 1rem;
+}
+
+.uploadButton > input[type="file"] {
+    margin-top: 10px;
+    background-color: #806E53;
+    color: black;
+}
+
+.submitButton {
+    background-color: #806E53;
+    color: white;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    border: none;
+}

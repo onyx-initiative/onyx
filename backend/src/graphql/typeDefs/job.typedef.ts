@@ -37,6 +37,20 @@ export const jobTypeDef = gql`
         tags: [String!]!
     }
 
+    input BatchJob {
+        employer_name: String!
+        title: String!
+        description: String!
+        long_description: String
+        contact_email: String
+        job_type: String!
+        term: String!
+        location: String!
+        applicant_year: [Int!]!
+        deadline: String!
+        tags: [String!]!
+    }
+
     type JobSearch {
         job_id: ID!
         name: String!
@@ -87,6 +101,10 @@ export const jobTypeDef = gql`
             applicant_year: [Int!]!
             deadline: String!
             tags: [String!]!
+        ): Boolean!
+        batchCreateJobs(
+            admin_id: ID!
+            jobs: [BatchJob!]!
         ): Boolean!
         archiveJob(job_id: ID!): Boolean!
         incrementViews(job_id: ID!): Boolean!

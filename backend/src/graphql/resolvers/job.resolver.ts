@@ -319,6 +319,59 @@ const jobResolver = {
             client.release()
             return true;
         },
+        batchCreateJobs: async (_: any, { admin_id, jobs }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+
+            const query = `INSERT INTO job(
+                employer_id,
+                admin_id,
+                title,
+                description,
+                long_description,
+                contact_email,
+                job_type,
+                term,
+                location,
+                applicant_year,
+                deadline,
+                tags,
+                live
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true) RETURNING *;`;
+            for (let i = 0; i < jobs.length; i++) {
+                // Get the employer id
+                const employer = await client.query(`SELECT employer_id
+                                                    FROM employer   
+                                                    WHERE name = $1;`,
+                    [jobs[i].employer_name]).catch((err: any) => {
+                        console.log(err);
+                        client.release()
+                        return false;
+                    });
+                const job = jobs[i];
+                await client.query(query, 
+                    [
+                    employer.rows[0].employer_id,
+                    admin_id,
+                    job.title,
+                    job.description,
+                    job.long_description,
+                    job.contact_email,
+                    job.job_type,
+                    job.term,
+                    job.location,   
+                    job.applicant_year,
+                    job.deadline,
+                    job.tags
+                ]).catch((err: any) => {
+                    console.log(err);
+                    client.release()
+                    return false;
+                });
+            }
+            client.release()
+            return true;
+        },
         // @todo: Make this a cron to run sunday every 2 weeks
         archiveJob: async (_: any, { job_id }: any, { dataSources }: any) => {
             const date = new Date();
