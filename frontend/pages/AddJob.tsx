@@ -27,9 +27,8 @@ type JobInfo = {
 
 export default function AddJob() {
     const [JobInfo, setJobInfo] = useState({} as JobInfo)
-    const [checked, setChecked] = useState(false)
     const [createJob, {data: jobData, loading, error}] = useMutation(CREATE_JOB, {variables: {
-      employerId: JobInfo.employerId,
+        employerId: JobInfo.employerId,
         adminId:JobInfo.adminId,
         title:JobInfo.title,
         description: JobInfo.description,
@@ -47,9 +46,6 @@ export default function AddJob() {
 
 
     const handleSubmit = () => {
-      console.log(error)
-      console.log(loading)
-      console.log(JobInfo)
       createJob();
       router.push('/Admin')
   }
@@ -73,13 +69,15 @@ export default function AddJob() {
     // Ignore, this is intentional
   }, [empData, employerLoading])
 
+  const current_year= new Date().getFullYear()
+
   
 
   const [searchValue, onSearchChange] = useState('');
   const [applicationYearSearchValue, onSearchApplicationYear] = useState('');
   const [tagSearchValue, onSearchTag] = useState('');
   const [tagData, setTagData] = useState([{ value: 'Technology', label:  'Technology' },
-    { value: 'Business ', label: 'Business' }, { value: 'Marketing', label:  'Marketing' }, { value: 'Engineering', label:  'Engineering' }, { value: 'Finance', label:  'Finance' }, { value: 'HR', label:  'HR' }, { value: 'IT', label:  'IT' }, { value: 'Research', label:  'Research' }, { value: 'Sales', label:  'Sales' }, { value: 'Security', label:  'Security' }, { value: 'Accounting', label:  'Accounting' }, { value: 'Administration', label:  'Administration' }, { value: 'Automotive', label:  'Automotive' }, { value: 'Arts&Entertainment', label:  'Arts&Entertainment' }, { value: 'Communication', label:  'Communication' }, { value: 'Design', label:  'Design' }, { value: 'Gaming', label:  'Gaming' }, { value: 'Healthcare', label:  'HealthCare' }, { value: 'Mathematics', label:  'Mathematics' }, { value: 'Telecommunications', label:  'Telecommunications' }
+    { value: 'Business ', label: 'Business' }, { value: 'Marketing', label:  'Marketing' }, { value: 'Engineering', label:  'Engineering' }, { value: 'Finance', label:  'Finance' }, { value: 'HR', label:  'HR' }, { value: 'IT', label:  'IT' }, { value: 'Research', label:  'Research' }, { value: 'Sales', label:  'Sales' }, { value: 'Security', label:  'Security' }, { value: 'Accounting', label:  'Accounting' }, { value: 'Administration', label:  'Administration' }, { value: 'Automotive', label:  'Automotive' }, { value: 'Arts&Entertainment', label:  'Arts&Entertainment' }, { value: 'Communication', label:  'Communication' }, { value: 'Design', label:  'Design' }, { value: 'Gaming', label:  'Gaming' }, { value: 'Healthcare', label:  'HealthCare' }, { value: 'Mathematics', label:  'Mathematics' }, { value: 'Telecommunications', label:  'Telecommunications'},{ value: 'Default', label:  'Default' }
     ])
   
 
@@ -138,18 +136,19 @@ export default function AddJob() {
             nothingFound="No options"
             dropdownPosition="bottom"
             data={[
-              new Date().getFullYear().toString(),
-              (new Date().getFullYear()+1).toString(),
-              (new Date().getFullYear()+2).toString(),
-              (new Date().getFullYear()+3).toString(),
-              (new Date().getFullYear()+4).toString()
+              current_year.toString(),
+              (current_year+1).toString(),
+              (current_year+2).toString(),
+              (current_year+3).toString(),
+              (current_year+4).toString()
             ]}
             onChange={(query) => {
               let x: number[] = [];
               for (let i = 0; i < query.length; i++) {
                 x.push(parseInt(query[i]))
               }
-              setJobInfo(state => ({...state, applicant_year: x}))
+              console.log(x)
+              setJobInfo(state => ({...state, applicantYear: x}))
             }}
           />
             <InputElement label="deadline" JobInfo={JobInfo} setJobInfo={setJobInfo} />
@@ -184,7 +183,6 @@ export default function AddJob() {
           <Button color="dark" onClick={() => {
             // 1. Check all fields are filled
             console.log(checkCompletion(JobInfo, setCompleted));
-            console.log(JobInfo)
           }}>
             Create Job
           </Button>
@@ -266,6 +264,8 @@ const formatEmpData = (empData: any[]) => {
 
 
 const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
+
+  console.log(jobInfo.applicantYear)
   if (jobInfo.title && jobInfo.description && jobInfo.jobType && jobInfo.location && jobInfo.applicantYear && jobInfo.deadline && jobInfo.tags) {
     setCompleted(true)
   } else {
@@ -273,11 +273,4 @@ const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
   }
 }
 
-const createTagList = (tags: any[]) => {
-  let tagList = [];
-  for (let i = 0; i < tags.length; i++) {
-    tagList.push(tags[i].label)
-  }
-  return tagList
-}
 

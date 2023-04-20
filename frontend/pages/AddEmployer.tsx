@@ -1,5 +1,4 @@
 import React, { useEffect, useState} from 'react';
-import { Checkbox } from '@mantine/core';
 import { CREATE_EMPLOYER } from '../graphql/mutations/employerMutations';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -9,6 +8,7 @@ import Image from 'next/image';
 import EmployerInfo from '../src/components/employer/EmployerInfo';
 import { Employer } from "../../backend/src/types/db.types";
 import {Button} from '@mantine/core'
+import { loadavg } from 'os';
 
 type EmployerInfo = {
   employer_id: string,
@@ -28,19 +28,29 @@ export default function AddEmployer() {
   const [EmployerInfo, setEmployerInfo] = useState({} as EmployerInfo)
 
   const [createEmployer, {data: employerData, loading, error}] = useMutation(CREATE_EMPLOYER, {variables: {
-    employer_id: EmployerInfo.employer_id,
-    admin_id: EmployerInfo.admin_id,
+    adminId: EmployerInfo.admin_id,
     name: EmployerInfo.name,
-    contact_email: EmployerInfo.contact_email,
+    contactEmail: EmployerInfo.contact_email,
     address: EmployerInfo.address,
     website: EmployerInfo.website,
     description: EmployerInfo.description
   }})
 
+  useEffect(() => {
+    if(!loading) {
+      EmployerInfo.admin_id = "1"
+    }
+  }, [loading])
 
+
+  useEffect(() => {
+    if (completed) {
+      console.log(EmployerInfo)
+      handleSubmit();
+    }
+  }, [completed])
 
   const handleSubmit = () => {
-    console.log(EmployerInfo)
     createEmployer();
     router.push('/Admin')
 }
@@ -58,16 +68,16 @@ return (
         <div className={styles.formContainer}>
           <h1>Create an Employer!</h1>
           <InputElement label="Name" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
-          <InputElement label="Contact Email" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
+          <InputElement label="contact_Email" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <InputElement label="Address" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <InputElement label="Website" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
-          <InputElement label="Description" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
+          <InputElementLong label="Description" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <Button color="dark" onClick={() => {
             // 1. Check all fields are filled
-            console.log(EmployerInfo)
             checkCompletion(EmployerInfo, setCompleted);
+            console.log(completed)
           }}>
-            Create Job
+            Create Employer
           </Button>
 
         </div>
@@ -117,4 +127,30 @@ export const InputElement = ({label, EmployerInfo, setEmployerInfo}: InputElemen
     </div>
   )
 }
+
+export const InputElementLong = ({label, EmployerInfo, setEmployerInfo}: InputElementProps) => {
+  const [inputValue, setInputValue] = useState("")
+
+  useEffect(() => {
+    setEmployerInfo({ ...EmployerInfo, [label.toLowerCase()]: inputValue } as EmployerInfo)
+    // Ignore warning, this is intentional
+  }, [inputValue])
+
+  return (
+    <div className={styles.inputContainerLarge}>
+      <h3 className={styles.inputText}>{label}</h3>
+      <textarea
+        rows={20} 
+        cols={50}
+        id={label} 
+        placeholder={label}
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+        }} ></textarea>
+        
+    </div>
+  )
+}
+
 
