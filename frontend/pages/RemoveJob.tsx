@@ -14,7 +14,6 @@ import {BsFillTrashFill } from "react-icons/bs";
 //Search Bar
 
 
-
 type SelectedJob = {
     jobID: string
 }
