@@ -45,6 +45,7 @@
   
   .removeJobCard:hover {
     background-color: #a19f9f; /* change background color on hover */
+    cursor: pointer;
   }
 
   .removeJobCard p {

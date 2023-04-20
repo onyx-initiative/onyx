@@ -18,6 +18,7 @@
   
   .employerContainer:hover {
     background-color: #9f9e9e; /* change background color on hover */
+    cursor: pointer;
   }
 
 .employerInfo {

@@ -85,4 +85,5 @@
 
 .employerJobButton:hover {
     background-color: #969595; /* change to a darker color on hover */
+    cursor: pointer;
   }
