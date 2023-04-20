@@ -1,6 +1,6 @@
 import { DELETE_JOB } from "../graphql/mutations/jobMutations";
 import { GET_JOBS } from "../graphql/queries/jobQueries";
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../../frontend/styles/components/RemoveJob.module.css';
 import Image from 'next/image';
 import { useMutation, useQuery } from "@apollo/client";
@@ -9,6 +9,8 @@ import loading_svg from "../../frontend/src/assets/loading.svg";
 import SearchBar from "../src/components/general/SearchBar";
 import {GET_EMPLOYER_BY_ID} from "../graphql/queries/employerQueries";
 import {BsFillTrashFill } from "react-icons/bs";
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+
 
 //Search Bar
 
@@ -22,9 +24,9 @@ export default function RemoveJob(props: SelectedJob) {
 
 
     //Mutations and Queries Needed
-    const [deleteJob, {data: jobData, loading: deleteLoading, error}] = useMutation(DELETE_JOB)
-    const { data: jobsData, loading: loading, error: AllJobQueryError } = useQuery(GET_JOBS)
+    const { data: jobsData, loading: loading, error: AllJobQueryError, refetch } = useQuery(GET_JOBS)
 
+    const refetchQueries = [{ query: GET_JOBS }];
 
     
     // For if the page is loading 
@@ -49,7 +51,7 @@ export default function RemoveJob(props: SelectedJob) {
             <SearchBar/>
             <div className={styles.jobContainer}>
                 <div>
-                {loading ? <p>loading</p> : jobsData.getJobs.map((job: Job) => <RemoveJobCard deleteJob={deleteJob} job={job}/>
+                {loading ? <p>loading</p> : jobsData.getJobs.map((job: Job, index:any) => <RemoveJobCard  job={job} key={index} refetchQueries={refetchQueries} />
                 )}
                 </div>
             </div>
@@ -61,9 +63,11 @@ export default function RemoveJob(props: SelectedJob) {
 
 
 export function RemoveJobCard(props: any) {
+  const {job, refetchQueries } = props
+  const [deleteJob, {data: jobData, loading: deleteLoading, error}] = useMutation(DELETE_JOB, {refetchQueries})
 
-    const {job, deleteJob} = props
-    const {data: employer_name, loading, error} = useQuery(GET_EMPLOYER_BY_ID, {variables: {
+
+    const {data: employer_name, loading, error: queryError} = useQuery(GET_EMPLOYER_BY_ID, {variables: {
         employerId: job.employer_id
     }})
 
@@ -71,18 +75,19 @@ export function RemoveJobCard(props: any) {
     const deadline_date = new Date(parseInt(job.deadline)).toDateString();
     const date_posted = new Date(parseInt(job.date_posted)).toDateString();
 
-    const confirmDelete = () => {
-        if (confirm("Are you sure you want to delete this job?")) {
-          // If the user clicks "OK", proceed with the deletion logic here
-          // For example, you can make an API call to delete a resource, or update the UI to remove the deleted item
-          console.log("Deleting...");
-          deleteJob({variables: {jobId: job.job_id}})
-          
-        } else {
-          // If the user clicks "Cancel", do nothing
-          console.log("Cancelled deletion.");
-        }
+    async function confirmDelete() {
+      try {
+        console.log("trying")
+        console.log(job.job_id.toString())
+        await deleteJob({variables: {jobId: job.job_id.toString()}})
+      }catch(queryError){
+        console.error('Error occurred: ', queryError);
       }
+    }
+
+    if (loading) return <p>Loading...</p>;
+    if (queryError) return <p>Error occurred. Please try again later.</p>;
+
 
     return (
         <div className={styles.removeJobCard}>

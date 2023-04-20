@@ -43,7 +43,7 @@ export const ARCHIVE_JOB = gql`
 `
 
 export const DELETE_JOB = gql`
-    mutation deleteJob($jobId: ID!) {
+    mutation DeleteJob($jobId: ID!) {
         deleteJob(job_id: $jobId)
     }
 `
