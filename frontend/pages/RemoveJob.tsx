@@ -77,9 +77,9 @@ export function RemoveJobCard(props: any) {
 
     async function confirmDelete() {
       try {
-        console.log("trying")
         console.log(job.job_id.toString())
         await deleteJob({variables: {jobId: job.job_id.toString()}})
+        console.log("job deleted")
       }catch(queryError){
         console.error('Error occurred: ', queryError);
       }
