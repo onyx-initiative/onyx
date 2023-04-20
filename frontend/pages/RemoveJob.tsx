@@ -6,9 +6,10 @@ import Image from 'next/image';
 import { useMutation, useQuery } from "@apollo/client";
 import { Job } from "../../backend/src/types/db.types";
 import loading_svg from "../../frontend/src/assets/loading.svg";
-import SearchBar from "../src/components/general/SearchBar";
 import {GET_EMPLOYER_BY_ID} from "../graphql/queries/employerQueries";
 import {BsFillTrashFill } from "react-icons/bs";
+import SearchBar from "../src/components/jobs/SearchBar";
+
 
 
 //Search Bar
@@ -26,7 +27,18 @@ export default function RemoveJob(props: SelectedJob) {
 
     const refetchQueries = [{ query: GET_JOBS }];
 
-    
+    const [search, setSearch] = useState('')
+    const [jobs, setJobs] = useState([])
+
+    useEffect(() => {
+      if (!loading) {
+          setJobs(jobsData?.getJobs)
+        }
+      }
+      // Ignore, this is intentional
+     ,[jobsData, loading])
+
+     
     // For if the page is loading 
     if (loading) {
         return (
@@ -37,6 +49,8 @@ export default function RemoveJob(props: SelectedJob) {
         )
       }
     
+    
+
     return (
         <div>
           <Image
@@ -46,10 +60,10 @@ export default function RemoveJob(props: SelectedJob) {
               height={100} 
           />
             <h1>Search for a Job to remove!</h1>
-            <SearchBar/>
+            <SearchBar setJobs={setJobs} query={search} setSearch={setSearch}/>
             <div className={styles.jobContainer}>
                 <div>
-                {loading ? <p>loading</p> : jobsData.getJobs.map((job: Job, index:any) => <RemoveJobCard  job={job} key={index} refetchQueries={refetchQueries} />
+                {loading ? <p>loading</p> : jobs.map((job: Job, index:any) => <RemoveJobCard  job={job} key={index} refetchQueries={refetchQueries} />
                 )}
                 </div>
             </div>
@@ -75,10 +89,14 @@ export function RemoveJobCard(props: any) {
 
     async function confirmDelete() {
       try {
-        console.log(job.job_id.toString())
-        await deleteJob({variables: {jobId: job.job_id.toString()}})
-        console.log("job deleted")
-      }catch(queryError){
+        var result = confirm("Are you sure you want to delete this Job?");
+        if (result == true) {
+        console.log(job.job_id)
+        await deleteJob({variables: {jobId: job.job_id}})
+        console.log("Job deleted")}
+        else {
+    } }
+      catch(queryError){
         console.error('Error occurred: ', queryError);
       }
     }
