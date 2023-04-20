@@ -9,7 +9,6 @@ import loading_svg from "../../frontend/src/assets/loading.svg";
 import SearchBar from "../src/components/general/SearchBar";
 import {GET_EMPLOYER_BY_ID} from "../graphql/queries/employerQueries";
 import {BsFillTrashFill } from "react-icons/bs";
-import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 
 //Search Bar
