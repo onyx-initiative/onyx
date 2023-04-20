@@ -65,7 +65,7 @@ export const EmployerBlock = (props: any) => {
             <Image src={logo} 
                     alt="Company Logo" 
                     width={150}
-                    height={150}
+                    height={100}
             />
             <p>{employer.description}</p>
             <h3>Job Postings</h3>
@@ -78,8 +78,8 @@ export const EmployerBlock = (props: any) => {
             <div>
                 <Image src={logo} 
                     alt="Company Logo" 
-                    width={200}
-                    height={200} />
+                    width={700}
+                    height={500} />
             </div>
 
         </Button>

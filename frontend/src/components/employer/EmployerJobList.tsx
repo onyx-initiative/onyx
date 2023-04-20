@@ -3,7 +3,9 @@ import JobSnippet from '../scholar/JobSnippet'
 import { job_type, Job } from '../../../../backend/src/types/db.types';
 import styles from '../../../styles/components/AllEmployers.module.css';
 import { IoLocationSharp } from "react-icons/io5";
-import Link from 'next/link';
+import { useRouter } from 'next/router'
+import { useQuery } from '@apollo/client';
+import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
 
 
 type EmployerJobList = {
@@ -13,7 +15,7 @@ type EmployerJobList = {
 function EmployerJobList(props: EmployerJobList) {
     const { jobs } = props
     console.log(jobs)
-    const employersJobs = jobs.map((job: Job, index: number) => <JobBlock job={job} key={index}/> )
+    const employersJobs = jobs?.map((job: Job, index: number) => <JobBlock job={job} key={index}/> )
 
 
     return (
@@ -28,19 +30,28 @@ export default EmployerJobList
 
 export function JobBlock(props: any) {
     const {job} = props
+    const router = useRouter()
+
+    const {data: employer_name, loading, error: queryError} = useQuery(GET_EMPLOYER_BY_ID, {variables: {
+        employerId: job.employer_id
+    }})
+
     return(
-        <Link href="">
-        <div className={styles.jobBlockContainer}>
-            <h3 className={styles.title}>{props.job.title}</h3>
-            <div className={styles.additionalInfo}>
+        <button className={styles.employerJobButton} onClick={() => {
+            router.push({
+              pathname: '/Jobs',
+              query: { search: employer_name.getEmployerById.name },
+            })
+        }}>
+                <h3 className={styles.title}>{props.job.title}</h3>
+                <div className={styles.additionalInfo}>
                     <IoLocationSharp size={20} color='gray' />
                     <h5>{job.location} | {job.job_type} | Deadline: {new Date(parseInt(job.deadline)).toDateString()}  </h5>
-            </div>
-            <div className={styles.jobTags}>
-                    {job.tags.map((tag: string) => Tag(tag))}
-            </div>
-        </div>
-        </Link>
+                </div>
+                <div className={styles.jobTags}>
+                        {job.tags.map((tag: string) => Tag(tag))}
+                </div>
+        </button>
                 
             
     )
