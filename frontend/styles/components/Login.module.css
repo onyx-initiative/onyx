@@ -6,6 +6,7 @@
     padding-right: 10rem;
     vertical-align: middle;
     height: 100vh;
+    background-color: black;
 }
 
 .loginLogo {
@@ -13,17 +14,80 @@
     display: flex;
 }
 
+
 .loginContainer {
+    margin-left: 3rem;
     display: flex;
     flex-direction: column;
     background-color: #806E53;
     border-radius: 0.5rem;
     width: 40%;
-    height: 60%;
+    height: 80%;
     /* justify-content: center;
     align-items: center; */
     padding: 3rem;
 }
+
+@media (max-width:1080px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+    .loginContainer {
+        width: 80%;
+        margin-top: 0;
+        padding: 1rem;
+    }
+    .loginLogo {
+        width:40%;
+        margin-bottom: 1rem;
+    }
+}
+
+ @media (max-width:720px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 2rem;
+    }
+    .loginContainer {
+        width: 100%;
+        margin-top:0px;
+        padding: 1rem;
+        margin-bottom: 20rem;
+    }
+    .loginButton {
+        align-items: center;
+    }
+    .loginLogo {
+        width:40%;
+        margin-bottom: 0;
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width:600px) {
+    .footerContainer {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 0rem;
+        height: 40%;
+
+    }
+    .loginLogo {
+        margin-top: 0rem;
+    }
+
+    .footerInfo {
+        margin-left: 0rem;
+    }
+    .socials {
+        display: flex;
+        align-items: center;
+    }
+}
+
 
 .loginHeader {
     color: white;
@@ -98,10 +162,12 @@
     align-items: center;
     margin-left: auto;
     margin-right: 5rem;
+    color: white;
 }
 
 .socials a {
     padding: 0.5rem;
+    color: white;
 }
 
 .loginFields {

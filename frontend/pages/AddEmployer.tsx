@@ -14,7 +14,7 @@ type EmployerInfo = {
   employer_id: string,
     admin_id: string,
     name: string,
-    contact_email: string,
+    contact: string,
     address: string,
     website: string,
     description: string,
@@ -30,7 +30,7 @@ export default function AddEmployer() {
   const [createEmployer, {data: employerData, loading, error}] = useMutation(CREATE_EMPLOYER, {variables: {
     adminId: EmployerInfo.admin_id,
     name: EmployerInfo.name,
-    contactEmail: EmployerInfo.contact_email,
+    contactEmail: EmployerInfo.contact,
     address: EmployerInfo.address,
     website: EmployerInfo.website,
     description: EmployerInfo.description
@@ -45,7 +45,7 @@ export default function AddEmployer() {
 
   useEffect(() => {
     if (completed) {
-      console.log(EmployerInfo)
+      // console.log(EmployerInfo)
       handleSubmit();
     }
   }, [completed])
@@ -68,14 +68,14 @@ return (
         <div className={styles.formContainer}>
           <h1>Create an Employer!</h1>
           <InputElement label="Name" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
-          <InputElement label="contact_Email" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
+          <InputElement label="Contact" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <InputElement label="Address" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <InputElement label="Website" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <InputElementLong label="Description" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <Button color="dark" onClick={() => {
             // 1. Check all fields are filled
+            console.log(EmployerInfo)
             checkCompletion(EmployerInfo, setCompleted);
-            console.log(completed)
           }}>
             Create Employer
           </Button>
@@ -89,7 +89,8 @@ return (
 }
 
 const checkCompletion = async (employerInfo: EmployerInfo, setCompleted: any) => {
-  if (employerInfo.name && employerInfo.contact_email && employerInfo.address && employerInfo.website && employerInfo.description) {
+  console.log(employerInfo.contact)
+  if (employerInfo.name && employerInfo.contact && employerInfo.address && employerInfo.website && employerInfo.description) {
     setCompleted(true)
   } else {
     setCompleted(false)
