@@ -5,7 +5,7 @@ Mike
   - [ ] Make sure jobs are properly filtered
 - [X] Add job from csv/excel
   - [X] Add a gql endpoint to batch add using employer name instead of id
-- [ ] Add profile page
+- [X] Add profile page
   - Just a dropdown w profile and logout
   - Profile page shows views
 
