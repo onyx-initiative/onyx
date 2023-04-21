@@ -38,7 +38,13 @@
 .navbarProfile {
     display: flex;
     align-items: center;
-    margin-right: 5rem;
+    /* margin-right: 5rem; */
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.navbarProfile:hover {
+    cursor: pointer;
 }
 
 .navbarPhoto {
@@ -50,6 +56,19 @@
     border: 2px solid white;
     align-items: center;
     justify-content: center;
+    align-content: center;
+}
+
+.profileButton {
+    color: black;
+    background-color: white;
+    border: none;   
+    padding: 0.5rem;
+}
+
+.profileButton:hover {
+    font-weight: bold;
+    transition: 0.1s;
 }
 
 .betaWrapper {

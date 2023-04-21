@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import styles from '../../../styles/components/Jobs.module.css'
 import { MdOutlineCancel } from "react-icons/md";
 import { Select, Checkbox, MultiSelect } from '@mantine/core';
-import { filters, sort } from '../../../pages/Jobs';
+import { filters } from '../../../pages/Jobs';
 import { cursorTo } from 'readline';
-import { SEARCH_JOBS } from '../../../graphql/queries/jobQueries';
+import { GET_FILTERED_JOBS, SEARCH_JOBS } from '../../../graphql/queries/jobQueries';
 import { useLazyQuery } from '@apollo/client';
 
 type FilterProps = {
@@ -17,14 +17,13 @@ type FilterProps = {
 
 export default function Filter(props: FilterProps) {
   const { filters, setFilters, selected, setSelected, setJobs } = props
-  const [getJobs, { data, loading }] = useLazyQuery(SEARCH_JOBS, {
-    variables: { search: '' },
-  })
+  const [getFilteredJobs, { data, loading }] = useLazyQuery(GET_FILTERED_JOBS)
+
 
   // @todo: Fix the apply filter query
   useEffect(() => {
     if (data && !loading) {
-        setJobs(data.searchJobs)
+        setJobs(data.getFilteredJobs)
     }
   }, [data, setJobs])
 
@@ -167,11 +166,7 @@ export default function Filter(props: FilterProps) {
           searchable
           creatable
           onChange={(query) => {
-            const item = { value: query, label: query };
-            setSelected({
-              ...selected,
-              tags: [...selected.tags, item]
-            })
+            selected.tags = query
           }}
           getCreateLabel={(query) => `+ Create ${query}`}
           onCreate={(query) => {
@@ -188,9 +183,9 @@ export default function Filter(props: FilterProps) {
         type="button" 
         className={styles.applyFilters}
         onClick={() => {
-          console.log(selected)
-          console.log('query', stringifyFilters(selected))
-          getJobs({ variables:  { search: stringifyFilters(selected) } })
+          getFilteredJobs({
+            variables: { filter: selected }
+          })
         }}
       >
         Apply Filters
@@ -208,7 +203,7 @@ const ClearAll = (props: any) => {
       type="button"
       onClick={() => {
         setSelected({
-          location: '',
+          location: "",
           job_type: {
             full_time: false,
             part_time: false,
@@ -216,7 +211,7 @@ const ClearAll = (props: any) => {
             new_grad: false
           },
           applicant_year: [],
-          sort: sort.Newest,
+          sort: "Newest",
           tags: []
         })
       }}
@@ -227,46 +222,4 @@ const ClearAll = (props: any) => {
       </div>
     </button>
   )
-}
-
-const stringifyFilters = (selected: any) => {
-  let filters = ''
-  for (let key in selected) {
-    if (selected[key] !== '' && (selected[key].length > 0 || key === 'job_type')) {
-      if (key === 'job_type') {
-        for (let jobType in selected[key]) {
-          if (selected[key][jobType]) {
-            const formattedJobType = jobType.replace('_', ' ');
-            filters += ` & ${formattedJobType}`;
-          }
-        }
-      } else if (key === 'applicant_year') {
-        filters += ' & '; // Add the '&' separator before appending years
-        for (const year of selected[key]) {
-          filters += `${year} `; // Append the year to the filters string
-        }
-        filters = filters.trim(); // Remove trailing space after the last year
-      } else if (key === 'tags') {
-        const tag = selected[key][selected[key].length - 1]
-        for (let i = 0; i < tag.value.length; i++) {
-          filters += ` & ${tag.value[i]}`
-        }
-      } else {
-        filters += ` & ${selected[key]}`
-      }
-    }
-  }
-
-  if (filters[filters.length - 1] === '&') {
-    if (filters[1] === '&') {
-      filters = filters.slice(3, -1)
-    } else {
-      filters = filters.slice(1, -1)
-    }
-  }
-  if (filters[0] === ' ') {
-    filters = filters.slice(3)
-  }
-
-  return filters
 }

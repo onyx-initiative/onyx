@@ -129,11 +129,10 @@ export const GET_JOBS_BY_EMPLOYER_ID = gql`
 `
 
 export const GET_RELEVANT_JOBS = gql`
-    query GetRelevantJobs($scholarId: ID!, $viewId: [ID!]!) {
+    query GetRelevantJobs($scholarId: ID!, $viewId: ID!) {
         getRelevantJobs(scholar_id: $scholarId, view_id: $viewId) {
             job_id
             employer_id
-            admin_id
             title
             description
             long_description
@@ -143,6 +142,7 @@ export const GET_RELEVANT_JOBS = gql`
             location
             applicant_year
             deadline
+            date_posted
             total_views
             tags
         }
@@ -196,6 +196,28 @@ export const GET_NEW_JOBS = gql`
 export const GET_FAVOURITES = gql`
     query GetFavourites($scholarId: ID!) {
         getFavourites(scholar_id: $scholarId) {
+            job_id
+            employer_id
+            admin_id
+            title
+            description
+            long_description
+            contact_email
+            job_type
+            term
+            location
+            applicant_year
+            deadline
+            date_posted
+            total_views
+            tags
+        }
+    }
+`
+
+export const GET_FILTERED_JOBS = gql`
+    query GetFilteredJobs($filter: JobFilterInput!) {
+        getFilteredJobs(filter: $filter) {
             job_id
             employer_id
             admin_id

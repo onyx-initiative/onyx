@@ -1,6 +1,6 @@
 Mike
 - [X] Fix search
-- [ ] Implement filter -> Fix applicant year filter
+- [X] Implement filter
 - [X] Fix emails
   - [ ] Make sure jobs are properly filtered
 - [X] Add job from csv/excel
@@ -8,8 +8,6 @@ Mike
 - [ ] Add profile page
   - Just a dropdown w profile and logout
   - Profile page shows views
-- [ ] Make json w logos
-  - [ ] Update URLs
 
 # Tests
 - Test long descriptions
@@ -17,7 +15,8 @@ Mike
 
 Cole
 - [ ] Make responsive
-- [ ] Link jobs to search from employer
+- [X] Link jobs to search from employer
 - [ ] Format drawer in open jobs page
-- [ ] Remove job/employer 
-- [ ] Add announcement banner
+- [X] Remove job
+- [X] Remove employer
+- [X] Add announcement banner

@@ -20,55 +20,25 @@ const viewResolver = {
             const client = await establishConnection(db);
 
             // Get the relevant views for the scholar
-            const viewQuery = `SELECT * FROM filterView WHERE scholar_id = $1 AND view_id = ANY($2)`;  
+            const viewQuery = `SELECT criteria FROM filterView WHERE scholar_id = $1 AND view_id = $2`;  
             const viewResp = await client.query(viewQuery, [scholar_id, view_id]).catch((err: any) => {
                 console.error(err);
                 client.release()
                 return [];
             });
             let criteria = viewResp.rows[0].criteria;
-            for (let i = 1; i < viewResp.rows.length; i++) {
-                criteria.push(...viewResp.rows[i].criteria);
-            }
+            console.log(criteria);
+        
             // Query based on the criteria
-            let relevantJobs = [];
-            for (let i = 0; i < criteria.length; i++) {
-                if (typeof criteria[i] === 'string') {
-                    const query = `SELECT * 
-                           FROM job 
-                           WHERE employer_id = ALL(
-                                SELECT employer_id
-                                FROM employer
-                                WHERE name = $1
-                           ) 
-                           OR title = $1 
-                           OR location = $1  
-                           OR job_type = $1
-                           OR $1 = ANY(tags::varchar[])
-                           `;
-                    const resp = await client.query(query, [criteria[i]]).catch((err: any) => {
-                        console.error(err);
-                        client.release()
-                    });
-                    relevantJobs.push(...resp.rows);
-                }
-                else {
-                    const query = `SELECT * 
-                           FROM job 
-                           WHERE applicant_year @> $1
-                           `;
-                    const resp = await client.query(query, [criteria[i]]).catch((err: any) => {
-                        console.error(err);
-                        client.release()
-                    });
-                    relevantJobs.push(...resp.rows);
-                }
-            }
-            client.release()
-            if (!relevantJobs) {
+            let query = `SELECT * FROM search_jobs_by_criteria($1)`;
+            const resp = await client.query(query, [criteria]).catch((err: any) => {
+                console.error(err);
+                client.release()
                 return [];
-            }
-            console.log(relevantJobs);
+            });
+            client.release()
+            const relevantJobs = resp.rows;
+
             return relevantJobs;
         }
     },

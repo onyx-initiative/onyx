@@ -30,7 +30,7 @@ export default function Scholar() {
     variables: { email: session?.user?.email },
     fetchPolicy: 'cache-and-network'
   })
-  const router= useRouter()
+  const router = useRouter()
 
   // @todo: Style this
   if (loadingScholar) {

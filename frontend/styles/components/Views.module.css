@@ -1,0 +1,52 @@
+
+.viewContainer {
+    padding: 0 4rem;
+}
+
+.viewSelect {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.createViewButton {
+    margin-left: 0.5rem;
+    height: 2.2rem;
+    width: 2.2rem;
+    margin-top: 2.2rem;
+    font-size: x-large;
+    background-color: #806E53;
+    color: white;
+    border: none;
+    border-radius: 0.2rem;
+}
+
+.viewNameInput {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width: 100%;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgb(204, 204, 204);
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.viewSubmitButton {
+    width: 100%;
+    background-color: #806E53;
+    color: white;
+    border: none;
+    border-radius: 0.2rem;
+    padding: 0.7rem;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

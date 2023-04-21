@@ -30,7 +30,7 @@ const JobCard = (props: any) => {
       if (loading) {
         website = 'www.onyxinitiative.org/'
       } else {
-        website = websiteURL(data?.getEmployerById.name);
+        website = data?.getEmployerById.website;
       }
     }
     let logo = fetchLogo(website);
@@ -53,7 +53,7 @@ const JobCard = (props: any) => {
             <h3>{job.title}</h3>
             <div className={styles.additionalInfo}>
               <IoLocationSharp size={16} color='gray' />
-              <h6>{job.location} • {job.job_type}</h6>
+              <h6>{job.location} • {Capitalize(job.job_type)}</h6>
             </div>
           </div>
             <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
@@ -89,7 +89,7 @@ const JobCard = (props: any) => {
             <h3>{job.title}</h3>
             <div className={styles.additionalInfo}>
               <IoLocationSharp size={16} color='gray' />
-              <h6>{job.location} • {job.job_type}</h6>
+              <h6>{job.location} • {Capitalize(job.job_type)}</h6>
             </div>
           </div>
         </div>
@@ -156,17 +156,26 @@ export const fetchLogo = (websiteURL: string) => {
   return `https://logo.clearbit.com/${websiteURL}`;
 }
 
-const formatYears = (years: string[]) => {
+const formatYears = (years: number[]) => {
   let formattedYears: string = '';
-  const currentYear = new Date().getFullYear();
   for (let i = 0; i < years.length; i++) {
     if (i === years.length - 1) {
-      formattedYears += (currentYear + i);
+      formattedYears += years[i].toString();
     } else {
-      formattedYears += (currentYear + i) + ', ';
+      formattedYears += years[i].toString() + ', ';
     }
   }
   return formattedYears;
+}
+
+export const Capitalize = (str: string) => {
+  // Capitalize each word in the string separated by a space
+  const sub = str.split(' ');
+  let capitalized = '';
+  for (let i = 0; i < sub.length; i++) {
+    capitalized += sub[i].charAt(0).toUpperCase() + sub[i].slice(1) + ' ';
+  }
+  return capitalized;
 }
 
 export default JobCard;

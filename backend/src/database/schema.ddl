@@ -42,7 +42,7 @@ CREATE TABLE Employer (
 
 CREATE TABLE Job (
     job_id SERIAL PRIMARY KEY,
-    employer_id INTEGER NOT NULL REFERENCES Employer,
+    employer_id INTEGER NOT NULL REFERENCES Employer ON DELETE CASCADE,
     admin_id INTEGER NOT NULL REFERENCES Admin,
     title VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE FilterView (
 );
 
 CREATE TABLE Saved (
-    job_id INTEGER NOT NULL REFERENCES Job,
+    job_id INTEGER NOT NULL REFERENCES Job ON DELETE CASCADE,
     scholar_id INTEGER NOT NULL REFERENCES Scholar,
     PRIMARY KEY (job_id, scholar_id)
 );
@@ -140,9 +140,9 @@ BEGIN
 
     RETURN QUERY
     SELECT
-        job.job_id,
-        job.employer_id,
         job.admin_id,
+        job.employer_id,
+        job.job_id,
         employer.name,
         job.title,
         job.description,
@@ -179,11 +179,11 @@ BEGIN
                     EXISTS (SELECT 1 FROM unnest(job.tags) AS tag WHERE similarity(tag, query) > 0.6) OR 
                     similarity(
                         array_to_string(
-                            ARRAY(SELECT CAST(element AS text) FROM unnest(job.applicant_year) AS element),
+                            ARRAY(SELECT element::text FROM unnest(job.applicant_year) AS element),
                             ' '
                         ),
                         query
-                    ) > 0.2
+                    ) > 0.15
                 )
             )
         )
@@ -196,5 +196,62 @@ BEGIN
             similarity(job.location, query),
             COALESCE((SELECT MAX(similarity(tag, query)) FROM unnest(job.tags) AS tag), 0)
         ) DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION search_jobs_by_criteria(criteria TEXT[])
+RETURNS TABLE(
+    job_id INTEGER,
+    employer_id INTEGER,
+    title VARCHAR(50),
+    description TEXT,
+    long_description TEXT,
+    contact_email VARCHAR(100),
+    job_type VARCHAR(50),
+    term VARCHAR(50),
+    location VARCHAR(50),
+    applicant_year INTEGER[],
+    deadline TIMESTAMP,
+    date_posted TIMESTAMP,
+    total_views INTEGER,
+    tags VARCHAR(255)[],
+    live BOOLEAN
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        j.job_id,
+        j.employer_id,
+        j.title,
+        j.description,
+        j.long_description,
+        j.contact_email,
+        j.job_type,
+        j.term,
+        j.location,
+        j.applicant_year,
+        j.deadline,
+        j.date_posted,
+        j.total_views,
+        j.tags,
+        j.live
+    FROM
+        Job j, Employer
+    WHERE
+        j.live = TRUE AND 
+        j.employer_id = Employer.employer_id
+        AND
+        (
+            Employer.name = ANY(criteria) OR
+            j.title = ANY(criteria) OR
+            j.description = ANY(criteria) OR
+            j.long_description = ANY(criteria) OR
+            j.job_type = ANY(criteria) OR
+            j.term = ANY(criteria) OR
+            j.location = ANY(criteria) OR
+            j.tags::TEXT[] @> criteria
+        )
+    ORDER BY
+        j.date_posted DESC;
 END;
 $$ LANGUAGE plpgsql;

@@ -149,6 +149,69 @@ const jobResolver = {
             client.release()
             return resp.rows;
         },
+        getFilteredJobs: async (_: any, { filter }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            
+            // Initialize an array to store query parameters
+            const queryParams = [];
+
+            // Initialize the query string
+            let query = 'SELECT * FROM Job WHERE live = true';
+
+            // Filter by location
+            if (filter.location) {
+                query += ` AND location = '${filter.location}'`;
+                queryParams.push(filter.location);
+            }
+
+            // Filter by job type (dynamically build the condition based on the specified job types)
+            const jobTypeConditions = Object.entries(filter.job_type)
+                .filter(([type, value]) => value == true)
+                .map(([type]) => {
+                const formattedType = type.replace('_', ' ');
+                return formattedType;
+                })
+            if (jobTypeConditions) {
+                let jobTypeCondition = '';
+                jobTypeCondition += ` AND (`;
+                for (let i = 0; i < jobTypeConditions.length; i++) {
+                    jobTypeCondition += `job_type = '${jobTypeConditions[i]}'`;
+                    jobTypeCondition += ' OR '
+                }
+                jobTypeCondition = jobTypeCondition.slice(0, -4);
+                jobTypeCondition += `)`;
+                if (jobTypeCondition.length > 7) {
+                    query += jobTypeCondition;
+                }
+            }
+
+            // Filter by applicant year
+            if (filter.applicant_year.length > 0) {
+                for (let i = 0; i < filter.applicant_year.length; i++) {
+                    query += ` AND ${filter.applicant_year[i]} = ANY(applicant_year)`;
+                }
+            }
+
+            // Filter by tags
+            if (filter.tags.length > 0) {
+                for (let i = 0; i < filter.tags.length; i++) {
+                    query += ` AND '${filter.tags[i]}' = ANY(tags)`;
+                }
+            }
+
+            // Sort by date posted (Newest or Oldest)
+            if (filter.sort === 'Newest') {
+                query += ' ORDER BY date_posted DESC';
+            } else if (filter.sort === 'Oldest') {
+                query += ' ORDER BY date_posted ASC';
+            }
+            
+            console.log(query)
+            // Execute the query
+            const result = await client.query(query);
+            return result.rows;
+        },
     },
     Mutation: {
         createJob: async (_: any, { 
@@ -203,7 +266,7 @@ const jobResolver = {
                     admin_id,
                     title,
                     description,
-                    job_type,
+                    job_type.toLowerCase(),
                     term,
                     location,   
                     applicant_year,
@@ -235,7 +298,7 @@ const jobResolver = {
                         title,
                         description,
                         contact_email,
-                        job_type,
+                        job_type.toLowerCase(),
                         term,
                         location,   
                         applicant_year,
@@ -268,7 +331,7 @@ const jobResolver = {
                     title,
                     description,
                     long_description,
-                    job_type,
+                    job_type.toLowerCase(),
                     term,
                     location,   
                     applicant_year,
@@ -303,7 +366,7 @@ const jobResolver = {
                     description,
                     long_description,
                     contact_email,
-                    job_type,
+                    job_type.toLowerCase(),
                     term,
                     location,   
                     applicant_year,
@@ -357,7 +420,7 @@ const jobResolver = {
                     job.description,
                     job.long_description,
                     job.contact_email,
-                    job.job_type,
+                    job.job_type.toLowerCase(),
                     job.term,
                     job.location,   
                     job.applicant_year,
@@ -371,7 +434,7 @@ const jobResolver = {
             }
             client.release()
             return true;
-        },
+        },    
         // @todo: Make this a cron to run sunday every 2 weeks
         archiveJob: async (_: any, { job_id }: any, { dataSources }: any) => {
             const date = new Date();
@@ -415,6 +478,14 @@ const jobResolver = {
         deleteJob: async (_: any, { job_id }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
+
+            // Remove from the saved table
+            const remove = `DELETE FROM saved WHERE job_id = $1`;
+            await client.query(remove, [job_id]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false
+            });
             const query = `DELETE FROM job WHERE job_id = $1`;
             await client.query(query, [job_id]).catch((err: any) => {
                 console.log(err);

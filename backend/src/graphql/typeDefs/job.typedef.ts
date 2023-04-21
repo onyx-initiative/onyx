@@ -70,6 +70,22 @@ export const jobTypeDef = gql`
         tags: [String!]!
     }
 
+    input JobTypeFilterInput {
+        full_time: Boolean!
+        part_time: Boolean!
+        internship: Boolean!
+        new_grad: Boolean!
+    }
+
+
+    input JobFilterInput {
+        location: String!
+        job_type: JobTypeFilterInput!
+        applicant_year: [Int]!
+        sort: String!
+        tags: [String]!
+    }
+
     type Query {
         getJobs: [Job!]!
         getJobsAdmin(active: Boolean!, live: Boolean!): [Job!]!
@@ -79,13 +95,13 @@ export const jobTypeDef = gql`
         searchJobs(search: String!): [JobSearch!]!
         getNewJobs: [Job!]!
         getFavourites(scholar_id: ID!): [Job!]!
+        getFilteredJobs(filter: JobFilterInput!): [Job]!
     }
 
     type Return {
         message: String!
         job: Job!
     }
-
 
     type Mutation {
         createJob(

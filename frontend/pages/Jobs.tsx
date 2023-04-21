@@ -18,24 +18,17 @@ import { useRouter } from "next/router"
 
 // Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
 
-export enum sort {
-  'Newest',
-  'Oldest',
-  'Most Popular',
-  'Saved'
-}
-
 export type filters = {
   location: string[];
   job_type: job_type[];
   applicant_year: number[];
-  sort: sort;
+  sort: "Newest" | "Oldest";
   tags: string[];
 }
 
-// @ todo: Figure out how to handle the toggling
+// @todo: Figure out how to handle the toggling
 export type selected = {
-  location: string[];
+  location: string;
   job_type: {
     full_time: boolean;
     part_time: boolean;
@@ -43,7 +36,7 @@ export type selected = {
     new_grad: boolean;
   };
   applicant_year: number[];
-  sort: sort;
+  sort: "Newest" | "Oldest";
   tags: string[];
 }
 
@@ -53,6 +46,7 @@ export default function Jobs() {
   const { query } = router
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState({
+    // @todo: Update this list
     location: ['Toronto', 'New York', 'London'],
     job_type: [],
     applicant_year: [
@@ -62,11 +56,11 @@ export default function Jobs() {
       new Date().getFullYear() + 3,
       new Date().getFullYear() + 4,
     ],
-    sort: sort.Newest,
+    sort: "Newest",
     tags: []
   } as filters)
   const [selected, setSelected] = useState({
-    location: [],
+    location: "",
     job_type: {
       full_time: false,
       part_time: false,
@@ -74,7 +68,7 @@ export default function Jobs() {
       new_grad: false
     },
     applicant_year: [],
-    sort: sort.Newest,
+    sort: "Newest",
     tags: []
   } as selected)
 
@@ -115,4 +109,5 @@ export default function Jobs() {
     </div>
   )
 }
+
 export { getServerProps };

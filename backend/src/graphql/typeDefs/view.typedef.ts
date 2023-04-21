@@ -11,7 +11,7 @@ export const viewTypeDef = gql`
 
     type Query {
         getScholarsViews(scholar_id: ID!): [View!]!
-        getRelevantJobs(scholar_id: ID!, view_id: [ID!]!): [Job!]!
+        getRelevantJobs(scholar_id: ID!, view_id: ID!): [Job!]!
     }
 
     type Mutation {
