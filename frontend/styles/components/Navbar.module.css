@@ -93,3 +93,16 @@
     margin: 0;
     font-weight: 700;
 }
+<<<<<<< HEAD
+=======
+
+.onyxAnnouncement {
+    color: black;
+    background-color: grey;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+>>>>>>> f83ab4b4636cfda4ec9270fabf7d68e9421fb222

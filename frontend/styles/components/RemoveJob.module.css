@@ -1,0 +1,58 @@
+.search_bar_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    padding: 10px;
+  }
+  
+  .search_input {
+    border: none;
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    margin-right: 10px;
+  }
+  
+  .search_btn {
+    background-color: #806E53;
+    border: none;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .search-btn:hover {
+    background-color: #000;
+    color: #ffd700;
+  }
+
+  .removeJobCard {
+       display: flex;
+      background-color: white;
+      margin-bottom: 2px;
+      width: 60%;
+      padding: auto;
+      padding-right: 2px;
+      
+  }
+
+  .removeJobCard p {
+    color: black;
+    width: 400px;
+}
+
+
+  
+  .jobContainer {
+      display: flex;
+  }
+  
+  
+  
+  
+  

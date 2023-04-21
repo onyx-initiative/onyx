@@ -42,7 +42,7 @@ export default function Navbar(props: any) {
     <div className={styles.betaWrapper}>
       {/* @todo: Remove the wrapper div for final launch */}
       <BetaHeadline />
-    
+      <OnyxAnnouncemment/>
       <div className={styles.navbar}>
         <div className={styles.navbarLogo}>
           <Link
@@ -74,6 +74,7 @@ export default function Navbar(props: any) {
         <ProfilePhoto name={name} scholar_id={scholar_id}/>}
         
       </div>
+      
     </div> 
   )
 }
@@ -91,4 +92,12 @@ const BetaHeadline = () => {
       </p>
     </div>
   );
+}
+
+const OnyxAnnouncemment = () => {
+  return (
+    <div className={styles.onyxAnnouncement}> 
+      <p> Welcome to the Onyx Job Board, this is where we can post news about the next job fair, or any other relevant announcements</p>
+    </div>
+  )
 }
