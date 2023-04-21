@@ -18,7 +18,7 @@ export default function Login() {
     const [password, setPassword] = React.useState('')
 
     return (
-        <div>
+        <div className={styles.outerContainer}>
             <div className={styles.container}>
                 <div className={styles.loginLogo}>
                     <Image 

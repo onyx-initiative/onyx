@@ -45,14 +45,19 @@ export default function AddEmployer() {
 
   useEffect(() => {
     if (completed) {
-      // console.log(EmployerInfo)
-      handleSubmit();
-    }
-  }, [completed])
+      var result = confirm("Are you sure you want to add this Employer?");
+        if (result == true) {
+      handleSubmit();}
+    }else {
+      console.log("Create Employer")
+      
+    }}
+  , [completed])
 
   const handleSubmit = () => {
-    createEmployer();
-    router.push('/Admin')
+    console.log(EmployerInfo)
+    // createEmployer();
+    // router.push('/Admin')
 }
 
 return (
@@ -90,6 +95,11 @@ return (
 
 const checkCompletion = async (employerInfo: EmployerInfo, setCompleted: any) => {
   console.log(employerInfo.contact)
+  console.log(employerInfo.address)
+  console.log(employerInfo.description)
+  console.log(employerInfo.website)
+  console.log(employerInfo.name)
+
   if (employerInfo.name && employerInfo.contact && employerInfo.address && employerInfo.website && employerInfo.description) {
     setCompleted(true)
   } else {
