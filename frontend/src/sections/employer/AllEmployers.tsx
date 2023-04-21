@@ -40,16 +40,6 @@ export default function AllEmployers(props: ListedEmployersProps) {
             </div>
             {/* For the pages */}
             
-            <div>
-        
-                    <Pagination 
-                page={activePage} 
-                onChange={setPage} 
-                total={numPages} 
-                color="gray"
-                position="center"
-                />
-            </div>
             
         </div>
     
