@@ -1,28 +1,29 @@
 .jobBlockContainer {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     border-radius: 10px;
     border-style: solid;
-    border-color: #808080;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+    border-color: white;
     padding: 3px;
 
 
 }
 
 .jobTags {
-    align-items: center;
-    display: flex;
+    justify-items: center;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
     margin-bottom: 2px;
+
 }
 
 
 
 .tag {
+    margin-top: 0;
     color: rgb(140, 140, 140);
     background-color: #f5e9d9;
-    width: 20%;
     font-size: small;
     font-weight: bold;
     padding: 0.2rem;
@@ -35,23 +36,22 @@
 }
 
 .title {
-    margin-bottom: 1px;
+    margin-bottom: 0;
     margin-left: 1px;
+    color: black;
+    text-align: left;
 }
 
-
-.allEmployersList {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    justify-content: center;
-}
 
 .employer {
-    display: flex;
-    justify-content: space-around;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+    justify-items: center;
 }
+
+
 
 .loading {
     display: flex;
@@ -62,8 +62,28 @@
 }
 
 .additionalInfo {
+    margin-top: 0;
     display: flex;
     align-items: center;
-
+    color: black;
 }
 
+.employerJobList {
+    display: flex-column;
+}
+
+.employerJobButton {
+    background-color: white;
+    width: 90%;
+    border-radius: 5px;
+    background-color: #f6f5f5;
+  border:none;
+  transition: background-color 0.3s ease; /* 
+  add transition effect */
+  margin-bottom: 3px;
+}
+
+.employerJobButton:hover {
+    background-color: #969595; /* change to a darker color on hover */
+    cursor: pointer;
+  }

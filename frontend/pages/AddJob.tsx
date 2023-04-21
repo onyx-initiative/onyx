@@ -58,8 +58,13 @@ export default function AddJob() {
 
   useEffect(() => {
     if (completed) {
-      handleSubmit();
-    }
+      var result = confirm("Are you sure you want to add this Job?");
+        if (result == true) {
+          handleSubmit();
+    } else {
+      console.log("Create Job Aborted")
+      
+    }}
   }, [completed])
 
   useEffect(() => {

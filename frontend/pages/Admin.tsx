@@ -5,6 +5,7 @@ import AddEmployerButton from "../src/components/admin/AddEmployerButton"
 import RemoveJobButton from "../src/components/admin/RemoveJobButton";
 import styles from "../styles/components/AdminPageButtons.module.css"
 import ExcelReader from "../src/components/admin/ExcelReader";
+import RemoveEmployerButton from "../src/components/admin/RemoveEmployerButton"
 
 // To ensure unauthenticated people don't access
 // import getServerProps from "../src/utils/getServerProps";
@@ -21,6 +22,7 @@ export default function Admin() {
                 <RemoveJobButton/>
                 <ExcelReader />
             </div>
+            <RemoveEmployerButton/>
             
         </div>
         
