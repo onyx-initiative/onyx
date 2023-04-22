@@ -73,7 +73,7 @@
         display: flex;
         justify-content: space-between;
         margin-left: 0rem;
-        height: 40%;
+        height: auto;
 
     }
     .loginLogo {
@@ -88,6 +88,7 @@
         align-items: center;
     }
 }
+
 
 @media (max-height:768){
     .footerContainer {
@@ -140,11 +141,17 @@
 
 .footerContainer {
     display: flex;
-    height: 12%;
+    height: 14%;
     width: 100%;
     background-color: #111111;
     position: fixed;
     bottom: 0;
+}
+
+@media (max-height: 840px) {
+    .footerContainer {
+        height: auto;
+    }
 }
 
 .footerInfo {
