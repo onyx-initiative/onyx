@@ -23,28 +23,28 @@ export default function CreateAccount() {
   const { data: session } = useSession({ required: true })
   const [userInfo, setUserInfo] = useState({} as UserInfo)
   const [checked, setChecked] = useState(false)
-  const [createScholar, { data: scholarData, loading: sendingData, error}] = useMutation(CREATE_SCHOLAR, {
-    variables: {
-      name: userInfo.name,
-      email: session?.user?.email,
-      year: Number(userInfo.year),
-      school: userInfo.school,
-      major: userInfo.major,
-      status: 'current',
-      notifications: checked,
-    }})
+  const [createScholar, { data: scholarData, loading: sendingData, error}] = useMutation(CREATE_SCHOLAR)
   const [completed, setCompleted] = useState(null as boolean | null)
   const [viewInfo, setViewInfo] = useState([] as any)
   const [createView] = useMutation(CREATE_VIEW)
-  const router= useRouter()
+  const router = useRouter()
 
   const handleSubmit = () => {
-      createScholar();
+      createScholar({
+        variables: {
+          name: userInfo.name,
+          email: session?.user?.email,
+          year: Number(userInfo.year),
+          school: userInfo.school,
+          major: userInfo.major,
+          status: 'current',
+          notifications: checked,
+      }});
       createView({
         variables: { 
           viewId: (Math.round(Math.random() * 1000000)).toString(10),
           email: session?.user?.email, 
-          viewName: 'default', 
+          viewName: 'Default', 
           criteria: formatViewInfo(viewInfo)
         }
       })
