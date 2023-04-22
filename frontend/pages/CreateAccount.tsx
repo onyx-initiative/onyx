@@ -39,16 +39,24 @@ export default function CreateAccount() {
           major: userInfo.major,
           status: 'current',
           notifications: checked,
-      }});
-      createView({
-        variables: { 
-          viewId: (Math.round(Math.random() * 1000000)).toString(10),
-          email: session?.user?.email, 
-          viewName: 'Default', 
-          criteria: formatViewInfo(viewInfo)
+      }}).then((resp) => {
+          if (!sendingData && !error) {
+            createView({
+              variables: { 
+                viewId: (Math.round(Math.random() * 10000000)).toString(10),
+                scholarId: resp.data?.createScholar?.scholar_id,
+                viewName: 'Default', 
+                criteria: formatViewInfo(viewInfo)
+              }
+            }).then((resp) => {
+              console.log(resp)
+              if (resp.data?.createView) {
+                router.push('/Scholar')
+              }
+            })
+          }
         }
-      })
-      router.push('/Scholar')
+      )
   }
 
   useEffect(() => {

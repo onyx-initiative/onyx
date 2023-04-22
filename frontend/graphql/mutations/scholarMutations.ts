@@ -43,10 +43,9 @@ export const DELETE_SCHOLAR = gql`
 `
 
 export const CREATE_VIEW = gql`
-    mutation CreateView($viewId: ID!, $email: String!, $viewName: String!, $criteria: [String!]!) {
-        createView(view_id: $viewId, email: $email, view_name: $viewName, criteria: $criteria) {
-            view_name
-            criteria
+   mutation CreateView($viewId: ID!, $scholarId: ID!, $viewName: String!, $criteria: [String!]!) {
+        createView(view_id: $viewId, scholar_id: $scholarId, view_name: $viewName, criteria: $criteria) {
+            view_id
         }
     }
 `
