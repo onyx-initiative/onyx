@@ -9,6 +9,7 @@ import styles from '../styles/components/Views.module.css'
 import JobCard from '../src/components/jobs/JobCard'
 import { CREATE_VIEW } from '../graphql/mutations/scholarMutations'
 import { useSession } from 'next-auth/react'
+import { Capitalize } from './CreateAccount'
 
 export default function Views() {
     const router = useRouter()
@@ -117,13 +118,13 @@ export default function Views() {
                         createView({
                             variables: { 
                                 viewId: (Math.round(Math.random() * 1000000)).toString(10),
-                                email: session?.user?.email, 
+                                scholarId: query.scholar_id?.toString(), 
                                 viewName: viewName, 
                                 criteria: formatViewInfo(newView)
                             }
+                        }).then(() => {
+                            refetchViews().then(() => setOpened(false))
                         })
-                        refetchViews()
-                        setOpened(false)
                     } else {
                         alert('Please enter a view name and at least one criteria')
                     }
@@ -136,7 +137,7 @@ export default function Views() {
 const formatViewInfo = (viewInfo: any) => {
     let formattedViewInfo: string[] = []
     viewInfo.forEach((item: any) => {
-        formattedViewInfo.push(item.value)
+        formattedViewInfo.push(Capitalize(item.value))
     })
     return formattedViewInfo
 }

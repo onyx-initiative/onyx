@@ -49,7 +49,6 @@ export default function CreateAccount() {
                 criteria: formatViewInfo(viewInfo)
               }
             }).then((resp) => {
-              console.log(resp)
               if (resp.data?.createView) {
                 router.push('/Scholar')
               }
@@ -180,7 +179,7 @@ const formatViewInfo = (viewInfo: any) => {
   return formattedViewInfo;
 }
 
-const Capitalize = (str: string) => {
+export const Capitalize = (str: string) => {
   // Capitalize the first letter of each word separated by a space
   str = str.toLowerCase().split(' ').map((word) => {
     return word.charAt(0).toUpperCase() + word.slice(1);
