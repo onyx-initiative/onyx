@@ -162,10 +162,10 @@ const checkCompletion = async (userInfo: UserInfo, setCompleted: any) => {
 }
 
 const formatViewInfo = (viewInfo: any) => {
-  let formattedViewInfo = [];
-  for (let i = 0; i < viewInfo.length; i++) {
-    formattedViewInfo.push(viewInfo[i].value)
-  }
+  let formattedViewInfo: string[] = []
+    viewInfo.forEach((item: any) => {
+        formattedViewInfo.push(item.value)
+    })
   if (formattedViewInfo.length === 0) {
     formattedViewInfo = ['Toronto'];
   }
