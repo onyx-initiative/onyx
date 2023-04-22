@@ -12,12 +12,12 @@ import { loadavg } from 'os';
 
 type EmployerInfo = {
   employer_id: string,
-    admin_id: string,
-    name: string,
-    contact: string,
-    address: string,
-    website: string,
-    description: string,
+  admin_id: string,
+  name: string,
+  contact: string,
+  address: string,
+  website: string,
+  description: string,
 }
 
 
@@ -28,7 +28,7 @@ export default function AddEmployer() {
   const [EmployerInfo, setEmployerInfo] = useState({} as EmployerInfo)
 
   const [createEmployer, {data: employerData, loading, error}] = useMutation(CREATE_EMPLOYER, {variables: {
-    adminId: EmployerInfo.admin_id,
+    adminId: "1",
     name: EmployerInfo.name,
     contactEmail: EmployerInfo.contact,
     address: EmployerInfo.address,
@@ -36,11 +36,11 @@ export default function AddEmployer() {
     description: EmployerInfo.description
   }})
 
-  useEffect(() => {
-    if(!loading) {
-      EmployerInfo.admin_id = "1"
-    }
-  }, [loading])
+  // useEffect(() => {
+  //   if(!loading) {
+  //     EmployerInfo.admin_id = "1"
+  //   }
+  // }, [loading])
 
 
   useEffect(() => {
@@ -51,6 +51,7 @@ export default function AddEmployer() {
   }, [completed])
 
   const handleSubmit = () => {
+    console.log(EmployerInfo)
     createEmployer();
     router.push('/Admin')
 }
