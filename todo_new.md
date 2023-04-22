@@ -19,4 +19,4 @@ Cole
 - [ ] Format drawer in open jobs page
 - [X] Remove job
 - [X] Remove employer
-- [X] Add announcement banner
+- [X] Add announcement banner       
