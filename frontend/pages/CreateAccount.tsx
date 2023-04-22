@@ -172,10 +172,18 @@ const checkCompletion = async (userInfo: UserInfo, setCompleted: any) => {
 const formatViewInfo = (viewInfo: any) => {
   let formattedViewInfo: string[] = []
     viewInfo.forEach((item: any) => {
-        formattedViewInfo.push(item.value)
+        formattedViewInfo.push(Capitalize(item.value))
     })
   if (formattedViewInfo.length === 0) {
     formattedViewInfo = ['Toronto'];
   }
   return formattedViewInfo;
+}
+
+const Capitalize = (str: string) => {
+  // Capitalize the first letter of each word separated by a space
+  str = str.toLowerCase().split(' ').map((word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }).join(' ');
+  return str;
 }
