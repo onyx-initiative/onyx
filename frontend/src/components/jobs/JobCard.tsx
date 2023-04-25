@@ -21,6 +21,7 @@ const JobCard = (props: any) => {
         employerId: job.employer_id
       }
     });
+    console.log(job)
   
     // @todo: Add a call to get the employer website
     let website: string;

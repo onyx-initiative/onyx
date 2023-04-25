@@ -15,7 +15,7 @@ type JobInfo = {
     adminId: string,
     title: string,
     description: string,
-    long_description: string
+    longDescription: string
     contact_email: string
     jobType: string,
     term: string,
@@ -39,13 +39,14 @@ export default function AddJob() {
         deadline: JobInfo.deadline,
         tags: JobInfo.tags,
         contactEmail: JobInfo.contact_email,
-        longDescription: JobInfo.long_description,
+        longDescription: JobInfo.longDescription,
     }})
     const router = useRouter()
     const [completed, setCompleted] = useState(null as boolean | null)
 
 
     const handleSubmit = () => {
+      console.log(JobInfo)
       createJob();
       router.push('/Admin')
   }

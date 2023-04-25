@@ -240,10 +240,7 @@
 .jobHeader {
     display: flex;
     align-items: left;
-    /* margin-left: auto; */
     flex-direction: column;
-    margin-right: 10rem;
-    margin-left: 1.5rem;
     font-size: large;
     cursor: pointer;
 }
