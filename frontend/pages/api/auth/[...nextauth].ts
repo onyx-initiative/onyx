@@ -3,7 +3,7 @@ import NextAuth, { Awaitable, RequestInternal, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import Credentials from 'next-auth/providers/credentials'
 import { compare, hash } from 'bcrypt'
-import AzureADB2C from "next-auth/providers/azure-ad-b2c";
+import AzureADProvider from "next-auth/providers/azure-ad";
 
 export interface Admin  extends User { 
     admin: boolean
@@ -13,10 +13,9 @@ export interface Admin  extends User {
 export default NextAuth({
     // Configure one or more authentication providers
     providers: [
-        AzureADB2C({
+        AzureADProvider({
             clientId: process.env.AZURE_CLIENT_ID as string,
-            clientSecret: process.env.AZURE_CLIENT_SECRET as string,
-            scope: 'offline_access User.Read',
+            clientSecret: process.env.AZURE_CLIENT_SECRET_VALUE as string,
             tenantId: process.env.AZURE_TENANT_ID,
           }),
         GoogleProvider({

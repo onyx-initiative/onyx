@@ -70,7 +70,7 @@ const JobCard = (props: any) => {
             <p>{job.description}</p>
           </div>
           <div className={styles.jobTags}>
-            {job.tags.map((tag: string) => Tag(tag))}
+            {job.tags.map((tag: string, index:number) => <Tag key={tag} tag={tag}/>)}
           </div>
           <p className={styles.deadline}>{'Deadline: ' + date}</p>
         </div>
@@ -110,7 +110,8 @@ const JobCard = (props: any) => {
   }
   
   // @todo: Add logic so if there's more than x #, it renders +total - x more
-  const Tag = (tag: string) => {
+  const Tag = (props: { tag: any; }) => {
+    const tag = props.tag;
     return (
       <div className={styles.tag}>
         {tag}
