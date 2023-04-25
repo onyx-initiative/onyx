@@ -224,6 +224,18 @@
     align-items: center;
     cursor: pointer;
 }
+.jobCardHeaderDrawer {
+    display: flex;
+    color: black;
+    align-items: center;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .jobCardHeaderDrawer {
+        flex-direction: column;
+    }
+}
 
 .jobHeader {
     display: flex;
@@ -236,11 +248,23 @@
     cursor: pointer;
 }
 
+.jobHeaderDrawer {
+    display: flex;
+    align-items: left;
+    margin-left: 2rem;
+    flex-direction: column;
+    font-size: large;
+    cursor: pointer;
+}
+
+
+
 @media (max-width: 800px) {
-    .jobHeader {
-        margin-right: 2rem;
+    .jobHeaderDrawer {
+        margin-left: 0rem;
     }
 }
+
 .jobCardImage {
     min-width: 4rem;
 }

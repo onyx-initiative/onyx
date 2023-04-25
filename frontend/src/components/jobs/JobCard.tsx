@@ -82,24 +82,26 @@ const JobCard = (props: any) => {
           opened={opened}
           onClose={() => setOpened(!opened)}
           padding="xl"
-          size="30%"
+          size="60%"
           position='right'
         >
-          <div className={styles.jobCardHeader}>
-          <Image 
-            src={logo}
-            alt="Company Logo"
-            width={60}
-            height={60}
-          />
-          <div className={styles.jobHeader}>
-            <h3>{job.title}</h3>
-            <div className={styles.additionalInfo}>
-              <IoLocationSharp size={16} color='gray' />
-              <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+          <div className={styles.jobCardHeaderDrawer}>
+            <Image 
+              src={logo}
+              alt="Company Logo"
+              width={60}
+              height={60}
+            />
+            <div className={styles.jobHeaderDrawer}>
+              <h3>{job.title}</h3>
+              <div className={styles.additionalInfo}>
+                <IoLocationSharp size={16} color='gray' />
+                <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+              </div>
             </div>
           </div>
-        </div>
+          <h4>Job Description:</h4>
+            <p>{job.description}</p>
         </Drawer>
       }
       </div>
