@@ -39,36 +39,43 @@ const JobCard = (props: any) => {
     return (
       <div key={job.job_id} className={styles.mainContainer}>
       <div className={styles.jobCard}>
-        <div className={styles.jobCardHeader}>
-          <Image 
-            onClick={() => setOpened(!opened)}
-            src={logo}
-            alt="Company Logo"
-            width={60}
-            height={60}
-          />
-          <div className={styles.jobHeader}
-            onClick={() => setOpened(!opened)}
-          >
-            <h3>{job.title}</h3>
-            <div className={styles.additionalInfo}>
-              <IoLocationSharp size={16} color='gray' />
-              <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+        <div>
+          <div className={styles.jobCardHeader}>
+            <div className={styles.jobCardImage}>
+              <Image 
+                onClick={() => setOpened(!opened)}
+                src={logo}
+                alt="Company Logo"
+                width={60}
+                height={60}
+                objectFit='cover'
+              />
+            </div>
+            <div className={styles.jobHeader}
+              onClick={() => setOpened(!opened)}
+            >
+              <h3>{job.title}</h3>
+              <div className={styles.additionalInfo}>
+                <IoLocationSharp size={16} color='gray' />
+                <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+              </div>
             </div>
           </div>
-            <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
+          
+          <div className={styles.jobCardBody}
+            onClick={() => setOpened(!opened)}
+          >
+            <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4>
+            <p>{job.description}</p>
+          </div>
+          <div className={styles.jobTags}>
+            {job.tags.map((tag: string) => Tag(tag))}
+          </div>
+          <p className={styles.deadline}>{'Deadline: ' + date}</p>
         </div>
-        <div className={styles.jobCardBody}
-          onClick={() => setOpened(!opened)}
-        >
-          <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4>
-          <p>{job.description}</p>
-        </div>
-        <div className={styles.jobTags}>
-          {job.tags.map((tag: string) => Tag(tag))}
-        </div>
-        <p className={styles.deadline}>{'Deadline: ' + date}</p>
+        <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
       </div>
+      
       {/* @todo: add other necessary info */}
       { email ? null : 
       <Drawer

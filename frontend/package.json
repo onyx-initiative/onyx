@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.4",
+    "@azure/msal-browser": "^2.36.0",
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
     "@hubspot/api-client": "^8.3.2",
