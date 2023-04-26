@@ -20,7 +20,6 @@ export default function Favourites() {
   const [jobs, setJobs] = useState([])
 
   useEffect(() => {
-    console.log(savedJobs)
     if (!loadingSavedJobs && !loadingScholar) {
         setJobs(savedJobs?.getFavourites)
     }

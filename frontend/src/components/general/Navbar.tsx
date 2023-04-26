@@ -27,16 +27,13 @@ export default function Navbar(props: any) {
   // } else {
   //     logoLink = '/'
   // }
-  console.log(loadingScholar)
+
   useEffect(() => {
     if (!loadingScholar) {
       setName(scholarData?.getScholarByEmail?.name)
       setScholarId(scholarData?.getScholarByEmail?.scholar_id)
     }
   }, [loadingScholar, scholarData?.getScholarByEmail?.name, scholarData?.getScholarByEmail?.scholar_id])
-
-  console.log(scholarData?.getScholarByEmail?.name)
-  console.log(session?.user?.email)
 
   return (
     <div className={styles.betaWrapper}>

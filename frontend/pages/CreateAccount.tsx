@@ -23,32 +23,39 @@ export default function CreateAccount() {
   const { data: session } = useSession({ required: true })
   const [userInfo, setUserInfo] = useState({} as UserInfo)
   const [checked, setChecked] = useState(false)
-  const [createScholar, { data: scholarData, loading: sendingData, error}] = useMutation(CREATE_SCHOLAR, {
-    variables: {
-      name: userInfo.name,
-      email: session?.user?.email,
-      year: Number(userInfo.year),
-      school: userInfo.school,
-      major: userInfo.major,
-      status: 'current',
-      notifications: checked,
-    }})
+  const [createScholar, { data: scholarData, loading: sendingData, error}] = useMutation(CREATE_SCHOLAR)
   const [completed, setCompleted] = useState(null as boolean | null)
   const [viewInfo, setViewInfo] = useState([] as any)
   const [createView] = useMutation(CREATE_VIEW)
-  const router= useRouter()
+  const router = useRouter()
 
   const handleSubmit = () => {
-      createScholar();
-      createView({
-        variables: { 
-          viewId: (Math.round(Math.random() * 1000000)).toString(10),
-          email: session?.user?.email, 
-          viewName: 'default', 
-          criteria: formatViewInfo(viewInfo)
+      createScholar({
+        variables: {
+          name: userInfo.name,
+          email: session?.user?.email,
+          year: Number(userInfo.year),
+          school: userInfo.school,
+          major: userInfo.major,
+          status: 'current',
+          notifications: checked,
+      }}).then((resp) => {
+          if (!sendingData && !error) {
+            createView({
+              variables: { 
+                viewId: (Math.round(Math.random() * 10000000)).toString(10),
+                scholarId: resp.data?.createScholar?.scholar_id,
+                viewName: 'Default', 
+                criteria: formatViewInfo(viewInfo)
+              }
+            }).then((resp) => {
+              if (resp.data?.createView) {
+                router.push('/Scholar')
+              }
+            })
+          }
         }
-      })
-      router.push('/Scholar')
+      )
   }
 
   useEffect(() => {
@@ -162,12 +169,20 @@ const checkCompletion = async (userInfo: UserInfo, setCompleted: any) => {
 }
 
 const formatViewInfo = (viewInfo: any) => {
-  let formattedViewInfo = [];
-  for (let i = 0; i < viewInfo.length; i++) {
-    formattedViewInfo.push(viewInfo[i].value)
-  }
+  let formattedViewInfo: string[] = []
+    viewInfo.forEach((item: any) => {
+        formattedViewInfo.push(Capitalize(item.value))
+    })
   if (formattedViewInfo.length === 0) {
     formattedViewInfo = ['Toronto'];
   }
   return formattedViewInfo;
+}
+
+export const Capitalize = (str: string) => {
+  // Capitalize the first letter of each word separated by a space
+  str = str.toLowerCase().split(' ').map((word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }).join(' ');
+  return str;
 }

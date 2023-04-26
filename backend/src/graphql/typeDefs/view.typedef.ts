@@ -17,7 +17,7 @@ export const viewTypeDef = gql`
     type Mutation {
         createView(
             view_id: ID!
-            email: String!
+            scholar_id: ID!
             view_name: String!
             criteria: [String!]!
         ): View!

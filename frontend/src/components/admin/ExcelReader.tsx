@@ -70,7 +70,7 @@ const ExcelReader: React.FC = () => {
         .then((res) => {
           if (res.data?.batchCreateJobs) {
             alert('Jobs created successfully');
-          } else {
+          } else if (res.errors) {
             alert('There was an error creating the jobs, Please try again');
           }
         })
