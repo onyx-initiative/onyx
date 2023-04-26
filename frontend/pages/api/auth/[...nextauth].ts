@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import Credentials from 'next-auth/providers/credentials'
 import { compare, hash } from 'bcrypt'
 import AzureADProvider from "next-auth/providers/azure-ad";
+import AppleProvider from "next-auth/providers/apple";
 
 export interface Admin  extends User { 
     admin: boolean
@@ -13,6 +14,10 @@ export interface Admin  extends User {
 export default NextAuth({
     // Configure one or more authentication providers
     providers: [
+        AppleProvider({
+            clientId: process.env.APPLE_ID as string,
+            clientSecret: process.env.APPLE_SECRET as string
+          }),
         AzureADProvider({
             clientId: process.env.AZURE_CLIENT_ID as string,
             clientSecret: process.env.AZURE_CLIENT_SECRET_VALUE as string,
