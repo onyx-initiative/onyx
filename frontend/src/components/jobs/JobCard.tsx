@@ -102,7 +102,9 @@ const JobCard = (props: any) => {
             </div>
           </div>
           <h4>Job Description:</h4>
-            <p>{job.description}</p>
+            <p>{job.long_description}</p>
+            <p>{"Term: " + job.term}</p>
+          {job.contact_email ? <h4>{"Contact: " + job.contact_email}</h4> : null}
         </Drawer>
       }
       </div>
