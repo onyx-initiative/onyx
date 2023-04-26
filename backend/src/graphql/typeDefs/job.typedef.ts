@@ -35,6 +35,7 @@ export const jobTypeDef = gql`
         date_posted: String!
         total_views: Int!
         tags: [String!]!
+        link: String!
     }
 
     input BatchJob {
@@ -49,6 +50,7 @@ export const jobTypeDef = gql`
         applicant_year: [Int!]!
         deadline: String!
         tags: [String!]!
+        link: String!
     }
 
     type JobSearch {
@@ -68,6 +70,7 @@ export const jobTypeDef = gql`
         date_posted: String!
         total_views: Int!
         tags: [String!]!
+        link: String!
     }
 
     input JobTypeFilterInput {
@@ -117,6 +120,7 @@ export const jobTypeDef = gql`
             applicant_year: [Int!]!
             deadline: String!
             tags: [String!]!
+            link: String!
         ): Boolean!
         batchCreateJobs(
             admin_id: ID!

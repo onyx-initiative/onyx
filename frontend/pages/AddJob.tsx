@@ -22,7 +22,8 @@ type JobInfo = {
     location: string,
     applicantYear: number[],
     deadline: string,
-    tags: string[]
+    tags: string[], 
+    link: string,
 }
 
 export default function AddJob() {
@@ -40,6 +41,7 @@ export default function AddJob() {
         tags: JobInfo.tags,
         contactEmail: JobInfo.contact_email,
         longDescription: JobInfo.longDescription,
+        link: JobInfo.link
     }})
     const router = useRouter()
     const [completed, setCompleted] = useState(null as boolean | null)
@@ -180,6 +182,7 @@ export default function AddJob() {
             }}
           />
           <InputElement label="contactEmail" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="link" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <InputElementLong label="longDescription" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <Checkbox
             label="Save to Drafts?"

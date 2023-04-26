@@ -95,7 +95,7 @@ const JobCard = (props: any) => {
             />
             <div className={styles.jobHeaderDrawer}>
               <h3>{job.title}</h3>
-              <div className={styles.additionalInfo}>
+              <div className={styles.additionalInfo}> 
                 <IoLocationSharp size={16} color='gray' />
                 <h6>{job.location} • {Capitalize(job.job_type)}</h6>
               </div>
@@ -105,6 +105,11 @@ const JobCard = (props: any) => {
             <p>{job.long_description}</p>
             <p>{"Term: " + job.term}</p>
           {job.contact_email ? <h4>{"Contact: " + job.contact_email}</h4> : null}
+          <div style={{ display: 'flex', alignItems: 'center'}}>
+            <h4>{"Apply here:"}</h4>
+            <p style={{ color: 'white' }}>{"i"}</p>
+            <a href={job.link}>{job.link}</a>
+          </div>
         </Drawer>
       }
       </div>

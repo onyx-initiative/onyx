@@ -15,26 +15,10 @@ export const REMOVE_FROM_FAVORITES = gql`
 
 
 export const CREATE_JOB = gql`
-mutation createJob($employerId: ID!, $adminId: ID!, $title: String!, $description: String!, $jobType: String!, $term: String!, $location: String!, $applicantYear: [Int!]!, $deadline: String!, $tags: [String!]!, $contactEmail: String, $longDescription: String) {
-    createJob(employer_id: $employerId, admin_id: $adminId, title: $title, description: $description, job_type: $jobType, term: $term, location: $location, applicant_year: $applicantYear, deadline: $deadline, tags: $tags, contact_email: $contactEmail, long_description: $longDescription)
-    # {
-    #     # job_id
-        # employerId
-        # adminId
-        # title
-        # description
-        # jobType
-        # term
-        # location
-        # applicantYear
-        # deadline
-        # tags
-        # contactEmail
-        # longDescription
-    # }
-    
-  }
-  `
+    mutation CreateJob($employerId: ID!, $adminId: ID!, $title: String!, $description: String!, $term: String!, $location: String!, $applicantYear: [Int!]!, $deadline: String!, $tags: [String!]!, $link: String!, $longDescription: String, $contactEmail: String, $jobType: String!) {
+        createJob(employer_id: $employerId, admin_id: $adminId, title: $title, description: $description, term: $term, location: $location, applicant_year: $applicantYear, deadline: $deadline, tags: $tags, link: $link, long_description: $longDescription, contact_email: $contactEmail, job_type: $jobType)
+    }
+`
 
 export const ARCHIVE_JOB = gql`
     mutation CreateJob($jobId: ID!) {

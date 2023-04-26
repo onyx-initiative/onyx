@@ -52,6 +52,7 @@ export type Job = {
     total_views: number;
     tags: string[];
     live: boolean;
+    link: string;
 }
 
 export type Featured = {

@@ -19,6 +19,7 @@ export const GET_FEATURED_JOBS = gql`
             term
             title
             total_views
+            link
         }
     }
 `
@@ -40,6 +41,7 @@ export const GET_JOB_BY_FILTER = gql`
             term
             title
             total_views
+            link
         }
     }
 `
@@ -61,6 +63,7 @@ export const GET_JOB_BY_ID = gql`
             term
             title
             total_views
+            link
         }
     }
 `
@@ -83,6 +86,7 @@ export const GET_JOBS = gql`
             title
             total_views
             date_posted
+            link
         }
     }
 `
@@ -104,6 +108,7 @@ export const GET_JOBS_ADMIN = gql`
             term
             title
             total_views
+            link
         }
     }
 `
@@ -125,6 +130,7 @@ export const GET_JOBS_BY_EMPLOYER_ID = gql`
             deadline
             total_views
             tags
+            link
         }
     }
 `
@@ -146,6 +152,7 @@ export const GET_RELEVANT_JOBS = gql`
             date_posted
             total_views
             tags
+            link
         }
     }
 `
@@ -168,6 +175,7 @@ export const SEARCH_JOBS = gql`
             job_id
             name
             employer_id
+            link
         }
     }
 `
@@ -190,6 +198,7 @@ export const GET_NEW_JOBS = gql`
             date_posted
             total_views
             tags
+            link
         }
     }
 `
@@ -212,6 +221,7 @@ export const GET_FAVOURITES = gql`
             date_posted
             total_views
             tags
+            link
         }
     }
 `
@@ -234,6 +244,7 @@ export const GET_FILTERED_JOBS = gql`
             date_posted
             total_views
             tags
+            link
         }
     }
 `

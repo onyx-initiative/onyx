@@ -36,6 +36,7 @@ export const scholarTypeDef = gql`
         date_posted: String!
         total_views: Int!
         tags: [String!]!
+        link: String!
     }
 
     type Recommendation {
@@ -49,6 +50,7 @@ export const scholarTypeDef = gql`
         job_type: String!
         location: String!
         deadline: String!
+        link: String!
     }
 
     type Query {

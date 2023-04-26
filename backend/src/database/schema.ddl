@@ -6,6 +6,11 @@ CREATE TABLE AllowedAdmins (
     email VARCHAR(50) PRIMARY KEY NOT NULL
 );
 
+
+CREATE TABLE AllowedScholars (
+    email VARCHAR(50) PRIMARY KEY NOT NULL
+);
+
 CREATE TABLE Admin (
     admin_id SERIAL PRIMARY KEY,
     email VARCHAR(50) NOT NULL REFERENCES AllowedAdmins,
@@ -56,7 +61,8 @@ CREATE TABLE Job (
     date_posted TIMESTAMP NOT NULL DEFAULT NOW(),
     total_views INTEGER NOT NULL DEFAULT 0,
     tags VARCHAR(255)[] NOT NULL,
-    live BOOLEAN NOT NULL DEFAULT FALSE
+    live BOOLEAN NOT NULL DEFAULT FALSE,
+    link VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Featured (
@@ -125,7 +131,8 @@ RETURNS TABLE(
     date_posted TIMESTAMP,
     total_views INTEGER,
     tags VARCHAR(255)[],
-    live BOOLEAN
+    live BOOLEAN,
+    link VARCHAR(255)
 ) AS $$
 DECLARE
     employer_match RECORD;
@@ -156,7 +163,8 @@ BEGIN
         job.date_posted,
         job.total_views,
         job.tags,
-        job.live
+        job.live,
+        job.link
     FROM
         Job
     JOIN
@@ -215,7 +223,8 @@ RETURNS TABLE(
     date_posted TIMESTAMP,
     total_views INTEGER,
     tags VARCHAR(255)[],
-    live BOOLEAN
+    live BOOLEAN,
+    link VARCHAR(255)
 ) AS $$
 BEGIN
     RETURN QUERY
@@ -234,7 +243,8 @@ BEGIN
         j.date_posted,
         j.total_views,
         j.tags,
-        j.live
+        j.live,
+        j.link
     FROM
         Job j, Employer
     WHERE

@@ -136,7 +136,8 @@ const jobResolver = {
                 deadline,
                 date_posted,
                 total_views,
-                tags
+                tags,
+                link
                 FROM Saved, Job
                 WHERE scholar_id = $1
                 AND Saved.job_id = Job.job_id;
@@ -227,7 +228,8 @@ const jobResolver = {
             applicant_year,
             deadline,
             tags,
-            live
+            live,
+            link
             }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
@@ -258,8 +260,9 @@ const jobResolver = {
                     location,
                     applicant_year,
                     deadline,
-                    tags
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;`;
+                    tags,
+                    link
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;`;
                 await client.query(query, 
                     [
                     employer_id,
@@ -271,7 +274,8 @@ const jobResolver = {
                     location,   
                     applicant_year,
                     deadline,
-                    tags
+                    tags,
+                    link
                 ]).catch((err: any) => {
                     console.log(err);
                     client.release()
@@ -289,8 +293,9 @@ const jobResolver = {
                     location,
                     applicant_year,
                     deadline,
-                    tags
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;`;
+                    tags, 
+                    link
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *;`;
                     await client.query(query, 
                         [
                         employer_id,
@@ -303,7 +308,8 @@ const jobResolver = {
                         location,   
                         applicant_year,
                         deadline,
-                        tags
+                        tags,
+                        link
                     ]).catch((err: any) => {
                         console.log(err);
                         client.release()
@@ -322,8 +328,9 @@ const jobResolver = {
                     applicant_year,
                     deadline,
                     tags,
-                    live
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true) RETURNING *;`;
+                    live,
+                    link
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true, $12) RETURNING *;`;
                 await client.query(query, 
                     [
                     employer_id,
@@ -336,7 +343,8 @@ const jobResolver = {
                     location,   
                     applicant_year,
                     deadline,
-                    tags
+                    tags,
+                    link
                 ]).catch((err: any) => {
                     console.log(err);
                     client.release()
@@ -356,8 +364,9 @@ const jobResolver = {
                     applicant_year,
                     deadline,
                     tags,
-                    live
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true) RETURNING *;`;
+                    live,
+                    link
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true, $13) RETURNING *;`;
                 await client.query(query, 
                     [
                     employer_id,
@@ -371,7 +380,8 @@ const jobResolver = {
                     location,   
                     applicant_year,
                     deadline,
-                    tags
+                    tags,
+                    link
                 ]).catch((err: any) => {
                     console.log(err);
                     client.release()
@@ -399,8 +409,9 @@ const jobResolver = {
                 applicant_year,
                 deadline,
                 tags,
-                live
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true) RETURNING *;`;
+                live, 
+                link
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true, $13) RETURNING *;`;
             for (let i = 0; i < jobs.length; i++) {
                 // Get the employer id
                 const employer = await client.query(`SELECT employer_id
@@ -425,7 +436,8 @@ const jobResolver = {
                     job.location,   
                     job.applicant_year,
                     job.deadline,
-                    job.tags
+                    job.tags,
+                    job.link
                 ]).catch((err: any) => {
                     console.log(err);
                     client.release()

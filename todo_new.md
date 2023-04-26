@@ -9,14 +9,29 @@ Mike
   - Just a dropdown w profile and logout
   - Profile page shows views
 
+Add link:
+ - [X] Modal
+ - [ ] Add from csv
+ - [ ] Add single job
+
 # Tests
 - Test long descriptions
 - Test how many jobs can be batch added
 
 Cole
-- [ ] Make responsive
+- [X] Make responsive
 - [X] Link jobs to search from employer
-- [ ] Format drawer in open jobs page
+- [X] Format drawer in open jobs page
 - [X] Remove job
 - [X] Remove employer
-- [X] Add announcement banner       
+- [X] Add announcement banner     
+- [ ] Fix single add job **(PRIORITY)**
+  - [ ] Description not being sent properly
+  - [ ] New jobs not showing up in search
+- [ ] Connect it to hubspot and add a db table AllowedScholars **(PRIORITY)**
+  - [ ] You'll need to add a check to the resolver method for creating a scholar to first check this table before allowing a scholar to continue
+  - [ ] Just use the hubspot api to populate it directly (google/chatgpt can help)
+- Look into if we can use vercel analytics on components
+- [ ] Add support for employer videos
+- [ ] Add IG widget
+

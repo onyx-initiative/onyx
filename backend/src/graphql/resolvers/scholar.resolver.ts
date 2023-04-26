@@ -55,7 +55,7 @@ const scholarResolver = {
                 CREATE VIEW recommended_jobs AS
                 SELECT scholar.name as scholar, scholar.email as email, scholar.scholar_id, view_name, 
                 employer.name as employer, job.job_id, job.title, job.description, job.job_type, 
-                job.location, job.deadline
+                job.location, job.deadline, job.link
                 FROM employer JOIN job ON employer.employer_id = job.employer_id 
                 JOIN job_search ON job_search.job_id = job.job_id,
                 scholar JOIN filterview ON filterview.scholar_id = scholar.scholar_id
@@ -71,7 +71,7 @@ const scholarResolver = {
             });
             const query = `                
                 SELECT scholar, email, scholar_id, view_name, employer, 
-                title, description, job_type, location, deadline
+                title, description, job_type, location, deadline, link
                 FROM recommended_jobs
                 WHERE job_id IN (
                     SELECT job_id
