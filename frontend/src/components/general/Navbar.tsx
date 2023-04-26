@@ -66,9 +66,13 @@ export default function Navbar(props: any) {
           <li>
             <a href="https://onyxinitiative.org/contact/" target="_blank" rel="noreferrer">Contact Us</a>
           </li>
+          <li>
+
+            {name === '' || name === undefined ? <ProfilePhoto name='Guest' scholar_id='1' /> : 
+            <ProfilePhoto name={name} scholar_id={scholar_id}/>}
+          </li>
         </ul>
-        {name === '' || name === undefined ? <ProfilePhoto name='Guest' scholar_id='1' /> : 
-        <ProfilePhoto name={name} scholar_id={scholar_id}/>}
+          
         
       </div>
       

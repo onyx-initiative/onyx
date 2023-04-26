@@ -21,6 +21,7 @@ const JobCard = (props: any) => {
         employerId: job.employer_id
       }
     });
+    console.log(job)
   
     // @todo: Add a call to get the employer website
     let website: string;
@@ -39,60 +40,69 @@ const JobCard = (props: any) => {
     return (
       <div key={job.job_id} className={styles.mainContainer}>
       <div className={styles.jobCard}>
-        <div className={styles.jobCardHeader}>
-          <Image 
-            onClick={() => setOpened(!opened)}
-            src={logo}
-            alt="Company Logo"
-            width={60}
-            height={60}
-          />
-          <div className={styles.jobHeader}
-            onClick={() => setOpened(!opened)}
-          >
-            <h3>{job.title}</h3>
-            <div className={styles.additionalInfo}>
-              <IoLocationSharp size={16} color='gray' />
-              <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+        <div>
+          <div className={styles.jobCardHeader}>
+            <div className={styles.jobCardImage}>
+              <Image 
+                onClick={() => setOpened(!opened)}
+                src={logo}
+                alt="Company Logo"
+                width={60}
+                height={60}
+                objectFit='cover'
+              />
+            </div>
+            <div className={styles.jobHeader}
+              onClick={() => setOpened(!opened)}
+            >
+              <h3>{job.title}</h3>
+              <div className={styles.additionalInfo}>
+                <IoLocationSharp size={16} color='gray' />
+                <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+              </div>
             </div>
           </div>
-            <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
+          
+          <div className={styles.jobCardBody}
+            onClick={() => setOpened(!opened)}
+          >
+            <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4>
+            <p>{job.description}</p>
+          </div>
+          <div className={styles.jobTags}>
+            {job.tags.map((tag: string, index:number) => <Tag key={tag} tag={tag}/>)}
+          </div>
+          <p className={styles.deadline}>{'Deadline: ' + date}</p>
         </div>
-        <div className={styles.jobCardBody}
-          onClick={() => setOpened(!opened)}
-        >
-          <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4>
-          <p>{job.description}</p>
-        </div>
-        <div className={styles.jobTags}>
-          {job.tags.map((tag: string) => Tag(tag))}
-        </div>
-        <p className={styles.deadline}>{'Deadline: ' + date}</p>
+        <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
       </div>
+      
       {/* @todo: add other necessary info */}
       { email ? null : 
       <Drawer
           opened={opened}
           onClose={() => setOpened(!opened)}
           padding="xl"
-          size="30%"
+          size="60%"
           position='right'
         >
-          <div className={styles.jobCardHeader}>
-          <Image 
-            src={logo}
-            alt="Company Logo"
-            width={60}
-            height={60}
-          />
-          <div className={styles.jobHeader}>
-            <h3>{job.title}</h3>
-            <div className={styles.additionalInfo}>
-              <IoLocationSharp size={16} color='gray' />
-              <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+          <div className={styles.jobCardHeaderDrawer}>
+            <Image 
+              src={logo}
+              alt="Company Logo"
+              width={60}
+              height={60}
+            />
+            <div className={styles.jobHeaderDrawer}>
+              <h3>{job.title}</h3>
+              <div className={styles.additionalInfo}>
+                <IoLocationSharp size={16} color='gray' />
+                <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+              </div>
             </div>
           </div>
-        </div>
+          <h4>Job Description:</h4>
+            <p>{job.description}</p>
         </Drawer>
       }
       </div>
@@ -100,7 +110,8 @@ const JobCard = (props: any) => {
   }
   
   // @todo: Add logic so if there's more than x #, it renders +total - x more
-  const Tag = (tag: string) => {
+  const Tag = (props: { tag: any; }) => {
+    const tag = props.tag;
     return (
       <div className={styles.tag}>
         {tag}

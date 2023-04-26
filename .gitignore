@@ -1,4 +1,5 @@
 backend/src/database/index.ts
+node_modules/
 
 *.pem
 

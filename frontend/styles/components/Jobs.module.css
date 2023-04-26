@@ -1,9 +1,11 @@
 
+
+
 .jobContainer {
     display: flex;
     margin: 1rem;
-    margin-left: 8rem;
-    margin-right: 8rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
 }
 
 .filterBar {
@@ -11,13 +13,31 @@
     flex-direction: column;
     align-items: left;
     width: 15%;
+    min-width: 10rem;
     height: 50rem;
     background-color: #806E53;
     border-radius: 0.2rem;
     padding: 1rem;
     padding-top: 0.2rem;
-    position: fixed;
 }
+
+@media (max-width: 800px) {
+    .jobContainer {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0rem;
+        margin-right: 0rem;
+        align-items: center;
+    }
+    .filterBar {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        height: auto;
+
+    }
+
+    }
 
 .filterHeader {
     display: flex;
@@ -84,8 +104,16 @@
     align-items: center;
     width: 80%;
     height: 20%;
-    margin-left: auto;
+    margin-left: 1rem;
 }
+
+@media (max-width: 800px) {
+    .jobList {
+        margin-left: 0rem;
+    }
+}
+
+
 
 .searchBar {
     width: 100%;
@@ -94,6 +122,12 @@
     padding: 1rem;
     border-radius: 0.2rem;
     justify-content: space-between;
+}
+
+@media (max-width: 800px) {
+    .searchBar {
+        margin-top: 1rem;
+    }
 }
 
 .searchBar > input {
@@ -110,7 +144,7 @@
 }
 
 .searchButton {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 0.2rem;
@@ -118,7 +152,9 @@
     color: white;
     padding-left: 1rem;
     padding-right: 1rem;
-    width: 10%;
+    /* width: 10%;
+    min-width: 5rem; */
+
 }
 
 .searchButton > button {
@@ -170,8 +206,7 @@
 
 .jobCard {
     display: flex;
-    flex-direction: column;
-    align-items: left;
+    align-items: flex-start;
     background-color: white;
     margin: 0;
     padding: 1rem;
@@ -180,22 +215,55 @@
     margin-bottom: 1rem;
 }
 
+
+
+
 .jobCardHeader {
     display: flex;
     color: black;
     align-items: center;
     cursor: pointer;
 }
+.jobCardHeaderDrawer {
+    display: flex;
+    color: black;
+    align-items: center;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .jobCardHeaderDrawer {
+        flex-direction: column;
+    }
+}
 
 .jobHeader {
     display: flex;
     align-items: left;
-    /* margin-left: auto; */
     flex-direction: column;
-    margin-right: 10rem;
-    margin-left: 1.5rem;
     font-size: large;
     cursor: pointer;
+}
+
+.jobHeaderDrawer {
+    display: flex;
+    align-items: left;
+    margin-left: 2rem;
+    flex-direction: column;
+    font-size: large;
+    cursor: pointer;
+}
+
+
+
+@media (max-width: 800px) {
+    .jobHeaderDrawer {
+        margin-left: 0rem;
+    }
+}
+
+.jobCardImage {
+    min-width: 4rem;
 }
 
 .jobHeader > h3 {
@@ -231,6 +299,17 @@
     cursor: pointer;
 }
 
+@media (max-width: 800px) {
+    .jobCard {
+        flex-direction: column;
+    }
+
+    .bookmarkContainer {
+        margin-left:0;
+        margin-right: 0;
+    }
+}
+
 .jobCardBody {
     color: black;
     cursor: pointer;
@@ -253,7 +332,7 @@
 .tag {
     color: rgb(140, 140, 140);
     background-color: #f5e9d9;
-    width: 7%;
+    min-width: 7%;
     font-size: small;
     font-weight: bold;
     padding: 0.2rem;
@@ -268,7 +347,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
 }
+
 
 .applyFilters {
     display: flex;

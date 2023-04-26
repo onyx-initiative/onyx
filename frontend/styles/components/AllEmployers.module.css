@@ -49,6 +49,23 @@
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
     justify-items: center;
+    width: 100%;
+}
+
+@media (max-width: 1084px) {
+    .employer {
+        grid-template-columns: repeat(3,1fr);
+        grid-gap: 20px;
+        display: grid;
+    }
+}
+
+@media (max-width: 768px) {
+    .employer {
+        grid-template-columns: repeat(2,1fr);
+        grid-gap: 20px;
+        display: grid;
+    }
 }
 
 

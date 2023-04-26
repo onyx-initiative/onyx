@@ -7,6 +7,7 @@ import { GET_SCHOLAR_BY_EMAIL } from '../graphql/queries/scholarQueries';
 import loading from '../src/assets/loading.svg'
 import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
 import {useRouter } from 'next/router';
+import {PublicClientApplication} from '@azure/msal-browser'
 
 
 // @todo: If email not in db, redirect to sign up page
@@ -17,8 +18,19 @@ export default function Login() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
 
+    const handleSignInAzure = async () => {
+        try {
+            const session = await signIn('azure-ad', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})
+          // handle successful sign-in
+          console.log({session})
+        } catch (error) {
+          // handle sign-in error
+        }
+      };
+
+
     return (
-        <div>
+        <div className={styles.outerContainer}>
             <div className={styles.container}>
                 <div className={styles.loginLogo}>
                     <Image 
@@ -43,7 +55,7 @@ export default function Login() {
                         <FaMicrosoft size={28} />
                         <button
                         className={styles.loginButton}
-                            onClick={() => alert('Microsoft auth coming soon!')}
+                        onClick={handleSignInAzure}
                         >
                             Login with Microsoft
                         </button>

@@ -8,11 +8,11 @@
 
 
 .employerContainer {
-    width: 200px;
-    height: 200px;
+    width: 80%;
+    height: 150px;
     background-color: white;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     transition: background-color 0.3s ease; /* add transition effect */
   }
   
