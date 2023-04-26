@@ -60,7 +60,7 @@ const scholarResolver = {
                 JOIN job_search ON job_search.job_id = job.job_id,
                 scholar JOIN filterview ON filterview.scholar_id = scholar.scholar_id
                 WHERE document @@ plainto_tsquery(array_to_string(filterview.criteria, ' & ')) AND 
-                scholar.notification = true
+                scholar.notifications = true
                 GROUP BY scholar.scholar_id, view_name, employer.name, job.title, job.description, 
                 job.job_type, job.location, job.deadline, job.job_id;
             `
