@@ -46,7 +46,7 @@ export default function Jobs() {
   const { query } = router
   const [search, setSearch] = useState('')
   const { data: locationData, loading: locationLoading } = useQuery(GET_LOCATIONS)
-  console.log(locationData.getJobs)
+
   const [filters, setFilters] = useState({
     // @todo: Update this list
     location: ['Toronto', 'New York', 'London'],
