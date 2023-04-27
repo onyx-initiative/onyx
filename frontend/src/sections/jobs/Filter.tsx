@@ -5,7 +5,7 @@ import { Select, Checkbox, MultiSelect } from '@mantine/core';
 import { filters } from '../../../pages/Jobs';
 import { cursorTo } from 'readline';
 import { GET_FILTERED_JOBS, SEARCH_JOBS } from '../../../graphql/queries/jobQueries';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 
 type FilterProps = {
   filters: any;

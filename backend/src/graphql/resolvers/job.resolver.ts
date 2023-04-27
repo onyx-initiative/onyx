@@ -249,73 +249,7 @@ const jobResolver = {
 
             let query;
             
-            if (contact_email === undefined && live === undefined) {
-                query = `INSERT INTO job(
-                    employer_id,
-                    admin_id,
-                    title,
-                    description,
-                    job_type,
-                    term,
-                    location,
-                    applicant_year,
-                    deadline,
-                    tags,
-                    link
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;`;
-                await client.query(query, 
-                    [
-                    employer_id,
-                    admin_id,
-                    title,
-                    description,
-                    job_type.toLowerCase(),
-                    term,
-                    location,   
-                    applicant_year,
-                    deadline,
-                    tags,
-                    link
-                ]).catch((err: any) => {
-                    console.log(err);
-                    client.release()
-                    return false;
-                });
-            } else if (live === undefined) {
-                query = `INSERT INTO job(
-                    employer_id,
-                    admin_id,
-                    title,
-                    description,
-                    contact_email,
-                    job_type,
-                    term,
-                    location,
-                    applicant_year,
-                    deadline,
-                    tags, 
-                    link
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *;`;
-                    await client.query(query, 
-                        [
-                        employer_id,
-                        admin_id,
-                        title,
-                        description,
-                        contact_email,
-                        job_type.toLowerCase(),
-                        term,
-                        location,   
-                        applicant_year,
-                        deadline,
-                        tags,
-                        link
-                    ]).catch((err: any) => {
-                        console.log(err);
-                        client.release()
-                        return false;
-                    });
-            } else if (contact_email === undefined) {
+            if (contact_email === undefined) {
                 query = `INSERT INTO job(
                     employer_id,
                     admin_id,
@@ -330,7 +264,7 @@ const jobResolver = {
                     tags,
                     live,
                     link
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true, $12) RETURNING *;`;
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *;`;
                 await client.query(query, 
                     [
                     employer_id,
@@ -344,6 +278,7 @@ const jobResolver = {
                     applicant_year,
                     deadline,
                     tags,
+                    live,
                     link
                 ]).catch((err: any) => {
                     console.log(err);
@@ -366,7 +301,7 @@ const jobResolver = {
                     tags,
                     live,
                     link
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true, $13) RETURNING *;`;
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`;
                 await client.query(query, 
                     [
                     employer_id,
@@ -381,6 +316,7 @@ const jobResolver = {
                     applicant_year,
                     deadline,
                     tags,
+                    live,
                     link
                 ]).catch((err: any) => {
                     console.log(err);

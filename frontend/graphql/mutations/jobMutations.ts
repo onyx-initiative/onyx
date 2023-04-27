@@ -15,8 +15,14 @@ export const REMOVE_FROM_FAVORITES = gql`
 
 
 export const CREATE_JOB = gql`
-    mutation CreateJob($employerId: ID!, $adminId: ID!, $title: String!, $description: String!, $term: String!, $location: String!, $applicantYear: [Int!]!, $deadline: String!, $tags: [String!]!, $link: String!, $longDescription: String, $contactEmail: String, $jobType: String!) {
-        createJob(employer_id: $employerId, admin_id: $adminId, title: $title, description: $description, term: $term, location: $location, applicant_year: $applicantYear, deadline: $deadline, tags: $tags, link: $link, long_description: $longDescription, contact_email: $contactEmail, job_type: $jobType)
+    mutation CreateJob($employerId: ID!, $adminId: ID!, $title: String!, $description: String!, $jobType: String!, $term: String!, $location: String!, $applicantYear: [Int!]!, $deadline: String!, $tags: [String!]!, $live: Boolean!, $link: String!, $longDescription: String, $contactEmail: String) {
+        createJob(employer_id: $employerId, admin_id: $adminId, title: $title, description: $description, job_type: $jobType, term: $term, location: $location, applicant_year: $applicantYear, deadline: $deadline, tags: $tags, live: $live, link: $link, long_description: $longDescription, contact_email: $contactEmail)
+    }
+`
+
+export const CREATE_JOB_NO_CONTACT_EMAIL = gql`
+    mutation CreateJob($employerId: ID!, $adminId: ID!, $title: String!, $description: String!, $jobType: String!, $term: String!, $location: String!, $applicantYear: [Int!]!, $deadline: String!, $tags: [String!]!, $live: Boolean!, $link: String!, $longDescription: String) {
+    createJob(employer_id: $employerId, admin_id: $adminId, title: $title, description: $description, job_type: $jobType, term: $term, location: $location, applicant_year: $applicantYear, deadline: $deadline, tags: $tags, live: $live, link: $link, long_description: $longDescription)
     }
 `
 

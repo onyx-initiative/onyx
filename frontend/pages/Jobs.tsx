@@ -8,7 +8,7 @@ import ListedJobs from '../src/sections/jobs/ListedJobs'
 // To ensure unauthenticated people don't access
 import getServerProps from "../src/utils/getServerProps";
 import SearchBar from '../src/components/jobs/SearchBar'
-import { GET_JOBS, SEARCH_JOBS } from '../graphql/queries/jobQueries'
+import { GET_JOBS, GET_LOCATIONS, SEARCH_JOBS } from '../graphql/queries/jobQueries'
 import { useLazyQuery, useQuery } from '@apollo/client'
 import loading from '../src/assets/loading.svg'
 import Image from 'next/image'
@@ -45,6 +45,8 @@ export default function Jobs() {
   const router = useRouter()
   const { query } = router
   const [search, setSearch] = useState('')
+  const { data: locationData, loading: locationLoading } = useQuery(GET_LOCATIONS)
+  console.log(locationData.getJobs)
   const [filters, setFilters] = useState({
     // @todo: Update this list
     location: ['Toronto', 'New York', 'London'],

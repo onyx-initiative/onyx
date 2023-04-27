@@ -248,3 +248,11 @@ export const GET_FILTERED_JOBS = gql`
         }
     }
 `
+
+export const GET_LOCATIONS = gql`
+    query GetJobs {
+        getJobs { 
+            location
+        }
+    }
+`

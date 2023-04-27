@@ -35,6 +35,7 @@ export const jobTypeDef = gql`
         date_posted: String!
         total_views: Int!
         tags: [String!]!
+        live: Boolean!
         link: String!
     }
 
@@ -120,6 +121,7 @@ export const jobTypeDef = gql`
             applicant_year: [Int!]!
             deadline: String!
             tags: [String!]!
+            live: Boolean!
             link: String!
         ): Boolean!
         batchCreateJobs(
