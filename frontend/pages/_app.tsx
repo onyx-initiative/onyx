@@ -8,6 +8,7 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 import { SessionProvider } from 'next-auth/react';
+import { Analytics } from '@vercel/analytics/react';
 
 type AuthProps = {
   Component: any;
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps, session }: AuthProps) {
     <SessionProvider session={session}>
       <ApolloContextProvider>
         <Component {...pageProps} />
+        <Analytics />
       </ApolloContextProvider>
     </SessionProvider> 
   )

@@ -39,6 +39,7 @@
     "@react-email/section": "0.0.8",
     "@react-email/text": "0.0.4",
     "@sendgrid/mail": "^7.7.0",
+    "@vercel/analytics": "^1.0.1",
     "bcrypt": "^5.1.0",
     "dayjs": "^1.11.6",
     "dotenv": "^16.0.3",
