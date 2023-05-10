@@ -14,7 +14,7 @@ import JobCard from '../../components/jobs/JobCard';
 export default function LatestJobs() {
     const { data: jobData, loading: jobsLoading, error } = useQuery(GET_NEW_JOBS)
 
-    console.log(jobData)
+    // console.log(jobData)
 
     if (jobsLoading) {
         return (
