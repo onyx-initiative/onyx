@@ -22,7 +22,7 @@ export default function Login() {
         try {
             const session = await signIn('azure-ad', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})
           // handle successful sign-in
-          console.log({session})
+        //   console.log({session})
         } catch (error) {
           // handle sign-in error
         }

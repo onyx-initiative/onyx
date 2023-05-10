@@ -40,16 +40,22 @@ export type selected = {
   tags: string[];
 }
 
+type location = {
+  location: string;
+}
+
 //@todo: fix filtering, add side menu, bookmarking, and fix double click to search
 export default function Jobs() {
   const router = useRouter()
   const { query } = router
   const [search, setSearch] = useState('')
+  const [jobs, setJobs] = useState([])
+  const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
   const { data: locationData, loading: locationLoading } = useQuery(GET_LOCATIONS)
 
   const [filters, setFilters] = useState({
     // @todo: Update this list
-    location: ['Toronto', 'New York', 'London'],
+    location: [],
     job_type: [],
     applicant_year: [
       new Date().getFullYear(),
@@ -74,10 +80,6 @@ export default function Jobs() {
     tags: []
   } as selected)
 
-  // @todo: Add call to the api to get the jobs
-  const [jobs, setJobs] = useState([])
-  const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
-
   useEffect(() => {
     if (!jobLoading) {
       if (!query.search) {
@@ -86,6 +88,12 @@ export default function Jobs() {
     }
     // Ignore, this is intentional
   }, [jobData, jobLoading])
+
+  useEffect(() => {
+    if (!locationLoading) {
+      setFilters((prev) => ({ ...prev, location: getUniqueLocations(locationData?.getJobs) }))
+    }
+  }, [locationData, locationLoading])
 
   return (
     <div>
@@ -110,6 +118,16 @@ export default function Jobs() {
       </div>
     </div>
   )
+}
+
+const getUniqueLocations = (locations: location[]) => {
+  const uniqueLocations: any = []
+  for (let i = 0; i < locations.length; i++) {
+    if (!uniqueLocations.includes(locations[i].location.trim())) {
+      uniqueLocations.push(locations[i].location.trim())
+    }
+  }
+  return uniqueLocations
 }
 
 export { getServerProps };
