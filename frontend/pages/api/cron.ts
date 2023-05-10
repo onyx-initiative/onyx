@@ -1,10 +1,10 @@
-  import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { render } from '@react-email/render';
 import sendgrid from '@sendgrid/mail';
 import { Email, Recommendation } from '../../emails/jobUpdate';
 import { Job } from '../../../backend/src/types/db.types';
 
-type ResponseData = {
+export type ResponseData = {
   message: string
 }
 
