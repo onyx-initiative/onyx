@@ -11,6 +11,7 @@ import styles from '../../../styles/components/Jobs.module.css'
 import { BOOKMARK_JOB } from '../../../graphql/mutations/scholarMutations';
 import { useSession } from 'next-auth/react';
 import { CHECK_BOOKMARK } from '../../../graphql/queries/scholarQueries';
+import va from '@vercel/analytics';
 
 const JobCard = (props: any) => {
     const { job, email } = props;
@@ -105,11 +106,7 @@ const JobCard = (props: any) => {
             <p>{job.long_description}</p>
             <p>{"Term: " + job.term}</p>
           {job.contact_email ? <h4>{"Contact: " + job.contact_email}</h4> : null}
-          <div style={{ display: 'flex', alignItems: 'center'}}>
-            <h4>{"Apply here:"}</h4>
-            <p style={{ color: 'white' }}>{"i"}</p>
-            <a href={job.link}>{job.link}</a>
-          </div>
+          <ApplyButton link={job.link} />
         </Drawer>
       }
       </div>
@@ -194,6 +191,26 @@ export const Capitalize = (str: string) => {
     capitalized += sub[i].charAt(0).toUpperCase() + sub[i].slice(1) + ' ';
   }
   return capitalized;
+}
+
+const ApplyButton = (props: any) => {
+
+  const { link } = props;
+
+  return (
+      <div style={{ display: 'flex', alignItems: 'center'}}>
+            <h4>{"Apply here:"}</h4>
+            <button 
+              style={{ backgroundColor: 'white', border: 'none'}}
+              onClick={() => {
+                va.track("Apply", { link: link });
+                window.open(link, '_blank');
+              }}
+            >
+              <a href={link} style={{ color: '#806E53', fontWeight: 'bold', fontSize: '1rem'}}>{link}</a>
+            </button>
+          </div>
+  )
 }
 
 export default JobCard;
