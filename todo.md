@@ -97,4 +97,5 @@ Michael's Hours:
 - Tues Apr 26 - 2 hr
 - Tues May 9 - 2 hr
 - Wed May 10 - 2 hr
-- Thurs May 11 - 5 hr
+- Thurs May 11 - 7 hr
+- Mon May 15 - 2 hr

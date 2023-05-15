@@ -6,6 +6,10 @@ from webscraper.webscraper import find_companies, get_logo, scrape_jobs
 
 app = FastAPI()
 
+@app.get("/")
+async def main():
+    return {"message": "Hello World"}
+
 @app.get("/webscraper/logo/{company}")
 async def main(company: str):
     company_name, company_id = find_companies(company)
