@@ -22,6 +22,7 @@ export default NextAuth({
             clientId: process.env.AZURE_CLIENT_ID as string,
             clientSecret: process.env.AZURE_CLIENT_SECRET_VALUE as string,
             tenantId: process.env.AZURE_TENANT_ID,
+            authorization: { params: { scope: "openid profile user.Read email" } },
           }),
         GoogleProvider({
             clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
