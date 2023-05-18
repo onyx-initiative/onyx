@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Carousel } from '@mantine/carousel';
 import { createStyles, Paper, Text, Title, Button, useMantineTheme } from '@mantine/core';
 import styles from '../../../styles/components/ScholarHero.module.css'
@@ -8,6 +8,7 @@ import { useQuery } from '@apollo/client';
 import { GET_EMPLOYERS } from '../../../graphql/queries/employerQueries';
 import { Employer } from '../../../../backend/src/types/db.types';
 import Loading from '../../../pages/Loading';
+import { getLogo, unsupportedCompanies } from '../../utils/microservices';
 
 export default function ScholarHero() {
     const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
@@ -67,8 +68,23 @@ const EmployerCard = (props: Employer) => {
         address, 
         website
     } = props
-    const site = websiteURL(props.name)
-    const logo = fetchLogo(site)
+    const [logo, setLogo] = React.useState('')
+    
+    // NOTE: Logo rendering
+    useEffect(() => {
+        setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
+        if (name) {
+            if (name in unsupportedCompanies) {
+                const newLogo = unsupportedCompanies[name as keyof typeof unsupportedCompanies]
+                setLogo(newLogo)
+            } else {
+                getLogo(name).then(logo => {
+                    setLogo(logo.logo)
+                });
+            }
+        }
+      }, [name]);
+      
     return (
         <Paper
             className={styles.card}

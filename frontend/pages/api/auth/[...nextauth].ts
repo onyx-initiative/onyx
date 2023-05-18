@@ -19,9 +19,10 @@ export default NextAuth({
             clientSecret: process.env.APPLE_SECRET as string
           }),
         AzureADProvider({
-            clientId: process.env.AZURE_CLIENT_ID as string,
-            clientSecret: process.env.AZURE_CLIENT_SECRET_VALUE as string,
-            tenantId: process.env.AZURE_TENANT_ID,
+            clientId: process.env.NEXT_PUBLIC_AZURE_AD_CLIENT_ID as string,
+            clientSecret: process.env.NEXT_PUBLIC_AZURE_CLIENT_SECRET as string,
+            tenantId: process.env.NEXT_PUBLIC_AZURE_AD_TENANT_ID,
+            // authorization: { params: { scope: "openid profile user.Read email" } },
           }),
         GoogleProvider({
             clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,

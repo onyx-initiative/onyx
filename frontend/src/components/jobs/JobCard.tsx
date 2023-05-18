@@ -12,11 +12,13 @@ import { BOOKMARK_JOB } from '../../../graphql/mutations/scholarMutations';
 import { useSession } from 'next-auth/react';
 import { CHECK_BOOKMARK } from '../../../graphql/queries/scholarQueries';
 import va from '@vercel/analytics';
+import { getLogo, unsupportedCompanies } from '../../utils/microservices';
 
 const JobCard = (props: any) => {
     const { job, email } = props;
     const [bookmarked, setBookmarked] = useState(false);
     const [opened, setOpened] = useState(false);
+    const [logo, setLogo] = useState('');
     const { data, loading } = useQuery(GET_EMPLOYER_BY_ID, {
       variables: { 
         employerId: job.employer_id
@@ -35,7 +37,21 @@ const JobCard = (props: any) => {
         website = data?.getEmployerById.website;
       }
     }
-    let logo = fetchLogo(website);
+
+    useEffect(() => {
+      setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
+      if (!loading) {
+          if (data?.getEmployerById?.name in unsupportedCompanies) {
+              const newLogo = unsupportedCompanies[data?.getEmployerById?.name as keyof typeof unsupportedCompanies]
+              setLogo(newLogo)
+          } else {
+              getLogo(data?.getEmployerById?.name).then(logo => {
+                  setLogo(logo.logo)
+              });
+          }
+      }
+    }, [loading]);
+
     const date = new Date(parseInt(job.deadline)).toDateString();
   
     return (
@@ -51,6 +67,8 @@ const JobCard = (props: any) => {
                 width={60}
                 height={60}
                 objectFit='cover'
+                priority
+                quality={100}
               />
             </div>
             <div className={styles.jobHeader}
