@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Carousel } from '@mantine/carousel';
 import { createStyles, Paper, Text, Title, Button, useMantineTheme } from '@mantine/core';
 import styles from '../../../styles/components/ScholarHero.module.css'
@@ -8,6 +8,8 @@ import { useQuery } from '@apollo/client';
 import { GET_EMPLOYERS } from '../../../graphql/queries/employerQueries';
 import { Employer } from '../../../../backend/src/types/db.types';
 import Loading from '../../../pages/Loading';
+
+import { getLogo, unsupportedCompanies } from '../../utils/microservices';
 import {Drawer} from '@mantine/core';
 import { useState } from 'react';
 import EmployerJobList from '../../components/employer/EmployerJobList';
@@ -58,5 +60,3 @@ export default function ScholarHero() {
     </div>
   )
 }
-
-

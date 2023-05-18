@@ -8,6 +8,7 @@ import {Employer} from '../../../../backend/src/types/db.types'
 import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
 import { useQuery } from "@apollo/client";
 import { GET_JOBS_BY_EMPLOYER_ID } from "../../../graphql/queries/jobQueries";
+import { getLogo, unsupportedCompanies } from "../../utils/microservices";
 
 
 
@@ -24,26 +25,29 @@ export const EmployerBlock = (props: any) => {
     
     
     const [jobs, setJobs] = useState([])
+    const [logo, setLogo] = useState('');
     
-    let website: string;
-      if (employer.name) {
-        website = websiteURL(employer.name)
-      } else {
-        if (loading) {
-          website = 'www.onyxinitiative.org/'
-        } else {
-          website = websiteURL(data.getEmployerById.name);
-        }
+    useEffect(() => {
+      setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
+      if (!loading) {
+          if (data?.getEmployerById?.name in unsupportedCompanies) {
+              const newLogo = unsupportedCompanies[data?.getEmployerById?.name as keyof typeof unsupportedCompanies]
+              setLogo(newLogo)
+          } else {
+              getLogo(data?.getEmployerById?.name).then(logo => {
+                  setLogo(logo.logo)
+              });
+              console.log(data?.getEmployerById?.name, logo)
+          }
       }
-    3
-      let logo = fetchLogo(website);
+    }, [loading]);
 
       
       useEffect(() => {
-        if (!jobLoading) {
-            console.log(error, "Error")
-            console.log("JobList", JobList)
+        if (!jobLoading && JobList?.getJobsByEmployerId) {
             setJobs(JobList?.getJobsByEmployerId)
+        } else {
+            setJobs([])
         }
         // Ignore, this is intentional
       }, [JobList, jobLoading])
