@@ -134,6 +134,14 @@ export default NextAuth({
             }
         })
     ],
+    callbacks: {
+        async jwt({ token, account }) {
+          // IMPORTANT: Persist the access_token to the token right after sign in
+          if (account) {
+            token.idToken = account.id_token;
+          }
+          return token;
+        },},
     pages: {
         signIn: "/Login",
         signOut: "/",

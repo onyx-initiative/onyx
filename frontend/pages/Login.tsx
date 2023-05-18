@@ -18,16 +18,6 @@ export default function Login() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
 
-    const handleSignInAzure = async () => {
-        try {
-            const session = await signIn('azure-ad', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})
-          // handle successful sign-in
-        //   console.log({session})
-        } catch (error) {
-          // handle sign-in error
-        }
-      };
-
 
     return (
         <div className={styles.outerContainer}>
@@ -55,7 +45,7 @@ export default function Login() {
                         <FaMicrosoft size={28} />
                         <button
                         className={styles.loginButton}
-                        onClick={handleSignInAzure}
+                        onClick={() => signIn('azure-ad', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})}
                         >
                             Login with Microsoft
                         </button>

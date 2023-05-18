@@ -8,7 +8,14 @@ import { useQuery } from '@apollo/client';
 import { GET_EMPLOYERS } from '../../../graphql/queries/employerQueries';
 import { Employer } from '../../../../backend/src/types/db.types';
 import Loading from '../../../pages/Loading';
+
 import { getLogo, unsupportedCompanies } from '../../utils/microservices';
+import {Drawer} from '@mantine/core';
+import { useState } from 'react';
+import EmployerJobList from '../../components/employer/EmployerJobList';
+import { EmployerBlock } from '../../components/employer/EmployerBlock';
+import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
+import { GET_JOBS_BY_EMPLOYER_ID } from '../../../graphql/queries/jobQueries';
 
 export default function ScholarHero() {
     const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
@@ -18,18 +25,14 @@ export default function ScholarHero() {
             <Loading />
     )}
 
+
     const employers = employerData.getEmployers.map(
         (employer: Employer) => {
             return (
                 <Carousel.Slide key={employer.name}>
-                    <EmployerCard
-                        name={employer.name}
-                        description={employer.description}
-                        employer_id={employer.employer_id}
-                        admin_id={employer.admin_id}
-                        contact_email={employer.contact_email}
-                        address={employer.address}
-                        website={employer.website}
+                    <EmployerBlock
+                        className={styles.card}
+                        employer={employer}
                     />
                 </Carousel.Slide>
             )
@@ -41,11 +44,11 @@ export default function ScholarHero() {
         <h2>Featured Employers</h2>
         <div className={styles.carouselContainer}>
             <Carousel
-                sx={{ maxWidth: '80%' }}
+                sx={{ maxWidth: '90%' }}
                 mx="auto"
-                slideGap="xs"
-                controlSize={22}
-                slideSize="20%"
+                slideGap="xl"
+                controlSize={29}
+                slideSize="25%"
                 loop
                 align="start"
                 withIndicators
@@ -56,49 +59,4 @@ export default function ScholarHero() {
         </div>
     </div>
   )
-}
-
-const EmployerCard = (props: Employer) => {
-    const { 
-        name, 
-        description,
-        employer_id, 
-        admin_id, 
-        contact_email, 
-        address, 
-        website
-    } = props
-    const [logo, setLogo] = React.useState('')
-    
-    // NOTE: Logo rendering
-    useEffect(() => {
-        setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
-        if (name) {
-            if (name in unsupportedCompanies) {
-                const newLogo = unsupportedCompanies[name as keyof typeof unsupportedCompanies]
-                setLogo(newLogo)
-            } else {
-                getLogo(name).then(logo => {
-                    setLogo(logo.logo)
-                });
-            }
-        }
-      }, [name]);
-      
-    return (
-        <Paper
-            className={styles.card}
-        >
-            <div>
-                <Image 
-                    src={logo} 
-                    alt="Company Logo" 
-                    width={100} 
-                    height={100}
-                />
-                <h2>{name}</h2>
-                <p>{description}</p>
-            </div>
-        </Paper>
-    )
 }
