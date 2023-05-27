@@ -24,33 +24,24 @@ const JobCard = (props: any) => {
         employerId: job.employer_id
       }
     });
-    // console.log(job)
-  
-    // @todo: Add a call to get the employer website
-    let website: string;
-    if (job.name) {
-      website = websiteURL(job.name)
-    } else {
-      if (loading) {
-        website = 'www.onyxinitiative.org/'
-      } else {
-        website = data?.getEmployerById.website;
-      }
-    }
 
-    useEffect(() => {
-      setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
-      if (!loading) {
-          if (data?.getEmployerById?.name in unsupportedCompanies) {
-              const newLogo = unsupportedCompanies[data?.getEmployerById?.name as keyof typeof unsupportedCompanies]
-              setLogo(newLogo)
-          } else {
-              getLogo(data?.getEmployerById?.name).then(logo => {
-                  setLogo(logo.logo)
-              });
-          }
-      }
-    }, [loading]);
+    // useEffect(() => {
+    //   setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
+    //   if (!loading && data?.getEmployerById?.name) {
+    //       if (data?.getEmployerById?.name in unsupportedCompanies) {
+    //           const newLogo = unsupportedCompanies[data?.getEmployerById?.name as keyof typeof unsupportedCompanies]
+    //           setLogo(newLogo)
+    //       } else {
+    //           getLogo(data?.getEmployerById?.name).then(logo => {
+    //               setLogo(logo.logo)
+    //           }).catch(err => {
+    //             console.log(err)
+    //             setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
+    //           });
+    //           console.log(data?.getEmployerById?.name, 'Success!')
+    //       }
+    //   }
+    // }, [loading, data?.getEmployerById?.name]);
 
     const date = new Date(parseInt(job.deadline)).toDateString();
   
@@ -62,7 +53,7 @@ const JobCard = (props: any) => {
             <div className={styles.jobCardImage}>
               <Image 
                 onClick={() => setOpened(!opened)}
-                src={logo}
+                src={data?.getEmployerById?.logo_url ? data?.getEmployerById?.logo_url : 'https://logo.clearbit.com/www.onyxinitiative.org/'}
                 alt="Company Logo"
                 width={60}
                 height={60}

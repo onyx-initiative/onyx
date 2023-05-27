@@ -9,6 +9,7 @@ import EmployerInfo from '../src/components/employer/EmployerInfo';
 import { Employer } from "../../backend/src/types/db.types";
 import {Button} from '@mantine/core'
 import { loadavg } from 'os';
+import { getLogo } from '../src/utils/microservices';
 
 type EmployerInfo = {
   employer_id: string,
@@ -26,6 +27,7 @@ export default function AddEmployer() {
   const [checked, setChecked] = useState(false)
   const [completed, setCompleted] = useState(null as boolean | null);
   const [EmployerInfo, setEmployerInfo] = useState({} as EmployerInfo)
+  const [logo, setLogo] = useState('' as string)
 
   const [createEmployer, {data: employerData, loading, error}] = useMutation(CREATE_EMPLOYER, {variables: {
     adminId: "1",
@@ -33,7 +35,7 @@ export default function AddEmployer() {
     contactEmail: EmployerInfo.contact,
     address: EmployerInfo.address,
     website: EmployerInfo.website,
-    description: EmployerInfo.description
+    description: EmployerInfo.description,
   }})
 
   // useEffect(() => {
@@ -47,7 +49,8 @@ export default function AddEmployer() {
     if (completed) {
       var result = confirm("Are you sure you want to add this Employer?");
         if (result == true) {
-      handleSubmit();}
+          handleSubmit();
+        }
     }else {
       console.log("Create Employer")
       

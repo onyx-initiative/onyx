@@ -11,7 +11,8 @@ const nextConfig = {
       "media.licdn.com",
       "asset.brandfetch.io",
       "logo.clearbit.com",
-      "media.glassdoor.com"
+      "media.glassdoor.com",
+      "upload.wikimedia.org"
     ],
   }
 }

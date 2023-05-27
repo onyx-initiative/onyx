@@ -5,7 +5,7 @@ export const GET_EMPLOYER_BY_ID = gql`
     query GetEmployerById($employerId: ID!) {
         getEmployerById(employer_id: $employerId) {
             name
-            website
+            logo_url
         }
     }
 `
@@ -20,6 +20,7 @@ export const GET_EMPLOYER_BY_NAME = gql`
             employer_id
             name
             website
+            logo_url
         }
 }
 `
@@ -28,13 +29,14 @@ export const GET_EMPLOYER_BY_NAME = gql`
 export const GET_EMPLOYERS = gql`
     query GetEmployers {
         getEmployers {
-            address
-            admin_id
-            contact_email
-            description
             employer_id
+            admin_id
             name
+            contact_email
+            address
             website
+            description
+            logo_url
         }
     }
 `

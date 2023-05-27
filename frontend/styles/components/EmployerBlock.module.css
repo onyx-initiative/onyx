@@ -11,14 +11,18 @@
     width: 80%;
     height: 150px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px;
     transition: background-color 0.3s ease; /* add transition effect */
   }
   
   .employerContainer:hover {
-    background-color: #9f9e9e; /* change background color on hover */
+    /* background-color: #fafafa; change background color on hover */
+    background-color: white;
     cursor: pointer;
+    border-color: #806E53;
+    border-width: 0.2rem;
+    transition: 0.15s ease;
   }
 
 .employerInfo {

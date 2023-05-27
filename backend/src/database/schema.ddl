@@ -42,7 +42,8 @@ CREATE TABLE Employer (
     contact_email VARCHAR(100) NOT NULL,
     address VARCHAR(50) NOT NULL,
     website VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    logo_url TEXT
 );
 
 CREATE TABLE Job (
