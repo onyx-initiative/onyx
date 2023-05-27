@@ -20,4 +20,12 @@ export const REMOVE_EMPLOYER = gql`
     }
 `
 
+export const UPDATE_LOGO = gql`
+    mutation UpdateLogo($name: String!, $logoUrl: String!) {
+        updateLogo(name: $name, logo_url: $logoUrl) {
+            logo_url
+        }
+    }
+`
+
 //@todo: Add update employer mutation

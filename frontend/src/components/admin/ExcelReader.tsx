@@ -57,7 +57,7 @@ const ExcelReader: React.FC = () => {
   return (
     <div className={styles.uploadWrapper}>
       <label htmlFor="file-upload" className="custom-file-upload">
-        Upload Excel or CSV File
+        Add jobs from an Excel or CSV file
       </label>
       <div className={styles.upload}>
         <input id="file-upload" type="file" onChange={handleFileChange} className={styles.uploadButton} />
