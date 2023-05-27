@@ -60,6 +60,7 @@ const JobCard = (props: any) => {
                 objectFit='cover'
                 priority
                 quality={100}
+                loader={({ src }) => src }
               />
             </div>
             <div className={styles.jobHeader}

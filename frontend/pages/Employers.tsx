@@ -22,8 +22,6 @@ export default function Employers() {
   const [employers, setEmployers] = useState([])
   const { data: employerData, loading: employerLoading } = useQuery(GET_EMPLOYERS)
 
-  console.log(query)
-
   useEffect(() => {
     if (!employerLoading) {
       if (!query.search) {

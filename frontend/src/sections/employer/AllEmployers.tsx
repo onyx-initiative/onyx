@@ -39,8 +39,6 @@ export default function AllEmployers(props: ListedEmployersProps) {
                 })}
             </div>
             {/* For the pages */}
-            
-            
         </div>
     
     )

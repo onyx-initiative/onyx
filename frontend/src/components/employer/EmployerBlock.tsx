@@ -22,14 +22,14 @@ export const EmployerBlock = (props: any) => {
     
     const [jobs, setJobs] = useState([])
       
-      useEffect(() => {
-        if (!jobLoading && JobList?.getJobsByEmployerId) {
-            setJobs(JobList?.getJobsByEmployerId)
-        } else {
-            setJobs([])
-        }
-        // Ignore, this is intentional
-      }, [JobList, jobLoading])
+    useEffect(() => {
+      if (!jobLoading && JobList?.getJobsByEmployerId) {
+          setJobs(JobList?.getJobsByEmployerId)
+      } else {
+          setJobs([])
+      }
+      // Ignore, this is intentional
+    }, [JobList, jobLoading]);
 
     return (
         
@@ -47,6 +47,7 @@ export const EmployerBlock = (props: any) => {
                     alt="Company Logo" 
                     width={90}
                     height={90}
+                    loader={({ src }) => src }
             />
             <p>{employer.description}</p>
             <h3>Job Postings</h3>
@@ -65,6 +66,7 @@ export const EmployerBlock = (props: any) => {
                     objectFit="contain"
                     unoptimized={true}
                     priority={true}
+                    loader={({ src }) => src }
                     />
             </div>
 
@@ -73,25 +75,7 @@ export const EmployerBlock = (props: any) => {
       </>
         
     ) 
-    }
-
-    export const websiteURL = (company: string) => {
-        // Temp fix
-        if (company == 'Facebook') {
-          return 'www.facebook.com';
-        } else if (company === '') {
-          return 'www.onyxinitiative.org/';
-        } else {
-          return "www." + company.toLowerCase().replace(/ /g, "-") + ".com";
-        }
-      }
-      
-      // Helper function to get logos dynamically
-      // @todo: try to update this to get higher quality logos
-      export const fetchLogo = (websiteURL: string) => {
-        return `https://logo.clearbit.com/${websiteURL}`;
-      }
-
+}
     
 
 
