@@ -96,6 +96,17 @@ const employerResolver = {
             });
             client.release()
             return true;
+        },
+        updateLogo: async (_: any, { name, logo_url }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `UPDATE employer SET logo_url = $1 WHERE name = $2 RETURNING *`;
+            const resp = await client.query(query, [logo_url, name]).catch((err: any) => {
+                console.error(err);
+                client.release()
+            });
+            client.release()
+            return resp.rows[0];
         }
     }
 }

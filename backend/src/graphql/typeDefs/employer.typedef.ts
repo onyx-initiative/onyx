@@ -30,6 +30,7 @@ export const employerTypeDef = gql`
             website: String!
             description: String!
         ): Employer!
-        removeEmployer(employer_id: ID!): Boolean!                                          
+        removeEmployer(employer_id: ID!): Boolean!      
+        updateLogo(name: String!, logo_url: String!): Employer!                            
     }
 `

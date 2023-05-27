@@ -44,12 +44,13 @@
 
 
 .employer {
-    margin-top: 10px;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
     justify-items: center;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 @media (max-width: 1084px) {
@@ -90,17 +91,22 @@
 }
 
 .employerJobButton {
-    background-color: white;
+    background-color: #f5f5f5;
     width: 90%;
     border-radius: 5px;
-    background-color: #f6f5f5;
-  border:none;
-  transition: background-color 0.3s ease; /* 
-  add transition effect */
-  margin-bottom: 3px;
+    /* background-color: #f6f5f5; */
+    /* border-color: #bebebe;
+    border-width: 0.05rem; */
+    border: none;
+    margin-bottom: 0.5rem;
+    padding: 0 1rem;
+    padding-bottom: 0.2rem;
 }
 
 .employerJobButton:hover {
-    background-color: #969595; /* change to a darker color on hover */
+    /* background-color: #969595; change to a darker color on hover */
     cursor: pointer;
+    transform: translate(0, -0.03rem);
+    transition: 0.15s ease;
+    box-shadow: 0 0.05rem 0.2rem rgb(1, 1, 1);
   }
