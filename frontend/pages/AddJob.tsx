@@ -28,6 +28,7 @@ type JobInfo = {
 
 export default function AddJob() {
     const [JobInfo, setJobInfo] = useState({} as JobInfo)
+    const [checked, setChecked] = useState(false)
     const [createJob, {data: jobData, loading, error}] = useMutation(CREATE_JOB, {variables: {
         employerId: JobInfo.employerId,
         adminId:JobInfo.adminId,
@@ -39,6 +40,7 @@ export default function AddJob() {
         applicantYear: JobInfo.applicantYear,
         deadline: JobInfo.deadline,
         tags: JobInfo.tags,
+        live: !checked,
         contactEmail: JobInfo.contact_email,
         longDescription: JobInfo.longDescription,
         link: JobInfo.link
@@ -188,6 +190,8 @@ export default function AddJob() {
             label="Save to Drafts?"
             color="dark"
             size="md"
+            checked={checked}
+            onChange={() => setChecked(!checked)}
           />
           <Button color="dark" onClick={() => {
             // 1. Check all fields are filled

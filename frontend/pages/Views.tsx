@@ -10,6 +10,7 @@ import JobCard from '../src/components/jobs/JobCard'
 import { CREATE_VIEW } from '../graphql/mutations/scholarMutations'
 import { useSession } from 'next-auth/react'
 import { Capitalize } from './CreateAccount'
+import { GET_EMPLOYERS } from '../graphql/queries/employerQueries'
 
 export default function Views() {
     const router = useRouter()
@@ -26,6 +27,7 @@ export default function Views() {
             viewId: views?.getScholarsViews[0].view_id,
         }
     })
+    const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
     const [createView] = useMutation(CREATE_VIEW)
     const [jobs, setJobs] = useState<any>([])
     const [value, setValue] = useState<string>('')
@@ -86,7 +88,7 @@ export default function Views() {
                     jobLoading || viewsLoading ? <div>Loading...</div> :
                         jobs.map((job: any, index: number) => {
                             return (
-                                <JobCard key={index} job={job} />
+                                <JobCard key={index} job={job} employerData={employerData}/>
                             )
                         }
                     )

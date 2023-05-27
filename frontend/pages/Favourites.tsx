@@ -8,6 +8,7 @@ import styles from '../styles/components/Favourites.module.css'
 import loading from '../src/assets/loading.svg'
 import Image from 'next/image'
 import ListedJobs from '../src/sections/jobs/ListedJobs'
+import { GET_EMPLOYERS } from '../graphql/queries/employerQueries'
 
 export default function Favourites() {
   const { data: session } = useSession({ required: true })
@@ -17,6 +18,7 @@ export default function Favourites() {
   const { data: savedJobs, loading: loadingSavedJobs, error: savedJobsError, refetch } = useQuery(GET_FAVOURITES, {
       variables: { scholarId: scholarData?.getScholarByEmail?.scholar_id }
   })
+  const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
   const [jobs, setJobs] = useState([])
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function Favourites() {
           <div className={styles.noFavourites}>
             <h1>You have no favourites</h1>
           </div> :
-          <ListedJobs jobs={jobs} />
+          <ListedJobs jobs={jobs} employerData={employerData}/>
         }
       </div>
     </div>

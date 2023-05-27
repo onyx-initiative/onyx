@@ -8,7 +8,6 @@ import loading_svg from "../../frontend/src/assets/loading.svg";
 import SearchBar from "../src/components/jobs/SearchBar";
 import { Employer } from '../../backend/src/types/db.types';
 import { BsFillTrashFill } from 'react-icons/bs';
-import {fetchLogo} from "../src/components/jobs/JobCard"
 
 type SelectedEmployer = {
     employerId: string
@@ -73,14 +72,6 @@ export function RemoveEmployerCard(props: any) {
   const {employer, refetchQueries } = props
   const [RemoveEmployer, {data: employerData, loading: deleteLoading, error}] = useMutation(REMOVE_EMPLOYER, {refetchQueries})
 
-   
-
-    const {data: employer_name, loading, error: queryError} = useQuery(GET_EMPLOYER_BY_ID, {variables: {
-        employerId: employer.employer_id
-    }})
-
-    let logo = fetchLogo(employer_name?.getEmployerById.website)
-
     async function confirmDelete() {
       try {
         var result = confirm("Are you sure you want to delete this Employer?");
@@ -94,10 +85,6 @@ export function RemoveEmployerCard(props: any) {
         console.error('Error occurred: ', queryError);
       }
     }
-
-    if (loading) return <p>Loading...</p>;
-    if (queryError) return <p>Error occurred. Please try again later.</p>;
-
 
     return (
         <div className={styles.removeJobCard}>

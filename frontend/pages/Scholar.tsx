@@ -30,6 +30,7 @@ export default function Scholar() {
     variables: { email: session?.user?.email },
     fetchPolicy: 'cache-and-network'
   })
+  const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
   const router = useRouter()
 
   // @todo: Style this
@@ -55,8 +56,8 @@ export default function Scholar() {
         <div>
           <Navbar />
           <SearchBar />
-          <ScholarHero />
-          <LatestJobs />
+          <ScholarHero employerData={employerData} employerLoading={loadingEmployers}/>
+          <LatestJobs employerData={employerData} />
         </div>
       }
     </div>

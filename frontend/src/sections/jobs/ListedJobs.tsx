@@ -14,6 +14,7 @@ import JobCard from '../../components/jobs/JobCard';
 
 type ListedJobsProps = {
     jobs: Job[];
+    employerData: any;
 }
 
 type Bookmarks = {
@@ -21,7 +22,7 @@ type Bookmarks = {
 }
 
 export default function ListedJobs(props: ListedJobsProps) {
-  const { jobs } = props;
+  const { jobs, employerData } = props;
   const [activePage, setPage] = useState(1);
 
   // @todo: This should be changed when the backend is called
@@ -55,7 +56,7 @@ export default function ListedJobs(props: ListedJobsProps) {
       <div className={styles.job}>
         {display.map((job: any, index: number) => {
           return (
-              <JobCard key={index} job={job} email={false} />
+              <JobCard key={index} job={job} email={false} employerData={employerData}/>
           )
         })}
       </div>
@@ -70,27 +71,6 @@ export default function ListedJobs(props: ListedJobsProps) {
       </div>
     </div>
   )
-}
-
-// Move to separate components file
-
-
-//@todo: Pull logos programmatically
-const websiteURL = (company: string) => {
-  // Temp fix
-  if (company == 'Facebook') {
-    return 'www.facebook.com';
-  } else if (company === '') {
-    return 'www.onyxinitiative.org/';
-  } else {
-    return "www." + company.toLowerCase().replace(/ /g, "-") + ".com";
-  }
-}
-
-// Helper function to get logos dynamically
-// @todo: try to update this to get higher quality logos
-export const fetchLogo = (websiteURL: string) => {
-  return `https://logo.clearbit.com/${websiteURL}`;
 }
 
 const formatYears = (years: string[]) => {

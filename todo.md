@@ -99,12 +99,4 @@ Michael's Hours:
 - Wed May 10 - 2 hr
 - Thurs May 11 - 7 hr
 - Mon May 15 - 2 hr
-- Fri May 26 - 4 hr
-
-
-
-
-## TODO
-
-- Add all companies as employers from xlsx
-- Add mutation to add/change a logo url for an existing employer
+- Fri May 26 - 7 hr
