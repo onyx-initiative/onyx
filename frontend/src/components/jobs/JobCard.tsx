@@ -1,49 +1,28 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { Select, Pagination, Slider, RangeSlider, Drawer } from '@mantine/core';
-import { DatePicker, DateRangePicker } from '@mantine/dates';
+import React, { useState, useEffect } from 'react'
+import { Drawer } from '@mantine/core';
 import { IoLocationSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
-import { Job } from '../../../../backend/src/types/db.types';
+import { useMutation, useQuery } from '@apollo/client';
 import Image from 'next/image';
 import styles from '../../../styles/components/Jobs.module.css'
 import { BOOKMARK_JOB } from '../../../graphql/mutations/scholarMutations';
 import { useSession } from 'next-auth/react';
 import { CHECK_BOOKMARK } from '../../../graphql/queries/scholarQueries';
 import va from '@vercel/analytics';
-import { getLogo, unsupportedCompanies } from '../../utils/microservices';
 
 const JobCard = (props: any) => {
-    const { job, email } = props;
+    const { job, email, employerData } = props;
     const [bookmarked, setBookmarked] = useState(false);
     const [opened, setOpened] = useState(false);
-    const [logo, setLogo] = useState('');
-    const { data, loading } = useQuery(GET_EMPLOYER_BY_ID, {
-      variables: { 
-        employerId: job.employer_id
-      }
-    });
-
-    // useEffect(() => {
-    //   setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
-    //   if (!loading && data?.getEmployerById?.name) {
-    //       if (data?.getEmployerById?.name in unsupportedCompanies) {
-    //           const newLogo = unsupportedCompanies[data?.getEmployerById?.name as keyof typeof unsupportedCompanies]
-    //           setLogo(newLogo)
-    //       } else {
-    //           getLogo(data?.getEmployerById?.name).then(logo => {
-    //               setLogo(logo.logo)
-    //           }).catch(err => {
-    //             console.log(err)
-    //             setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
-    //           });
-    //           console.log(data?.getEmployerById?.name, 'Success!')
-    //       }
-    //   }
-    // }, [loading, data?.getEmployerById?.name]);
+    const [logo, setLogo] = useState('https://logo.clearbit.com/www.onyxinitiative.org/');
 
     const date = new Date(parseInt(job.deadline)).toDateString();
+
+    useEffect(() => {
+      if (employerData) {
+        setLogo(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).logo_url);
+      }
+    }, [employerData, job.employer_id])
   
     return (
       <div key={job.job_id} className={styles.mainContainer}>
@@ -53,7 +32,7 @@ const JobCard = (props: any) => {
             <div className={styles.jobCardImage}>
               <Image 
                 onClick={() => setOpened(!opened)}
-                src={data?.getEmployerById?.logo_url ? data?.getEmployerById?.logo_url : 'https://logo.clearbit.com/www.onyxinitiative.org/'}
+                src={logo}
                 alt="Company Logo"
                 width={60}
                 height={60}
@@ -61,10 +40,12 @@ const JobCard = (props: any) => {
                 priority
                 quality={100}
                 loader={({ src }) => src }
+                unoptimized
               />
             </div>
             <div className={styles.jobHeader}
               onClick={() => setOpened(!opened)}
+              style={{ marginLeft: '0.4rem'}}
             >
               <h3>{job.title}</h3>
               <div className={styles.additionalInfo}>
@@ -103,6 +84,8 @@ const JobCard = (props: any) => {
               alt="Company Logo"
               width={60}
               height={60}
+              loader={({ src }) => src }
+              unoptimized
             />
             <div className={styles.jobHeaderDrawer}>
               <h3>{job.title}</h3>
@@ -163,23 +146,6 @@ const JobCard = (props: any) => {
       </button>
     )
   }
-
-  //@todo: Pull logos programmatically
-export const websiteURL = (company: string) => {
-    // Temp fix
-    if (company === 'Facebook') {
-      return 'www.facebook.com';
-    } else if (company) {
-      return "www." + company.toLowerCase().replace(/ /g, "-") + ".com";
-    }
-    return 'www.onyxinitiative.org/';
-}
-  
-  // Helper function to get logos dynamically
-  // @todo: try to update this to get higher quality logos
-export const fetchLogo = (websiteURL: string) => {
-  return `https://logo.clearbit.com/${websiteURL}`;
-}
 
 const formatYears = (years: number[]) => {
   let formattedYears: string = '';

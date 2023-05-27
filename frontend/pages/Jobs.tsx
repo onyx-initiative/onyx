@@ -14,6 +14,7 @@ import loading from '../src/assets/loading.svg'
 import Image from 'next/image'
 
 import { useRouter } from "next/router"
+import { GET_EMPLOYERS } from '../graphql/queries/employerQueries'
 
 
 // Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
@@ -52,6 +53,7 @@ export default function Jobs() {
   const [jobs, setJobs] = useState([])
   const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
   const { data: locationData, loading: locationLoading } = useQuery(GET_LOCATIONS)
+  const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
 
   const [filters, setFilters] = useState({
     // @todo: Update this list
@@ -112,7 +114,7 @@ export default function Jobs() {
             <div className={styles.loading}>
               <Image src={loading} alt="Loading..." width={80} height={80}/>
             </div> : 
-            <ListedJobs jobs={jobs} />
+            <ListedJobs jobs={jobs} employerData={employerData}/>
           }
         </div>
       </div>

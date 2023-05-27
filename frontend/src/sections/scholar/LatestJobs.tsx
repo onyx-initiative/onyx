@@ -11,12 +11,13 @@ import JobCard from '../../components/jobs/JobCard';
 
 // Icon website: https://react-icons.github.io/react-icons
 
-export default function LatestJobs() {
+export default function LatestJobs(props: any) {
     const { data: jobData, loading: jobsLoading, error } = useQuery(GET_NEW_JOBS)
+    const { employerData } = props
 
     // console.log(jobData)
 
-    if (jobsLoading) {
+    if (jobsLoading || error || !jobData) {
         return (
             <div className={styles.loading}>
                 <Image
@@ -34,7 +35,7 @@ export default function LatestJobs() {
             <h2>Latest Jobs</h2>
             {jobData.getNewJobs.map((job: Job, index: number) => {
                 return (
-                    <JobCard job={job} email={false} key={index} />
+                    <JobCard job={job} email={false} key={index} employerData={employerData}/>
                 )
             })}
         </div>

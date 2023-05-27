@@ -13,6 +13,7 @@ import getServerProps from "../src/utils/getServerProps";
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Loading from './Loading'
+import { GET_JOBS } from '../graphql/queries/jobQueries'
 
 export default function Employers() {
 
@@ -21,6 +22,7 @@ export default function Employers() {
   const [search, setSearch] = useState('')
   const [employers, setEmployers] = useState([])
   const { data: employerData, loading: employerLoading } = useQuery(GET_EMPLOYERS)
+  const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
 
   useEffect(() => {
     if (!employerLoading) {
@@ -31,7 +33,7 @@ export default function Employers() {
     // Ignore, this is intentional
   }, [employerData, employerLoading])
 
-  if (employerLoading) {
+  if (employerLoading || jobLoading) {
     return (
         <Loading />
   )}
@@ -45,7 +47,7 @@ export default function Employers() {
             <div className={styles.loading}>
               <Image src={loading} alt="Loading..." width={80} height={80}/>
             </div> : 
-            <AllEmployers employers={employers} />
+            <AllEmployers employers={employers} jobs={jobData?.getJobs}/>
         }
       </div>
     </div>

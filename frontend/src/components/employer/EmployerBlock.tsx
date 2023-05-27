@@ -13,23 +13,23 @@ import { getLogo, unsupportedCompanies } from "../../utils/microservices";
 
 
 export const EmployerBlock = (props: any) => {
-    const {employer} = props
+    const { employer, jobs } = props
     const [opened, setOpened] = useState(false);
 
-    const {data: JobList, loading: jobLoading, error}  = useQuery(GET_JOBS_BY_EMPLOYER_ID, {
-      variables: { employerId: employer.employer_id}
-    });
+    // const {data: JobList, loading: jobLoading, error}  = useQuery(GET_JOBS_BY_EMPLOYER_ID, {
+    //   variables: { employerId: employer.employer_id}
+    // });
     
-    const [jobs, setJobs] = useState([])
+    // const [jobs, setJobs] = useState([])
       
-    useEffect(() => {
-      if (!jobLoading && JobList?.getJobsByEmployerId) {
-          setJobs(JobList?.getJobsByEmployerId)
-      } else {
-          setJobs([])
-      }
-      // Ignore, this is intentional
-    }, [JobList, jobLoading]);
+    // useEffect(() => {
+    //   if (!jobLoading && JobList?.getJobsByEmployerId) {
+    //       setJobs(JobList?.getJobsByEmployerId)
+    //   } else {
+    //       setJobs([])
+    //   }
+    //   // Ignore, this is intentional
+    // }, [JobList, jobLoading]);
 
     return (
         
@@ -48,11 +48,11 @@ export const EmployerBlock = (props: any) => {
                     width={90}
                     height={90}
                     loader={({ src }) => src }
+                    unoptimized
             />
             <p>{employer.description}</p>
             <h3>Job Postings</h3>
-            <EmployerJobList jobs={jobs} />
-          
+            <EmployerJobList jobs={jobs.filter((job: Job) => job.employer_id === employer.employer_id)} />
             
         </Drawer>
   

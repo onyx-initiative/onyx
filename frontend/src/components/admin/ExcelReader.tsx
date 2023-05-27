@@ -70,9 +70,9 @@ const ExcelReader: React.FC = () => {
         .then((res) => {
           if (res.data?.batchCreateJobs) {
             alert('Jobs created successfully');
-          } else if (res.errors) {
-            alert('There was an error creating the jobs, Please try again');
           }
+        }).catch((err) => {
+          alert('Error creating jobs. Please make sure all employer names are exactly as they appear in the database and check the fields.');
         })
       }}
       >
