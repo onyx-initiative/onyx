@@ -49,7 +49,7 @@ export function Email({ scholarName, jobs }: EmailInfo) {
         <Body style={styles.main}>
             <Container>
                 <Section style={styles.logo}>
-                    <Img src={fetchLogo('')} alt="logo" width={250} />
+                    <Img src={('')} alt="logo" width={250} />
                 </Section>
                 <Section style={styles.content}>
                     <Text style={styles.text}>Hi {scholarName},</Text>
