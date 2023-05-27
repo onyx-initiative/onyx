@@ -12,6 +12,7 @@ import loading from '../../frontend/src/assets/loading.svg'
 import getServerProps from "../src/utils/getServerProps";
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import Loading from './Loading'
 
 export default function Employers() {
 
@@ -32,7 +33,10 @@ export default function Employers() {
     // Ignore, this is intentional
   }, [employerData, employerLoading])
 
-
+  if (employerLoading) {
+    return (
+        <Loading />
+  )}
 
   return (
     <div >

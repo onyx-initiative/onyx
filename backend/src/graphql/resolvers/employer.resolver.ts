@@ -1,4 +1,6 @@
+import { microserviceUrl } from '../env';
 import { establishConnection } from '../utils';
+import fetch from 'node-fetch';
 
 const employerResolver = {
     Query: {
@@ -53,6 +55,18 @@ const employerResolver = {
                 client.release()
             });
 
+            // Find the logo for the employer
+            type Logo = {
+                logo: string
+            }
+
+            const logo = await fetch(microserviceUrl + '/webscraper/logo/' + name).then(res => res.json()).then(data => {
+                return data;
+            }) as Logo;
+            
+            let logo_url = await logo;
+            logo_url.logo === null ? logo_url.logo = 'https://logo.clearbit.com/www.onyxinitiative.org/' : logo_url.logo = logo_url.logo;
+
             if (currentEmployers.rows.length > 0) {
                 console.log("Employer already exists");
                 return currentEmployers.rows[0];
@@ -60,10 +74,10 @@ const employerResolver = {
 
             // If employer doesn't exist, create a new one
             const query = `INSERT INTO employer (admin_id, name, contact_email, 
-                           address, website, description)
-                           VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+                           address, website, description, logo_url)
+                           VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
             const resp = await client.query(query, [admin_id, name, 
-                contact_email, address, website, description]).catch((err: any) => {
+                contact_email, address, website, description, logo_url.logo]).catch((err: any) => {
                 console.log(err);
                 client.release()
                 return [];

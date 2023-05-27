@@ -34,6 +34,7 @@ export type Employer = {
     address: string;
     website: string;
     description: string;
+    logo_url: string;
 }
 
 export type job_type = "Full Time" | "Part Time" | "Internship" | "New Grad";

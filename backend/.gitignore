@@ -17,6 +17,7 @@
 /src/serverlessAuth.ts
 /resources
 src/database/db.ts
+src/graphql/env.ts
 
 # AWS Key Pair
 *.pem

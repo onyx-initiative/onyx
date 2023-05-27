@@ -24,7 +24,7 @@ export default function ScholarHero() {
         return (
             <Loading />
     )}
-
+    
 
     const employers = employerData.getEmployers.map(
         (employer: Employer) => {

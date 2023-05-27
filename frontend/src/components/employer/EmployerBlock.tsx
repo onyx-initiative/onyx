@@ -15,33 +15,12 @@ import { getLogo, unsupportedCompanies } from "../../utils/microservices";
 export const EmployerBlock = (props: any) => {
     const {employer} = props
     const [opened, setOpened] = useState(false);
-    const { data, loading } = useQuery(GET_EMPLOYER_BY_ID, {
-        variables: { employerId: employer.employer_id }
-      });
 
     const {data: JobList, loading: jobLoading, error}  = useQuery(GET_JOBS_BY_EMPLOYER_ID, {
       variables: { employerId: employer.employer_id}
     });
     
-    
     const [jobs, setJobs] = useState([])
-    const [logo, setLogo] = useState('');
-    
-    useEffect(() => {
-      setLogo('https://logo.clearbit.com/www.onyxinitiative.org/');
-      if (!loading) {
-          if (data?.getEmployerById?.name in unsupportedCompanies) {
-              const newLogo = unsupportedCompanies[data?.getEmployerById?.name as keyof typeof unsupportedCompanies]
-              setLogo(newLogo)
-          } else {
-              getLogo(data?.getEmployerById?.name).then(logo => {
-                  setLogo(logo.logo)
-              });
-              console.log(data?.getEmployerById?.name, logo)
-          }
-      }
-    }, [loading]);
-
       
       useEffect(() => {
         if (!jobLoading && JobList?.getJobsByEmployerId) {
@@ -51,8 +30,6 @@ export const EmployerBlock = (props: any) => {
         }
         // Ignore, this is intentional
       }, [JobList, jobLoading])
-    
-  
 
     return (
         
@@ -66,10 +43,10 @@ export const EmployerBlock = (props: any) => {
           className={styles.employerJobList}
         >
           
-            <Image src={logo} 
+            <Image src={employer.logo_url} 
                     alt="Company Logo" 
-                    width={150}
-                    height={100}
+                    width={90}
+                    height={90}
             />
             <p>{employer.description}</p>
             <h3>Job Postings</h3>
@@ -80,12 +57,14 @@ export const EmployerBlock = (props: any) => {
   
         <Button  className={styles.employerContainer} onClick={() => setOpened(true)}>
             <div>
-                <Image src={logo} 
+                <Image src={employer.logo_url} 
                     alt="Company Logo" 
-                    // width={700}
-                    // height={500} 
-                    layout="fill"
+                    width={90}
+                    height={90} 
+                    // layout="fill"
                     objectFit="contain"
+                    unoptimized={true}
+                    priority={true}
                     />
             </div>
 

@@ -12,6 +12,7 @@ export const employerTypeDef = gql`
         address: String!
         website: String!
         description: String!
+        logo_url: String
     }
 
     type Query {
