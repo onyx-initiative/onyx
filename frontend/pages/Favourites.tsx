@@ -27,7 +27,7 @@ export default function Favourites() {
     }
     refetch()
     // Ignore, this is intentional
-  }, [savedJobs, loadingSavedJobs, loadingScholar])
+  }, [savedJobs, loadingSavedJobs, loadingScholar, refetch])
   
   return (
     <div>

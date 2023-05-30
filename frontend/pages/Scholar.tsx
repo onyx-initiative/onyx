@@ -34,7 +34,7 @@ export default function Scholar() {
   const router = useRouter()
 
   // @todo: Style this
-  if (loadingScholar) {
+  if (loadingScholar || loadingEmployers) {
     return (
       <div className={loadingStyles.loading}>
         <Loading />

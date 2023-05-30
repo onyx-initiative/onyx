@@ -95,11 +95,36 @@ const JobCard = (props: any) => {
               </div>
             </div>
           </div>
-          <h4>Job Description:</h4>
+          <div className={styles.jobTags}>
+            {job.tags.map((tag: string, index:number) => <Tag key={tag} tag={tag}/>)}
+          </div>
+          <div>
+            <h4>Job Description:</h4>
             <p>{job.long_description}</p>
-            <p>{"Term: " + job.term}</p>
+            <p>{"Job Function: " + job.job_function}</p>
+            <h4>Requirements</h4>
+            <p>{job.requirements}</p>
+            <h4>Experience</h4>
+            <p>{job.experience}</p>
+            <h4>Education</h4>
+            <p>{job.education}</p>
+          </div>
+          <div style={{ display: "flex" }}>
+              <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Term: </p>
+              <p>{job.term}</p>
+          </div>
           {job.contact_email ? <h4>{"Contact: " + job.contact_email}</h4> : null}
+          {job.additional_info ?  
+            <div> 
+              <h5>Additional Information</h5>
+              <p>{job.additional_info}</p>
+            </div>
+            : null}
           <ApplyButton link={job.link} />
+          <div style={{ display: "flex" }}>
+              <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Deadline: </p>
+              <p>{date}</p>
+          </div>
         </Drawer>
       }
       </div>
@@ -128,7 +153,7 @@ const JobCard = (props: any) => {
       if (!bookmarkLoading) {
         setBookmarked(bookmark?.checkBookmark);
       }
-    }, [bookmark, bookmarkLoading])
+    }, [bookmark, bookmarkLoading, setBookmarked])
 
     return (
       <button 

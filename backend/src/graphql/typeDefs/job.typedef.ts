@@ -26,6 +26,13 @@ export const jobTypeDef = gql`
         title: String!
         description: String!
         long_description: String
+        requirements: String
+        experience: String
+        education: String
+        how_to_apply: String
+        additional_info: String
+        employer_industries: String!
+        job_function: String!
         contact_email: String
         job_type: String!
         term: String!
@@ -44,6 +51,13 @@ export const jobTypeDef = gql`
         title: String!
         description: String!
         long_description: String
+        requirements: String
+        experience: String
+        education: String
+        how_to_apply: String
+        additional_info: String
+        employer_industries: String!
+        job_function: String!
         contact_email: String
         job_type: String!
         term: String!
@@ -62,6 +76,13 @@ export const jobTypeDef = gql`
         title: String!
         description: String!
         long_description: String
+        requirements: String
+        experience: String
+        education: String
+        how_to_apply: String
+        additional_info: String
+        employer_industries: String!
+        job_function: String!
         contact_email: String
         job_type: String!
         term: String!
@@ -114,6 +135,14 @@ export const jobTypeDef = gql`
             title: String!
             description: String!
             long_description: String
+            requirements: String
+            experience: String
+            education: String
+            how_to_apply: String
+            additional_info: String
+            employer_industries: String!
+            job_function: String!
+
             contact_email: String
             job_type: String!
             term: String!

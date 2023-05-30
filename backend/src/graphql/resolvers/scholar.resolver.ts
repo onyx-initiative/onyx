@@ -47,6 +47,7 @@ const scholarResolver = {
                 return null;
             };
         },
+        // @todo: Change this to be in line with new job typedef
         getRecommendedJobs: async (_: any, __: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);

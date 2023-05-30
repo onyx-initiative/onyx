@@ -45,6 +45,16 @@ export type Job = {
     admin_id: string;
     title: string;
     description: string;
+    long_description: string;
+    requirements: string;
+    experience: string;
+    education: string;
+    how_to_apply: string;
+    additional_info: string;
+    employer_industries: string;
+    job_function: string;
+    categories: string;
+    contact_email: string;
     job_type: job_type;
     location: string;
     applicant_year: number[];
