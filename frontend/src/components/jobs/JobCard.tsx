@@ -96,7 +96,7 @@ const JobCard = (props: any) => {
             </div>
           </div>
           <div className={styles.jobTags}>
-            {job.tags.map((tag: string, index:number) => <Tag key={tag} tag={tag}/>)}
+            {job.tags.map((tag: string, index: number) => <Tag key={tag} tag={tag}/>)}
           </div>
           <div>
             <h4>Job Description:</h4>

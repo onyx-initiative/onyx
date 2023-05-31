@@ -285,7 +285,7 @@ const jobResolver = {
                     tags,
                     live,
                     link
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) RETURNING *;`;
+                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) RETURNING *;`;
                 await client.query(query, 
                     [
                     employer_id,
@@ -387,7 +387,6 @@ const jobResolver = {
                 additional_info,
                 employer_industries,
                 job_function,
-                categories,
                 contact_email,
                 job_type,
                 term,
@@ -397,7 +396,7 @@ const jobResolver = {
                 tags,
                 live, 
                 link
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true, $13, $14, $15, $16, $17, $18, $19, $20, $21) RETURNING *;`;
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, true, $20) RETURNING *;`;
             for (let i = 0; i < jobs.length; i++) {
                 // Get the employer id
                 const employer = await client.query(`SELECT employer_id
@@ -422,8 +421,7 @@ const jobResolver = {
                     job.how_to_apply,
                     job.additional_info,
                     job.employer_industries,
-                    job.function,
-                    job.categories,
+                    job.job_function,
                     job.contact_email,
                     job.job_type.toLowerCase(),
                     job.term,

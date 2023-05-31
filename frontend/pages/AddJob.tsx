@@ -16,7 +16,14 @@ type JobInfo = {
     title: string,
     description: string,
     longDescription: string
-    contact_email: string
+    requirements: string,
+    experience: string,
+    education: string,
+    howToApply: string,
+    additionalInfo: string | null,
+    employerIndustries: string,
+    jobFunction: string,
+    contactEmail: string
     jobType: string,
     term: string,
     location: string,
@@ -41,8 +48,15 @@ export default function AddJob() {
         deadline: JobInfo.deadline,
         tags: JobInfo.tags,
         live: !checked,
-        contactEmail: JobInfo.contact_email,
+        contactEmail: JobInfo.contactEmail,
         longDescription: JobInfo.longDescription,
+        requirements: JobInfo.requirements,
+        experience: JobInfo.experience,
+        education: JobInfo.education,
+        howToApply: JobInfo.howToApply,
+        additionalInfo: JobInfo.additionalInfo ? JobInfo.additionalInfo : null,
+        employerIndustries: JobInfo.employerIndustries,
+        jobFunction: JobInfo.jobFunction,
         link: JobInfo.link
     }})
     const router = useRouter()
@@ -51,7 +65,7 @@ export default function AddJob() {
 
     const handleSubmit = () => {
       console.log(JobInfo)
-      createJob();
+      createJob().catch((err) => alert("Error creating job. Please check that all fields were correctly filled out and try again."));
       router.push('/Admin')
   }
 
@@ -186,6 +200,13 @@ export default function AddJob() {
           <InputElement label="contactEmail" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <InputElement label="link" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <InputElementLong label="longDescription" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElementLong label="requirements" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElementLong label="experience" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElementLong label="education" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElementLong label="howToApply" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElementLong label="additionalInfo" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="employerIndustries" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="jobFunction" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <Checkbox
             label="Save to Drafts?"
             color="dark"
@@ -199,9 +220,6 @@ export default function AddJob() {
           }}>
             Create Job
           </Button>
-
-
-
         </div>
 
 
