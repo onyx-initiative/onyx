@@ -54,7 +54,7 @@ export default function Login() {
                         <FaApple size={28} />
                         <button
                         className={styles.loginButton}
-                            onClick={() => alert('Apple auth coming soon!')}
+                            onClick={() => signIn('apple', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})}
                         >
                             Login with Apple
                         </button>
