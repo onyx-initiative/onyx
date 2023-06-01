@@ -103,3 +103,4 @@ Michael's Hours:
 - Sat May 27 - 4 hr
 - Tues May 30 - 4 hr
 - Wed May 31 - 8 hr
+- Thurs June 1 - 4 hr

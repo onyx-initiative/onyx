@@ -21,7 +21,7 @@ export default NextAuth({
         AzureADProvider({
             clientId: process.env.NEXT_PUBLIC_AZURE_AD_CLIENT_ID as string,
             clientSecret: process.env.NEXT_PUBLIC_AZURE_CLIENT_SECRET as string,
-            tenantId: process.env.NEXT_PUBLIC_AZURE_AD_TENANT_ID as string,
+            // tenantId: process.env.NEXT_PUBLIC_AZURE_AD_TENANT_ID as string,
           }),
         GoogleProvider({
             clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,

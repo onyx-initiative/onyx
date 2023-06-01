@@ -19,7 +19,7 @@ const claims = {
   iat: now,
   exp: expires,
   aud: "https://appleid.apple.com",
-  sub: process.env.NEXT_PUBLIC_APPLE_CLIENT_ID,
+  sub: process.env.NEXT_PUBLIC_APPLE_SERVICE_ID,
 };
 
 const jwt = nJwt.create(claims, privateKey, "ES256");
