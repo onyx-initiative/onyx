@@ -10,13 +10,13 @@ export interface Admin  extends User {
     admin: boolean
 }
 
-
+// http://localhost:3000/api/auth/callback/apple
 export default NextAuth({
     // Configure one or more authentication providers
     providers: [
         AppleProvider({
-            clientId: process.env.APPLE_ID as string,
-            clientSecret: process.env.APPLE_SECRET as string
+            clientId: process.env.NEXT_PUBLIC_APPLE_CLIENT_ID as string,
+            clientSecret: process.env.NEXT_PUBLIC_APPLE_SECRET as string,
           }),
         AzureADProvider({
             clientId: process.env.NEXT_PUBLIC_AZURE_AD_CLIENT_ID as string,
