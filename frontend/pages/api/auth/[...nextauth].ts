@@ -6,7 +6,7 @@ import { compare, hash } from 'bcrypt'
 import AzureADProvider from "next-auth/providers/azure-ad";
 import AppleProvider from "next-auth/providers/apple";
 
-export interface Admin  extends User { 
+export interface Admin extends User { 
     admin: boolean
 }
 
@@ -15,7 +15,7 @@ export default NextAuth({
     // Configure one or more authentication providers
     providers: [
         AppleProvider({
-            clientId: process.env.NEXT_PUBLIC_APPLE_CLIENT_ID as string,
+            clientId: process.env.APPLE_CLIENT_ID as string,
             clientSecret: process.env.NEXT_PUBLIC_APPLE_SECRET as string,
           }),
         AzureADProvider({
