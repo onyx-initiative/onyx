@@ -21,7 +21,7 @@ export default function SearchBar({ setJobs, initialQuery, query, setSearch }: S
     if (initialQuery) {
         getJobs({ variables: { search: formatQuery(initialQuery) } })
         // Ignore, this is intentional
-    }}, [initialQuery])
+    }}, [initialQuery, getJobs])
 
     useEffect(() => {
         if (data) {
@@ -29,6 +29,7 @@ export default function SearchBar({ setJobs, initialQuery, query, setSearch }: S
         }
     }, [data, setJobs])
 
+    console.log(data)
     return (
       <div className={styles.searchBar}>
         <input
@@ -42,6 +43,7 @@ export default function SearchBar({ setJobs, initialQuery, query, setSearch }: S
           <button
             type="button"
             onClick={() => {
+              console.log(formatQuery(query))
               getJobs({ variables: { search: formatQuery(query) } })}}
           >
             Search
