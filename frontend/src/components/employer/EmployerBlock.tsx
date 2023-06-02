@@ -1,7 +1,7 @@
 import styles from "../../../styles/components/EmployerBlock.module.css";
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { Drawer, Button, Group } from '@mantine/core';
+import { Drawer, Button, ScrollArea } from '@mantine/core';
 import { job_type, Job } from '../../../../backend/src/types/db.types';
 import EmployerJobList from './EmployerJobList';
 import {Employer} from '../../../../backend/src/types/db.types'
@@ -40,7 +40,7 @@ export const EmployerBlock = (props: any) => {
           padding="xl"
           size="xl"
           position="right"
-          className={styles.employerJobList}
+          scrollAreaComponent={ScrollArea.Autosize}
         >
           
             <Image src={employer.logo_url} 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Drawer } from '@mantine/core';
+import { Drawer, ScrollArea } from '@mantine/core';
 import { IoLocationSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useMutation, useQuery } from '@apollo/client';
@@ -18,9 +18,13 @@ const JobCard = (props: any) => {
 
     const date = new Date(parseInt(job.deadline)).toDateString();
 
+    
+
     useEffect(() => {
       if (employerData) {
         setLogo(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).logo_url);
+        // console.log(formatText(job.requirements));
+        console.log(filterNewlines(job.long_description))
       }
     }, [employerData, job.employer_id])
   
@@ -77,6 +81,7 @@ const JobCard = (props: any) => {
           padding="xl"
           size="60%"
           position='right'
+          scrollAreaComponent={ScrollArea.Autosize}
         >
           <div className={styles.jobCardHeaderDrawer}>
             <Image 
@@ -98,16 +103,20 @@ const JobCard = (props: any) => {
           <div className={styles.jobTags}>
             {job.tags.map((tag: string, index: number) => <Tag key={tag} tag={tag}/>)}
           </div>
+          <div className={styles.jobCardBodyDrawer}>
+            <div>
+              <ApplyButton link={job.link} />
+            </div>
           <div>
-            <h4>Job Description:</h4>
-            <p>{job.long_description}</p>
+            <h4>Job Description</h4>
+            <p>{filterNewlines(job.long_description)}</p>
             <p>{"Job Function: " + job.job_function}</p>
-            <h4>Requirements</h4>
-            <p>{job.requirements}</p>
+            <h4>Requirements</h4> 
+              <JobListElement textItems={job.requirements}/>
             <h4>Experience</h4>
             <p>{job.experience}</p>
             <h4>Education</h4>
-            <p>{job.education}</p>
+            <JobListElement textItems={job.education}/>
           </div>
           <div style={{ display: "flex" }}>
               <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Term: </p>
@@ -120,10 +129,10 @@ const JobCard = (props: any) => {
               <p>{job.additional_info}</p>
             </div>
             : null}
-          <ApplyButton link={job.link} />
           <div style={{ display: "flex" }}>
               <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Deadline: </p>
               <p>{date}</p>
+          </div>
           </div>
         </Drawer>
       }
@@ -199,18 +208,61 @@ const ApplyButton = (props: any) => {
   const { link } = props;
 
   return (
-      <div style={{ display: 'flex', alignItems: 'center'}}>
-            <h4>{"Apply here:"}</h4>
+      <div style={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          backgroundColor: '#806E53', 
+          marginTop: 10, 
+          paddingRight: 30, 
+          paddingTop: 15,
+          paddingBottom: 15,
+          paddingLeft: 30,
+          borderRadius: 5,
+          width: 'fit-content',
+      }}>
             <button 
-              style={{ backgroundColor: 'white', border: 'none'}}
+              style={{ border: 'none', backgroundColor: 'transparent', padding: 0, margin: 0}}
               onClick={() => {
                 va.track("Apply", { link: link });
                 window.open(link, '_blank');
               }}
             >
-              <a href={link} style={{ color: '#806E53', fontWeight: 'bold', fontSize: '1rem'}}>{link}</a>
+              <a href={link} style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem'}} target='_blank' rel="noreferrer">Apply</a>
             </button>
           </div>
+  )
+}
+
+const formatText = (text: string) => {
+  if (!text) return "";
+  if (text[0] === '-' || text[0] === '•') {
+    const result = text.split('- ');
+    // Trim whitespaces
+    let final = result.map(str => str.trim());
+    // Remove empty strings
+    final = final.filter(str => str !== "");
+    return final;
+  } else {
+    return text;
+  }
+}
+
+const filterNewlines = (text: string) => {
+  if (!text) return "";
+  const result = text.split('\\n').map((str: string, indx: number) => <p key={indx}>{str}</p>);
+  return result;
+}
+
+const JobListElement = (props: any) => {
+  const { textItems } = props;
+  const formatted = formatText(textItems);
+  const listItems = Array.isArray(formatted) ? formatted.map((str: string, index: number) => <li key={index}>{str}</li>) : <li>{formatted}</li>;
+  return (
+    <div>
+      <ul>
+        {listItems}
+      </ul>
+    </div>
   )
 }
 

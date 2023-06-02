@@ -6,6 +6,8 @@
     margin: 1rem;
     margin-left: 4rem;
     margin-right: 4rem;
+    align-content: middle;
+    justify-content: center;
 }
 
 .filterBar {
@@ -231,6 +233,10 @@
     cursor: pointer;
 }
 
+.jobCardBodyDrawer {
+
+}
+
 @media (max-width: 800px) {
     .jobCardHeaderDrawer {
         flex-direction: column;
@@ -252,6 +258,7 @@
     flex-direction: column;
     font-size: large;
     cursor: pointer;
+    margin-top: -17px;
 }
 
 
@@ -269,7 +276,7 @@
 .jobHeader > h3 {
     margin: 0;
     padding: 0;
-    margin-bottom: 0.3rem;
+    margin-bottom: 1.2rem;
 }
 
 .additionalInfo {
@@ -279,6 +286,8 @@
     padding: 0;
     margin: 0;
     color: gray;
+    margin-top: -15px;
+    
 }
 
 .additionalInfo > h6 {

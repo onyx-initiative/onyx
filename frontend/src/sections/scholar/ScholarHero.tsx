@@ -56,6 +56,7 @@ export default function ScholarHero(props: any) {
                 align="start"
                 withIndicators
                 styles={{ indicators: { position: 'relative', top: 20, marginBottom: 20 } }}
+                slidesToScroll={4}
             >
                 {employers}
             </Carousel>
