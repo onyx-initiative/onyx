@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Drawer } from '@mantine/core';
-import { IoLocationSharp } from "react-icons/io5";
+import { Drawer, ScrollArea } from '@mantine/core';
+import { IoLocationSharp, IoTimeSharp, IoBagSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useMutation, useQuery } from '@apollo/client';
 import Image from 'next/image';
@@ -15,12 +15,17 @@ const JobCard = (props: any) => {
     const [bookmarked, setBookmarked] = useState(false);
     const [opened, setOpened] = useState(false);
     const [logo, setLogo] = useState('https://logo.clearbit.com/www.onyxinitiative.org/');
+    const [employerName, setEmployerName] = useState('');
 
     const date = new Date(parseInt(job.deadline)).toDateString();
+    const check = new Date(parseInt(job.deadline)).getFullYear();
 
     useEffect(() => {
       if (employerData) {
         setLogo(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).logo_url);
+        setEmployerName(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).name);
+        // console.log(formatText(job.requirements));
+        console.log(filterNewlines(job.long_description))
       }
     }, [employerData, job.employer_id])
   
@@ -47,10 +52,16 @@ const JobCard = (props: any) => {
               onClick={() => setOpened(!opened)}
               style={{ marginLeft: '0.4rem'}}
             >
-              <h3>{job.title}</h3>
+              <h3 style={{ padding: 0, margin: 0, marginBottom: "0.4rem"}}>{job.title}</h3>
               <div className={styles.additionalInfo}>
-                <IoLocationSharp size={16} color='gray' />
-                <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+                <IoBagSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{employerName} • </h5>
+                <div></div>
+                <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{job.location} • </h5>
+                <div></div>
+                <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{Capitalize(job.job_type)}</h5>
               </div>
             </div>
           </div>
@@ -64,7 +75,7 @@ const JobCard = (props: any) => {
           <div className={styles.jobTags}>
             {job.tags.map((tag: string, index:number) => <Tag key={tag} tag={tag}/>)}
           </div>
-          <p className={styles.deadline}>{'Deadline: ' + date}</p>
+          <p className={styles.deadline}>{check > 2090 ? "No Deadline" : 'Deadline: ' + date}</p>
         </div>
         <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
       </div>
@@ -77,6 +88,7 @@ const JobCard = (props: any) => {
           padding="xl"
           size="60%"
           position='right'
+          scrollAreaComponent={ScrollArea.Autosize}
         >
           <div className={styles.jobCardHeaderDrawer}>
             <Image 
@@ -89,25 +101,35 @@ const JobCard = (props: any) => {
             />
             <div className={styles.jobHeaderDrawer}>
               <h3>{job.title}</h3>
-              <div className={styles.additionalInfo}> 
-                <IoLocationSharp size={16} color='gray' />
-                <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+              <div className={styles.additionalInfo} style={{ marginTop: "-16px"}}> 
+                <IoBagSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{employerName} • </h5>
+                <div></div>
+                <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{job.location} • </h5>
+                <div></div>
+                <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{Capitalize(job.job_type)}</h5>
               </div>
             </div>
           </div>
           <div className={styles.jobTags}>
             {job.tags.map((tag: string, index: number) => <Tag key={tag} tag={tag}/>)}
           </div>
+          <div className={styles.jobCardBodyDrawer}>
+            <div>
+              <ApplyButton link={job.link} />
+            </div>
           <div>
-            <h4>Job Description:</h4>
-            <p>{job.long_description}</p>
+            <h4>Job Description</h4>
+            <p>{filterNewlines(job.long_description)}</p>
             <p>{"Job Function: " + job.job_function}</p>
-            <h4>Requirements</h4>
-            <p>{job.requirements}</p>
+            <h4>Requirements</h4> 
+              <JobListElement textItems={job.requirements}/>
             <h4>Experience</h4>
             <p>{job.experience}</p>
             <h4>Education</h4>
-            <p>{job.education}</p>
+            <JobListElement textItems={job.education}/>
           </div>
           <div style={{ display: "flex" }}>
               <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Term: </p>
@@ -120,10 +142,9 @@ const JobCard = (props: any) => {
               <p>{job.additional_info}</p>
             </div>
             : null}
-          <ApplyButton link={job.link} />
           <div style={{ display: "flex" }}>
-              <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Deadline: </p>
-              <p>{date}</p>
+              <p className={styles.deadline}>{check > 2090 ? "No Deadline" : 'Deadline: ' + date}</p>
+          </div>
           </div>
         </Drawer>
       }
@@ -199,18 +220,61 @@ const ApplyButton = (props: any) => {
   const { link } = props;
 
   return (
-      <div style={{ display: 'flex', alignItems: 'center'}}>
-            <h4>{"Apply here:"}</h4>
+      <div style={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          backgroundColor: '#806E53', 
+          marginTop: 10, 
+          paddingRight: 30, 
+          paddingTop: 15,
+          paddingBottom: 15,
+          paddingLeft: 30,
+          borderRadius: 5,
+          width: 'fit-content',
+      }}>
             <button 
-              style={{ backgroundColor: 'white', border: 'none'}}
+              style={{ border: 'none', backgroundColor: 'transparent', padding: 0, margin: 0}}
               onClick={() => {
                 va.track("Apply", { link: link });
                 window.open(link, '_blank');
               }}
             >
-              <a href={link} style={{ color: '#806E53', fontWeight: 'bold', fontSize: '1rem'}}>{link}</a>
+              <a href={link} style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem'}} target='_blank' rel="noreferrer">Apply</a>
             </button>
           </div>
+  )
+}
+
+const formatText = (text: string) => {
+  if (!text) return "";
+  if (text[0] === '-' || text[0] === '•') {
+    const result = text.split('- ');
+    // Trim whitespaces
+    let final = result.map(str => str.trim());
+    // Remove empty strings
+    final = final.filter(str => str !== "");
+    return final;
+  } else {
+    return text;
+  }
+}
+
+const filterNewlines = (text: string) => {
+  if (!text) return "";
+  const result = text.split('\\n').map((str: string, indx: number) => <p key={indx}>{str}</p>);
+  return result;
+}
+
+const JobListElement = (props: any) => {
+  const { textItems } = props;
+  const formatted = formatText(textItems);
+  const listItems = Array.isArray(formatted) ? formatted.map((str: string, index: number) => <li key={index}>{str}</li>) : <li>{formatted}</li>;
+  return (
+    <div>
+      <ul>
+        {listItems}
+      </ul>
+    </div>
   )
 }
 

@@ -137,6 +137,28 @@ const scholarResolver = {
                 return true;
             }
             return false;
+        },
+        getBanner: async (_: any, __: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `
+                SELECT * FROM banner
+                WHERE end_date > NOW()
+                AND start_date <= NOW()
+                ORDER BY start_date DESC
+                LIMIT 1;
+            `;
+            const resp = await client.query(query).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            }
+            );
+            client.release()
+            if (resp.rows[0]) {
+                return resp.rows[0];
+            }
+            return [];
         }
     },
     Mutation: {
@@ -286,6 +308,18 @@ const scholarResolver = {
 
             client.release()
             return true;
+        },
+        addBanner: async (_: any, { banner_text, start_date, end_date }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `INSERT INTO banner (banner_text, start_date, end_date) VALUES ($1, $2, $3) RETURNING *`;
+            const resp = await client.query(query, [banner_text, start_date, end_date]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return [];
+            });
+            client.release()
+            return resp.rows[0];
         }
     }
 }

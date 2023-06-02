@@ -30,7 +30,7 @@
 
 ## New
 
-- [ ] Add apple MSFT and google auth bc theyre students <- Need onyx cc
+- [X] Add apple MSFT and google auth bc theyre students <- Need onyx cc
 - [X] CRON job to send emails
 - [X] Add password login for admins
     - [X] Add valid admin email list to the database
@@ -40,7 +40,6 @@
 - [X] Add semantic search
 - [X] Link bookmarking to backend
 - [X] Add a view creation on signup
-- [ ] Make filters grab 5 jobs per view
  
 
 Michael's Hours:
@@ -103,4 +102,5 @@ Michael's Hours:
 - Sat May 27 - 4 hr
 - Tues May 30 - 4 hr
 - Wed May 31 - 8 hr
-- Thurs June 1 - 4 hr
+- Thurs June 1 - 9 hr
+- Fri June 2 - 5 hr

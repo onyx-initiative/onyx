@@ -114,7 +114,10 @@ export default function Jobs() {
             <div className={styles.loading}>
               <Image src={loading} alt="Loading..." width={80} height={80}/>
             </div> : 
+            <div style={{ width: "100%", marginBottom: 0}}>
+            <p style={{ marginBottom: "-15px", padding: 0, color: "grey" }}>{jobs.length + " result(s)"}</p>
             <ListedJobs jobs={jobs} employerData={employerData}/>
+            </div>
           }
         </div>
       </div>

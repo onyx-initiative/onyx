@@ -76,3 +76,14 @@ export const CHECK_BOOKMARK = gql`
         checkBookmark(job_id: $jobId, email: $email)
     }
 `
+
+export const GET_BANNER = gql`
+    query GetBanner {
+        getBanner {
+            banner_id
+            banner_text
+            start_date
+            end_date
+        }
+    }
+`

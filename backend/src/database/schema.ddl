@@ -79,6 +79,13 @@ CREATE TABLE Featured (
     PRIMARY KEY (job_id)
 );
 
+CREATE TABLE Banner (
+    banner_id SERIAL PRIMARY KEY,
+    banner_text TEXT NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL
+);
+
 CREATE TABLE FilterView (
     view_id SERIAL NOT NULL,
     scholar_id INTEGER NOT NULL REFERENCES Scholar,

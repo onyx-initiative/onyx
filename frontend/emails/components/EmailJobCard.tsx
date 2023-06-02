@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Select, Pagination, Slider, RangeSlider, Drawer } from '@mantine/core';
-import { DatePicker, DateRangePicker } from '@mantine/dates';
 import { IoLocationSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import Image from 'next/image';

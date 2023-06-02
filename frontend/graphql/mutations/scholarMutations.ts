@@ -88,3 +88,11 @@ export const BOOKMARK_JOB = gql`
         bookmarkJob(email: $email, job_id: $jobId)
     }
 `
+
+export const ADD_BANNER = gql`
+    mutation AddBanner($bannerText: String!, $startDate: String!, $endDate: String!) {
+        addBanner(banner_text: $bannerText, start_date: $startDate, end_date: $endDate) {
+            banner_id
+        }
+    }
+`
