@@ -133,7 +133,7 @@
 }
 
 .searchBar > input {
-    width: 85%;
+    width: 90%;
     border: none;
     border-radius: 0.2rem;
     padding: 0.5rem;
@@ -285,9 +285,24 @@
     flex-direction: row;
     padding: 0;
     margin: 0;
-    color: gray;
-    margin-top: -15px;
-    
+    color: rgb(54, 54, 54);
+    align-self: top;
+    margin-left: auto;
+    margin-right: 2rem;
+    /* margin-top: -16px; */
+}
+
+.additionalInfo > h5 {
+    padding: 0;
+    margin: 0;
+    margin-left: 0.3rem;
+}
+
+.additionalInfo > div {
+    padding: 0;
+    margin: 0;
+    margin-left: 0.15rem;
+    margin-right: 0.15rem;
 }
 
 .additionalInfo > h6 {

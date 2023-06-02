@@ -7,6 +7,8 @@ import styles from "../styles/components/AdminPageButtons.module.css"
 import ExcelReader from "../src/components/admin/ExcelReader";
 import RemoveEmployerButton from "../src/components/admin/RemoveEmployerButton"
 import UpdateLogo from "../src/components/admin/UpdateLogo";
+import BarChart from "../src/components/admin/BarChart";
+import AddBanner from "../src/components/admin/AddBanner";
 
 // To ensure unauthenticated people don't access
 // import getServerProps from "../src/utils/getServerProps";
@@ -16,18 +18,32 @@ export default function Admin() {
     return (
         <div>
             <Navbar/>
-            <h1 className={styles.title}>Welcome to the Admin page! What would you like to do?</h1>
-            <div className={styles.adminActions}>
-                <AddJobButton />
-                <AddEmployerButton/>
-                <RemoveJobButton/>
-                <ExcelReader />
-                <UpdateLogo />
+            <div style={{ display: "flex", justifyContent: "space-between", padding: "5rem"}}>
+                <div className={styles.adminActions} style={{ display: "flex", flexDirection: "column", width: "100%",}}>
+                    <div>
+                        <h1>Single-Edit Actions</h1>
+                        <div style={{ display: "flex", }}>
+                            <AddJobButton />
+                            <AddEmployerButton/>
+                            <AddBanner/>
+                        </div>
+                    </div>
+                    <div style={{ width: "100%", height: "0.1rem", backgroundColor: "white", marginTop: "1rem" }}></div>
+                    <div>
+                        <h1>Batch Actions</h1>
+                            <div style={{ display: "flex",justifyContent: "space-between"}}>
+                                <ExcelReader />
+                                <UpdateLogo />
+                                <RemoveJobButton/>
+                                <RemoveEmployerButton/>
+                            </div>
+                    </div>
+                </div>
+                {/* <div style={{ width: "100%", height: "100%"}}>
+                    <BarChart />
+                </div> */}
             </div>
-            <RemoveEmployerButton/>
-            
-        </div>
-        
+        </div>   
     )
 }
 

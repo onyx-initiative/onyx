@@ -1,7 +1,7 @@
 import styles from "../../../styles/components/EmployerBlock.module.css";
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { Drawer, Button, ScrollArea } from '@mantine/core';
+import { Drawer, Button, ScrollArea, Center } from '@mantine/core';
 import { job_type, Job } from '../../../../backend/src/types/db.types';
 import EmployerJobList from './EmployerJobList';
 import {Employer} from '../../../../backend/src/types/db.types'
@@ -55,23 +55,29 @@ export const EmployerBlock = (props: any) => {
             <EmployerJobList jobs={jobs.filter((job: Job) => job.employer_id === employer.employer_id)} />
             
         </Drawer>
-  
-        <Button  className={styles.employerContainer} onClick={() => setOpened(true)}>
-            <div>
-                <Image src={employer.logo_url} 
-                    alt="Company Logo" 
-                    width={90}
-                    height={90} 
-                    // layout="fill"
-                    objectFit="contain"
-                    unoptimized={true}
-                    priority={true}
-                    loader={({ src }) => src }
-                    />
-            </div>
-
-        </Button>
-        
+        <div style={{
+            display: "flex", 
+            flexDirection: "column", 
+            width: "100%", 
+            padding: "0.5rem",
+            alignItems: "center",
+        }}>
+            <Button  className={styles.employerContainer} onClick={() => setOpened(true)}>
+                <div>
+                    <Image src={employer.logo_url} 
+                        alt="Company Logo" 
+                        width={90}
+                        height={90} 
+                        // layout="fill"
+                        objectFit="contain"
+                        unoptimized={true}
+                        priority={true}
+                        loader={({ src }) => src }
+                        />
+                </div>
+            </Button>
+            <h3>{employer.name}</h3>
+        </div>
       </>
         
     ) 

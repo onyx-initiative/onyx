@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Drawer, ScrollArea } from '@mantine/core';
-import { IoLocationSharp } from "react-icons/io5";
+import { IoLocationSharp, IoTimeSharp, IoBagSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useMutation, useQuery } from '@apollo/client';
 import Image from 'next/image';
@@ -15,14 +15,15 @@ const JobCard = (props: any) => {
     const [bookmarked, setBookmarked] = useState(false);
     const [opened, setOpened] = useState(false);
     const [logo, setLogo] = useState('https://logo.clearbit.com/www.onyxinitiative.org/');
+    const [employerName, setEmployerName] = useState('');
 
     const date = new Date(parseInt(job.deadline)).toDateString();
-
-    
+    const check = new Date(parseInt(job.deadline)).getFullYear();
 
     useEffect(() => {
       if (employerData) {
         setLogo(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).logo_url);
+        setEmployerName(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).name);
         // console.log(formatText(job.requirements));
         console.log(filterNewlines(job.long_description))
       }
@@ -51,10 +52,16 @@ const JobCard = (props: any) => {
               onClick={() => setOpened(!opened)}
               style={{ marginLeft: '0.4rem'}}
             >
-              <h3>{job.title}</h3>
+              <h3 style={{ padding: 0, margin: 0, marginBottom: "0.4rem"}}>{job.title}</h3>
               <div className={styles.additionalInfo}>
-                <IoLocationSharp size={16} color='gray' />
-                <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+                <IoBagSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{employerName} • </h5>
+                <div></div>
+                <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{job.location} • </h5>
+                <div></div>
+                <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{Capitalize(job.job_type)}</h5>
               </div>
             </div>
           </div>
@@ -68,7 +75,7 @@ const JobCard = (props: any) => {
           <div className={styles.jobTags}>
             {job.tags.map((tag: string, index:number) => <Tag key={tag} tag={tag}/>)}
           </div>
-          <p className={styles.deadline}>{'Deadline: ' + date}</p>
+          <p className={styles.deadline}>{check > 2090 ? "No Deadline" : 'Deadline: ' + date}</p>
         </div>
         <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
       </div>
@@ -94,9 +101,15 @@ const JobCard = (props: any) => {
             />
             <div className={styles.jobHeaderDrawer}>
               <h3>{job.title}</h3>
-              <div className={styles.additionalInfo}> 
-                <IoLocationSharp size={16} color='gray' />
-                <h6>{job.location} • {Capitalize(job.job_type)}</h6>
+              <div className={styles.additionalInfo} style={{ marginTop: "-16px"}}> 
+                <IoBagSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{employerName} • </h5>
+                <div></div>
+                <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{job.location} • </h5>
+                <div></div>
+                <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
+                <h5>{Capitalize(job.job_type)}</h5>
               </div>
             </div>
           </div>
@@ -130,8 +143,7 @@ const JobCard = (props: any) => {
             </div>
             : null}
           <div style={{ display: "flex" }}>
-              <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Deadline: </p>
-              <p>{date}</p>
+              <p className={styles.deadline}>{check > 2090 ? "No Deadline" : 'Deadline: ' + date}</p>
           </div>
           </div>
         </Drawer>

@@ -28,13 +28,15 @@ type JobInfo = {
     term: string,
     location: string,
     applicantYear: number[],
-    deadline: string,
+    deadline: string | null,
     tags: string[], 
     link: string,
 }
 
 export default function AddJob() {
-    const [JobInfo, setJobInfo] = useState({} as JobInfo)
+    const [JobInfo, setJobInfo] = useState({
+        deadline: "",
+    } as JobInfo)
     const [checked, setChecked] = useState(false)
     const [createJob, {data: jobData, loading, error}] = useMutation(CREATE_JOB, {variables: {
         employerId: JobInfo.employerId,
@@ -45,7 +47,7 @@ export default function AddJob() {
         term: JobInfo.term,
         location: JobInfo.location,
         applicantYear: JobInfo.applicantYear,
-        deadline: JobInfo.deadline,
+        deadline: JobInfo.deadline !== "" ?  JobInfo.deadline : "2100-01-01",
         tags: JobInfo.tags,
         live: !checked,
         contactEmail: JobInfo.contactEmail,
@@ -62,9 +64,8 @@ export default function AddJob() {
     const router = useRouter()
     const [completed, setCompleted] = useState(null as boolean | null)
 
-
     const handleSubmit = () => {
-      console.log(JobInfo)
+      console.log(JobInfo.deadline)
       createJob().catch((err) => alert("Error creating job. Please check that all fields were correctly filled out and try again."));
       router.push('/Admin')
   }
@@ -77,12 +78,15 @@ export default function AddJob() {
 
   useEffect(() => {
     if (completed) {
+      // if (!JobInfo.deadline) {
+      //   setJobInfo({...JobInfo, deadline: "2100-01-01"})
+      // }
+      console.log(JobInfo)
       var result = confirm("Are you sure you want to add this Job?");
         if (result == true) {
           handleSubmit();
     } else {
       console.log("Create Job Aborted")
-      
     }}
   }, [completed])
 
@@ -94,8 +98,6 @@ export default function AddJob() {
   }, [empData, employerLoading])
 
   const current_year= new Date().getFullYear()
-
-  
 
   const [searchValue, onSearchChange] = useState('');
   const [applicationYearSearchValue, onSearchApplicationYear] = useState('');
@@ -297,7 +299,7 @@ const formatEmpData = (empData: any[]) => {
 const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
 
   console.log(jobInfo.applicantYear)
-  if (jobInfo.title && jobInfo.description && jobInfo.jobType && jobInfo.location && jobInfo.applicantYear && jobInfo.deadline && jobInfo.tags) {
+  if (jobInfo.title && jobInfo.description && jobInfo.jobType && jobInfo.location && jobInfo.applicantYear && jobInfo.tags) {
     setCompleted(true)
   } else {
     setCompleted(false)

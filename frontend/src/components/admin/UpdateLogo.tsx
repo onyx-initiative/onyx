@@ -26,7 +26,6 @@ export default function UpdateLogo() {
                 className={styles.button}
                 onClick={() => setOpened(true)}
                 style={{
-                    width: "100%",
                     height: "2rem",
                     borderRadius: "0.25rem",
                     border: "1px solid #ced4da",

@@ -5,7 +5,7 @@ import ProfilePhoto from '../navbar/ProfilePhoto'
 import styles from '../../../styles/components/Navbar.module.css'
 import { useSession } from 'next-auth/react'
 import { User } from 'next-auth'
-import { GET_SCHOLAR_BY_EMAIL } from '../../../graphql/queries/scholarQueries'
+import { GET_BANNER, GET_SCHOLAR_BY_EMAIL } from '../../../graphql/queries/scholarQueries'
 import { useQuery } from '@apollo/client'
 
 interface Admin extends User { 
@@ -18,8 +18,10 @@ export default function Navbar(props: any) {
     variables: { email: session?.user?.email },
     fetchPolicy: 'cache-and-network'
   })
+  const {data: banner, loading: loadingBanner, error: bannerError} = useQuery(GET_BANNER)
   const [name, setName] = React.useState('')
   const [scholar_id, setScholarId] = React.useState('')
+  const [bannerText, setBannerText] = React.useState('')
 
   let logoLink = '/';
   // if ((session?.user as Admin).admin === true) {
@@ -35,11 +37,17 @@ export default function Navbar(props: any) {
     }
   }, [loadingScholar, scholarData?.getScholarByEmail?.name, scholarData?.getScholarByEmail?.scholar_id])
 
+  useEffect(() => {
+    if (!loadingBanner) {
+      setBannerText(banner?.getBanner?.banner_text)
+    }
+  }, [loadingBanner, banner?.getBanner?.banner_text])
+
   return (
     <div className={styles.betaWrapper}>
       {/* @todo: Remove the wrapper div for final launch */}
       <BetaHeadline />
-      <OnyxAnnouncemment/>
+      {bannerText && !loadingBanner ? <OnyxAnnouncemment banner={bannerText}/> : null}
       <div className={styles.navbar}>
         <div className={styles.navbarLogo}>
           <Link
@@ -95,10 +103,11 @@ const BetaHeadline = () => {
   );
 }
 
-const OnyxAnnouncemment = () => {
+const OnyxAnnouncemment = (props: any) => {
+  const { banner } = props
   return (
     <div className={styles.onyxAnnouncement}> 
-      <p> Welcome to the Onyx Job Board, this is where we can post news about the next job fair, or any other relevant announcements</p>
+      <p> {banner} </p>
     </div>
   )
 }

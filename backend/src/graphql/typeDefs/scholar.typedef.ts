@@ -19,6 +19,12 @@ export const scholarTypeDef = gql`
         status: Status!
         notifications: Boolean!
     }
+    type Banner {
+        banner_id: ID!
+        banner_text: String!
+        start_date: String!
+        end_date: String!
+    }
 
     type Job {
         job_id: ID!
@@ -68,6 +74,7 @@ export const scholarTypeDef = gql`
         getRecommendedJobs: [Recommendation]!
         getBookmarkedJobs(scholar_id: ID!): [Job]!
         checkBookmark(job_id: ID!, email: String!): Boolean
+        getBanner: Banner!
     }
 
     type Mutation {
@@ -86,5 +93,6 @@ export const scholarTypeDef = gql`
         archiveScholar(scholar_id: ID!): Boolean!
         deleteScholar(scholar_id: ID!): Boolean!
         bookmarkJob(email: String!, job_id: ID!): Boolean
+        addBanner(banner_text: String!, start_date: String!, end_date: String!): Banner!
     }
 `
