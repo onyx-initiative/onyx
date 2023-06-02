@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Select, Pagination, Slider, RangeSlider, Drawer } from '@mantine/core';
-import { DatePicker, DateRangePicker } from '@mantine/dates';
+import { DatePicker } from '@mantine/dates';
 import { Job } from '../../../../backend/src/types/db.types';
 import styles from '../../../styles/components/Jobs.module.css'
 import loading_svg from '../../assets/loading.svg';
@@ -63,7 +63,7 @@ export default function ListedJobs(props: ListedJobsProps) {
       {/* For the pages */}
       <div>
         <Pagination 
-          page={activePage} 
+          // page={activePage} 
           onChange={setPage} 
           total={numPages} 
           color="gray"
