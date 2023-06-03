@@ -9,6 +9,7 @@ import { BOOKMARK_JOB } from '../../../graphql/mutations/scholarMutations';
 import { useSession } from 'next-auth/react';
 import { CHECK_BOOKMARK } from '../../../graphql/queries/scholarQueries';
 import va from '@vercel/analytics';
+import { useMediaQuery } from 'react-responsive';
 
 const JobCard = (props: any) => {
     const { job, email, employerData } = props;
@@ -28,6 +29,7 @@ const JobCard = (props: any) => {
         console.log(filterNewlines(job.long_description))
       }
     }, [employerData, job.employer_id])
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 767px)' });
   
     return (
       <div key={job.job_id} className={styles.mainContainer}>
@@ -86,7 +88,7 @@ const JobCard = (props: any) => {
           opened={opened}
           onClose={() => setOpened(!opened)}
           padding="xl"
-          size="60%"
+          size={isSmallScreen ? '90%' : '60%'}
           position='right'
           scrollAreaComponent={ScrollArea.Autosize}
         >
