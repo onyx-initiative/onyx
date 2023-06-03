@@ -105,10 +105,10 @@ const JobCard = (props: any) => {
               <h3>{job.title}</h3>
               <div className={styles.additionalInfo} style={{ marginTop: "-16px"}}> 
                 <IoBagSharp size={16} color='rgb(54, 54, 54)' />
-                <h5>{employerName} • </h5>
+                <h5>{employerName} </h5>
                 <div></div>
                 <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
-                <h5>{job.location} • </h5>
+                <h5>{job.location} </h5>
                 <div></div>
                 <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
                 <h5>{Capitalize(job.job_type)}</h5>
