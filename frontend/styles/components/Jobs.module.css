@@ -233,9 +233,6 @@
     cursor: pointer;
 }
 
-.jobCardBodyDrawer {
-
-}
 
 @media (max-width: 800px) {
     .jobCardHeaderDrawer {
@@ -326,6 +323,7 @@
 @media (max-width: 800px) {
     .jobCard {
         flex-direction: column;
+        padding: 0.5rem;
     }
 
     .bookmarkContainer {
@@ -337,6 +335,7 @@
 .jobCardBody {
     color: black;
     cursor: pointer;
+    width: 90%;
 }
 
 .jobCardBody > h4 {
@@ -346,6 +345,10 @@
     margin-bottom: 0.5rem;
     font-size: medium;
 
+}
+
+.jobCardBody > p {
+    overflow-wrap: break-word;
 }
 
 .deadline {
