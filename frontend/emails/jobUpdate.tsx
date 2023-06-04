@@ -16,6 +16,9 @@ import { Job, job_type } from '../../backend/src/types/db.types';
 import { FaLinkedinIn, FaTwitter, FaInstagram, FaGoogle } from "react-icons/fa";
 import { Capitalize } from '../src/components/jobs/JobCard';
 import { IoLocationSharp, IoTimeSharp, IoBagSharp } from "react-icons/io5";
+import briefcase from './assets/*.png';
+import clock from './assets/*.png';
+import pin from './assets/*.png';
 
 
 export type Recommendation = {
@@ -80,8 +83,7 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                                     <Section style={{ margin: 0, padding: 0, alignContent: 'top' as const, alignItems: "top" as const }}>
                                         <Text style={styles.title}>{recommendation.title}</Text>
                                         <Row
-                                            style={{ 
-                                                width: "20%", 
+                                            style={{  
                                                 alignSelf: "left", 
                                                 alignItems: "top", 
                                                 alignContent: "top",
@@ -91,22 +93,16 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                                             }}
                                             align='left'
                                         >
-                                            <Column>
-                                            <IoBagSharp size={16} color='rgb(54, 54, 54)' />
-                                            </Column>
-                                            <Column>
+                                            <Column align='left'>
                                             <Text>{recommendation.employer}</Text>
                                             </Column>
                                         </Row>
-                                        <Row align='left' style={{ marginTop: -25, alignItems: "left", paddingRight: "40%"}}>
-                                            <Column>
-                                            <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
-                                            </Column>
-                                            <Column>
+                                        <Row align='left' style={{ marginTop: -25, alignItems: "left",}}>
+                                            <Column width={"23%"}>
                                             <Text>{recommendation.location}</Text>
                                             </Column>
-                                            <Column>
-                                            <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
+                                            <Column width={"5%"}>
+                                            <Text style={{ fontSize: 18}}>•</Text>
                                             </Column>
                                             <Column>
                                             <Text>{Capitalize(recommendation.job_type)}</Text>
