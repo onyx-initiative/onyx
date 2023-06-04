@@ -14,6 +14,7 @@ import { useLazyQuery } from '@apollo/client'
 import EmailTest from './EmailTest'
 import { Email, Recommendation } from '../emails/jobUpdate'
 import { Job } from '../../backend/src/types/db.types'
+import EmailJobCard from '../emails/components/EmailJobCard'
 
 const serverResponse = {
     applicationDeadline: '2021-12-31',
@@ -31,6 +32,27 @@ const Home: NextPage = () => {
   return (
     <div>
       <Scholar />
+
+      {/* For testing purposes only */}
+      {/* <Email scholarName="Michael" jobs={[{
+        scholar: "Michael",
+        email: "mdawes28@gmail.com",
+        scholar_id: "1",
+        view_name: "default",
+        employer: "Google",
+        title: "Software Engineer",
+        description: "Software Engineer at Google",
+        job_type: "Full Time",
+        location: "New York, NY",
+        deadline: "2021-12-31"
+      }]}
+      employers={[
+        {
+          name: "Google",
+          logo: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+        }
+      ]}
+      /> */}
     </div>
   )
 }

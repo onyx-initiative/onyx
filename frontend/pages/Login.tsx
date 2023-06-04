@@ -54,7 +54,10 @@ export default function Login() {
                         <FaApple size={28} />
                         <button
                         className={styles.loginButton}
-                            onClick={() => signIn('apple', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})}
+                            onClick={() => {
+                                alert('Apple login is currently unavailable. Please use another login method.')
+                                // signIn('apple', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})
+                            }}
                         >
                             Login with Apple
                         </button>

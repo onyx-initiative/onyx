@@ -9,10 +9,11 @@ const MONTH = 30 * DAY;
 
 // NOTE: The values are found in .env.local in the frontend folder
 
-const privateKey = createPrivateKey(process.env.NEXT_PUBLIC_APPLE_PRIVATE_KEY); // Copy from the cert you downloaded from Apple
+const privateKey = createPrivateKey(NEXT_PUBLIC_APPLE_PRIVATE_KEY); // Copy from the cert you downloaded from Apple
 const now = Math.ceil(Date.now() / 1000);
 const expires = now + MONTH * 3;
-const kid = process.env.APPLE_KEY_ID; // Found in the Apple Developer Portal
+// const kid = process.env.APPLE_KEY_ID; // Found in the Apple Developer Portal
+const kid = NEXT_PUBLIC_APPLE_KEY_ID; // Found in the Apple Developer Portal
 
 const claims = {
   iss: process.env.NEXT_PUBLIC_APPLE_TEAM_ID,
