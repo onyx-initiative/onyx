@@ -36,7 +36,7 @@ export default async function handler(
       
       // Configure the options for the email
       const options = {
-        from: 'mdawes28@gmail.com',
+        from: 'cole.purboo@icloud.com',
         to: email,
         subject: 'Onyx Job Weekly Update',
         html: emailHtml,
