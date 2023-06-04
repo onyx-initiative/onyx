@@ -39,7 +39,7 @@ const Home: NextPage = () => {
         email: "mdawes28@gmail.com",
         scholar_id: "1",
         view_name: "default",
-        employer: "Google",
+        employer: "Hudson River Trading",
         title: "Software Engineer",
         description: "Software Engineer at Google",
         job_type: "Full Time",
