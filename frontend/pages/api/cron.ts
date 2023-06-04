@@ -17,6 +17,7 @@ export default async function handler(
 
     // fetch the data from the db
     const recommendedJobs = await getRecommendedJobs();
+    const employers = await getEmployers();
 
     // Format the data
     const formattedJobs = parseRecommendedJobs(recommendedJobs.data.getRecommendedJobs as Recommendation[]);
@@ -32,7 +33,7 @@ export default async function handler(
       const name = key.split(',')[0];
       const email = key.split(',')[1];
 
-      const emailHtml = render(Email({ scholarName: name, jobs: formattedJobs[key] as Recommendation[] }));
+      const emailHtml = render(Email({ scholarName: name, jobs: formattedJobs[key] as Recommendation[], employers: employers?.data?.getEmployers }));
       
       // Configure the options for the email
       const options = {
@@ -84,6 +85,28 @@ const getRecommendedJobs = async () => {
   })
 
   const resp = recommendedJobs.json();
+  return resp;
+}
+
+const getEmployers = async () => {
+  const employers = await fetch(process.env.NEXT_PUBLIC_URI as string, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+          query: `
+              query GetEmployers {
+                getEmployers {
+                    name
+                    logo_url
+                }
+              }
+          `,
+      })
+  })
+  const resp = employers.json();
   return resp;
 }
 

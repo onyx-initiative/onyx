@@ -14,6 +14,9 @@ import { Row } from '@react-email/row';
 import { Body } from '@react-email/body';
 import { Job, job_type } from '../../backend/src/types/db.types';
 import { FaLinkedinIn, FaTwitter, FaInstagram, FaGoogle } from "react-icons/fa";
+import { Capitalize } from '../src/components/jobs/JobCard';
+import { IoLocationSharp, IoTimeSharp, IoBagSharp } from "react-icons/io5";
+
 
 export type Recommendation = {
     scholar: string;
@@ -31,15 +34,26 @@ export type Recommendation = {
 type EmailInfo = {
     scholarName: string;
     jobs: Recommendation[];
+    employers: any[];
 }
 
-export function Email({ scholarName, jobs }: EmailInfo) {
+export function Email({ scholarName, jobs, employers }: EmailInfo) {
 
     const previewText: string = 'Check out recently added jobs that match your filters!';
 
     const formatDate = (date: string) => {
         const formattedDate = new Date(parseInt(date)).toDateString() as string;
         return formattedDate;
+    }
+
+    const checkDeadline = (deadline: string) => {
+        const check = new Date(deadline).getFullYear();
+        return check > 2090;
+    }
+
+    const findLogo = (employer: string) => {
+        const logo = employers.find((emp: any) => emp.name === employer);
+        return logo?.logo;
     }
   
     return (
@@ -49,7 +63,7 @@ export function Email({ scholarName, jobs }: EmailInfo) {
         <Body style={styles.main}>
             <Container>
                 <Section style={styles.logo}>
-                    <Img src={('')} alt="logo" width={250} />
+                    <Img src={('https://onyxinitiative.org/assets/img/onyxlogo_nav.png')} alt="logo" width={250} />
                 </Section>
                 <Section style={styles.content}>
                     <Text style={styles.text}>Hi {scholarName},</Text>
@@ -60,7 +74,7 @@ export function Email({ scholarName, jobs }: EmailInfo) {
                                 <Row>
                                 <Column style={{ padding: '0px', width: '80px', verticalAlign: 'top' as const, }}>
                                     <Img 
-                                        src={fetchLogo(recommendation.employer)} 
+                                        src={findLogo(recommendation.employer)} 
                                         alt="logo" 
                                         width={80} 
                                         height={80}
@@ -70,13 +84,37 @@ export function Email({ scholarName, jobs }: EmailInfo) {
                                 <Column align='right' style={styles.jobInfo}>
                                     <Container style={{ margin: 0, padding: 0, alignContent: 'top' as const }}>
                                         <Text style={styles.title}>{recommendation.title}</Text>
-                                        <Text 
-                                            style={{ padding: 0, margin: 0, fontSize: 14, color: '#666' }}
+                                        <Row
+                                            style={{ 
+                                                width: "80%", 
+                                                alignSelf: "left", 
+                                                alignItems: "center", 
+                                                padding: 0, 
+                                                margin: 0,
+                                                marginTop: -10
+                                            }}
                                         >
-                                            {recommendation.location} • {recommendation.job_type}
-                                        </Text>
+                                            <Column>
+                                            <IoBagSharp size={16} color='rgb(54, 54, 54)' />
+                                            </Column>
+                                            <Column>
+                                            <Text>{recommendation.employer} • </Text>
+                                            </Column>
+                                            <Column>
+                                            <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
+                                            </Column>
+                                            <Column>
+                                            <Text>{recommendation.location} • </Text>
+                                            </Column>
+                                            <Column>
+                                            <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
+                                            </Column>
+                                            <Column>
+                                            <Text>{Capitalize(recommendation.job_type)}</Text>
+                                            </Column>
+                                        </Row>
                                         <Text
-                                            style={{ padding: 0, margin: 0, fontSize: 16, marginTop: 10 }}
+                                            style={{ padding: 0, margin: 0, fontSize: 16, marginTop: 0 }}
                                         >{recommendation.description}</Text>
                                     </Container>
                                 </Column>
@@ -88,7 +126,7 @@ export function Email({ scholarName, jobs }: EmailInfo) {
                                 <Text
                                     style={{ padding: 0, margin: 0, fontSize: 14, color: '#666' }}
                                 >
-                                    Deadline: {formatDate(recommendation.deadline)}
+                                    <p>{checkDeadline(recommendation.deadline) ? "No Deadline" : 'Deadline: ' + formatDate(recommendation.deadline)}</p>
                                 </Text>
                                 </Row>
                             </Container>
