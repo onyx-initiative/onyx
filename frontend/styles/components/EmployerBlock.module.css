@@ -15,6 +15,13 @@
     padding: 5px;
     transition: background-color 0.3s ease; /* add transition effect */
   }
+
+  @media (min-width: 1000px) {
+    .employerContainer {
+        width: 18rem;
+        height: 20rem;
+    }
+  }
   
   .employerContainer:hover {
     /* background-color: #fafafa; change background color on hover */
