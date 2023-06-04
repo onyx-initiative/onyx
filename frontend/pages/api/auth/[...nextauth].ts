@@ -166,6 +166,17 @@ export default NextAuth({
             return randomUUID?.() ?? randomBytes(32).toString("hex")
         },
     },
+    cookies: {
+        pkceCodeVerifier: {
+          name: 'next-auth.pkce.code_verifier',
+          options: {
+            httpOnly: true,
+            sameSite: 'none',
+            path: '/',
+            secure: true,
+          },
+        },
+    },
     jwt: {
         maxAge: 60 * 60 * 24, // 1 day
     },
