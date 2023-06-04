@@ -50,11 +50,6 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
         const check = new Date(deadline).getFullYear();
         return check > 2090;
     }
-
-    const findLogo = (employer: string) => {
-        const logo = employers.find((emp: any) => emp.name === employer);
-        return logo?.logo;
-    }
   
     return (
       <Html lang="en">
@@ -74,37 +69,41 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                                 <Row>
                                 <Column style={{ padding: '0px', width: '80px', verticalAlign: 'top' as const, }}>
                                     <Img 
-                                        src={findLogo(recommendation.employer)} 
+                                        src={fetchLogo(recommendation.employer)} 
                                         alt="logo" 
                                         width={80} 
                                         height={80}
                                         style={ styles.companyLogo }    
                                     />
                                 </Column>
-                                <Column align='right' style={styles.jobInfo}>
-                                    <Container style={{ margin: 0, padding: 0, alignContent: 'top' as const }}>
+                                <Column align='left' style={styles.jobInfo}>
+                                    <Section style={{ margin: 0, padding: 0, alignContent: 'top' as const, alignItems: "top" as const }}>
                                         <Text style={styles.title}>{recommendation.title}</Text>
                                         <Row
                                             style={{ 
-                                                width: "80%", 
+                                                width: "20%", 
                                                 alignSelf: "left", 
-                                                alignItems: "center", 
+                                                alignItems: "top", 
+                                                alignContent: "top",
                                                 padding: 0, 
                                                 margin: 0,
                                                 marginTop: -10
                                             }}
+                                            align='left'
                                         >
                                             <Column>
                                             <IoBagSharp size={16} color='rgb(54, 54, 54)' />
                                             </Column>
                                             <Column>
-                                            <Text>{recommendation.employer} • </Text>
+                                            <Text>{recommendation.employer}</Text>
                                             </Column>
+                                        </Row>
+                                        <Row align='left' style={{ marginTop: -25, alignItems: "left", paddingRight: "40%"}}>
                                             <Column>
                                             <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
                                             </Column>
                                             <Column>
-                                            <Text>{recommendation.location} • </Text>
+                                            <Text>{recommendation.location}</Text>
                                             </Column>
                                             <Column>
                                             <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
@@ -112,11 +111,11 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                                             <Column>
                                             <Text>{Capitalize(recommendation.job_type)}</Text>
                                             </Column>
-                                        </Row>
+                                            </Row>
                                         <Text
                                             style={{ padding: 0, margin: 0, fontSize: 16, marginTop: 0 }}
                                         >{recommendation.description}</Text>
-                                    </Container>
+                                    </Section>
                                 </Column>
                                 </Row>
                                 <Row>
