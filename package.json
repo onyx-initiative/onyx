@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@azure/msal-node": "^1.17.1",
+    "@mantine/utils": "^6.0.13",
     "next-auth": "^4.22.1"
   }
 }
