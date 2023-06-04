@@ -9,6 +9,7 @@ import { BOOKMARK_JOB } from '../../../graphql/mutations/scholarMutations';
 import { useSession } from 'next-auth/react';
 import { CHECK_BOOKMARK } from '../../../graphql/queries/scholarQueries';
 import va from '@vercel/analytics';
+import { useMediaQuery } from 'react-responsive';
 
 const JobCard = (props: any) => {
     const { job, email, employerData } = props;
@@ -28,6 +29,7 @@ const JobCard = (props: any) => {
         console.log(filterNewlines(job.long_description))
       }
     }, [employerData, job.employer_id])
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 767px)' });
   
     return (
       <div key={job.job_id} className={styles.mainContainer}>
@@ -55,10 +57,10 @@ const JobCard = (props: any) => {
               <h3 style={{ padding: 0, margin: 0, marginBottom: "0.4rem"}}>{job.title}</h3>
               <div className={styles.additionalInfo}>
                 <IoBagSharp size={16} color='rgb(54, 54, 54)' />
-                <h5>{employerName} • </h5>
+                <h5>{employerName}  </h5>
                 <div></div>
                 <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
-                <h5>{job.location} • </h5>
+                <h5>{job.location}  </h5>
                 <div></div>
                 <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
                 <h5>{Capitalize(job.job_type)}</h5>
@@ -86,7 +88,7 @@ const JobCard = (props: any) => {
           opened={opened}
           onClose={() => setOpened(!opened)}
           padding="xl"
-          size="60%"
+          size={isSmallScreen ? '90%' : '60%'}
           position='right'
           scrollAreaComponent={ScrollArea.Autosize}
         >
@@ -103,10 +105,10 @@ const JobCard = (props: any) => {
               <h3>{job.title}</h3>
               <div className={styles.additionalInfo} style={{ marginTop: "-16px"}}> 
                 <IoBagSharp size={16} color='rgb(54, 54, 54)' />
-                <h5>{employerName} • </h5>
+                <h5>{employerName} </h5>
                 <div></div>
                 <IoLocationSharp size={16} color='rgb(54, 54, 54)' />
-                <h5>{job.location} • </h5>
+                <h5>{job.location} </h5>
                 <div></div>
                 <IoTimeSharp size={16} color='rgb(54, 54, 54)' />
                 <h5>{Capitalize(job.job_type)}</h5>
