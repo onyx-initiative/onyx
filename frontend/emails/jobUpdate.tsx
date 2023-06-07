@@ -46,7 +46,9 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
 
     const formatDate = (date: string) => {
         const formattedDate = new Date(parseInt(date)).toDateString() as string;
-        return formattedDate;
+        if (formattedDate === "2100-01-01")
+            return "No deadline";
+        return "Deadline" + formattedDate;
     }
 
     const checkDeadline = (deadline: string) => {
