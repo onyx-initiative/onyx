@@ -50,8 +50,9 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
     }
 
     const checkDeadline = (deadline: string) => {
-        const check = new Date(deadline).getFullYear();
-        return check > 2090;
+        const check = new Date(deadline);
+        const year = check.getFullYear();
+        return year > 2090;
     }
   
     return (
@@ -98,7 +99,7 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                                             </Column>
                                         </Row>
                                         <Row align='left' style={{ marginTop: -25, alignItems: "left",}}>
-                                            <Column width={"30%"}>
+                                            <Column width={"20%"}>
                                             <Text>{recommendation.location}</Text>
                                             </Column>
                                             <Column width={"5%"}>
