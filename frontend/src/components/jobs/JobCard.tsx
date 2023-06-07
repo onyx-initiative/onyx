@@ -219,6 +219,8 @@ const ApplyButton = (props: any) => {
 
   const { link } = props;
 
+  let regex = /^https:\/\//;
+
   return (
       <div style={{ 
           display: 'flex', 
@@ -234,12 +236,18 @@ const ApplyButton = (props: any) => {
       }}>
             <button 
               style={{ border: 'none', backgroundColor: 'transparent', padding: 0, margin: 0}}
-              onClick={() => {
-                va.track("Apply", { link: link });
-                window.open(link, '_blank');
-              }}
             >
-              <a href={link} style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem'}} target='_blank' rel="noreferrer">Apply</a>
+              <a 
+                href={regex.test(link) ? link : "https://" + link} 
+                style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem'}} 
+                target='_blank' 
+                rel="noreferrer"
+                onClick={() => {
+                  va.track("Apply", { link: link });
+                }}
+              >
+                Apply
+              </a>
             </button>
           </div>
   )
