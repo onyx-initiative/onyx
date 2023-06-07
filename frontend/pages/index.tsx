@@ -44,7 +44,7 @@ const Home: NextPage = () => {
         description: "Software Engineer at Google",
         job_type: "Full Time",
         location: "New York, NY",
-        deadline: "2000-12-31"
+        deadline: "2100-01-01"
       }]}
       employers={[
         {
