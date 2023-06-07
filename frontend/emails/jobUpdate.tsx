@@ -94,11 +94,11 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                                             align='left'
                                         >
                                             <Column align='left'>
-                                            <Text>{recommendation.employer}</Text>
+                                            <Text style={{ fontWeight: "bold"}}>{recommendation.employer}</Text>
                                             </Column>
                                         </Row>
                                         <Row align='left' style={{ marginTop: -25, alignItems: "left",}}>
-                                            <Column width={"20%"}>
+                                            <Column width={"30%"}>
                                             <Text>{recommendation.location}</Text>
                                             </Column>
                                             <Column width={"5%"}>
