@@ -61,7 +61,7 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
         <Body style={styles.main}>
             <Container>
                 <Section style={styles.logo}>
-                    <Img src={('https://onyxinitiative.org/assets/img/onyxlogo_nav.png')} alt="logo" width={250} />
+                    <Img src={'https://onyxinitiative.org/assets/img/onyxlogo_nav.png'} alt="logo" width={250} />
                 </Section>
                 <Section style={styles.content}>
                     <Text style={styles.text}>Hi {scholarName},</Text>
@@ -71,13 +71,13 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                             <Container style={styles.jobContainer}>
                                 <Row>
                                 <Column style={{ padding: '0px', width: '80px', verticalAlign: 'top' as const, }}>
-                                    <Img 
+                                    {/* <Img 
                                         src={fetchLogo(recommendation.employer)} 
                                         alt="logo" 
                                         width={80} 
                                         height={80}
                                         style={ styles.companyLogo }    
-                                    />
+                                    /> */}
                                 </Column>
                                 <Column align='left' style={styles.jobInfo}>
                                     <Section style={{ margin: 0, padding: 0, alignContent: 'top' as const, alignItems: "top" as const }}>
@@ -98,7 +98,7 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                                             </Column>
                                         </Row>
                                         <Row align='left' style={{ marginTop: -25, alignItems: "left",}}>
-                                            <Column width={"23%"}>
+                                            <Column width={"20%"}>
                                             <Text>{recommendation.location}</Text>
                                             </Column>
                                             <Column width={"5%"}>
@@ -132,20 +132,22 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                         <Button style={styles.button} href="jobs.onyxinitiative.org">Explore All Jobs</Button>
                     </Section>
                     <Hr style={styles.hr} />
-                    <div style={{ alignItems: 'center' }}>
+                    <div style={{ alignItems: 'center', margin: 0, padding: 0 }}>
                         <p style={styles.footer}>info@onyxinitiative.org</p>
                         <p style={styles.footer}>334 Lakeshore Road E #203, Oakville, ON L6J 1J6</p>
                     </div>
-                    <div style={{ ...styles.footer, justifyContent: 'center', display: 'flex' }}>
-                        <a style={{ ...styles.footer, paddingLeft: 10, paddingRight: 10 }} href='https://www.linkedin.com/company/onyx-initiative/' target="_blank" rel="noreferrer">
-                            <FaLinkedinIn size={18} />
-                        </a>
-                        <a style={{ ...styles.footer, paddingLeft: 10, paddingRight: 10 }} href='https://twitter.com/onyxinitiative' target="_blank" rel="noreferrer">
-                            <FaTwitter size={18} />
-                        </a>
-                        <a style={{ ...styles.footer, paddingLeft: 10, paddingRight: 10 }} href='https://www.instagram.com/onyxinitiative/' target="_blank" rel="noreferrer">
-                            <FaInstagram size={18} />
-                        </a>
+                    <div style={{ ...styles.footer, justifyContent: 'center', display: 'flex', alignItems: 'center', alignContent: 'center', margin: 0, padding: 0, alignSelf: "center", verticalAlign: "center" }}>
+                            <a style={{ ...styles.footer, padding: 0, margin: 0, paddingLeft: 0, paddingRight: 10 }} href='https://www.linkedin.com/company/onyx-initiative/' target="_blank" rel="noreferrer">
+                                <Text>LinkedIn</Text>
+                            </a>
+                            <p style={{ fontSize: 20 }}>|</p>
+                            <a style={{ ...styles.footer, padding: 0, margin: 0, paddingLeft: 10, paddingRight: 10 }} href='https://twitter.com/onyxinitiative' target="_blank" rel="noreferrer">
+                                <Text>Twitter</Text>
+                            </a>
+                            <p style={{ fontSize: 20 }}>|</p>
+                            <a style={{ ...styles.footer, padding: 0, margin: 0, paddingLeft: 10, paddingRight: 10 }} href='https://www.instagram.com/onyxinitiative/' target="_blank" rel="noreferrer">
+                                <Text>Instagram</Text>
+                            </a>
                     </div>
                 </Section>
             </Container>
@@ -177,6 +179,7 @@ const styles = {
     footer: {
         color: 'gray',
         fontSize: '12px',
+        cursor: 'pointer',
     },
     btnContainer: {
         textAlign: 'center' as const,
@@ -204,7 +207,7 @@ const styles = {
         marginTop: 3
     },
     jobContainer: {
-        border: '1px solid white',
+        border: '1px solid gray',
         padding: '15px',
         margin: '10px 0',
         borderRadius: '3px',
