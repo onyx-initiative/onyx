@@ -52,7 +52,9 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
     const checkDeadline = (deadline: string) => {
         const check = new Date(deadline);
         const year = check.getFullYear();
-        return year > 2090;
+        if (year > 2090)
+            return "No deadline";
+        return formatDate(deadline);
     }
   
     return (
@@ -122,7 +124,7 @@ export function Email({ scholarName, jobs, employers }: EmailInfo) {
                                 <Text
                                     style={{ padding: 0, margin: 0, fontSize: 14, color: '#666' }}
                                 >
-                                    <p>{checkDeadline(recommendation.deadline) ? "No Deadline" : 'Deadline: ' + formatDate(recommendation.deadline)}</p>
+                                    <p>{checkDeadline(recommendation.deadline)}</p>
                                 </Text>
                                 </Row>
                             </Container>
