@@ -9,6 +9,7 @@ import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
 import { useQuery } from "@apollo/client";
 import { GET_JOBS_BY_EMPLOYER_ID } from "../../../graphql/queries/jobQueries";
 import { getLogo, unsupportedCompanies } from "../../utils/microservices";
+import { useMediaQuery } from "react-responsive";
 
 
 
@@ -30,6 +31,8 @@ export const EmployerBlock = (props: any) => {
     //   }
     //   // Ignore, this is intentional
     // }, [JobList, jobLoading]);
+
+    const isLargeScreen = useMediaQuery({ query: '(min-width: 800px)' })
 
     return (
         
@@ -66,8 +69,8 @@ export const EmployerBlock = (props: any) => {
                 <div>
                     <Image src={employer.logo_url} 
                         alt="Company Logo" 
-                        width={90}
-                        height={90} 
+                        width={isLargeScreen ? 200 : 90}
+                        height={isLargeScreen ? 200 : 90}
                         // layout="fill"
                         objectFit="contain"
                         unoptimized={true}

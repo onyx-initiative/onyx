@@ -46,16 +46,17 @@
 .employer {
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     justify-items: center;
     width: 100%;
     margin-bottom: 20px;
     margin-left: auto;
-    padding-left: 3rem;
+    padding-left: 03rem;
     padding-right: 3rem;
     padding-top: 1rem;
 }
+
 
 @media (max-width: 1084px) {
     .employer {
@@ -67,11 +68,27 @@
 
 @media (max-width: 768px) {
     .employer {
-        grid-template-columns: repeat(2,1fr);
-        grid-gap: 20px;
+        grid-template-columns: repeat(3,1fr);
+        grid-gap:5px;
         display: grid;
+        padding-left: 2rem;
     }
 }
+
+@media (max-width: 500px) {
+    .employer {
+        grid-template-columns: repeat(2,1fr);
+        grid-gap:5px;
+        display: grid;
+        padding-left: 2rem;
+    }
+}
+
+@media (min-width: 1700px) {
+    .employer {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
 
 
 

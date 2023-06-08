@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/client';
 import { GET_EMPLOYERS } from '../../../graphql/queries/employerQueries';
 import { Employer } from '../../../../backend/src/types/db.types';
 import Loading from '../../../pages/Loading';
-
+import { useMediaQuery } from 'react-responsive';
 import { getLogo, unsupportedCompanies } from '../../utils/microservices';
 import {Drawer} from '@mantine/core';
 import { useState } from 'react';
@@ -20,11 +20,12 @@ export default function ScholarHero(props: any) {
     const { employerData, employerLoading } = props
     const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
 
-
+    const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' });
     if (employerLoading || jobLoading) {
         return (
             <Loading />
     )}
+
     
 
     const employers = employerData.getEmployers.map(
@@ -51,7 +52,7 @@ export default function ScholarHero(props: any) {
                 mx="auto"
                 slideGap="xl"
                 controlSize={29}
-                slideSize="25%"
+                slideSize={isLargeScreen ? '10%' : '25%'}
                 loop
                 align="start"
                 withIndicators
