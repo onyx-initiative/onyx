@@ -20,13 +20,12 @@ export default function ScholarHero(props: any) {
     const { employerData, employerLoading } = props
     const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
 
-
+    const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' });
     if (employerLoading || jobLoading) {
         return (
             <Loading />
     )}
 
-    const isLargeScreen = useMediaQuery({ query: '(min-width: 1024px)' });
     
 
     const employers = employerData.getEmployers.map(
