@@ -44,6 +44,8 @@ export default function AddEmployer() {
   //   }
   // }, [loading])
 
+  console.log(EmployerInfo)
+
 
   useEffect(() => {
     if (completed) {
@@ -59,7 +61,10 @@ export default function AddEmployer() {
 
   const handleSubmit = () => {
     console.log(EmployerInfo)
-    createEmployer();
+    createEmployer().catch((err) => {
+      alert("Error creating Employer. Please check that you entered the information correctly and try again.")
+      console.log(err)
+    });
     router.push('/Admin')
 }
 
