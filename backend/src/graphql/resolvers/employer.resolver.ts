@@ -62,7 +62,9 @@ const employerResolver = {
 
             const logo = await fetch(microserviceUrl + '/webscraper/logo/' + name).then(res => res.json()).then(data => {
                 return data;
-            }) as Logo;
+            }).catch((err: any) => {
+                return { logo: null };
+            });
             
             let logo_url = await logo;
             logo_url.logo === null ? logo_url.logo = 'https://logo.clearbit.com/www.onyxinitiative.org/' : logo_url.logo = logo_url.logo;

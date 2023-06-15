@@ -30,6 +30,7 @@ export const EmployerBlock = (props: any) => {
     //   }
     //   // Ignore, this is intentional
     // }, [JobList, jobLoading]);
+    console.log(employer.description)
 
     return (
         
@@ -50,7 +51,11 @@ export const EmployerBlock = (props: any) => {
                     loader={({ src }) => src }
                     unoptimized
             />
-            <p>{employer.description}</p>
+            <p>
+                <a href={employer.website}>{"Learn more: " + employer.website}</a>
+            </p>
+            <p>{"Contact: " + employer.contact_email}</p>
+            <p>{filterNewlines(employer.description)}</p>
             <h3>Job Postings</h3>
             <EmployerJobList jobs={jobs.filter((job: Job) => job.employer_id === employer.employer_id)} />
             
@@ -83,6 +88,12 @@ export const EmployerBlock = (props: any) => {
     ) 
 }
     
+
+export const filterNewlines = (text: string) => {
+    if (!text) return "";
+    const result = text.split('\n').map((str: string, indx: number) => <p key={indx}>{str}</p>);
+    return result;
+}
 
 
 

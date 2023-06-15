@@ -81,7 +81,7 @@ export default function AddJob() {
       // if (!JobInfo.deadline) {
       //   setJobInfo({...JobInfo, deadline: "2100-01-01"})
       // }
-      console.log(JobInfo)
+      // console.log(JobInfo)
       var result = confirm("Are you sure you want to add this Job?");
         if (result == true) {
           handleSubmit();

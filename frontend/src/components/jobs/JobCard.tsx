@@ -267,7 +267,7 @@ const formatText = (text: string) => {
   }
 }
 
-const filterNewlines = (text: string) => {
+export const filterNewlines = (text: string) => {
   if (!text) return "";
   const result = text.split('\\n').map((str: string, indx: number) => <p key={indx}>{str}</p>);
   return result;
