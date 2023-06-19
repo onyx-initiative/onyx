@@ -43,7 +43,6 @@ const JobCard = (props: any) => {
                 alt="Company Logo"
                 width={60}
                 height={60}
-                objectFit='cover'
                 priority
                 quality={100}
                 loader={({ src }) => src }
@@ -99,7 +98,7 @@ const JobCard = (props: any) => {
               width={60}
               height={60}
               loader={({ src }) => src }
-              unoptimized
+              // unoptimized
             />
             <div className={styles.jobHeaderDrawer}>
               <h3>{job.title}</h3>
@@ -258,7 +257,7 @@ const ApplyButton = (props: any) => {
 const formatText = (text: string) => {
   if (!text) return "";
   if (text[0] === '-' || text[0] === '•') {
-    const result = text.split('- ');
+    const result = text.split('- ') || text.split('-');
     // Trim whitespaces
     let final = result.map(str => str.trim());
     // Remove empty strings
