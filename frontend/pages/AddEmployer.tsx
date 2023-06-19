@@ -10,6 +10,7 @@ import { Employer } from "../../backend/src/types/db.types";
 import {Button} from '@mantine/core'
 import { loadavg } from 'os';
 import { getLogo } from '../src/utils/microservices';
+import BackButton from '../src/components/admin/BackButton';
 
 type EmployerInfo = {
   employer_id: string,
@@ -71,11 +72,14 @@ export default function AddEmployer() {
 return (
     <div className={styles.container}>
         <div className={styles.logo}>
+          <BackButton />
           <Image
               src="https://onyxinitiative.org/assets/img/onyxlogo_nav.png" 
               alt="Onyx Logo" 
               width={250} 
               height={100} 
+              style={{
+              }}
           />
         </div>
         <div className={styles.formContainer}>

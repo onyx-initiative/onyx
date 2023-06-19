@@ -107,3 +107,4 @@ Michael's Hours:
 - Sat June 3 - 1 hr
 - Wed June 7 - 3 hr
 - Thurs June 15 - 4 hr
+- Sun June 18 - 2 hr

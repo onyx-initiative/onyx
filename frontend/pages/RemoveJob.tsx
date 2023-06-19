@@ -9,6 +9,7 @@ import loading_svg from "../../frontend/src/assets/loading.svg";
 import {GET_EMPLOYER_BY_ID} from "../graphql/queries/employerQueries";
 import {BsFillTrashFill } from "react-icons/bs";
 import SearchBar from "../src/components/jobs/SearchBar";
+import BackButton from "../src/components/admin/BackButton";
 
 
 
@@ -53,6 +54,7 @@ export default function RemoveJob(props: SelectedJob) {
 
     return (
         <div>
+          <BackButton />
           <Image
               src="https://onyxinitiative.org/assets/img/onyxlogo_nav.png" 
               alt="Onyx Logo" 

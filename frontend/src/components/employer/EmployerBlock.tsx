@@ -46,8 +46,8 @@ export const EmployerBlock = (props: any) => {
           
             <Image src={employer.logo_url} 
                     alt="Company Logo" 
-                    width={90}
-                    height={90}
+                    width={80}
+                    height={80}
                     loader={({ src }) => src }
                     unoptimized
             />
