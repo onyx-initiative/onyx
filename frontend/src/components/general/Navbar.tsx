@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import { User } from 'next-auth'
 import { GET_BANNER, GET_SCHOLAR_BY_EMAIL } from '../../../graphql/queries/scholarQueries'
 import { useQuery } from '@apollo/client'
+import { Capitalize } from '../jobs/JobCard'
 
 interface Admin extends User { 
   admin: boolean
@@ -22,6 +23,7 @@ export default function Navbar(props: any) {
   const [name, setName] = React.useState('')
   const [scholar_id, setScholarId] = React.useState('')
   const [bannerText, setBannerText] = React.useState('')
+  const [email, setEmail] = React.useState('')
 
   let logoLink = '/';
   // if ((session?.user as Admin).admin === true) {
@@ -29,19 +31,34 @@ export default function Navbar(props: any) {
   // } else {
   //     logoLink = '/'
   // }
+  const getNameFromEmail = (email: string) => {
+    if (email === undefined || email === ' ') return 'Guest'
+    const name = email.split('.')[0]
+    return Capitalize(name)
+  }
+  
 
+  
   useEffect(() => {
+
     if (!loadingScholar) {
-      setName(scholarData?.getScholarByEmail?.name)
       setScholarId(scholarData?.getScholarByEmail?.scholar_id)
+      setEmail(scholarData?.getScholarByEmail?.email)
+      if (scholarData?.getScholarByEmail?.name === undefined) {
+        setName(getNameFromEmail(session?.user?.email as string))
+      } else {
+        setName(scholarData?.getScholarByEmail?.name)
+      }
+      
     }
-  }, [loadingScholar, scholarData?.getScholarByEmail?.name, scholarData?.getScholarByEmail?.scholar_id])
+  }, [loadingScholar, scholarData?.getScholarByEmail?.name, scholarData?.getScholarByEmail?.scholar_id, scholarData?.getScholarByEmail?.email, name, email])
 
   useEffect(() => {
     if (!loadingBanner) {
       setBannerText(banner?.getBanner?.banner_text)
     }
   }, [loadingBanner, banner?.getBanner?.banner_text])
+
 
   return (
     <div className={styles.betaWrapper}>
@@ -76,7 +93,7 @@ export default function Navbar(props: any) {
           </li>
           <li>
 
-            {name === '' || name === undefined ? <ProfilePhoto name='Guest' scholar_id='1' /> : 
+            {name === '' || name === undefined ? <ProfilePhoto name={'Guest'} scholar_id='1' /> : 
             <ProfilePhoto name={name} scholar_id={scholar_id}/>}
           </li>
         </ul>
@@ -95,9 +112,9 @@ const BetaHeadline = () => {
         This is the beta version of the Onyx Job Board. Please report any
         bugs or issues to{" "}
         <a 
-          href="mailto:cole.purboo@mail.utoronto.ca"
+          href="mailto:cole.purboo@onyxinitiative.org"
           className={styles.email}
-        >cole.purboo@mail.utoronto.ca</a>
+        >cole.purboo@onyxinitiative.org</a>
       </p>
     </div>
   );
@@ -111,3 +128,5 @@ const OnyxAnnouncemment = (props: any) => {
     </div>
   )
 }
+
+

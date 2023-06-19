@@ -8,6 +8,7 @@ import loading_svg from "../../frontend/src/assets/loading.svg";
 import SearchBar from "../src/components/jobs/SearchBar";
 import { Employer } from '../../backend/src/types/db.types';
 import { BsFillTrashFill } from 'react-icons/bs';
+import BackButton from '../src/components/admin/BackButton';
 
 type SelectedEmployer = {
     employerId: string
@@ -48,6 +49,7 @@ export default function RemoveEmployer(props: SelectedEmployer) {
 
     return (
         <div>
+          <BackButton />
           <Image
               src="https://onyxinitiative.org/assets/img/onyxlogo_nav.png" 
               alt="Onyx Logo" 

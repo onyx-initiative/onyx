@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Image from 'next/image';
 import {GET_EMPLOYER_BY_NAME, GET_EMPLOYERS} from "../../frontend/graphql/queries/employerQueries";
 import {Select, MultiSelect, Button} from '@mantine/core';
+import BackButton from "../src/components/admin/BackButton";
 
 
 
@@ -125,6 +126,7 @@ export default function AddJob() {
     return (
       <div className={styles.container}>
         <div className={styles.logo}>
+          <BackButton />
           <Image
               src="https://onyxinitiative.org/assets/img/onyxlogo_nav.png" 
               alt="Onyx Logo" 

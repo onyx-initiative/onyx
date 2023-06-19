@@ -8,6 +8,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 
 .textinput {
