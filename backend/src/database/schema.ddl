@@ -40,7 +40,7 @@ CREATE TABLE Employer (
     admin_id INTEGER NOT NULL REFERENCES Admin,
     name VARCHAR(50) NOT NULL,
     contact_email VARCHAR(100) NOT NULL,
-    address VARCHAR(50) NOT NULL,
+    address VARCHAR(255) NOT NULL,
     website VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     logo_url TEXT
