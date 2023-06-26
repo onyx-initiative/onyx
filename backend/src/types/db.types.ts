@@ -46,24 +46,22 @@ export type Job = {
     title: string;
     description: string;
     long_description: string;
-    requirements: string;
-    experience: string;
-    education: string;
-    how_to_apply: string;
-    additional_info: string;
-    employer_industries: string;
-    job_function: string;
-    categories: string;
-    contact_email: string;
+    requirements: string | null;
+    experience: string | null;
+    education: string | null;
+    how_to_apply: string | null;
+    additional_info: string | null;
+    categories: string | null;
+    contact_email: string | null;
     job_type: job_type;
     location: string;
-    applicant_year: number[];
+    applicant_year: number[] | null;
     deadline: Date;
     date_posted: Date;
     total_views: number;
     tags: string[];
     live: boolean;
-    link: string;
+    link: string | null;
 }
 
 export type Featured = {

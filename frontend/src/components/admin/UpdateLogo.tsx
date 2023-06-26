@@ -76,7 +76,7 @@ export default function UpdateLogo() {
                     </div>
                     <div>
                         <p>Please paste the URL of the new logo</p>
-                        <p style={{ fontSize: "0.9rem", color: "red", marginTop: 0}}>Note: Please make sure the URL path ends in .png/.jpg and comes from glassdoor</p>
+                        <p style={{ fontSize: "0.9rem", color: "red", marginTop: 0}}>Note: Please make sure the URL path ends in .png/.jpg and comes from linkedin</p>
                         <input type="text" placeholder="Image URL" value={newLogo} onChange={
                             (e) => {
                                 setNewLogo(e.target.value)

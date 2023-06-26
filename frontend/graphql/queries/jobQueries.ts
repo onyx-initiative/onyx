@@ -16,8 +16,6 @@ export const GET_FEATURED_JOBS = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -69,8 +67,6 @@ export const GET_JOB_BY_ID = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -100,8 +96,6 @@ export const GET_JOBS = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -131,8 +125,6 @@ export const GET_JOBS_ADMIN = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -162,8 +154,6 @@ export const GET_JOBS_BY_EMPLOYER_ID = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -192,8 +182,6 @@ export const GET_RELEVANT_JOBS = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -224,8 +212,6 @@ export const SEARCH_JOBS = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -254,8 +240,6 @@ export const GET_NEW_JOBS = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -285,8 +269,6 @@ export const GET_FAVOURITES = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term
@@ -315,8 +297,6 @@ export const GET_FILTERED_JOBS = gql`
             education
             how_to_apply
             additional_info
-            employer_industries
-            job_function
             contact_email
             job_type
             term

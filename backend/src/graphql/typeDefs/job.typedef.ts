@@ -31,19 +31,17 @@ export const jobTypeDef = gql`
         education: String
         how_to_apply: String
         additional_info: String
-        employer_industries: String!
-        job_function: String!
         contact_email: String
         job_type: String!
-        term: String!
+        term: String
         location: String!
-        applicant_year: [Int!]!
+        applicant_year: [Int]
         deadline: String!
         date_posted: String!
         total_views: Int!
-        tags: [String!]!
+        tags: [String]
         live: Boolean!
-        link: String!
+        link: String
     }
 
     input BatchJob {
@@ -56,16 +54,14 @@ export const jobTypeDef = gql`
         education: String
         how_to_apply: String
         additional_info: String
-        employer_industries: String!
-        job_function: String!
         contact_email: String
         job_type: String!
-        term: String!
+        term: String
         location: String!
-        applicant_year: [Int!]!
+        applicant_year: [Int]
         deadline: String!
-        tags: [String!]!
-        link: String!
+        tags: [String]
+        link: String
     }
 
     type JobSearch {
@@ -81,18 +77,16 @@ export const jobTypeDef = gql`
         education: String
         how_to_apply: String
         additional_info: String
-        employer_industries: String!
-        job_function: String!
         contact_email: String
         job_type: String!
-        term: String!
+        term: String
         location: String!
-        applicant_year: [Int!]!
+        applicant_year: [Int]
         deadline: String!
         date_posted: String!
         total_views: Int!
-        tags: [String!]!
-        link: String!
+        tags: [String]
+        link: String
     }
 
     input JobTypeFilterInput {
@@ -140,18 +134,15 @@ export const jobTypeDef = gql`
             education: String
             how_to_apply: String
             additional_info: String
-            employer_industries: String!
-            job_function: String!
-
             contact_email: String
             job_type: String!
-            term: String!
+            term: String
             location: String!
-            applicant_year: [Int!]!
+            applicant_year: [Int]
             deadline: String!
-            tags: [String!]!
+            tags: [String]
             live: Boolean!
-            link: String!
+            link: String
         ): Boolean!
         batchCreateJobs(
             admin_id: ID!
