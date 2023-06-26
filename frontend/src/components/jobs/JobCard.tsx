@@ -145,7 +145,7 @@ const JobCard = (props: any) => {
              job.education ? 
               <div>
             <h4>Education</h4>
-            <JobListElement textItems={job.education}/>
+            {formatText(job.education)}
             </div> : null
             }
           </div>
@@ -300,19 +300,6 @@ export const filterNewlines = (text: string) => {
   if (!text) return "";
   const result = text.split('\\n').map((str: string, indx: number) => <p key={indx}>{str}</p>);
   return result;
-}
-
-const JobListElement = (props: any) => {
-  const { textItems } = props;
-  const formatted = formatText(textItems);
-  const listItems = Array.isArray(formatted) ? formatted.map((str: string, index: number) => <li key={index}>{str}</li>) : <li>{formatted}</li>;
-  return (
-    <div>
-      <ul>
-        {listItems}
-      </ul>
-    </div>
-  )
 }
 
 export default JobCard;
