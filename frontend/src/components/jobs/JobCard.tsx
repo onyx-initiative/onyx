@@ -25,7 +25,7 @@ const JobCard = (props: any) => {
         setLogo(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).logo_url);
         setEmployerName(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).name);
         // console.log(formatText(job.requirements));
-        console.log(filterNewlines(job.long_description))
+        console.log(job.requirements)
       }
     }, [employerData, job.employer_id])
   
@@ -68,12 +68,15 @@ const JobCard = (props: any) => {
           <div className={styles.jobCardBody}
             onClick={() => setOpened(!opened)}
           >
-            <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4>
+            {job.applicant_year ? <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4> : null}
             <p>{job.description}</p>
           </div>
+          {
+            job.tags ?
           <div className={styles.jobTags}>
             {job.tags.map((tag: string, index:number) => <Tag key={tag} tag={tag}/>)}
-          </div>
+          </div> : null
+          }
           <p className={styles.deadline}>{check > 2090 ? "No Deadline" : 'Deadline: ' + date}</p>
         </div>
         <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
@@ -112,28 +115,46 @@ const JobCard = (props: any) => {
               </div>
             </div>
           </div>
+          {
+            job.tags ?
           <div className={styles.jobTags}>
             {job.tags.map((tag: string, index: number) => <Tag key={tag} tag={tag}/>)}
-          </div>
+          </div> : null
+          }
           <div className={styles.jobCardBodyDrawer}>
-            <div>
+            { job.link ? <div>
               <ApplyButton link={job.link} />
-            </div>
+            </div> : null}
           <div>
             <h4>Job Description</h4>
             <p>{filterNewlines(job.long_description)}</p>
-            <p>{"Job Function: " + job.job_function}</p>
-            <h4>Requirements</h4> 
-              <JobListElement textItems={job.requirements}/>
-            <h4>Experience</h4>
-            <p>{job.experience}</p>
+            { job.requirements ? 
+              <div>
+              <h4>Requirements</h4> 
+              {formatText(job.requirements)}
+              </div> : null
+            }
+            {
+              job.experience ? 
+            <div>
+              <h4>Experience</h4>
+              <p>{job.experience}</p>
+            </div> : null
+            }
+            {
+             job.education ? 
+              <div>
             <h4>Education</h4>
             <JobListElement textItems={job.education}/>
+            </div> : null
+            }
           </div>
-          <div style={{ display: "flex" }}>
-              <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Term: </p>
-              <p>{job.term}</p>
-          </div>
+          { job.term ? 
+            <div style={{ display: "flex" }}>
+                <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>Term: </p>
+                <p>{job.term}</p>
+            </div> : null
+          }
           {job.contact_email ? <h4>{"Contact: " + job.contact_email}</h4> : null}
           {job.additional_info ?  
             <div> 
@@ -254,16 +275,25 @@ const ApplyButton = (props: any) => {
 
 const formatText = (text: string) => {
   if (!text) return "";
-  if (text[0] === '-' || text[0] === '•') {
-    const result = text.split('- ') || text.split('-');
+  // if (text[0] === '-' || text[0] === '•') {
+    let result = text.split(/(?=- |\n)/)
+    console.log(result)
     // Trim whitespaces
-    let final = result.map(str => str.trim());
-    // Remove empty strings
-    final = final.filter(str => str !== "");
+    let final = result.map((str: string, index: number) => {
+      if (!str.includes("- ")) {
+        return <div key={index}><h4 style={{ fontWeight: "bold", fontSize: "16" }}>{str}</h4></div>
+      } else {
+        return <li key={index}>{str.trim().slice(2)}</li>
+      }
+    });
     return final;
-  } else {
-    return text;
-  }
+  // } else {
+  // }
+  // const formattedText = text
+  //   .replace(/\\n/g, '\n') // Replace '\\n' with newline character '\n'
+  //   .replace(/- /g, '\n- '); // Add a newline character before each dash ('-')
+  
+  // return formattedText;
 }
 
 export const filterNewlines = (text: string) => {

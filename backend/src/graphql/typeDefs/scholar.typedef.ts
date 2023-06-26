@@ -42,14 +42,14 @@ export const scholarTypeDef = gql`
         job_function: String!
         contact_email: String
         job_type: String!
-        term: String!
+        term: String
         location: String!
-        applicant_year: [Int!]!
+        applicant_year: [Int]
         deadline: String!
         date_posted: String!
         total_views: Int!
-        tags: [String!]!
-        link: String!
+        tags: [String]
+        link: String
     }
 
     type Recommendation {
@@ -63,7 +63,7 @@ export const scholarTypeDef = gql`
         job_type: String!
         location: String!
         deadline: String!
-        link: String!
+        link: String
     }
 
     type Query {

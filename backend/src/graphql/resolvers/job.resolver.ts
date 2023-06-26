@@ -107,7 +107,7 @@ const jobResolver = {
             const query = `
                 SELECT *
                 FROM Job
-                WHERE date_posted > NOW() - INTERVAL '3 days'
+                WHERE date_posted > NOW() - INTERVAL '7 days'
                 LIMIT 10;
             `;
             const resp = await client.query(query).catch((err: any) => {
@@ -133,8 +133,6 @@ const jobResolver = {
                 education,
                 how_to_apply,
                 additional_info,
-                employer_industries,
-                job_function,
                 contact_email,
                 job_type,
                 term,
@@ -233,8 +231,6 @@ const jobResolver = {
             education,
             how_to_apply,
             additional_info,
-            employer_industries,
-            job_function,
             contact_email,
             job_type,
             term,
@@ -263,109 +259,53 @@ const jobResolver = {
 
             let query;
             
-            if (contact_email === undefined) {
-                query = `INSERT INTO job(
-                    employer_id,
-                    admin_id,
-                    title,
-                    description,
-                    long_description,
-                    requirements,
-                    experience,
-                    education,
-                    how_to_apply,
-                    additional_info,
-                    employer_industries,
-                    job_function,
-                    job_type,
-                    term,
-                    location,
-                    applicant_year,
-                    deadline,
-                    tags,
-                    live,
-                    link
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) RETURNING *;`;
-                await client.query(query, 
-                    [
-                    employer_id,
-                    admin_id,
-                    title,
-                    description,
-                    long_description,
-                    requirements,
-                    experience,
-                    education,
-                    how_to_apply,
-                    additional_info,
-                    employer_industries,
-                    job_function,
-                    job_type.toLowerCase(),
-                    term,
-                    location,   
-                    applicant_year,
-                    deadline,
-                    tags,
-                    live,
-                    link
-                ]).catch((err: any) => {
-                    console.log(err);
-                    client.release()
-                    return false;
-                });
-            } else {
-                query = `INSERT INTO job(
-                    employer_id,
-                    admin_id,
-                    title,
-                    description,
-                    long_description,
-                    requirements,
-                    experience,
-                    education,
-                    how_to_apply,
-                    additional_info,
-                    employer_industries,
-                    job_function,
-                    contact_email,
-                    job_type,
-                    term,
-                    location,
-                    applicant_year,
-                    deadline,
-                    tags,
-                    live,
-                    link
-                    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) RETURNING *;`;
-                await client.query(query, 
-                    [
-                    employer_id,
-                    admin_id,
-                    title,
-                    description,
-                    long_description,
-                    requirements,
-                    experience,
-                    education,
-                    how_to_apply,
-                    additional_info,
-                    employer_industries,
-                    job_function,
-                    contact_email,
-                    job_type.toLowerCase(),
-                    term,
-                    location,   
-                    applicant_year,
-                    deadline,
-                    tags,
-                    live,
-                    link
-                ]).catch((err: any) => {
-                    console.log(err);
-                    client.release()
-                    return false;
-                });
-            }
+            query = `INSERT INTO job(
+                employer_id,
+                admin_id,
+                title,
+                description,
+                long_description,
+                requirements,
+                experience,
+                education,
+                how_to_apply,
+                additional_info,
+                job_type,
+                term,
+                location,
+                applicant_year,
+                deadline,
+                tags,
+                live,
+                link,
+                contact_email
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING *;`;
+            await client.query(query, 
+                [
+                employer_id,
+                admin_id,
+                title,
+                description,
+                long_description,
+                requirements,
+                experience,
+                education,
+                how_to_apply,
+                additional_info,
+                job_type.toLowerCase(),
+                term,
+                location,   
+                applicant_year,
+                deadline,
+                tags,
+                live,
+                link,
+                contact_email
+            ]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false;
+            });
             
             client.release()
             return true;
@@ -385,8 +325,6 @@ const jobResolver = {
                 education,
                 how_to_apply,
                 additional_info,
-                employer_industries,
-                job_function,
                 contact_email,
                 job_type,
                 term,
@@ -396,7 +334,7 @@ const jobResolver = {
                 tags,
                 live, 
                 link
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, true, $20) RETURNING *;`;
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, true, $18) RETURNING *;`;
             for (let i = 0; i < jobs.length; i++) {
                 // Get the employer id
                 const employer = await client.query(`SELECT employer_id
@@ -420,8 +358,6 @@ const jobResolver = {
                     job.education,
                     job.how_to_apply,
                     job.additional_info,
-                    job.employer_industries,
-                    job.job_function,
                     job.contact_email,
                     job.job_type.toLowerCase(),
                     job.term,

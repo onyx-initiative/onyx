@@ -58,8 +58,6 @@ export default function AddJob() {
         education: JobInfo.education,
         howToApply: JobInfo.howToApply,
         additionalInfo: JobInfo.additionalInfo ? JobInfo.additionalInfo : null,
-        employerIndustries: JobInfo.employerIndustries,
-        jobFunction: JobInfo.jobFunction,
         link: JobInfo.link
     }})
     const router = useRouter()
@@ -209,8 +207,6 @@ export default function AddJob() {
           <InputElementLong label="education" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <InputElementLong label="howToApply" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <InputElementLong label="additionalInfo" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElement label="employerIndustries" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElement label="jobFunction" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <Checkbox
             label="Save to Drafts?"
             color="dark"
@@ -301,7 +297,7 @@ const formatEmpData = (empData: any[]) => {
 const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
 
   console.log(jobInfo.applicantYear)
-  if (jobInfo.title && jobInfo.description && jobInfo.jobType && jobInfo.location && jobInfo.applicantYear && jobInfo.tags) {
+  if (jobInfo.title && jobInfo.description && jobInfo.jobType && jobInfo.location && jobInfo.longDescription) {
     setCompleted(true)
   } else {
     setCompleted(false)
