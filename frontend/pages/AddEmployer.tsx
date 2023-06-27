@@ -33,7 +33,7 @@ export default function AddEmployer() {
   const [createEmployer, {data: employerData, loading, error}] = useMutation(CREATE_EMPLOYER, {variables: {
     adminId: "1",
     name: EmployerInfo.name,
-    contactEmail: EmployerInfo.contact,
+    contactEmail: EmployerInfo.contact ? EmployerInfo.contact : "",
     address: EmployerInfo.address,
     website: EmployerInfo.website,
     description: EmployerInfo.description,
@@ -106,13 +106,8 @@ return (
 }
 
 const checkCompletion = async (employerInfo: EmployerInfo, setCompleted: any) => {
-  console.log(employerInfo.contact)
-  console.log(employerInfo.address)
-  console.log(employerInfo.description)
-  console.log(employerInfo.website)
-  console.log(employerInfo.name)
 
-  if (employerInfo.name && employerInfo.contact && employerInfo.address && employerInfo.website && employerInfo.description) {
+  if (employerInfo.name && employerInfo.address && employerInfo.website && employerInfo.description) {
     setCompleted(true)
   } else {
     setCompleted(false)
