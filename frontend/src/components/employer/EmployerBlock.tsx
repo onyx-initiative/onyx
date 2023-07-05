@@ -9,8 +9,8 @@ import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
 import { useQuery } from "@apollo/client";
 import { GET_JOBS_BY_EMPLOYER_ID } from "../../../graphql/queries/jobQueries";
 import { getLogo, unsupportedCompanies } from "../../utils/microservices";
+import va from '@vercel/analytics';
 import { useMediaQuery } from "react-responsive";
-
 
 
 export const EmployerBlock = (props: any) => {
@@ -30,8 +30,7 @@ export const EmployerBlock = (props: any) => {
     //       setJobs([])
     //   }
     //   // Ignore, this is intentional
-    // }, [JobList, jobLoading]);
-    console.log(employer)
+    // }, [JobList, jobLoading]);)
 
     const isLargeScreen = useMediaQuery({ query: '(min-width: 800px)' })
 
@@ -57,9 +56,10 @@ export const EmployerBlock = (props: any) => {
             <p>
                 <a href={employer.website}>{"Learn more: " + employer.website}</a>
             </p>
-            <p>{"Contact: " + employer.contact_email}</p>
-            {employer.student_new_grad_link ? <p>{"Student and New Grad Link: " + employer.student_new_grad_link}</p> : null }
+            {employer.contact_email ? <p>{"Contact: " + employer.contact_email}</p> : null }
+            
             <p>{filterNewlines(employer.description)}</p>
+            {employer.student_new_grad_link ? <ApplyButton link={employer.student_new_grad_link} /> : null}
             <h3>Job Postings</h3>
             <EmployerJobList jobs={jobs.filter((job: Job) => job.employer_id === employer.employer_id)} />
             
@@ -98,6 +98,44 @@ export const filterNewlines = (text: string) => {
     const result = text.split('\n').map((str: string, indx: number) => <p key={indx}>{str}</p>);
     return result;
 }
+
+const ApplyButton = (props: any) => {
+
+    const { link } = props;
+  
+    let regex = /^https:\/\//;
+  
+    return (
+        <div style={{ 
+            display: 'flex', 
+            alignItems: 'center',
+            backgroundColor: '#806E53', 
+            marginTop: 10, 
+            paddingRight: 20, 
+            paddingTop: 10,
+            paddingBottom: 10,
+            paddingLeft: 20,
+            borderRadius: 5,
+            width: 'fit-content',
+        }}>
+              <button 
+                style={{ border: 'none', backgroundColor: 'transparent', padding: 0, margin: 0}}
+              >
+                <a 
+                  href={regex.test(link) ? link : "https://" + link} 
+                  style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem'}} 
+                  target='_blank' 
+                  rel="noreferrer"
+                  onClick={() => {
+                    va.track("Students and New Grads", { link: link });
+                  }}
+                >
+                  Students and New Grads
+                </a>
+              </button>
+            </div>
+    )
+  }
 
 
 
