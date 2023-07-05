@@ -4,8 +4,8 @@
 .jobContainer {
     display: flex;
     margin: 1rem;
-    margin-left: 4rem;
-    margin-right: 4rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
     align-content: middle;
     justify-content: center;
 }
@@ -233,9 +233,6 @@
     cursor: pointer;
 }
 
-.jobCardBodyDrawer {
-
-}
 
 @media (max-width: 800px) {
     .jobCardHeaderDrawer {
@@ -288,8 +285,8 @@
     color: rgb(54, 54, 54);
     align-self: top;
     margin-left: auto;
-    margin-right: 2rem;
-    /* margin-top: -16px; */
+    flex-wrap: wrap;
+    
 }
 
 .additionalInfo > h5 {
@@ -326,6 +323,8 @@
 @media (max-width: 800px) {
     .jobCard {
         flex-direction: column;
+        padding: 0.5rem;
+        
     }
 
     .bookmarkContainer {
@@ -337,6 +336,7 @@
 .jobCardBody {
     color: black;
     cursor: pointer;
+    width: 90%;
 }
 
 .jobCardBody > h4 {
@@ -346,6 +346,10 @@
     margin-bottom: 0.5rem;
     font-size: medium;
 
+}
+
+.jobCardBody > p {
+    overflow-wrap: break-word;
 }
 
 .deadline {

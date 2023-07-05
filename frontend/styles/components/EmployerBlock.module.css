@@ -8,12 +8,19 @@
 
 
 .employerContainer {
-    width: 100%;
+    width: 9rem;
     height: 150px;
     background-color: white;
     border-radius: 5px;
     padding: 5px;
     transition: background-color 0.3s ease; /* add transition effect */
+  }
+
+  @media (min-width: 1000px) {
+    .employerContainer {
+        width: 18rem;
+        height: 20rem;
+    }
   }
   
   .employerContainer:hover {
