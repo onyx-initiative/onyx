@@ -21,6 +21,7 @@ export const GET_EMPLOYER_BY_NAME = gql`
             name
             website
             logo_url
+            student_new_grad_link
         }
 }
 `
@@ -37,6 +38,7 @@ export const GET_EMPLOYERS = gql`
             website
             description
             logo_url
+            student_new_grad_link
         }
     }
 `

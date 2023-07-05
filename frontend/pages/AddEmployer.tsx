@@ -37,6 +37,7 @@ export default function AddEmployer() {
     address: EmployerInfo.address,
     website: EmployerInfo.website,
     description: EmployerInfo.description,
+    studentNewGradLink: EmployerInfo["student and new grad link" as keyof typeof EmployerInfo],
   }})
 
   // useEffect(() => {
@@ -88,6 +89,7 @@ return (
           <InputElement label="Contact" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <InputElement label="Address" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <InputElement label="Website" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
+          <InputElement label="Student and New Grad Link" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <InputElementLong label="Description" EmployerInfo={EmployerInfo} setEmployerInfo={setEmployerInfo} />
           <Button color="dark" onClick={() => {
             // 1. Check all fields are filled

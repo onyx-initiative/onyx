@@ -44,7 +44,7 @@ const employerResolver = {
     Mutation: {
         // Need to add the URL path to the logo or an empty string OR remove from db and store locally
         createEmployer: async (_: any, { 
-            admin_id, name, contact_email, address, website, description
+            admin_id, name, contact_email, address, website, description, student_new_grad_link
         }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
@@ -76,10 +76,10 @@ const employerResolver = {
 
             // If employer doesn't exist, create a new one
             const query = `INSERT INTO employer (admin_id, name, contact_email, 
-                           address, website, description, logo_url)
-                           VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
+                           address, website, description, logo_url, student_new_grad_link)
+                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
             const resp = await client.query(query, [admin_id, name, 
-                contact_email, address, website, description, logo_url.logo]).catch((err: any) => {
+                contact_email, address, website, description, logo_url.logo, student_new_grad_link]).catch((err: any) => {
                 console.log(err);
                 client.release()
                 return [];

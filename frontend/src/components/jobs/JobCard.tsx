@@ -130,7 +130,7 @@ const JobCard = (props: any) => {
             <p>{filterNewlines(job.long_description)}</p>
             { job.requirements ? 
               <div>
-              <h4>Requirements</h4> 
+              <h4>Resposibilities & Requirements</h4> 
               {formatText(job.requirements)}
               </div> : null
             }
