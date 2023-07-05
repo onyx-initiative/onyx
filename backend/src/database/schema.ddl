@@ -43,7 +43,8 @@ CREATE TABLE Employer (
     address VARCHAR(255) NOT NULL,
     website VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    logo_url TEXT
+    logo_url TEXT,
+    student_new_grad_link TEXT
 );
 
 CREATE TABLE Job (

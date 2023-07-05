@@ -147,9 +147,6 @@ export default function AddJob() {
             nothingFound="No options"
             data={formatEmpData(empData)}
           />
-          <InputElement label="description" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElement label="jobType" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElement label="term" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <InputElement label="location" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <MultiSelect
             className={styles.inputContainer}
@@ -177,7 +174,15 @@ export default function AddJob() {
               setJobInfo(state => ({...state, applicantYear: x}))
             }}
           />
-            <InputElement label="deadline" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="deadline" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="description" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElementLong label="longDescription" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElementLong label="requirements" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="contactEmail" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="link" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElementLong label="howToApply" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="jobType" JobInfo={JobInfo} setJobInfo={setJobInfo} />
+          <InputElement label="term" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <MultiSelect
             className={styles.inputContainer}
             label="tags"
@@ -199,14 +204,6 @@ export default function AddJob() {
               setJobInfo(state => ({...state, tags: query}))
             }}
           />
-          <InputElement label="contactEmail" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElement label="link" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="longDescription" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="requirements" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="experience" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="education" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="howToApply" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="additionalInfo" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <Checkbox
             label="Save to Drafts?"
             color="dark"

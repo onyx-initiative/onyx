@@ -13,6 +13,7 @@ export const employerTypeDef = gql`
         website: String!
         description: String!
         logo_url: String
+        student_new_grad_link: String
     }
 
     type Query {
@@ -29,6 +30,7 @@ export const employerTypeDef = gql`
             address: String!
             website: String!
             description: String!
+            student_new_grad_link: String
         ): Employer!
         removeEmployer(employer_id: ID!): Boolean!      
         updateLogo(name: String!, logo_url: String!): Employer!                            

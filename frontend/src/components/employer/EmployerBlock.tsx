@@ -31,7 +31,7 @@ export const EmployerBlock = (props: any) => {
     //   }
     //   // Ignore, this is intentional
     // }, [JobList, jobLoading]);
-    console.log(employer.description)
+    console.log(employer)
 
     const isLargeScreen = useMediaQuery({ query: '(min-width: 800px)' })
 
@@ -58,6 +58,7 @@ export const EmployerBlock = (props: any) => {
                 <a href={employer.website}>{"Learn more: " + employer.website}</a>
             </p>
             <p>{"Contact: " + employer.contact_email}</p>
+            {employer.student_new_grad_link ? <p>{"Student and New Grad Link: " + employer.student_new_grad_link}</p> : null }
             <p>{filterNewlines(employer.description)}</p>
             <h3>Job Postings</h3>
             <EmployerJobList jobs={jobs.filter((job: Job) => job.employer_id === employer.employer_id)} />
