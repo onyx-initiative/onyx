@@ -31,13 +31,25 @@
     color: #ffd700;
   }
 
-
+.removeEmployerCard {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+ height: 200px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+overflow: 
+}
 
 .removeJobCard {
   display: flex;
   flex-direction: column;
   width: 300px;
- 
+ height: 200px;
   background-color: white;
   border-radius: 10px;
   padding: 20px;

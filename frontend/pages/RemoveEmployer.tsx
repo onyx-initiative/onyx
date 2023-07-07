@@ -90,8 +90,8 @@ export function RemoveEmployerCard(props: any) {
 
     return (
       <div>
-        <div className={styles.removeJobCard}>
-            <Image width={200} height={50} src={employer.logo_url} alt='employer logo' loader={({ src }) => src }/>
+        <div className={styles.removeEmployerCard}>
+            <Image width={50} height={100} src={employer.logo_url} alt='employer logo' loader={({ src }) => src }/>
             <BsFillTrashFill onClick={confirmDelete} size={20} color="black"></BsFillTrashFill>
         </div>
         <h4>{employer.name}</h4>
