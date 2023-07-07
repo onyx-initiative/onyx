@@ -64,10 +64,9 @@ export default function RemoveJob(props: SelectedJob) {
             <h1>Search for a Job to remove!</h1>
             <SearchBar setJobs={setJobs} query={search} setSearch={setSearch}/>
             <div className={styles.jobContainer}>
-                <div>
                 {loading ? <p>loading</p> : jobs.map((job: Job, index:any) => <RemoveJobCard  job={job} key={index} refetchQueries={refetchQueries} />
                 )}
-                </div>
+                
             </div>
         </div>
 
@@ -95,7 +94,7 @@ export function RemoveJobCard(props: any) {
         if (result == true) {
         console.log(job.job_id)
         await deleteJob({variables: {jobId: job.job_id}})
-        console.log("Job deleted")}
+        alert(`${job.title} successfully deleted'`)}
         else {
     } }
       catch(queryError){
@@ -113,7 +112,7 @@ export function RemoveJobCard(props: any) {
             <p>{ loading ? <p>loading</p> : employer_name.getEmployerById.name}</p>
             <p>Deadline: {deadline_date}</p>
             <p>Date Posted: {date_posted}</p>
-            <BsFillTrashFill onClick={confirmDelete} size={50} color="black"></BsFillTrashFill>
+            <BsFillTrashFill onClick={confirmDelete} size={20} color="black"></BsFillTrashFill>
         </div>
     )
 }
