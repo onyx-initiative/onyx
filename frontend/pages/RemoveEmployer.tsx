@@ -76,7 +76,7 @@ export function RemoveEmployerCard(props: any) {
 
     async function confirmDelete() {
       try {
-        var result = confirm("Are you sure you want to delete this Employer?");
+        var result = confirm(`Are you sure you want to delete ${employer.name}?`);
         if (result == true) {
         console.log(employer.employer_id)
         await RemoveEmployer({variables: {employerId: employer.employer_id}})
@@ -89,9 +89,12 @@ export function RemoveEmployerCard(props: any) {
     }
 
     return (
+      <div>
         <div className={styles.removeJobCard}>
             <Image width={200} height={50} src={employer.logo_url} alt='employer logo' loader={({ src }) => src }/>
             <BsFillTrashFill onClick={confirmDelete} size={20} color="black"></BsFillTrashFill>
         </div>
+        <h4>{employer.name}</h4>
+      </div>
     )
 }

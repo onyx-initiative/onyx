@@ -7,10 +7,11 @@ import styles from "../styles/components/AddJobForm.module.css";
 import Image from 'next/image';
 import EmployerInfo from '../src/components/employer/EmployerInfo';
 import { Employer } from "../../backend/src/types/db.types";
-import {Button} from '@mantine/core'
+import {Button, Notification} from '@mantine/core'
 import { loadavg } from 'os';
 import { getLogo } from '../src/utils/microservices';
 import BackButton from '../src/components/admin/BackButton';
+
 
 type EmployerInfo = {
   employer_id: string,
@@ -61,14 +62,19 @@ export default function AddEmployer() {
     }}
   , [completed])
 
-  const handleSubmit = () => {
-    console.log(EmployerInfo)
-    createEmployer().catch((err) => {
-      alert("Error creating Employer. Please check that you entered the information correctly and try again.")
-      console.log(err)
-    });
-    router.push('/Admin')
-}
+  const handleSubmit = async () => {
+    try {
+      console.log(EmployerInfo);
+      await createEmployer();
+      
+      alert('Employer created successfully!');
+  
+      router.push('/Admin');
+    } catch (err) {
+      alert('Error creating Employer. Please check that you entered the information correctly and try again.');
+      console.log(err);
+    }
+  };
 
 return (
     <div className={styles.container}>

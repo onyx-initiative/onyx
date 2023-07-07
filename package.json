@@ -1,7 +1,11 @@
 {
   "dependencies": {
     "@azure/msal-node": "^1.17.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@mantine/utils": "^6.0.13",
+    "@mui/material": "^5.13.7",
+    "@types/material-ui": "^0.21.12",
     "next-auth": "^4.22.1",
     "react-responsive": "^9.0.2"
   }
