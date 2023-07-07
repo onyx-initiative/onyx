@@ -67,7 +67,7 @@ export default function AddEmployer() {
       console.log(EmployerInfo);
       await createEmployer();
       
-      alert('Employer created successfully!');
+      alert(`${EmployerInfo.name} created successfully!`);
   
       router.push('/Admin');
     } catch (err) {
