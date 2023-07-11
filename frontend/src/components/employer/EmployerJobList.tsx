@@ -49,7 +49,7 @@ export function JobBlock(props: any) {
                     <h5>{job.location} | {job.job_type} | Deadline: {new Date(parseInt(job.deadline)).toDateString()}  </h5>
                 </div>
                 <div className={styles.jobTags}>
-                        {job.tags.map((tag: string) => Tag(tag))}
+                        {job.tags?.map((tag: string) => Tag(tag))}
                 </div>
         </button>
                 
