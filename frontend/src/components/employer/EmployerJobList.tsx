@@ -46,10 +46,10 @@ export function JobBlock(props: any) {
                 <h3 className={styles.title}>{props.job.title}</h3>
                 <div className={styles.additionalInfo}>
                     <IoLocationSharp size={20} color='gray' />
-                    <h5>{job.location} | {job.job_type} | Deadline: {new Date(parseInt(job.deadline)).toDateString()}  </h5>
+                    <h5>{job.location} | {job.job_type} | Deadline: {job.deadline ? new Date(parseInt(job.deadline)).toDateString() : "No Deadline"}  </h5>
                 </div>
                 <div className={styles.jobTags}>
-                        {job.tags?.map((tag: string) => Tag(tag))}
+                        {job.tags ? job.tags?.map((tag: string) => Tag(tag)) : null}
                 </div>
         </button>
                 

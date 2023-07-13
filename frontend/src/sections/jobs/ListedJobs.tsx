@@ -31,7 +31,7 @@ export default function ListedJobs(props: ListedJobsProps) {
   const [loading, setLoading] = useState(false);
 
   // @todo: Change this to 10 for production
-  const jobsPerPage = 4;
+  const jobsPerPage = 8;
 
   // Uncomment this when backend is connected
   const numPages = loading ? 1 : Math.ceil(jobs.length / jobsPerPage);

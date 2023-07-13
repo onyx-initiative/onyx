@@ -46,7 +46,7 @@ export const EmployerBlock = (props: any) => {
           scrollAreaComponent={ScrollArea.Autosize}
         >
           
-            <Image src={employer.logo_url} 
+            <Image src={employer.logo_url ? employer.logo_url : getLogo(employer.name)} 
                     alt="Company Logo" 
                     width={80}
                     height={80}
@@ -73,7 +73,7 @@ export const EmployerBlock = (props: any) => {
         }}>
             <Button  className={styles.employerContainer} onClick={() => setOpened(true)}>
                 <div>
-                    <Image src={employer.logo_url} 
+                    <Image src={employer.logo_url ? employer.logo_url : getLogo(employer.name)} 
                         alt="Company Logo" 
                         width={isLargeScreen ? 200 : 90}
                         height={isLargeScreen ? 200 : 90}
