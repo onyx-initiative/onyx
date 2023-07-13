@@ -122,6 +122,27 @@ export const jobTypeDef = gql`
         job: Job!
     }
 
+    input EditJobFields {
+        title: String
+        description: String
+        long_description: String
+        requirements: String
+        experience: String
+        education: String
+        how_to_apply: String
+        additional_info: String
+        categories: String
+        contact_email: String
+        job_type: String
+        term: String
+        location: String
+        applicant_year: [Int]
+        deadline: String
+        tags: [String]
+        live: Boolean
+        link: String
+    }
+
     type Mutation {
         createJob(
             employer_id: ID!
@@ -156,5 +177,6 @@ export const jobTypeDef = gql`
         removeFromFeatured(job_id: ID!): Boolean!
         setLive(job_id: ID!): Boolean!
         makePrivate(job_id: ID!): Boolean!
+        editJob(job_id: ID!, fields: EditJobFields): Boolean!
     }
 `

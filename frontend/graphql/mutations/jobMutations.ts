@@ -70,3 +70,9 @@ export const BATCH_CREATE_JOBS = gql`
     }
 `
 
+export const EDIT_JOB = gql`
+    mutation EditJob($jobId: ID!, $fields: EditJobFields) {
+        editJob(job_id: $jobId, fields: $fields)
+    }
+`
+

@@ -33,6 +33,7 @@ export const employerTypeDef = gql`
             student_new_grad_link: String
         ): Employer!
         removeEmployer(employer_id: ID!): Boolean!      
-        updateLogo(name: String!, logo_url: String!): Employer!                            
+        updateLogo(name: String!, logo_url: String!): Employer!    
+        editEmployer(employer_id: ID!, field: String!, value: String!): Boolean!                        
     }
 `

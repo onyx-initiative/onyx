@@ -9,6 +9,7 @@ import SearchBar from "../src/components/jobs/SearchBar";
 import { Employer } from '../../backend/src/types/db.types';
 import { BsFillTrashFill } from 'react-icons/bs';
 import BackButton from '../src/components/admin/BackButton';
+import { getLogo } from '../src/utils/microservices';
 
 type SelectedEmployer = {
     employerId: string
@@ -91,7 +92,7 @@ export function RemoveEmployerCard(props: any) {
     return (
       <div>
         <div className={styles.removeEmployerCard}>
-            <Image width={50} height={100} src={employer.logo_url} alt='employer logo' loader={({ src }) => src }/>
+            <Image width={50} height={100} src={employer.logo_url ? employer.logo_url : getLogo(employer.name)} alt='employer logo' loader={({ src }) => src }/>
             <BsFillTrashFill onClick={confirmDelete} size={20} color="black"></BsFillTrashFill>
         </div>
         <h4>{employer.name}</h4>

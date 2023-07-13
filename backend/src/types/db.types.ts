@@ -80,3 +80,33 @@ export type Archived = {
     job_id: string;
     scholar_id: string;
 }
+
+export enum EditEmployerFields {
+    name,
+    contact_email,
+    address,
+    website,
+    description,
+    student_new_grad_link
+}
+
+export type EditJobFields = {
+    title?: string;
+    description?: string;
+    long_description?: string;
+    requirements?: string;
+    experience?: string;
+    education?: string;
+    how_to_apply?: string;
+    additional_info?: string;
+    categories?: string;
+    contact_email?: string;
+    job_type?: string;
+    term?: string;
+    location?: string;
+    applicant_year?: number[];
+    deadline?: string;
+    tags?: string[];
+    live: boolean;
+    link?: string;
+}

@@ -30,4 +30,10 @@ export const UPDATE_LOGO = gql`
     }
 `
 
+export const EDIT_EMPLOYER = gql`
+    mutation EditEmployer($employerId: ID!, $field: String!, $value: String!) {
+        editEmployer(employer_id: $employerId, field: $field, value: $value)
+    }
+`
+
 //@todo: Add update employer mutation

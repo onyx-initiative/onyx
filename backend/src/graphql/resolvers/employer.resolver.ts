@@ -109,6 +109,31 @@ const employerResolver = {
             });
             client.release()
             return resp.rows[0];
+        },
+        editEmployer: async (_: any, { employer_id, field, value }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+
+            // Check if employer exists
+            const currentEmployers = await client.query(`SELECT * FROM employer WHERE employer_id = $1`, [employer_id]).catch((err: any) => {
+                console.error(err);
+                client.release()
+            });
+
+            if (currentEmployers.rows.length === 0) {
+                console.log("Employer does not exist");
+                return false;
+            }
+
+            // If employer exists, edit the field
+            const query = `UPDATE employer SET ${field} = $1 WHERE employer_id = $2`;
+            await client.query(query, [value, employer_id]).catch((err: any) => {
+                console.error(err);
+                client.release()
+                return false;
+            });
+            client.release()
+            return true;
         }
     }
 }

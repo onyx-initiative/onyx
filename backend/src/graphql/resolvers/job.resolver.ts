@@ -486,6 +486,30 @@ const jobResolver = {
             });
             client.release()
             return true;
+        },
+        editJob: async (_: any, { job_id, fields }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+
+            const fieldUpdates = Object.entries(fields)
+            .map(([key, value], index) => `${key} = $${index + 1}`)
+            .join(', ');
+
+            const query = `
+            UPDATE Job
+            SET ${fieldUpdates}
+            WHERE job_id = $${Object.keys(fields).length + 1}
+            `;
+
+            const values = Object.values(fields).concat(job_id);
+
+            await client.query(query, values).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false
+            });
+            client.release();
+            return true;
         }
     }
 };
