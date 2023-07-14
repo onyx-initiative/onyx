@@ -58,6 +58,23 @@ export default async function handler(
 
 // Helper functions for parsing the data from the db
 const getRecommendedJobs = async () => {
+  // Archive old jobs
+  await fetch(process.env.NEXT_PUBLIC_URI as string, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+        query: `
+          mutation Mutation {
+            archive
+          }
+        `
+    })
+  })
+
+  // Get the recommended jobs
   const recommendedJobs = await fetch(process.env.NEXT_PUBLIC_URI as string, {
       method: 'POST',
       headers: {

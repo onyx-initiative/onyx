@@ -170,6 +170,7 @@ export const jobTypeDef = gql`
             jobs: [BatchJob!]!
         ): Boolean!
         archiveJob(job_id: ID!): Boolean!
+        archive: Boolean!
         incrementViews(job_id: ID!): Boolean!
         incrementApplications(job_id: ID!): Boolean!
         deleteJob(job_id: ID!): Boolean!

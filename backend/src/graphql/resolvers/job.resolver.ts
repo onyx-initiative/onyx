@@ -3,6 +3,7 @@ import { establishConnection } from '../utils';
 const jobResolver = {
     Query: {
         getJobs: async (_: any, __: any, { dataSources }: any) => {
+            const date = new Date();
             const { db } = dataSources;
             const client = await establishConnection(db);
             const query = `SELECT * FROM job 
@@ -11,11 +12,13 @@ const jobResolver = {
                                 FROM Archive 
                                 WHERE job.job_id = Archive.job_id
                             )
-                            AND live = true`;
-            const resp = await client.query(query).catch((err: any) => {
+                            AND live = true
+                            AND deadline > $1`;
+            const resp = await client.query(query, [date]).catch((err: any) => {
                 console.error(err);
                 client.release()
             });
+
             client.release()
             return resp.rows;
         },
@@ -396,12 +399,46 @@ const jobResolver = {
             }
 
             // Archive the job
-            const archiveQuery = `INSERT INTO archive(job_id) VALUES ($1)`;
+            const archiveQuery = `INSERT INTO archive(job_id, scholar_id) VALUES ($1, 62)`;
             await client.query(archiveQuery, [job_id]).catch((err: any) => {
                 console.log(err);
                 client.release()
                 return false;
             });
+            client.release()
+            return true;
+        },
+        archive: async (_: any, __: any, { dataSources }: any) => {
+            // Get the current date
+            const date = new Date();
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+
+            // Find all of the jobs past the deadline
+            const query = `SELECT job_id
+                           FROM job
+                           WHERE deadline < $1
+                           AND job_id NOT IN (SELECT job_id FROM archive)`;
+            const resp = await client.query(query, [date]).catch((err: any) => {
+                console.log(err);
+                client.release()
+                return false;
+            });
+            if (resp.rows.length === 0) {
+                client.release()
+                return false;
+            }
+
+            // Archive the job
+            // Loop over all the jobs returned from the query and archive them
+            for (let i = 0; i < resp.rows.length; i++) {
+                const archiveQuery = `INSERT INTO archive(job_id, scholar_id) VALUES ($1, 62)`;
+                await client.query(archiveQuery, [resp.rows[i].job_id]).catch((err: any) => {
+                    console.log(err);
+                    client.release()
+                    return false;
+                });
+            }
             client.release()
             return true;
         },
