@@ -89,6 +89,12 @@ export default function Navbar(props: any) {
             <Link href="/Favourites">Favourites</Link>
           </li>
           <li>
+            <Link href={{
+              pathname: '/Views',
+              query: { scholar_id: scholar_id }
+            }}>My Views</Link>
+          </li>
+          <li>
             <a href="https://onyxinitiative.org/contact/" target="_blank" rel="noreferrer">Contact Us</a>
           </li>
           <li>
