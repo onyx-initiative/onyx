@@ -324,10 +324,7 @@ const jobResolver = {
                 description,
                 long_description,
                 requirements,
-                experience,
-                education,
                 how_to_apply,
-                additional_info,
                 contact_email,
                 job_type,
                 term,
@@ -335,9 +332,9 @@ const jobResolver = {
                 applicant_year,
                 deadline,
                 tags,
-                live, 
+                live,
                 link
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, true, $18) RETURNING *;`;
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, true, $15) RETURNING *;`;
             for (let i = 0; i < jobs.length; i++) {
                 // Get the employer id
                 const employer = await client.query(`SELECT employer_id
@@ -349,6 +346,7 @@ const jobResolver = {
                         return false;
                     });
                 const job = jobs[i];
+                job.deadline == null ? job.deadline = "2100-01-01" : job.deadline = job.deadline;
                 await client.query(query, 
                     [
                     employer.rows[0].employer_id,
@@ -357,10 +355,7 @@ const jobResolver = {
                     job.description,
                     job.long_description,
                     job.requirements,
-                    job.experience,
-                    job.education,
                     job.how_to_apply,
-                    job.additional_info,
                     job.contact_email,
                     job.job_type.toLowerCase(),
                     job.term,

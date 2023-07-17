@@ -70,7 +70,7 @@ const JobCard = (props: any) => {
           <div className={styles.jobCardBody}
             onClick={() => setOpened(!opened)}
           >
-            {job.applicant_year ? <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4> : null}
+            {job.applicant_year && job.applicant_year.length > 0 ? <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4> : null}
             <p>{job.description}</p>
           </div>
           {
@@ -216,6 +216,8 @@ const JobCard = (props: any) => {
   }
 
 const formatYears = (years: number[]) => {
+  //Check if years is empty
+  if (years.length === 0) return;
   let formattedYears: string = '';
   for (let i = 0; i < years.length; i++) {
     if (i === years.length - 1) {

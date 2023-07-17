@@ -51,7 +51,7 @@ CREATE TABLE Job (
     job_id SERIAL PRIMARY KEY,
     employer_id INTEGER NOT NULL REFERENCES Employer ON DELETE CASCADE,
     admin_id INTEGER NOT NULL REFERENCES Admin,
-    title VARCHAR(50) NOT NULL,
+    title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     long_description TEXT,
     requirements TEXT,
@@ -63,7 +63,7 @@ CREATE TABLE Job (
     contact_email VARCHAR(100),
     job_type VARCHAR(50) NOT NULL,
     term VARCHAR(50),
-    location VARCHAR(50) NOT NULL,
+    location VARCHAR(255) NOT NULL,
     applicant_year INTEGER[],
     deadline TIMESTAMP NOT NULL,
     date_posted TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -124,7 +124,7 @@ SELECT to_tsvector(
     || location || ' ' 
     || array_to_string(tags, ' ')) AS document, job_id
 FROM Job JOIN Employer ON Job.employer_id = Employer.employer_id
-WHERE live = TRUE;
+WHERE live = TRUE AND NOT EXISTS (SELECT * FROM Archive WHERE Archive.job_id = Job.job_id);
 
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
@@ -134,7 +134,7 @@ RETURNS TABLE(
     employer_id INTEGER,
     job_id INTEGER,
     name VARCHAR(50),
-    title VARCHAR(50),
+    title VARCHAR(255),
     description TEXT,
     long_description TEXT,
     requirements TEXT,
@@ -146,7 +146,7 @@ RETURNS TABLE(
     contact_email VARCHAR(100),
     job_type VARCHAR(50),
     term VARCHAR(50),
-    location VARCHAR(50),
+    location VARCHAR(255),
     applicant_year INTEGER[],
     deadline TIMESTAMP,
     date_posted TIMESTAMP,
@@ -238,7 +238,7 @@ CREATE OR REPLACE FUNCTION search_jobs_by_criteria(criteria TEXT[])
 RETURNS TABLE(
     job_id INTEGER,
     employer_id INTEGER,
-    title VARCHAR(50),
+    title VARCHAR(255),
     description TEXT,
     long_description TEXT,
     requirements TEXT,
@@ -250,7 +250,7 @@ RETURNS TABLE(
     contact_email VARCHAR(100),
     job_type VARCHAR(50),
     term VARCHAR(50),
-    location VARCHAR(50),
+    location VARCHAR(255),
     applicant_year INTEGER[],
     deadline TIMESTAMP,
     date_posted TIMESTAMP,

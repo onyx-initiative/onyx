@@ -44,26 +44,6 @@ export const jobTypeDef = gql`
         link: String
     }
 
-    input BatchJob {
-        employer_name: String!
-        title: String!
-        description: String!
-        long_description: String
-        requirements: String
-        experience: String
-        education: String
-        how_to_apply: String
-        additional_info: String
-        contact_email: String
-        job_type: String!
-        term: String
-        location: String!
-        applicant_year: [Int]
-        deadline: String!
-        tags: [String]
-        link: String
-    }
-
     type JobSearch {
         job_id: ID!
         name: String!
@@ -140,6 +120,23 @@ export const jobTypeDef = gql`
         deadline: String
         tags: [String]
         live: Boolean
+        link: String
+    }
+
+    input BatchJob {
+        employer_name: String!
+        title: String!
+        description: String!
+        long_description: String
+        requirements: String
+        how_to_apply: String
+        contact_email: String
+        job_type: String!
+        term: String
+        location: String!
+        applicant_year: [Int]
+        deadline: String!
+        tags: [String]
         link: String
     }
 

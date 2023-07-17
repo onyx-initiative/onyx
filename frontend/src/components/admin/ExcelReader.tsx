@@ -54,6 +54,7 @@ const ExcelReader: React.FC = () => {
     }
   };
 
+  console.log(data);
   return (
     <div className={styles.uploadWrapper}>
       <label htmlFor="file-upload" className="custom-file-upload">
@@ -73,6 +74,7 @@ const ExcelReader: React.FC = () => {
           }
         }).catch((err) => {
           alert('Error creating jobs. Please make sure all employer names are exactly as they appear in the database and check the fields.');
+          console.log(err);
         })
       }}
       >
@@ -88,7 +90,7 @@ export default ExcelReader;
 const formatData = (data: any) => {
   // Convert applicant year and tags to arrays
   data.map((applicant: any) => {
-    applicant.applicant_year = applicant.applicant_year.toString().split(',').map((year: string) => parseInt(year));
+    applicant.applicant_year = applicant.applicant_year ? applicant.applicant_year.toString().split(',').map((year: string) => parseInt(year)) : null;
     typeof applicant.tags === 'string' ? applicant.tags = applicant.tags.split(',').map((tag: string) => tag.trim()) : applicant.tags = applicant.tags;
     
   });
