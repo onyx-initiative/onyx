@@ -221,6 +221,24 @@ const jobResolver = {
             const result = await client.query(query);
             return result.rows;
         },
+        viewArchivedJobs: async (_: any, __: any, { dataSources }: any) => {
+            const date = new Date();
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `SELECT * FROM job 
+                           WHERE EXISTS (
+                                SELECT job_id 
+                                FROM Archive 
+                                WHERE job.job_id = Archive.job_id
+                            )`;
+            const resp = await client.query(query).catch((err: any) => {
+                console.error(err);
+                client.release()
+            });
+
+            client.release()
+            return resp.rows;
+        }
     },
     Mutation: {
         createJob: async (_: any, { 
@@ -382,8 +400,8 @@ const jobResolver = {
             // Find all of the jobs past the deadline
             const query = `SELECT job_id
                            FROM job
-                           WHERE job_id = $1 AND deadline < $2`;
-            const resp = await client.query(query, [job_id, date]).catch((err: any) => {
+                           WHERE job_id = $1`;
+            const resp = await client.query(query, [job_id]).catch((err: any) => {
                 console.log(err);
                 client.release()
                 return false;

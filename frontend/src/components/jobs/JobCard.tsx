@@ -11,8 +11,15 @@ import { CHECK_BOOKMARK } from '../../../graphql/queries/scholarQueries';
 import va from '@vercel/analytics';
 import { useMediaQuery } from 'react-responsive';
 
+type JobCardProps = {
+  job: any;
+  email: string;
+  employerData: any;
+  archive?: boolean | undefined;
+}
+
 const JobCard = (props: any) => {
-    const { job, email, employerData } = props;
+    const { job, email, employerData, archive } = props;
     const [bookmarked, setBookmarked] = useState(false);
     const [opened, setOpened] = useState(false);
     const [logo, setLogo] = useState('https://logo.clearbit.com/www.onyxinitiative.org/');
@@ -81,7 +88,7 @@ const JobCard = (props: any) => {
           }
           <p className={styles.deadline}>{check > 2090 ? "No Deadline" : 'Deadline: ' + date}</p>
         </div>
-        <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />
+        {archive ? null : <Bookmarked bookmarked={bookmarked} setBookmarked={setBookmarked} job_id={job.job_id} />}
       </div>
       
       {/* @todo: add other necessary info */}

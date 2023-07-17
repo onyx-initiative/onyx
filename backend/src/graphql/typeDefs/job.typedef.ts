@@ -95,6 +95,7 @@ export const jobTypeDef = gql`
         getNewJobs: [Job!]!
         getFavourites(scholar_id: ID!): [Job!]!
         getFilteredJobs(filter: JobFilterInput!): [Job]!
+        viewArchivedJobs: [Job]!
     }
 
     type Return {

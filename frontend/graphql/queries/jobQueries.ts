@@ -319,3 +319,29 @@ export const GET_LOCATIONS = gql`
         }
     }
 `
+
+export const VIEW_ARCHIVED_JOBS = gql`
+    query ViewArchivedJobs {
+        viewArchivedJobs {
+            job_id
+            employer_id
+            admin_id
+            title
+            description
+            long_description
+            requirements
+            how_to_apply
+            contact_email
+            job_type
+            term
+            location
+            applicant_year
+            deadline
+            date_posted
+            total_views
+            tags
+            link
+            live
+        }
+    }
+`

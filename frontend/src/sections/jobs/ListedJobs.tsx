@@ -15,14 +15,14 @@ import JobCard from '../../components/jobs/JobCard';
 type ListedJobsProps = {
     jobs: Job[];
     employerData: any;
+    archive?: boolean | undefined;
 }
 
 type Bookmarks = {
     [key: string]: boolean;
 }
 
-export default function ListedJobs(props: ListedJobsProps) {
-  const { jobs, employerData } = props;
+export default function ListedJobs({ jobs, employerData, archive }: ListedJobsProps) {
   const [activePage, setPage] = useState(1);
 
   // @todo: This should be changed when the backend is called
@@ -56,7 +56,7 @@ export default function ListedJobs(props: ListedJobsProps) {
       <div className={styles.job}>
         {display.map((job: any, index: number) => {
           return (
-              <JobCard key={index} job={job} email={false} employerData={employerData}/>
+              <JobCard key={index} job={job} email={false} employerData={employerData} archive={archive}/>
           )
         })}
       </div>

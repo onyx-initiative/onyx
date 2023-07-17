@@ -34,7 +34,9 @@ export default function Admin() {
                             <div style={{ display: "flex",justifyContent: "space-between"}}>
                                 <ExcelReader />
                                 <UpdateLogo />
-                                <RemoveJobButton/>
+                                <RemoveJobButton text="Remove Job" link="/RemoveJob"/>
+                                <RemoveJobButton text="Archive Job" link="/ArchiveJob"/>
+                                <RemoveJobButton text="View Archived Jobs" link="/Archive"/>
                                 <RemoveEmployerButton/>
                             </div>
                     </div>
