@@ -124,7 +124,7 @@ SELECT to_tsvector(
     || location || ' ' 
     || array_to_string(tags, ' ')) AS document, job_id
 FROM Job JOIN Employer ON Job.employer_id = Employer.employer_id
-WHERE live = TRUE AND NOT EXISTS (SELECT * FROM Archive WHERE Archive.job_id = Job.job_id);
+WHERE live = TRUE AND NOT EXISTS (SELECT job_id FROM Archive WHERE Archive.job_id = Job.job_id);
 
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
@@ -196,8 +196,11 @@ BEGIN
         Job
     JOIN
         Employer ON job.employer_id = employer.employer_id
+    LEFT JOIN
+        Archive ON job.job_id = Archive.job_id
     WHERE
         job.live = TRUE AND
+        Archive.job_id IS NULL AND
         (
             (
                 employer_match IS NOT NULL AND
@@ -206,12 +209,12 @@ BEGIN
             (
                 employer_match IS NULL AND
                 (
-                    similarity(job.title, query) > 0.6 OR
-                    similarity(job.description, query) > 0.6 OR
-                    similarity(job.long_description, query) > 0.6 OR
-                    similarity(job.job_type, query) > 0.6 OR
-                    similarity(job.location, query) > 0.6 OR
-                    EXISTS (SELECT 1 FROM unnest(job.tags) AS tag WHERE similarity(tag, query) > 0.6) OR 
+                    similarity(job.title, query) > 0.45 OR
+                    similarity(job.description, query) > 0.45 OR
+                    similarity(job.long_description, query) > 0.45 OR
+                    similarity(job.job_type, query) > 0.45 OR
+                    similarity(job.location, query) > 0.45 OR
+                    EXISTS (SELECT 1 FROM unnest(job.tags) AS tag WHERE similarity(tag, query) > 0.45) OR 
                     similarity(
                         array_to_string(
                             ARRAY(SELECT element::text FROM unnest(job.applicant_year) AS element),

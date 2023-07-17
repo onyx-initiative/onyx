@@ -53,7 +53,6 @@ const JobCard = (props: any) => {
                 priority
                 quality={100}
                 loader={({ src }) => src }
-                unoptimized
               />
             </div>
             <div className={styles.jobHeader}
@@ -136,7 +135,7 @@ const JobCard = (props: any) => {
             </div> : null}
           <div>
             <h4>Job Description</h4>
-            <p>{filterNewlines(job.long_description)}</p>
+            <p>{formatText(job.long_description)}</p>
             { job.requirements ? 
               <div>
               <h4>Resposibilities & Requirements</h4> 
