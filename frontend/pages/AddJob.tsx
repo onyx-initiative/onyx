@@ -159,6 +159,9 @@ export default function AddJob() {
             nothingFound="No options"
             dropdownPosition="bottom"
             data={[
+              (current_year-3).toString(),
+              (current_year-2).toString(),
+              (current_year-1).toString(),
               current_year.toString(),
               (current_year+1).toString(),
               (current_year+2).toString(),
