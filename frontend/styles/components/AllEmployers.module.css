@@ -13,8 +13,8 @@
 .jobTags {
     justify-items: center;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    margin-bottom: 2px;
+    grid-template-columns: repeat(3,1fr);
+    margin-bottom: 1px;
 
 }
 
@@ -33,6 +33,7 @@
     border-radius: 0.2rem;
     margin-right: 0.7rem;
     margin-left: 0.5rem;
+    margin-bottom: 0.3rem;
 }
 
 .title {
