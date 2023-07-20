@@ -15,6 +15,7 @@ import Image from 'next/image'
 
 import { useRouter } from "next/router"
 import { GET_EMPLOYERS } from '../graphql/queries/employerQueries'
+import BackButton from '../src/components/admin/BackButton'
 
 
 //@todo: fix filtering, add side menu, bookmarking, and fix double click to search
@@ -39,8 +40,12 @@ export default function Jobs() {
   return (
     <div>
       <Navbar />
+      <div style={{ marginLeft: 90 }}>
+        <BackButton />
+      </div>
       <div className={styles.jobContainer}>
         <div className={styles.jobList}>
+          
           <SearchBar setJobs={setJobs} initialQuery={query.search as string} query={search} setSearch={setSearch}/>
           {jobLoading ? 
             <div className={styles.loading}>

@@ -60,6 +60,9 @@ export default function Jobs() {
     location: [],
     job_type: [],
     applicant_year: [
+      new Date().getFullYear() - 3,
+      new Date().getFullYear() - 2,
+      new Date().getFullYear() - 1,
       new Date().getFullYear(),
       new Date().getFullYear() + 1,
       new Date().getFullYear() + 2,
