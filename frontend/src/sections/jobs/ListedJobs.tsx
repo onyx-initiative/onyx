@@ -15,6 +15,7 @@ import JobCard from '../../components/jobs/JobCard';
 type ListedJobsProps = {
     jobs: Job[];
     employerData: any;
+    selectedJobId?: any;
     archive?: boolean | undefined;
 }
 
@@ -22,7 +23,7 @@ type Bookmarks = {
     [key: string]: boolean;
 }
 
-export default function ListedJobs({ jobs, employerData, archive }: ListedJobsProps) {
+export default function ListedJobs({ jobs, employerData, archive, selectedJobId }: ListedJobsProps) {
   const [activePage, setPage] = useState(1);
 
   // @todo: This should be changed when the backend is called
@@ -38,6 +39,8 @@ export default function ListedJobs({ jobs, employerData, archive }: ListedJobsPr
 
   // The jobs to display beased on the current page
   const display = jobs.slice((activePage - 1) * jobsPerPage, activePage * jobsPerPage);
+  const displayJobs = selectedJobId ? jobs.filter((job) => job.job_id === selectedJobId) : jobs;
+
 
   if (loading) {
     return (
@@ -54,7 +57,7 @@ export default function ListedJobs({ jobs, employerData, archive }: ListedJobsPr
     <div className={styles.cardContainer}>
       {/* For the job listing */}
       <div className={styles.job}>
-        {display.map((job: any, index: number) => {
+        {displayJobs.map((job: any, index: number) => {
           return (
               <JobCard key={index} job={job} email={false} employerData={employerData} archive={archive}/>
           )

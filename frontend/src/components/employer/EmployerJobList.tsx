@@ -40,7 +40,7 @@ export function JobBlock(props: any) {
         <button className={styles.employerJobButton} onClick={() => {
             router.push({
               pathname: '/Jobs',
-              query: { search: employer_name.getEmployerById.name },
+              query: { search: employer_name.getEmployerById.name, job_id: job.job_id },
             })
         }}>
                 <h3 className={styles.title}>{props.job.title}</h3>
