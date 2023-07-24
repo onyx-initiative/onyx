@@ -54,6 +54,7 @@ export default function Jobs() {
   const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
   const { data: locationData, loading: locationLoading } = useQuery(GET_LOCATIONS)
   const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
+  const selectedJobId = query.job_id || null;
 
   const [filters, setFilters] = useState({
     // @todo: Update this list
@@ -119,7 +120,7 @@ export default function Jobs() {
             </div> : 
             <div style={{ width: "100%", marginBottom: 0}}>
             <p style={{ marginBottom: "-15px", padding: 0, color: "grey" }}>{jobs.length + " result(s)"}</p>
-            <ListedJobs jobs={jobs} employerData={employerData}/>
+            <ListedJobs jobs={jobs} employerData={employerData} selectedJobId={selectedJobId}/>
             </div>
           }
         </div>
