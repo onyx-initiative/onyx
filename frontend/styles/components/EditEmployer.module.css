@@ -1,0 +1,56 @@
+/* Styling for the employer container (using grid) */
+.employerContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Four equal columns */
+    grid-gap: 20px;
+}
+
+/* Styling for each employer card */
+.employerCard {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center; /* Center-align the items vertically */
+}
+
+.employerCard h4 {
+    color: black;
+}
+
+/* Styling for the employer card header */
+.employerCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.employerCard button {
+    padding: 8px 16px;
+    background-color: #806E53; /* Gold background color */
+    color: white; /* White text color */
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.finishEditButton {
+    padding: 8px 16px;
+    margin-top: 5px;
+    background-color: #806E53; /* Gold background color */
+    color: white; /* White text color */
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}

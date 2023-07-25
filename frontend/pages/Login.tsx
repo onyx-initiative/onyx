@@ -36,7 +36,10 @@ export default function Login() {
                         <FaGoogle size={28} />
                         <button
                         className={styles.loginButton}
-                            onClick={() => signIn('google', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})}
+                            onClick={() => 
+                                signIn('google', { callbackUrl: process.env.NEXT_PUBLIC_ENV === 'dev' ? '/Admin' : process.env.NEXT_PUBLIC_CALLBACK_URL})
+
+                            }
                         >
                             Login with Google
                         </button>
