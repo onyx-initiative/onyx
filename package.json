@@ -6,7 +6,7 @@
     "@mantine/utils": "^6.0.13",
     "@mui/material": "^5.13.7",
     "@types/material-ui": "^0.21.12",
-    "next-auth": "^4.22.1",
+    "next-auth": "^4.22.3",
     "react-responsive": "^9.0.2"
   }
 }
