@@ -286,24 +286,20 @@ const ApplyButton = (props: any) => {
 const formatText = (text: string) => {
   if (!text) return "";
   // if (text[0] === '-' || text[0] === '•') {
+    
+    // Initial Function
     let result = text.split(/(?=- |\n)/)
+
     console.log(result)
     // Trim whitespaces
     let final = result.map((str: string, index: number) => {
-      if (!str.includes("- ")) {
-        return <div key={index}><h4 style={{ fontWeight: "bold", fontSize: "16" }}>{str}</h4></div>
-      } else {
+      if (str.includes("- ") || str.startsWith("\n-\t" || str.startsWith("- "))) {
         return <li key={index}>{str.trim().slice(2)}</li>
+      } else {
+        return <div key={index}><h4 style={{ fontWeight: "bold", fontSize: "16" }}>{str}</h4></div>
       }
     });
     return final;
-  // } else {
-  // }
-  // const formattedText = text
-  //   .replace(/\\n/g, '\n') // Replace '\\n' with newline character '\n'
-  //   .replace(/- /g, '\n- '); // Add a newline character before each dash ('-')
-  
-  // return formattedText;
 }
 
 export const filterNewlines = (text: string) => {
