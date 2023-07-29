@@ -1,0 +1,77 @@
+/* YourStyles.module.css */
+
+
+.jobCard {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    background-color: white;
+    color: black;
+    margin-top: 1rem;
+    justify-content: space-between;
+  }
+  
+  .jobCardImage {
+    flex-shrink: 0;
+    margin-right: 16px;
+  }
+  
+  .jobCardImage img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+  
+  .jobCardContent {
+    flex: 1;
+  }
+  
+  .jobCard h4 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  
+  .jobCard p {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  .jobCard button {
+    padding: 8px 16px;
+    background-color: #806E53; /* Gold background color */
+    color: white; /* White text color */
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+  }
+  
+  .finishEditButton {
+    padding: 8px 16px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    background-color: #806E53; /* Gold background color */
+    color: white; /* White text color */
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+/* YourStyles.module.css */
+
+/* Hide the default checkbox */
+
+  
+  
+  
+  
+  
+  

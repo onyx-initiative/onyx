@@ -22,6 +22,7 @@
     "rimraf": "^3.0.2",
     "serverless-dotenv-plugin": "^4.0.2",
     "serverless-esbuild": "^1.37.0",
+    "serverless-nextjs-plugin": "^2.5.2-alpha.0",
     "serverless-offline": "^10.3.0",
     "serverless-plugin-typescript": "^2.1.2",
     "ts-node": "^10.9.1",
@@ -50,8 +51,9 @@
     "njwt": "^2.0.0",
     "node-fetch": "^2.6.1",
     "pg": "^8.8.0",
-    "serverless": "^3.22.0",
+    "serverless": "^3.33.0",
     "serverless-postgres": "^1.10.3",
+    "sls": "^0.1.0",
     "ts-jest": "^29.0.1"
   }
 }
