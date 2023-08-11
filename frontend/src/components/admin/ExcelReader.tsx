@@ -18,6 +18,8 @@ const ExcelReader: React.FC = () => {
       jobs: formatData(data)
     }
   })
+
+  console.log(data);
   
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

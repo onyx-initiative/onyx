@@ -10,6 +10,7 @@ import UpdateLogo from "../src/components/admin/UpdateLogo";
 import BarChart from "../src/components/admin/BarChart";
 import AddBanner from "../src/components/admin/AddBanner";
 import EditEmployerButton from "../src/components/admin/EditEmployerButton";
+import EditJobButton from "../src/components/admin/EditJobButton";
 
 // To ensure unauthenticated people don't access
 // import getServerProps from "../src/utils/getServerProps";
@@ -27,6 +28,8 @@ export default function Admin() {
                             <AddJobButton />
                             <AddEmployerButton/>
                             <AddBanner/>
+                            <EditJobButton text="Edit Job" link="/EditJob"/>
+                            <EditEmployerButton text="Edit Employer" link="/EditEmployer"/>
                         </div>
                     </div>
                     <div style={{ width: "100%", height: "0.1rem", backgroundColor: "white", marginTop: "1rem" }}></div>
@@ -39,7 +42,8 @@ export default function Admin() {
                                 <RemoveJobButton text="Archive Job" link="/ArchiveJob"/>
                                 <RemoveJobButton text="View Archived Jobs" link="/Archive"/>
                                 <RemoveEmployerButton/>
-                                <EditEmployerButton text="Edit Employer" link="/EditEmployer"/>
+                               
+                                
                             </div>
                     </div>
                 </div>

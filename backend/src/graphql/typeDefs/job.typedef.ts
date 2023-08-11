@@ -136,7 +136,7 @@ export const jobTypeDef = gql`
         term: String
         location: String!
         applicant_year: [Int]
-        deadline: String!
+        deadline: String
         tags: [String]
         link: String
     }

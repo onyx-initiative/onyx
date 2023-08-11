@@ -1,4 +1,4 @@
-import { microserviceUrl } from '../env';
+import { microserviceUrl } from '../.env';
 import { establishConnection } from '../utils';
 import fetch from 'node-fetch';
 
