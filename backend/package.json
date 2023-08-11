@@ -8,7 +8,9 @@
     "build": "rimraf ./build && tsc",
     "start:prod": "npm run build && node build/index.js",
     "test": "jest --config jest.config.ts ./src/integration/__tests__/",
-    "db": "node ./src/db/index.ts"
+    "db": "node ./src/db/index.ts",
+    "deploy": "serverless deploy",
+    "offline": "serverless offline"
   },
   "author": "Michael Dawes, Cole Purboo",
   "license": "MIT",
@@ -36,7 +38,7 @@
     "apollo-server": "^3.10.2",
     "apollo-server-lambda": "^3.10.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.3.1",
     "eslint-plugin-graphql-schema": "^0.4.1",
     "express": "^4.18.2",
     "find-config": "^1.0.0",
@@ -51,7 +53,7 @@
     "njwt": "^2.0.0",
     "node-fetch": "^2.6.1",
     "pg": "^8.8.0",
-    "serverless": "^3.33.0",
+    "serverless": "^3.34.0",
     "serverless-postgres": "^1.10.3",
     "sls": "^0.1.0",
     "ts-jest": "^29.0.1"

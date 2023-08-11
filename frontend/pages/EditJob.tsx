@@ -53,7 +53,7 @@ function EditJob(props: Props) {
           <h1>Find an Job to Edit!</h1>
           <p>Filter by Employer:</p>
           <NativeSelect
-                data={employerData.getEmployers.map((employer: Employer) => ({
+                data={employerData?.getEmployers.map((employer: Employer) => ({
                 label: employer.name,
                 value: employer.employer_id,
                 }))}
@@ -86,13 +86,16 @@ export function EditJobCard(props: any) {
   const [EditJob, { data: jobData, loading: editLoading, error }] = useMutation(EDIT_JOB);
   const [isModalOpen, setModalOpen] = useState(false);
   const [jobEdited, setJobEdited] = useState(false);
-
+  const formatDate = () => {
+    const date = new Date(parseInt(job.deadline)).toDateString();
+    return date // Adjust the format as needed
+  };
   const [updatedData, setUpdatedData] = useState({
     title: job.title || "",
     description: job.description || "",
     long_description: job.long_description || "",
-    requirements: job.requirements || null,
-    experience: job.experience || null,
+    requirements: job.requirements || "",
+    experience: job.experience || "",
     education: job.education || null,
     term: job.term || "",
     how_to_apply: job.how_to_apply || null,
@@ -102,38 +105,32 @@ export function EditJobCard(props: any) {
     job_type: job.job_type,
     location: job.location,
     applicant_year: job.applicant_year || [],
-    deadline: job.deadline || "2100-01-01", // Convert to Date object
+    deadline: formatDate() || "2100-01-01", // Convert to Date object
     tags: job.tags || [],
     live: job.live || false,
     link: job.link || null,
   });
 
   const handleEditJob = useCallback(async (updatedData: any, job: any) => {
-    const applicantYearsArray = updatedData.applicant_year.split(',');
-    updatedData.applicant_year = applicantYearsArray.map((year: string) => parseInt(year.trim(), 10));
+    const applicantYearsArray = updatedData.applicant_year.map((year:string) => parseInt(year, 10));
+    updatedData.applicant_year = applicantYearsArray;
     console.log(updatedData);
+    try {
+      await EditJob({
+        variables: { jobId: job.job_id, fields: updatedData },
+      });
 
-    // try {
-    //   await EditJob({
-    //     variables: { jobId: job.job_id, fields: updatedData },
-    //   });
-
-    //   setJobEdited(true);
-    //   closeModal();
-    //   alert(`Successfully edited job with ID ${job.job_id}!`);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      setJobEdited(true);
+      closeModal();
+      alert(`Successfully edited job with ID ${job.job_id}!`);
+    } catch (error) {
+      console.log(error);
+    }
   }, [job.job_id, updatedData]);
 
   const closeModal = () => {
     setModalOpen(false);
     setJobEdited(false);
-  };
-
-  const formatDate = (timestamp: number) => {
-    const date = new Date(parseInt(job.deadline)).toDateString();
-    return date // Adjust the format as needed
   };
 
   const handleDeadlineChange = (date: Date) => {
@@ -165,7 +162,7 @@ export function EditJobCard(props: any) {
           opened={isModalOpen}
           onClose={closeModal}
           size="100%"
-          title={'Edit Job - ' + job.title}
+          title={'Edit Job - ' + job.title + ' (Job ID: ' + job.job_id + ')'}
         >
           {/* Render job editing fields here, similar to EditEmployerCard */}
           <TextInput
@@ -224,9 +221,12 @@ export function EditJobCard(props: any) {
           />
           <TextInput
             label="Applicant year"
-            value={updatedData.applicant_year}
+            value={updatedData.applicant_year.join(', ')}
             onChange={(event) =>
-              setUpdatedData({ ...updatedData, applicant_year: event.currentTarget.value })
+              setUpdatedData({
+                ...updatedData,
+                applicant_year: event.currentTarget.value.split(',').map((year) => year.trim())
+              })
             }
           />
           <Textarea
