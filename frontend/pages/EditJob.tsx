@@ -147,7 +147,7 @@ export function EditJobCard(props: any) {
       <div className={styles.jobCard}>
             <h4>{job.title}</h4>
             <p>Job ID: {job.job_id}</p>
-            <p>Deadline: {formatDate(job.deadline)}</p>
+            <p>Deadline: {formatDate()}</p>
             <p>Location: {job.location}</p>
             <p>Job Type: {job.job_type}</p>
         <button onClick={() => setModalOpen(true)}>Edit</button>
@@ -267,7 +267,6 @@ export function EditJobCard(props: any) {
           />
           <p>Deadline</p>
           <DatePicker
-            value={updatedData.deadline}
             onChange={handleDeadlineChange}
             />
           <TextInput
