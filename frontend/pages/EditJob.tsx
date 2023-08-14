@@ -53,12 +53,15 @@ function EditJob(props: Props) {
           <h1>Find an Job to Edit!</h1>
           <p>Filter by Employer:</p>
           <NativeSelect
-                data={employerData?.getEmployers?.map((employer: Employer) => ({
-                label: employer.name,
-                value: employer.employer_id,
-                }))}
-                value={selectedEmployerId}
-                onChange={handleEmployerFilterChange}
+                data={[
+                  { label: 'Select an Employer', value: '' }, // Placeholder option
+                  ...(employerData?.getEmployers?.map((employer: Employer) => ({
+                      label: employer.name,
+                      value: employer.employer_id,
+                  })) || [])
+              ]}
+              value={selectedEmployerId || ''}
+              onChange={handleEmployerFilterChange}
                 
             />
           <div className={styles.jobContainer}>
@@ -118,6 +121,7 @@ export function EditJobCard(props: any) {
     try {
       await EditJob({
         variables: { jobId: job.job_id, fields: updatedData },
+        refetchQueries: refetchQueries
       });
 
       setJobEdited(true);
