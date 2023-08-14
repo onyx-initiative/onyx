@@ -53,7 +53,7 @@ function EditJob(props: Props) {
           <h1>Find an Job to Edit!</h1>
           <p>Filter by Employer:</p>
           <NativeSelect
-                data={employerData?.getEmployers.map((employer: Employer) => ({
+                data={employerData?.getEmployers?.map((employer: Employer) => ({
                 label: employer.name,
                 value: employer.employer_id,
                 }))}
@@ -66,8 +66,8 @@ function EditJob(props: Props) {
             <p>Loading</p>
           ) : (
             // Step 6: Use the filteredJobsData instead of jobsData
-            filteredJobsData.map((job: Job, index: any) => (
-              <EditJobCard job={job} key={index} refetchQueries={refetchQueries} />
+            filteredJobsData?.map((job: Job) => (
+              <EditJobCard job={job} key={job.job_id} refetchQueries={refetchQueries} />
             ))
           )}
         </div>

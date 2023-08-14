@@ -51,13 +51,13 @@ export default function ScholarHero(props: any) {
                 sx={{ maxWidth: '90%' }}
                 mx="auto"
                 slideGap="xl"
-                controlSize={29}
+                controlSize={30}
                 slideSize={isLargeScreen ? '10%' : '25%'}
                 loop
                 align="start"
                 withIndicators
-                styles={{ indicators: { position: 'relative', top: 20, marginBottom: 20 } }}
-                slidesToScroll={4}
+                styles={{ indicators: { position: 'relative', top: 10, marginBottom: 20 }, controls: { position: 'absolute' } }}
+                slidesToScroll={2}
             >
                 {employers}
             </Carousel>
