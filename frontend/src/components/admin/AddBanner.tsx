@@ -51,8 +51,7 @@ export default function AddBanner() {
                 size="md"
             >
                 <div>
-                <textarea
-                min-rows={5}
+                <input
                 placeholder="New Banner Text"
                 value={newBannerText}
                 onChange={(e) => {
