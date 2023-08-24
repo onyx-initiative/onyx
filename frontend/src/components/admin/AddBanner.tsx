@@ -10,11 +10,19 @@ import { Group } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
 
+
 export default function AddBanner() {
     const [opened, setOpened] = useState(false);
-    const [newBannerText, setNewBannerText] = useState("");
+    const [newBannerText, setNewBannerText] = useState('');
+    const [formattedBannerText, setFormattedBannerText] = useState('');
     const [updateBanner] = useMutation(ADD_BANNER)
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+
+    const formatTextWithLinks = (text: string) => {
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, (url: any) => `<a href="${url}" target="_blank">${url}</a>`);
+    };
+
 
     return (
         <div>
@@ -43,11 +51,15 @@ export default function AddBanner() {
                 size="md"
             >
                 <div>
-                <input type="text" placeholder="New Banner Text" value={newBannerText} onChange={
-                            (e) => {
-                                setNewBannerText(e.target.value)
-                            }
-                        } 
+                <textarea
+                min-rows={5}
+                placeholder="New Banner Text"
+                value={newBannerText}
+                onChange={(e) => {
+                    const formattedText = formatTextWithLinks(e.target.value);
+                    setNewBannerText(e.target.value); // Store the original text in state
+                    setFormattedBannerText(formattedText); // Store the formatted text in state
+                }}
                             style={{
                                 width: "100%",
                                 height: "2rem",
