@@ -115,7 +115,7 @@ const BetaHeadline = () => {
   return (
     <div className={styles.betaHeadline}>
       <p>
-        This is the beta version of the Onyx Job Board. Please report any
+        Welcome to the Onyx Job Board. Please report any
         bugs or issues to{" "}
         <a 
           href="mailto:cole.purboo@onyxinitiative.org"
