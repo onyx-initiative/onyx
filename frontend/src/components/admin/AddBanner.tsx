@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import Navbar from "../general/Navbar";
 import styles from "../../../styles/components/AdminPageButtons.module.css";
 import Link from "next/link";
@@ -18,10 +18,10 @@ export default function AddBanner() {
     const [updateBanner] = useMutation(ADD_BANNER)
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
 
-    const formatTextWithLinks = (text: string) => {
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        return text.replace(urlRegex, (url: any) => `<a href="${url}" target="_blank">${url}</a>`);
-    };
+    // const formatTextWithLinks = (text: string) => {
+    //     const urlRegex = /(https?:\/\/[^\s]+)/g;
+    //     return text.replace(urlRegex, (url: any) => `<a href="${url}" target="_blank">${url}</a>`);
+    // };
 
 
     return (
@@ -55,9 +55,9 @@ export default function AddBanner() {
                 placeholder="New Banner Text"
                 value={newBannerText}
                 onChange={(e) => {
-                    const formattedText = formatTextWithLinks(e.target.value);
+                    // const formattedText = formatTextWithLinks(e.target.value);
                     setNewBannerText(e.target.value); // Store the original text in state
-                    setFormattedBannerText(formattedText); // Store the formatted text in state
+                    // setFormattedBannerText(formattedText); // Store the formatted text in state
                 }}
                             style={{
                                 width: "100%",

@@ -13,7 +13,7 @@
 .link {
     color: blue; /* Set the text color to blue */
     text-decoration: underline; /* Add an underline to indicate it's a link */
-  }
+}
   
 .navbarLogo { 
     cursor: pointer;
