@@ -130,7 +130,7 @@ const OnyxAnnouncemment = (props: any) => {
   const { banner } = props
   return (
     <div className={styles.onyxAnnouncement}> 
-      <p> Click the link to register for the 4th Annual Black Professionals Career Fair!: <a className={styles.link} href= "https://www.airmeet.com/e/0bba9fa0-2134-11ee-b78c-73d51b74f492" > https://www.airmeet.com/e/0bba9fa0-2134-11ee-b78c-73d51b74f492</a> </p>
+      <p> Click the link to register for the 4th Annual Black Professionals Career Fair!: <a target="_blank" className={styles.link} href= "https://www.airmeet.com/e/0bba9fa0-2134-11ee-b78c-73d51b74f492" > https://www.airmeet.com/e/0bba9fa0-2134-11ee-b78c-73d51b74f492</a> </p>
     </div>
   )
 }
