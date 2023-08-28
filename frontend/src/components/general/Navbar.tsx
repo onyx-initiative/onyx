@@ -64,7 +64,8 @@ export default function Navbar(props: any) {
     <div className={styles.betaWrapper}>
       {/* @todo: Remove the wrapper div for final launch */}
       <BetaHeadline />
-      {bannerText && !loadingBanner ? <OnyxAnnouncemment banner={bannerText}/> : null}
+      {/* {bannerText && !loadingBanner ? <OnyxAnnouncemment banner={bannerText}/> : null} */}
+      <OnyxAnnouncemment banner={bannerText}/>
       <div className={styles.navbar}>
         <div className={styles.navbarLogo}>
           <Link
@@ -130,7 +131,9 @@ const OnyxAnnouncemment = (props: any) => {
   const { banner } = props
   return (
     <div className={styles.onyxAnnouncement}> 
-      <p> Follow the link to register for the 4th Annual Black Professionals Career Fair!: <a className={styles.link} href= "https://www.airmeet.com/e/0bba9fa0-2134-11ee-b78c-73d51b74f492" > https://www.airmeet.com/e/0bba9fa0-2134-11ee-b78c-73d51b74f492</a> </p>
+      <p> 
+          Follow the <a className={styles.link} target="_blank" rel="noreferrer" href= "https://www.airmeet.com/e/0bba9fa0-2134-11ee-b78c-73d51b74f492" > link</a> to register for the 4th Annual Black Professionals Career Fair!
+      </p>
     </div>
   )
 }
