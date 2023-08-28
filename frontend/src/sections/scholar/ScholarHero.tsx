@@ -28,7 +28,7 @@ export default function ScholarHero(props: any) {
 
     
 
-    const employers = employerData.getEmployers.map(
+    const employers = employerData.map(
         (employer: Employer) => {
             return (
                 <Carousel.Slide key={employer.name}>

@@ -21,6 +21,7 @@ import loadingStyles from '../styles/components/CreateAccount.module.css'
 import Loading from './Loading'
 import EmailTest from './EmailTest'
 import { Admin } from './api/auth/[...nextauth]'
+import { Employer } from '../../backend/src/types/db.types'
 
 export default function Scholar() {
   const { data: session, status } = useSession({ required: true })
@@ -32,6 +33,8 @@ export default function Scholar() {
   })
   const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
   const router = useRouter()
+
+  
 
   // @todo: Style this
   if (loadingScholar || loadingEmployers) {
@@ -50,13 +53,26 @@ export default function Scholar() {
     router.push('/CreateAccount')
   } 
 
+  const newestEmployers = employerData?.getEmployers
+  ?.slice()
+  .sort((a: Employer, b: Employer) => {
+    // Convert employer_id to integers and then sort in descending order
+    const employerIdA = parseInt(a.employer_id);
+    const employerIdB = parseInt(b.employer_id);
+
+    return employerIdB - employerIdA;
+  })
+  .slice(0, 10);
+
+
+
   return ( 
     <div>
       {scholarData.getScholarByEmail === null ? <Loading /> : 
         <div>
           <Navbar />
           <SearchBar />
-          <ScholarHero employerData={employerData} employerLoading={loadingEmployers}/>
+          <ScholarHero employerData={newestEmployers} employerLoading={loadingEmployers}/>
           <LatestJobs employerData={employerData} />
         </div>
       }
