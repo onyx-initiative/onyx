@@ -10,6 +10,7 @@ import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
 import JobCard from '../../components/jobs/JobCard';
+import { type } from 'os';
 
 
 type ListedJobsProps = {
@@ -32,14 +33,35 @@ export default function ListedJobs({ jobs, employerData, archive, selectedJobId 
   const [loading, setLoading] = useState(false);
 
   // @todo: Change this to 10 for production
-  const jobsPerPage = 8;
+  const jobsPerPage = 10;
 
   // Uncomment this when backend is connected
   const numPages = loading ? 1 : Math.ceil(jobs.length / jobsPerPage);
 
   // The jobs to display beased on the current page
-  const display = jobs.slice((activePage - 1) * jobsPerPage, activePage * jobsPerPage);
-  const displayJobs = selectedJobId ? jobs.filter((job) => job.job_id === selectedJobId) : jobs;
+  // const displayJobs = selectedJobId ? jobs.filter((job) => job.job_id === selectedJobId) : jobs.slice((activePage - 1) * jobsPerPage, activePage * jobsPerPage);
+
+  const newToOldJobs = jobs
+  .map((job) => {
+    // Convert the timestamp string to a number
+    return {
+      ...job,
+      date_posted: Number(job.date_posted)
+    };
+  })
+  .sort((a, b) => {
+    return b.date_posted - a.date_posted; // Sort in descending order (newest to oldest)
+  })
+  .slice((activePage - 1) * jobsPerPage, activePage * jobsPerPage);
+
+
+
+
+  const displayJobs = selectedJobId
+  ? jobs.filter((job) => job.job_id === selectedJobId)
+  : newToOldJobs;
+
+
 
 
   if (loading) {
@@ -58,6 +80,8 @@ export default function ListedJobs({ jobs, employerData, archive, selectedJobId 
       {/* For the job listing */}
       <div className={styles.job}>
         {displayJobs.map((job: any, index: number) => {
+          console.log("time + " + job.date_posted)
+          console.log(typeof(job.date_posted))
           return (
               <JobCard key={index} job={job} email={false} employerData={employerData} archive={archive}/>
           )
