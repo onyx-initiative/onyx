@@ -33,7 +33,7 @@ const JobCard = (props: any) => {
         setLogo(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).logo_url);
         setEmployerName(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).name);
         // console.log(formatText(job.requirements));
-        console.log(job.requirements)
+        
       }
     }, [employerData, job.employer_id])
     const isSmallScreen = useMediaQuery({ query: '(max-width: 767px)' });

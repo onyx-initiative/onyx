@@ -30,7 +30,6 @@ export default function LatestJobs(props: any) {
         )
     }
 
-    console.log(jobData)
 
     return (
         <div className={styles.jobContainer}>
