@@ -116,13 +116,18 @@ const BetaHeadline = () => {
   return (
     <div className={styles.betaHeadline}>
       <p>
-        Welcome to the Onyx Job Board. Please report any
-        bugs or issues to{" "}
-        <a 
-          href="mailto:cole.purboo@onyxinitiative.org"
-          className={styles.email}
-        >cole.purboo@onyxinitiative.org</a>
-      </p>
+    Welcome to the Onyx Job Board. Please report any technical
+    bugs to{" "}
+    <a 
+      href="mailto:cole.purboo@onyxinitiative.org"
+      className={styles.email}
+    >cole.purboo@onyxinitiative.org </a> 
+    and job related issues to{" "}
+    <a 
+      href="mailto:andy.francis@onyxinitiative.org"
+      className={styles.email}
+    >andy.francis@onyxinitiative.org</a>
+</p>
     </div>
   );
 }
