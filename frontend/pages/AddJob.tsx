@@ -63,10 +63,20 @@ export default function AddJob() {
     const router = useRouter()
     const [completed, setCompleted] = useState(null as boolean | null)
 
-    const handleSubmit = () => {
-      console.log(JobInfo.deadline)
-      createJob().catch((err) => alert("Error creating job. Please check that all fields were correctly filled out and try again."));
-      router.push('/Admin')
+  //   const handleSubmit = () => {
+  //     console.log(JobInfo.deadline)
+  //     createJob().catch((err) => alert("Error creating job. Please check that all fields were correctly filled out and try again."));
+  //     router.push('/Admin')
+  // }
+
+  const handleSubmit = () => {
+    console.log(JobInfo.deadline);
+    createJob()
+      .catch((err) => {
+        console.error("Error creating job:", err); // Log the error message
+        alert("Error creating job. Please check that all fields were correctly filled out and try again.");
+      });
+    router.push('/Admin');
   }
 
   const { data: employerData, loading: employerLoading, } = useQuery(GET_EMPLOYERS)
