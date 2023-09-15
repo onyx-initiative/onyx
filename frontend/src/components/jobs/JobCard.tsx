@@ -170,6 +170,12 @@ const JobCard = (props: any) => {
               <p>{job.additional_info}</p>
             </div>
             : null}
+          {job.how_to_apply ?  
+            <div> 
+              <h4>How to Apply</h4>
+              <p>{job.how_to_apply}</p>
+            </div>
+            : null}
           <div style={{ display: "flex" }}>
               <p className={styles.deadline}>{check > 2090 ? "No Deadline" : 'Deadline: ' + date}</p>
           </div>
