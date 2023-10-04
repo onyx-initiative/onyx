@@ -65,7 +65,7 @@ export default function Navbar(props: any) {
       {/* @todo: Remove the wrapper div for final launch */}
       <BetaHeadline />
       {/* {bannerText && !loadingBanner ? <OnyxAnnouncemment banner={bannerText}/> : null} */}
-      <OnyxAnnouncemment banner={bannerText}/>
+      {/* <OnyxAnnouncemment banner={bannerText}/> */}
       <div className={styles.navbar}>
         <div className={styles.navbarLogo}>
           <Link
