@@ -14,7 +14,7 @@
 .logo {
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: flex-start;
 }
 
 .textinput {
@@ -39,7 +39,7 @@
     align-items: center;
     justify-content: center;
     height: 60%;
-    width: 40%;
+    width: 80%;
     background-color: #806E53;
     align-self: center;
     border-radius: 0.5rem;

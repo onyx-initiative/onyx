@@ -32,8 +32,6 @@ const JobCard = (props: any) => {
       if (employerData) {
         setLogo(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).logo_url);
         setEmployerName(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).name);
-        // console.log(formatText(job.requirements));
-        
       }
     }, [employerData, job.employer_id])
     const isSmallScreen = useMediaQuery({ query: '(max-width: 767px)' });
