@@ -117,6 +117,7 @@ export default function AddJob() {
   const [tagData, setTagData] = useState([{ value: 'Technology', label:  'Technology' },
     { value: 'Business ', label: 'Business' }, { value: 'Marketing', label:  'Marketing' }, { value: 'Engineering', label:  'Engineering' }, { value: 'Finance', label:  'Finance' }, { value: 'HR', label:  'HR' }, { value: 'IT', label:  'IT' }, { value: 'Research', label:  'Research' }, { value: 'Sales', label:  'Sales' }, { value: 'Security', label:  'Security' }, { value: 'Accounting', label:  'Accounting' }, { value: 'Administration', label:  'Administration' }, { value: 'Automotive', label:  'Automotive' }, { value: 'Arts&Entertainment', label:  'Arts&Entertainment' }, { value: 'Communication', label:  'Communication' }, { value: 'Design', label:  'Design' }, { value: 'Gaming', label:  'Gaming' }, { value: 'Healthcare', label:  'HealthCare' }, { value: 'Mathematics', label:  'Mathematics' }, { value: 'Telecommunications', label:  'Telecommunications'},{ value: 'Default', label:  'Default' }
     ])
+    const sortedTagData = tagData.slice().sort((a, b) => a.label.localeCompare(b.label));
   
 
     const {loading: employerIdLoading, data: employerId} = useQuery(GET_EMPLOYER_BY_NAME, {variables: {name: searchValue}})
@@ -172,7 +173,7 @@ export default function AddJob() {
           <InputElementLong label="howToApply" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <Select className={styles.inputContainer} label="jobType" placeholder="Pick one" searchable clearable creatable data={jobTypes} nothingFound="No options" onChange={(query: any) => setJobInfo(state => ({...state, jobType: query}))}/>
           <InputElement label="term" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <MultiSelect className={styles.inputContainer} label="tags" placeholder="Pick one" searchable clearable creatable onSearchChange={onSearchTag} getCreateLabel={(query) => `+ Create ${query}`} onCreate={(query) => { const item = { value: query, label: query }; setTagData((current) => [...current, item]); return item; }} searchValue={tagSearchValue} nothingFound="No options" data={tagData} onChange={(query) => setJobInfo(state => ({...state, tags: query}))} />
+          <MultiSelect className={styles.inputContainer} label="tags" placeholder="Pick one" searchable clearable creatable onSearchChange={onSearchTag} getCreateLabel={(query) => `+ Create ${query}`} onCreate={(query) => { const item = { value: query, label: query }; setTagData((current) => [...current, item]); return item; }} searchValue={tagSearchValue} nothingFound="No options" data={sortedTagData} onChange={(query) => setJobInfo(state => ({...state, tags: query}))} />
           <Checkbox label="Save to Drafts?" color="dark" size="md" checked={checked} onChange={() => setChecked(!checked)}/>
           <Button color="dark" onClick={() => {console.log(checkCompletion(JobInfo, setCompleted));}}>Create Job</Button>
         </div>
@@ -263,11 +264,16 @@ const validateJobInfo = (jobInfo: JobInfo) => {
   if (!jobInfo.longDescription) {
     errors.push("Long description is required.");
   }
+  const deadlineRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (jobInfo.deadline !== "" && jobInfo.deadline != null && !deadlineRegex.test(jobInfo.deadline)) {
+    errors.push("Deadline format should be YYYY-MM-DD");
+  }
   return errors;
 };
 
 const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
   const errors = validateJobInfo(jobInfo);
+
   if (errors.length === 0) {
     setCompleted(true);
   } else {

@@ -37,17 +37,17 @@
 
 @media (max-width: 768px) {
     .box {
-      flex-direction: column;
+      flex-direction: row;
     }
     .inputContainer {
       margin-right: 0px;
-      margin-bottom: 10px;
-      margin-top: 3rem;
+      margin-bottom: 5px;
+      margin-top: 1rem;
       width: 80%;
     }
 
     .searchButton {
-        margin-bottom: 1rem;
+        margin-bottom: 0rem;
     }
   }
 

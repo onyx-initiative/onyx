@@ -59,11 +59,18 @@ export default function Navbar(props: any) {
     }
   }, [loadingBanner, banner?.getBanner?.banner_text])
 
+  const handleAlert = () => {
+    const message =
+      'Please report any technical bugs to cole.purboo@onyxinitiative.org and job-related issues to andy.francis@onyxinitiative.org';
+
+    alert(message);
+  };
+
 
   return (
     <div className={styles.betaWrapper}>
       {/* @todo: Remove the wrapper div for final launch */}
-      <BetaHeadline />
+      {/* <BetaHeadline /> */}
       {/* {bannerText && !loadingBanner ? <OnyxAnnouncemment banner={bannerText}/> : null} */}
       {/* <OnyxAnnouncemment banner={bannerText}/> */}
       <div className={styles.navbar}>
@@ -97,6 +104,9 @@ export default function Navbar(props: any) {
           </li>
           <li>
             <a href="https://onyxinitiative.org/contact/" target="_blank" rel="noreferrer">Contact Us</a>
+          </li>
+          <li onClick={handleAlert}>
+            Help
           </li>
           <li>
 

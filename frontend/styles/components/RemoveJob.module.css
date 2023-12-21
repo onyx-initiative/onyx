@@ -46,11 +46,12 @@
 
 .removeJobCard {
   display: flex;
-  flex-direction: column;
-  width: 300px;
+  flex-direction: row;
+  width: 90%;
   background-color: white;
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  padding: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   cursor: pointer;
@@ -58,9 +59,8 @@
 
 .removeJobCard p {
   color: black;
-  margin-bottom: 10px;
   overflow-wrap: break-word; /* Allow word wrapping */
-  font-size: 14px; /* Adjust the font size as desired */
+  margin-left: 20px;
 }
 
 .removeJobCard p:first-child {
@@ -78,9 +78,9 @@
 
   
   .jobContainer {
-      display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns with equal width */
-  grid-gap: 20px; /* Spacing between grid items */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
   }
 
   .employerContainer {
