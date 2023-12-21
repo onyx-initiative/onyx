@@ -134,7 +134,7 @@
     }
 
     .navbarItems li {
-        padding: 0 1rem;
+        padding: 0 rem;
         font-size: medium;
         color: gray;
         font-weight: 700;
@@ -156,7 +156,7 @@
     }
     .navbarLogo {
       margin-right: 0;
-      margin-bottom: 1rem;
+
       text-align: center;
     }
     .navbarItems {
@@ -164,8 +164,8 @@
       margin-right: 0;
     }
     .navbarItems li {
-      margin-right: 2rem;
-      font-size: medium;
+      margin-right: 1rem;
+      font-size: small;
     }
     .navbarProfile {
       margin-left: 0;
