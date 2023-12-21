@@ -32,12 +32,20 @@ export default function RemoveJob(props: SelectedJob) {
     const [jobs, setJobs] = useState([])
 
     useEffect(() => {
-      if (!loading) {
-          setJobs(jobsData?.getJobs)
-        }
-      }
-      // Ignore, this is intentional
-     ,[jobsData, loading])
+        const fetchData = async () => {
+            try {
+                await refetch(); // This will trigger a refetch of the data
+                if (!loading) {
+                    setJobs(jobsData?.getJobs);
+                }
+            } catch (error) {
+                console.error("Error fetching jobs:", error);
+                // Handle error state appropriately
+            }
+        };
+
+        fetchData();
+    }, [jobsData, loading, refetch]);
 
      
     // For if the page is loading 
@@ -49,8 +57,12 @@ export default function RemoveJob(props: SelectedJob) {
           </div>
         )
       }
-    
-    
+      
+      const sortedJobs = jobs.slice().sort((a: Job, b: Job) => {
+        const titleA = a.title.toLowerCase();
+        const titleB = b.title.toLowerCase();
+        return titleA.localeCompare(titleB);
+      });
 
     return (
         <div>
@@ -64,7 +76,7 @@ export default function RemoveJob(props: SelectedJob) {
             <h1>Search for a Job to remove!</h1>
             <SearchBar setJobs={setJobs} query={search} setSearch={setSearch}/>
             <div className={styles.jobContainer}>
-                {loading ? <p>loading</p> : jobs.map((job: Job, index:any) => <RemoveJobCard  job={job} key={index} refetchQueries={refetchQueries} />
+                {loading ? <p>loading</p> : sortedJobs.map((job: Job, index:any) => <RemoveJobCard  job={job} key={index} refetchQueries={refetchQueries} />
                 )}
                 
             </div>
