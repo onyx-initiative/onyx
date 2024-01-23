@@ -74,7 +74,7 @@ const JobCard = (props: any) => {
           <div className={styles.jobCardBody}
             onClick={() => setOpened(!opened)}
           >
-            {job.applicant_year && job.applicant_year.length > 0 ? <h4>{'Targetted Years: ' + formatYears(job.applicant_year)}</h4> : null}
+            {job.applicant_year && job.applicant_year.length > 0 ? <h4>{'Graduation Years: ' + formatYears(job.applicant_year)}</h4> : null}
             <p>{job.description}</p>
           </div>
           {
@@ -294,7 +294,6 @@ const formatText = (text: string) => {
     // Initial Function
     let result = text.split(/(?=- |\n)/)
 
-    console.log(result)
     // Trim whitespaces
     let final = result.map((str: string, index: number) => {
       if (str.includes("- ") || str.startsWith("\n-\t" || str.startsWith("- "))) {
