@@ -3,8 +3,10 @@ import { gql } from '@apollo/client';
 export const LOG_JOB_CLICK = gql`
     mutation LogJobClick($scholarId: Int!, $jobId: Int!) {
         logJobClick(scholarId: $scholarId, jobId: $jobId) {
-            scholarId
+            employerId
             jobId
+            jobTitle
+            employerName
             clickTime
         }
     }

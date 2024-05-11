@@ -322,7 +322,7 @@ const ApplyButton = (props: any) => {
                     const currentDate = new Date();
                     console.log(session?.user?.name)
                     logApplyClick({
-                      variables: { scholarId: scholarIdInt, jobId: jobIdInt }
+                      variables: { scholarId: scholarData?.getScholarByEmail?.scholar_id, jobId: job.job_id }
                     });
                   } catch (err) {
                     const scholarIdInt = scholarData?.getScholarByEmail?.scholar_id
