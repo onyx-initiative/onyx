@@ -5,6 +5,8 @@ export const GET_JOB_CLICKS = gql`
     query GetJobClicks {
         getJobClicks {
             scholarId
+            employerId
+            employerName
             jobId
             clickTime
         }
@@ -17,6 +19,7 @@ export const GET_EMPLOYER_CLICKS = gql`
         getEmployerClicks {
             scholarId
             employerId
+            employerName
             clickTime
         }
     }
@@ -26,9 +29,11 @@ export const GET_EMPLOYER_CLICKS = gql`
 export const GET_JOB_CLICKS_RANKED = gql`
     query GetJobClicksRanked {
         getJobClicksRanked {
-            scholarId
+            employerId
             jobId
-            clickTime
+            jobTitle
+            employerName
+            click_count
         }
     }
 `;

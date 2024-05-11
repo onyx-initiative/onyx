@@ -163,7 +163,7 @@ const analyticsResolver = {
             }
         },
 
-        getScholarEmployerClicksRanked: async (_: any, { dataSources }: any) => {
+        getScholarEmployerClicksRanked: async (_: any, args: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
             try {
@@ -194,13 +194,16 @@ const analyticsResolver = {
         getJobClicks: async (_: any, args: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
-            const query = `SELECT * FROM job_clicks`;
+            const query = `SELECT job.job_id, job.        title, job.employer_id, employer.name, job_clicks.click_time        FROM job_clicks
+                        JOIN job ON job_clicks.job_id = job.job_id JOIN employer ON job.employer_id = employer.employer_id`;
             try {
                 const resp = await client.query(query);
                 console.log(resp.rows);
                 const formattedRows = resp.rows.map((row:any) => ({
-                    scholarId: row.scholar_id,
+                    employerId: row.employer_id,
                     jobId: row.job_id,
+                    jobTitle: row.title,
+                    employerName: row.name,
                     clickTime: new Date(row.click_time).toISOString() // Convert timestamp to ISO string
                   }));
                   
@@ -215,45 +218,94 @@ const analyticsResolver = {
             }
         },
         
-        getJobClicksRanked: async (_: any, { dataSources }: any) => {
+        getJobClicksRanked: async (_: any, args: any, { dataSources }: any) => {
             const {db} = dataSources;
             const client = await establishConnection(db);
             const query = `
-                SELECT job_id, COUNT(*) AS clicks
-                FROM job_clicks
-                GROUP BY job_id
-                ORDER BY clicks DESC
+            SELECT job.job_id, job.title, job.employer_id, employer.name, count(job_clicks.job_id) as click_count
+            FROM job_clicks
+            JOIN job ON job_clicks.job_id = job.job_id JOIN employer ON job.employer_id = employer.employer_id
+            GROUP BY job.job_id, employer.name, job.title, job.employer_id
+            ORDER BY click_count DESC
             `;
-            const resp = await client.query(query).catch((err: any) => {
-                console.error(err);
+            try {
+                const resp = await client.query(query);
+                console.log(resp.rows);
+                const formattedRows = resp.rows.map((row:any) => ({
+                    employerId: row.employer_id,
+                    jobId: row.job_id,
+                    jobTitle: row.title,
+                    employerName: row.name,
+                    click_count: parseInt(row.click_count),
+                  }));
+                  
+                return formattedRows;
+            }
+            catch (err) {
+                console.error("Error executing query:", err);
+                throw new Error("Failed to get job clicks");
+            }
+            finally {
                 client.release();
-                return [];
-            });
-            client.release();
-            return resp.rows;
+            }
+        },
+
+        getEmployerClicksRanked: async (_: any, args: any, { dataSources }: any) => {
+            const {db} = dataSources;
+            const client = await establishConnection(db);
+            const query = `
+            SELECT employer.employer_id, employer.name, count(employer_clicks.employer_id) as click_count
+            FROM employer_clicks
+            JOIN employer ON employer_clicks.employer_id = employer.employer_id
+            GROUP BY employer.employer_id, employer.name
+            ORDER BY click_count DESC
+            `;
+            try {
+                const resp = await client.query(query);
+                console.log(resp.rows);
+                const formattedRows = resp.rows.map((row:any) => ({
+                    employerId: row.employer_id,
+                    employerName: row.name,
+                    click_count: parseInt(row.click_count),
+                  }));
+                  
+                return formattedRows;
+            }
+            catch (err) {
+                console.error("Error executing query:", err);
+                throw new Error("Failed to get employer clicks");
+            }
+            finally {
+                client.release();
+            }
         },
         
         getJobClicksRankedByApply: async (_: any, args: any, { dataSources }: any) => {
             const {db} = dataSources;
             const client = await establishConnection(db);
+            const query = `
+            SELECT job.job_id, job.title, job.employer_id, employer.name, count(apply_clicks.job_id) as click_count
+            FROM apply_clicks
+            JOIN job ON apply_clicks.job_id = job.job_id JOIN employer ON job.employer_id = employer.employer_id
+            GROUP BY job.job_id, employer.name, job.title, job.employer_id
+            ORDER BY click_count DESC
+            `;
             try {
-                const query = `
-                    SELECT job_id, COUNT(*) AS apply_count
-                    FROM apply_clicks
-                    GROUP BY job_id
-                    ORDER BY apply_count DESC
-                `;
                 const resp = await client.query(query);
                 console.log(resp.rows);
-                const formattedRows = resp.rows.map((row: any) => ({
+                const formattedRows = resp.rows.map((row:any) => ({
+                    employerId: row.employer_id,
                     jobId: row.job_id,
-                    apply_count: parseInt(row.apply_count)
-                }));
+                    jobTitle: row.title,
+                    employerName: row.name,
+                    click_count: parseInt(row.click_count),
+                  }));
+                  
                 return formattedRows;
             }
             catch (err) {
                 console.error("Error executing query:", err);
-                throw new Error("Failed to get job clicks ranked by apply");
+                throw new Error("Failed to get job clicks");
             }
             finally {
                 client.release();
@@ -394,17 +446,17 @@ const analyticsResolver = {
         },
         
         getEmployerClicks: async (_: any, args: any, { dataSources }: any) => {
-            const {db} = dataSources;
+            const { db } = dataSources;
             const client = await establishConnection(db);
+            const query = `SELECT  employer_clicks.employer_id, employer.name, employer_clicks.click_time, employer_clicks.scholar_id FROM employer_clicks
+                 JOIN employer ON employer_clicks.employer_id = employer.employer_id`;
             try {
-                const query = `
-                    SELECT * FROM employer_clicks
-                `;
                 const resp = await client.query(query);
                 console.log(resp.rows);
                 const formattedRows = resp.rows.map((row:any) => ({
                     scholarId: row.scholar_id,
-                    employerId: row.job_id,
+                    employerId: row.employer_id,
+                    employerName: row.name,
                     clickTime: new Date(row.click_time).toISOString() // Convert timestamp to ISO string
                   }));
                   
@@ -416,7 +468,7 @@ const analyticsResolver = {
             }
             finally {
                 client.release();
-            }
+            };
         },
 
         getEmployerJobPostingsRanking: async (_: any, args: any, { dataSources }: any) => {

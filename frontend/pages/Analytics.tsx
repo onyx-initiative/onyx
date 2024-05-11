@@ -19,6 +19,8 @@ import {
     GET_MOST_POPULAR_JOB_TAGS_BY_EMPLOYER,
     GET_SCHOLAR_CLICKS_BY_SCHOOL
 } from '../graphql/queries/analyticsQueries'
+import {saveAs} from 'file-saver';
+import * as XLSX from 'xlsx';
 
 
 interface Props {}
@@ -45,12 +47,57 @@ function AnalyticsPage(props: Props) {
     console.log(jobClickData)
     console.log(employerClicksData)
 
-    return (
+    const date = new Date();
 
-        
+    const exportToExcel = () => {
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.json_to_sheet(jobClickData.getJobClicks);
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Job Clicks");
+        const worksheet2 = XLSX.utils.json_to_sheet(employerClicksData.getEmployerClicks);
+        XLSX.utils.book_append_sheet(workbook, worksheet2, "Employer Clicks");
+        const worksheet3 = XLSX.utils.json_to_sheet(jobClicksRankedData.getJobClicksRanked);
+        XLSX.utils.book_append_sheet(workbook, worksheet3, "Job Clicks Ranked");
+        const worksheet4 = XLSX.utils.json_to_sheet(jobTagRankingData.getJobTagRanking);
+        XLSX.utils.book_append_sheet(workbook, worksheet4, "Job Tag Ranking");
+        const worksheet5 = XLSX.utils.json_to_sheet(jobTagRankingByClicksData.getJobTagRankingByClicks);
+        XLSX.utils.book_append_sheet(workbook, worksheet5, "Job Tag Ranking By Clicks");
+        const worksheet6 = XLSX.utils.json_to_sheet(jobLocationRankingData.getJobLocationRanking);
+        XLSX.utils.book_append_sheet(workbook, worksheet6, "Job Location Ranking");
+        const worksheet7 = XLSX.utils.json_to_sheet(jobDeadlineRankingByMonthData.getJobDeadlineRankingByMonth);
+        XLSX.utils.book_append_sheet(workbook, worksheet7, "Job Deadline Ranking By Month");
+        const worksheet8 = XLSX.utils.json_to_sheet(scholarsRankedByMajorData.getScholarsRankedByMajor);
+        XLSX.utils.book_append_sheet(workbook, worksheet8, "Scholars Ranked By Major");
+        const worksheet9 = XLSX.utils.json_to_sheet(scholarsRankedByYearData.getScholarsRankedByYear);
+        XLSX.utils.book_append_sheet(workbook, worksheet9, "Scholars Ranked By Year");
+        const worksheet10 = XLSX.utils.json_to_sheet(percentageOfScholarsWithAllowedNotificationsData.getPercentageOfScholarsWithAllowedNotifications);
+        XLSX.utils.book_append_sheet(workbook, worksheet10, "Percentage Of Scholars With Allowed Notifications");
+        const worksheet11 = XLSX.utils.json_to_sheet(scholarApplyClicksRankedData.getScholarApplyClicksRanked);
+        XLSX.utils.book_append_sheet(workbook, worksheet11, "Scholar Apply Clicks Ranked");
+        const worksheet12 = XLSX.utils.json_to_sheet(scholarJobClicksRankedData.getScholarJobClicksRanked);
+        XLSX.utils.book_append_sheet(workbook, worksheet12, "Scholar Job Clicks Ranked");
+        const worksheet13 = XLSX.utils.json_to_sheet(scholarEmployerClicksRankedData.getScholarEmployerClicksRanked);
+        XLSX.utils.book_append_sheet(workbook, worksheet13, "Scholar Employer Clicks Ranked");
+        const worksheet14 = XLSX.utils.json_to_sheet(employerJobPostingsRankingData.getEmployerJobPostingsRanking);
+        XLSX.utils.book_append_sheet(workbook, worksheet14, "Employer Job Postings Ranking");
+        const worksheet15 = XLSX.utils.json_to_sheet(numDaysSinceLastJobPostByEmployerData.getNumDaysSinceLastJobPostByEmployer);
+        XLSX.utils.book_append_sheet(workbook, worksheet15, "Num Days Since Last Job Post By Employer");
+        const worksheet16 = XLSX.utils.json_to_sheet(mostPopularJobTagsByEmployerData.getMostPopularJobTagsByEmployer);
+        XLSX.utils.book_append_sheet(workbook, worksheet16, "Most Popular Job Tags By Employer");
+        const worksheet17 = XLSX.utils.json_to_sheet(scholarClicksBySchoolData.getScholarClicksBySchool);
+        XLSX.utils.book_append_sheet(workbook, worksheet17, "Scholar Clicks By School");
+
+        // Buffer to store the generated Excel file
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+    
+        saveAs(blob, `OnyxAnalyticsData${date}.xlsx`);
+    };
+
+    return (
 
         <div>
             <h1>Analytics</h1>
+            <button onClick={exportToExcel}>Export Analytics</button>
         </div>
 
     )

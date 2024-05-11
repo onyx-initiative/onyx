@@ -5,8 +5,8 @@ export const analyticsTypeDefs = gql`
     type Query {
     getJobClicks: [JobClick]
     getEmployerClicks: [EmployerClick]
-    getJobClicksRanked: [JobClick]
-    getEmployerClicksRanked: [EmployerClick]
+    getJobClicksRanked: [RankedJobClick]
+    getEmployerClicksRanked: [RankedEmployerClick]
     getJobTagRanking: [JobTagRanking]
     getJobTagRankingByClicks: [JobTagRankingByClick]
     getJobLocationRanking: [JobLocationRanking]
@@ -17,7 +17,7 @@ export const analyticsTypeDefs = gql`
     getScholarApplyClicksRanked: [ApplyClickRank]
     getScholarJobClicksRanked: [JobClickRank]
     getScholarEmployerClicksRanked: [EmployerClickRank]
-    getJobClicksRankedByApply: [JobApplyClickRank]
+    getJobClicksRankedByApply: [RankedJobClick]
     getScholarClicksBySchool: [ScholarClicksBySchool]
     getEmployerJobPostingsRanking: [EmployerJobPostingRank]
     getNumDaysSinceLastJobPostByEmployer: [EmployerLastJobPost]
@@ -98,9 +98,25 @@ export const analyticsTypeDefs = gql`
     }
 
     type JobClick {
-    scholarId: Int
+    employerId: Int
     jobId: Int
-    clickTime: Date
+    jobTitle: String
+    employerName: String
+    clickTime: String
+    }
+
+    type RankedJobClick {
+    employerId: Int
+    jobId: Int
+    jobTitle: String
+    employerName: String
+    click_count: Int
+    }
+
+    type RankedEmployerClick {
+    employerId: Int
+    employerName: String
+    click_count: Int
     }
 
     type ApplyClick {
@@ -132,6 +148,7 @@ export const analyticsTypeDefs = gql`
     type EmployerClick {
     scholarId: Int
     employerId: Int
+    employerName: String
     clickTime: String
     }
 `
