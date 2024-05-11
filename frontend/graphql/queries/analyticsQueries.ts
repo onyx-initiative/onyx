@@ -1,4 +1,4 @@
-import {gql} from '@apollo/client'
+import { gql } from '@apollo/client';
 
 // Query for getting job clicks
 export const GET_JOB_CLICKS = gql`
@@ -33,33 +33,12 @@ export const GET_JOB_CLICKS_RANKED = gql`
     }
 `;
 
-// Query for job tag rankings
+// Query for getting job tag rankings
 export const GET_JOB_TAG_RANKING = gql`
     query GetJobTagRanking {
         getJobTagRanking {
             tag
             job_count
-        }
-    }
-`;
-
-// Query for scholar apply clicks ranked
-export const GET_SCHOLAR_APPLY_CLICKS_RANKED = gql`
-    query GetScholarApplyClicksRanked {
-        getScholarApplyClicksRanked {
-            scholarId
-            apply_count
-        }
-    }
-`;
-
-// Query for getting job clicks ranked by employer
-export const GET_EMPLOYER_CLICKS_RANKED = gql`
-    query GetEmployerClicksRanked {
-        getEmployerClicksRanked {
-            scholarId
-            employerId
-            clickTime
         }
     }
 `;
@@ -121,6 +100,16 @@ export const GET_PERCENTAGE_OF_SCHOLARS_WITH_ALLOWED_NOTIFICATIONS = gql`
     }
 `;
 
+// Query for getting scholar apply clicks ranked
+export const GET_SCHOLAR_APPLY_CLICKS_RANKED = gql`
+    query GetScholarApplyClicksRanked {
+        getScholarApplyClicksRanked {
+            scholarId
+            apply_count
+        }
+    }
+`;
+
 // Query for getting scholar job clicks ranked
 export const GET_SCHOLAR_JOB_CLICKS_RANKED = gql`
     query GetScholarJobClicksRanked {
@@ -141,32 +130,13 @@ export const GET_SCHOLAR_EMPLOYER_CLICKS_RANKED = gql`
     }
 `;
 
-// Query for getting job clicks ranked by apply
-export const GET_JOB_CLICKS_RANKED_BY_APPLY = gql`
-    query GetJobClicksRankedByApply {
-        getJobClicksRankedByApply {
-            jobId
-            apply_count
-        }
-    }
-`;
-
-// Query for getting scholar clicks by school
-export const GET_SCHOLAR_CLICKS_BY_SCHOOL = gql`
-    query GetScholarClicksBySchool {
-        getScholarClicksBySchool {
-            school
-            scholar_click_count
-        }
-    }
-`;
-
 // Query for getting employer job postings ranking
 export const GET_EMPLOYER_JOB_POSTINGS_RANKING = gql`
     query GetEmployerJobPostingsRanking {
         getEmployerJobPostingsRanking {
-            employer
-            job_posting_count
+            employerName
+            employerId
+            job_posting_click_count
         }
     }
 `;
@@ -175,7 +145,8 @@ export const GET_EMPLOYER_JOB_POSTINGS_RANKING = gql`
 export const GET_NUM_DAYS_SINCE_LAST_JOB_POST_BY_EMPLOYER = gql`
     query GetNumDaysSinceLastJobPostByEmployer {
         getNumDaysSinceLastJobPostByEmployer {
-            employer
+            employerName
+            employerId
             days_since_last_post
         }
     }
@@ -192,4 +163,12 @@ export const GET_MOST_POPULAR_JOB_TAGS_BY_EMPLOYER = gql`
     }
 `;
 
-
+// Query for getting scholar clicks by school
+export const GET_SCHOLAR_CLICKS_BY_SCHOOL = gql`
+    query GetScholarClicksBySchool {
+        getScholarClicksBySchool {
+            school
+            scholar_click_count
+        }
+    }
+`;

@@ -11,6 +11,9 @@ import BarChart from "../src/components/admin/BarChart";
 import AddBanner from "../src/components/admin/AddBanner";
 import EditEmployerButton from "../src/components/admin/EditEmployerButton";
 import EditJobButton from "../src/components/admin/EditJobButton";
+import { Analytics } from "@vercel/analytics/react";
+import AnalyticsPage from "./Analytics";
+import AnalyticsButton from "../src/components/admin/AnalyticsButton";
 
 // To ensure unauthenticated people don't access
 // import getServerProps from "../src/utils/getServerProps";
@@ -46,6 +49,13 @@ export default function Admin() {
                                 
                             </div>
                     </div>
+                    <div>
+                        <h1>Analytics</h1>
+                        <div style={{ display: "flex",justifyContent: "space-between"}}>
+                                <AnalyticsButton text="Analytics" link="/Analytics"/>
+                            </div>
+                    </div>
+            
                 </div>
                 {/* <div style={{ width: "100%", height: "100%"}}>
                     <BarChart />
