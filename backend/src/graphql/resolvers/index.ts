@@ -6,13 +6,15 @@ import employerResolver from "./employer.resolver";
 import jobResolver from "./job.resolver";
 import scholarResolver from "./scholar.resolver";
 import viewResolver from "./view.resolver";
+import analyticsResolver from "./analytics.resolver";
 
 const resolvers = mergeResolvers([
     adminResolver,
     employerResolver,
     jobResolver,
     scholarResolver,
-    viewResolver
+    viewResolver,
+    analyticsResolver
 ])
 
 export default resolvers;

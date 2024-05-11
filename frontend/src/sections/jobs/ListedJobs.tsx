@@ -80,8 +80,6 @@ export default function ListedJobs({ jobs, employerData, archive, selectedJobId 
       {/* For the job listing */}
       <div className={styles.job}>
         {displayJobs.map((job: any, index: number) => {
-          console.log("time + " + job.date_posted)
-          console.log(typeof(job.date_posted))
           return (
               <JobCard key={index} job={job} email={false} employerData={employerData} archive={archive}/>
           )

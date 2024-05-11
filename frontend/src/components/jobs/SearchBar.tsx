@@ -10,16 +10,20 @@ type SearchBarProps = {
     initialQuery?: string;
     query: string;
     setSearch: any;
+    filtersSelected: any;
 }
 
-export default function SearchBar({ setJobs, initialQuery, query, setSearch }: SearchBarProps) {
+export default function SearchBar({ setJobs, initialQuery, query, setSearch, filtersSelected }: SearchBarProps) {
+
+  
+      
     const [getJobs, { data }] = useLazyQuery(SEARCH_JOBS, {
-        variables: { search: query },
+        variables: { search: query, location: filtersSelected.location, jobType: filtersSelected.jobType, graduationYear: filtersSelected.graduationYear, categories: filtersSelected.categories },
     })
 
     useEffect(() => {
     if (initialQuery) {
-        getJobs({ variables: { search: formatQuery(initialQuery) } })
+        getJobs({ variables: { search: formatQuery(initialQuery), location: filtersSelected.location, jobType: filtersSelected.jobType, graduationYear: filtersSelected.graduationYear, categories: filtersSelected.categories } })
         // Ignore, this is intentional
     }}, [initialQuery, getJobs])
 
@@ -29,7 +33,6 @@ export default function SearchBar({ setJobs, initialQuery, query, setSearch }: S
         }
     }, [data, setJobs])
 
-    console.log(data)
     return (
       <div className={styles.searchBar}>
         <input
@@ -43,8 +46,8 @@ export default function SearchBar({ setJobs, initialQuery, query, setSearch }: S
           <button
             type="button"
             onClick={() => {
-              console.log(formatQuery(query))
-              getJobs({ variables: { search: formatQuery(query) } })}}
+
+              getJobs({ variables: { search: formatQuery(query), location: filtersSelected.location, jobType: filtersSelected.jobType, graduationYear: filtersSelected.graduationYear, categories: filtersSelected.categories } })}}
           >
             Search
           </button>

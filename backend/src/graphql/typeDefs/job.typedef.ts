@@ -91,11 +91,12 @@ export const jobTypeDef = gql`
         getJobById(job_id: ID!): Job!
         getJobsByEmployerId(employer_id: ID!): [Job!]!
         getFeaturedJobs: [Job!]!
-        searchJobs(search: String!): [JobSearch!]!
+        searchJobs(search: String!, location: [String], jobType: [String], graduationYear: [Int], categories: [String]): [JobSearch!]!
         getNewJobs: [Job!]!
         getFavourites(scholar_id: ID!): [Job!]!
         getFilteredJobs(filter: JobFilterInput!): [Job]!
         viewArchivedJobs: [Job]!
+        getAllDistinctTags: [String!]!
     }
 
     type Return {

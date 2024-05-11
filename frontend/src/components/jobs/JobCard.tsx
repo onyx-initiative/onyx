@@ -10,6 +10,9 @@ import { useSession } from 'next-auth/react';
 import { CHECK_BOOKMARK } from '../../../graphql/queries/scholarQueries';
 import va from '@vercel/analytics';
 import { useMediaQuery } from 'react-responsive';
+import { LOG_JOB_CLICK } from '../../../graphql/mutations/analyticsMutations';
+import { useRouter } from 'next/router';
+import { GET_SCHOLAR_BY_EMAIL } from '../../../graphql/queries/scholarQueries';
 
 type JobCardProps = {
   job: any;
@@ -19,6 +22,14 @@ type JobCardProps = {
 }
 
 const JobCard = (props: any) => {
+  const { data: session } = useSession({ required: true })
+
+  const { data: scholarData, loading: loadingScholar, error: scholarError } = useQuery(GET_SCHOLAR_BY_EMAIL, {
+    variables: { email: session?.user?.email }
+  })
+
+  const [logJobClick] = useMutation(LOG_JOB_CLICK);
+
     const { job, email, employerData, archive } = props;
     const [bookmarked, setBookmarked] = useState(false);
     const [opened, setOpened] = useState(false);
@@ -28,6 +39,7 @@ const JobCard = (props: any) => {
     const date = new Date(parseInt(job.deadline)).toDateString();
     const check = new Date(parseInt(job.deadline)).getFullYear();
 
+  
     useEffect(() => {
       if (employerData) {
         setLogo(employerData?.getEmployers?.find((employer: any) => employer.employer_id === job.employer_id).logo_url);
@@ -35,6 +47,22 @@ const JobCard = (props: any) => {
       }
     }, [employerData, job.employer_id])
     const isSmallScreen = useMediaQuery({ query: '(max-width: 767px)' });
+
+    const handleJobClick = async () => {
+      
+      setOpened(!opened);
+      try {
+        // Ensure scholarId and jobId are integers before passing them to the mutation
+        const scholarIdInt = parseInt(scholarData?.getScholarByEmail?.scholar_id, 10);
+        const jobIdInt = parseInt(job.job_id, 10);
+        await logJobClick({
+          variables: { scholarId: scholarIdInt, jobId: jobIdInt }
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    
   
     return (
       <div key={job.job_id} className={styles.mainContainer}>
@@ -43,7 +71,7 @@ const JobCard = (props: any) => {
           <div className={styles.jobCardHeader}>
             <div className={styles.jobCardImage}>
               <Image 
-                onClick={() => setOpened(!opened)}
+                onClick={handleJobClick}
                 src={logo}
                 alt="Company Logo"
                 width={60}
@@ -54,7 +82,7 @@ const JobCard = (props: any) => {
               />
             </div>
             <div className={styles.jobHeader}
-              onClick={() => setOpened(!opened)}
+              onClick={handleJobClick}
               style={{ marginLeft: '0.4rem'}}
             >
               <h3 style={{ padding: 0, margin: 0, marginBottom: "0.4rem"}}>{job.title}</h3>
@@ -72,7 +100,7 @@ const JobCard = (props: any) => {
           </div>
           
           <div className={styles.jobCardBody}
-            onClick={() => setOpened(!opened)}
+            onClick={() => handleJobClick}
           >
             {job.applicant_year && job.applicant_year.length > 0 ? <h4>{'Graduation Years: ' + formatYears(job.applicant_year)}</h4> : null}
             <p>{job.description}</p>

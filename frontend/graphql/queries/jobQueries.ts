@@ -199,7 +199,7 @@ export const GET_RELEVANT_JOBS = gql`
 
 export const SEARCH_JOBS = gql`
     query SearchJobs($search: String!) {
-        searchJobs(search: $search) {
+        searchJobs(search: $search, location: $location, jobType: $jobType, graduationYear: $graduationYear, categories: $categories) {
             job_id
             name
             employer_id
@@ -345,3 +345,10 @@ export const VIEW_ARCHIVED_JOBS = gql`
         }
     }
 `
+
+export const GET_ALL_DISTINCT_TAGS = gql`
+    query GetAllDistinctTags {
+        getAllDistinctTags
+    }
+`
+

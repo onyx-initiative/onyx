@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react";
 import styles from "../styles/components/AddJobForm.module.css";
+import { GET_ALL_DISTINCT_TAGS } from "../../frontend/graphql/queries/jobQueries";
 import { Checkbox } from "@mantine/core";
 import { CREATE_JOB } from "../graphql/mutations/jobMutations";
-import { useMutation, useQuery } from "@apollo/client";
+import { ApolloClient, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import Image from 'next/image';
 import {GET_EMPLOYER_BY_NAME, GET_EMPLOYERS} from "../../frontend/graphql/queries/employerQueries";
 import {Select, MultiSelect, Button} from '@mantine/core';
 import BackButton from "../src/components/admin/BackButton";
 import { job_type, Job, Employer } from "../../backend/src/types/db.types";
-
-
 
 
 type JobInfo = {
@@ -41,6 +40,12 @@ export default function AddJob() {
     const [JobInfo, setJobInfo] = useState({
         deadline: "",
     } as JobInfo)
+
+
+    const { data: tagData, loading: tagDataLoading, error: tagDataError } = useQuery(GET_ALL_DISTINCT_TAGS)
+    console.log(tagData)
+
+
     const [checked, setChecked] = useState(false)
     const [createJob, {data: jobData, loading, error}] = useMutation(CREATE_JOB, {variables: {
         employerId: JobInfo.employerId,
@@ -114,20 +119,21 @@ export default function AddJob() {
   const [searchValue, onSearchChange] = useState('');
   const [applicationYearSearchValue, onSearchApplicationYear] = useState('');
   const [tagSearchValue, onSearchTag] = useState('');
-  const [tagData, setTagData] = useState([{ value: 'Technology', label:  'Technology' },
-    { value: 'Business ', label: 'Business' }, { value: 'Marketing', label:  'Marketing' }, { value: 'Engineering', label:  'Engineering' }, { value: 'Finance', label:  'Finance' }, { value: 'HR', label:  'HR' }, { value: 'IT', label:  'IT' }, { value: 'Research', label:  'Research' }, { value: 'Sales', label:  'Sales' }, { value: 'Security', label:  'Security' }, { value: 'Accounting', label:  'Accounting' }, { value: 'Administration', label:  'Administration' }, { value: 'Automotive', label:  'Automotive' }, { value: 'Arts&Entertainment', label:  'Arts&Entertainment' }, { value: 'Communication', label:  'Communication' }, { value: 'Design', label:  'Design' }, { value: 'Gaming', label:  'Gaming' }, { value: 'Healthcare', label:  'HealthCare' }, { value: 'Mathematics', label:  'Mathematics' }, { value: 'Telecommunications', label:  'Telecommunications'},{ value: 'Default', label:  'Default' }
-    ])
-    const sortedTagData = tagData.slice().sort((a, b) => a.label.localeCompare(b.label));
+  
   
 
-    const {loading: employerIdLoading, data: employerId} = useQuery(GET_EMPLOYER_BY_NAME, {variables: {name: searchValue}})
+  const {loading: employerIdLoading, data: employerId} = useQuery(GET_EMPLOYER_BY_NAME, {variables: {name: searchValue}})
 
-    const initialJobTypes: job_type[] = ["Full Time", "Part Time", "Internship", "New Grad"];
-    const [jobTypes, setJobTypes] = useState(initialJobTypes);
+
+  
+  
+
+
+  const initialJobTypes: job_type[] = ["Full Time", "Part Time", "Internship", "New Grad"];
+  const [jobTypes, setJobTypes] = useState(initialJobTypes);
 
   
     useEffect(() => {
-      console.log(applicationYearSearchValue)
       if(!employerIdLoading && searchValue != "") {
         JobInfo.employerId = employerId?.getEmployerByName?.employer_id
         JobInfo.adminId = "1"
@@ -160,7 +166,6 @@ export default function AddJob() {
               for (let i = 0; i < query.length; i++) {
                 x.push(parseInt(query[i]))
               }
-              console.log(x)
               setJobInfo(state => ({...state, applicantYear: x}))
             }}
           />
@@ -173,7 +178,25 @@ export default function AddJob() {
           <InputElementLong label="howToApply" JobInfo={JobInfo} setJobInfo={setJobInfo} />
           <Select className={styles.inputContainer} label="jobType" placeholder="Pick one" searchable clearable creatable data={jobTypes} nothingFound="No options" onChange={(query: any) => setJobInfo(state => ({...state, jobType: query}))}/>
           <InputElement label="term" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <MultiSelect className={styles.inputContainer} label="tags" placeholder="Pick one" searchable clearable creatable onSearchChange={onSearchTag} getCreateLabel={(query) => `+ Create ${query}`} onCreate={(query) => { const item = { value: query, label: query }; setTagData((current) => [...current, item]); return item; }} searchValue={tagSearchValue} nothingFound="No options" data={sortedTagData} onChange={(query) => setJobInfo(state => ({...state, tags: query}))} />
+          {/* <MultiSelect
+            className={styles.inputContainer}
+            label="tags"
+            placeholder="Pick one"
+            searchable
+            clearable
+            creatable
+            onSearchChange={onSearchTag}
+            getCreateLabel={(query) => `+ Create ${query}`}
+            onCreate={(query) => {
+              const item = { value: query, label: query };
+              setTagData((current: any) => [...current, item]);
+              return item;
+            }} */}
+            {/* searchValue={tagSearchValue}
+            nothingFound="No options"
+            data={sortedTagData}
+            onChange={(query) => setJobInfo((state) => ({ ...state, tags: query }))}
+          /> */}
           <Checkbox label="Save to Drafts?" color="dark" size="md" checked={checked} onChange={() => setChecked(!checked)}/>
           <Button color="dark" onClick={() => {console.log(checkCompletion(JobInfo, setCompleted));}}>Create Job</Button>
         </div>

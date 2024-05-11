@@ -183,6 +183,7 @@ export default function Filter(props: FilterProps) {
         type="button" 
         className={styles.applyFilters}
         onClick={() => {
+          console.log(selected)
           getFilteredJobs({
             variables: { filter: selected }
           })

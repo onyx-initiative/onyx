@@ -113,7 +113,7 @@ export default function Jobs() {
           setJobs={setJobs}
         />
         <div className={styles.jobList}>
-          <SearchBar setJobs={setJobs} initialQuery={query.search as string} query={search} setSearch={setSearch}/>
+          <SearchBar filtersSelected={selected} setJobs={setJobs} initialQuery={query.search as string} query={search} setSearch={setSearch}/>
           {jobLoading ? 
             <div className={styles.loading}>
               <Image src={loading} alt="Loading..." width={80} height={80}/>

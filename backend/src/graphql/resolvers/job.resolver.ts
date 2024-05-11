@@ -90,7 +90,7 @@ const jobResolver = {
             client.release()
             return resp.rows;
         },
-        searchJobs: async (_: any, { search }: any, { dataSources }: any) => {
+        searchJobs: async (_: any, { search, location, jobType, graduationYear, categories }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
             const query = `
@@ -238,7 +238,19 @@ const jobResolver = {
 
             client.release()
             return resp.rows;
-        }
+        },
+        getAllDistinctTags: async (_: any, __: any, { dataSources }: any) => {
+            const { db } = dataSources;
+                const client = await establishConnection(db);
+                const query = 'SELECT DISTINCT unnest(tags) FROM job';
+                const resp = await client.query(query).catch((err: any) => {
+                    console.log(err)
+                    client.release()
+                });
+                client.release()
+                return resp.rows.map((row: any) => row.unnest);
+                
+            }
     },
     Mutation: {
         createJob: async (_: any, { 

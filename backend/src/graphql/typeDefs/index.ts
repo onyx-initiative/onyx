@@ -5,6 +5,7 @@ import { adminTypeDef } from "./admin.typedef";
 import { jobTypeDef } from "./job.typedef";
 import { employerTypeDef } from "./employer.typedef";
 import { viewTypeDef } from "./view.typedef";
+import { analyticsTypeDefs } from "./analytics.typedef";
 
 const baseSchema = gql`
   """
@@ -27,7 +28,8 @@ const typeDefs = [
     adminTypeDef,
     jobTypeDef,
     employerTypeDef,
-    viewTypeDef
+    viewTypeDef,
+    analyticsTypeDefs
 ]
 
 
