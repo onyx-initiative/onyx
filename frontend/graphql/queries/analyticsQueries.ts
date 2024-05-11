@@ -4,7 +4,7 @@ import { gql } from '@apollo/client';
 export const GET_JOB_CLICKS = gql`
     query GetJobClicks {
         getJobClicks {
-            scholarId
+            jobTitle
             employerId
             employerName
             jobId
@@ -111,6 +111,8 @@ export const GET_SCHOLAR_APPLY_CLICKS_RANKED = gql`
         getScholarApplyClicksRanked {
             scholarId
             apply_count
+            scholarName
+            scholarEmail
         }
     }
 `;
@@ -121,6 +123,8 @@ export const GET_SCHOLAR_JOB_CLICKS_RANKED = gql`
         getScholarJobClicksRanked {
             scholarId
             job_count
+            scholarName
+            scholarEmail
         }
     }
 `;
@@ -131,6 +135,8 @@ export const GET_SCHOLAR_EMPLOYER_CLICKS_RANKED = gql`
         getScholarEmployerClicksRanked {
             scholarId
             employer_count
+            scholarName
+            scholarEmail
         }
     }
 `;

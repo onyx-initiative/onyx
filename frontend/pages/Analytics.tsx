@@ -35,7 +35,7 @@ function AnalyticsPage(props: Props) {
     const { data: jobDeadlineRankingByMonthData, loading: jobDeadlineRankingByMonthLoading, error: jobDeadlineRankingByMonthError } = useQuery(GET_JOB_DEADLINE_RANKING_BY_MONTH)
     const { data: scholarsRankedByMajorData, loading: scholarsRankedByMajorLoading, error: scholarsRankedByMajorError } = useQuery(GET_SCHOLARS_RANKED_BY_MAJOR)
     const { data: scholarsRankedByYearData, loading: scholarsRankedByYearLoading, error: scholarsRankedByYearError } = useQuery(GET_SCHOLARS_RANKED_BY_YEAR)
-    const { data: percentageOfScholarsWithAllowedNotificationsData, loading: percentageOfScholarsWithAllowedNotificationsLoading, error: percentageOfScholarsWithAllowedNotificationsError } = useQuery(GET_PERCENTAGE_OF_SCHOLARS_WITH_ALLOWED_NOTIFICATIONS)
+    const { data: AllowedNotificationsData, loading: percentageOfScholarsWithAllowedNotificationsLoading, error: percentageOfScholarsWithAllowedNotificationsError } = useQuery(GET_PERCENTAGE_OF_SCHOLARS_WITH_ALLOWED_NOTIFICATIONS)
     const { data: scholarApplyClicksRankedData, loading: scholarApplyClicksRankedLoading, error: scholarApplyClicksRankedError } = useQuery(GET_SCHOLAR_APPLY_CLICKS_RANKED)
     const { data: scholarJobClicksRankedData, loading: scholarJobClicksRankedLoading, error: scholarJobClicksRankedError } = useQuery(GET_SCHOLAR_JOB_CLICKS_RANKED)
     const { data: scholarEmployerClicksRankedData, loading: scholarEmployerClicksRankedLoading, error: scholarEmployerClicksRankedError } = useQuery(GET_SCHOLAR_EMPLOYER_CLICKS_RANKED)
@@ -44,8 +44,8 @@ function AnalyticsPage(props: Props) {
     const { data: mostPopularJobTagsByEmployerData, loading: mostPopularJobTagsByEmployerLoading, error: mostPopularJobTagsByEmployerError } = useQuery(GET_MOST_POPULAR_JOB_TAGS_BY_EMPLOYER)
     const { data: scholarClicksBySchoolData, loading: scholarClicksBySchoolLoading, error: scholarClicksBySchoolError } = useQuery(GET_SCHOLAR_CLICKS_BY_SCHOOL)
 
-    console.log(jobClickData)
-    console.log(employerClicksData)
+    // console.log(jobClickData)
+    console.log(AllowedNotificationsData)
 
     const date = new Date();
 
@@ -69,8 +69,8 @@ function AnalyticsPage(props: Props) {
         XLSX.utils.book_append_sheet(workbook, worksheet8, "Scholars Ranked By Major");
         const worksheet9 = XLSX.utils.json_to_sheet(scholarsRankedByYearData.getScholarsRankedByYear);
         XLSX.utils.book_append_sheet(workbook, worksheet9, "Scholars Ranked By Year");
-        const worksheet10 = XLSX.utils.json_to_sheet(percentageOfScholarsWithAllowedNotificationsData.getPercentageOfScholarsWithAllowedNotifications);
-        XLSX.utils.book_append_sheet(workbook, worksheet10, "Percentage Of Scholars With Allowed Notifications");
+        // const worksheet10 = XLSX.utils.json_to_sheet(percentageOfScholarsWithAllowedNotificationsData.getPercentageOfScholarsWithAllowedNotifications);
+        // XLSX.utils.book_append_sheet(workbook, worksheet10, "Notifications");
         const worksheet11 = XLSX.utils.json_to_sheet(scholarApplyClicksRankedData.getScholarApplyClicksRanked);
         XLSX.utils.book_append_sheet(workbook, worksheet11, "Scholar Apply Clicks Ranked");
         const worksheet12 = XLSX.utils.json_to_sheet(scholarJobClicksRankedData.getScholarJobClicksRanked);
@@ -80,9 +80,9 @@ function AnalyticsPage(props: Props) {
         const worksheet14 = XLSX.utils.json_to_sheet(employerJobPostingsRankingData.getEmployerJobPostingsRanking);
         XLSX.utils.book_append_sheet(workbook, worksheet14, "Employer Job Postings Ranking");
         const worksheet15 = XLSX.utils.json_to_sheet(numDaysSinceLastJobPostByEmployerData.getNumDaysSinceLastJobPostByEmployer);
-        XLSX.utils.book_append_sheet(workbook, worksheet15, "Num Days Since Last Job Post By Employer");
+        XLSX.utils.book_append_sheet(workbook, worksheet15, "DaysSincePost");
         const worksheet16 = XLSX.utils.json_to_sheet(mostPopularJobTagsByEmployerData.getMostPopularJobTagsByEmployer);
-        XLSX.utils.book_append_sheet(workbook, worksheet16, "Most Popular Job Tags By Employer");
+        XLSX.utils.book_append_sheet(workbook, worksheet16, "PopularJobTagsByEmployer");
         const worksheet17 = XLSX.utils.json_to_sheet(scholarClicksBySchoolData.getScholarClicksBySchool);
         XLSX.utils.book_append_sheet(workbook, worksheet17, "Scholar Clicks By School");
 
