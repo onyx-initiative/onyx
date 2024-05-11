@@ -199,7 +199,7 @@ export const GET_RELEVANT_JOBS = gql`
 
 export const SEARCH_JOBS = gql`
     query SearchJobs($search: String!) {
-        searchJobs(search: $search, location: $location, jobType: $jobType, graduationYear: $graduationYear, categories: $categories) {
+        searchJobs(search: $search) {
             job_id
             name
             employer_id

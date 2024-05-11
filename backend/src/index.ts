@@ -52,8 +52,7 @@ const createHandler = (event: any, context: any, callback: any) => {
             return app;
         },
         expressGetMiddlewareOptions: {
-            cors: CORS_CONFIG,
-            path: "/" 
+            cors: CORS_CONFIG, 
         }
     });
     if (!event.requestContext || event === '') {

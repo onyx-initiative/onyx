@@ -70,7 +70,7 @@ CREATE TABLE Job (
     total_views INTEGER NOT NULL DEFAULT 0,
     tags VARCHAR(255)[],
     live BOOLEAN NOT NULL DEFAULT FALSE,
-    link VARCHAR(255)
+    link TEXT
 );
 
 CREATE TABLE Featured (
@@ -153,7 +153,7 @@ RETURNS TABLE(
     total_views INTEGER,
     tags VARCHAR(255)[],
     live BOOLEAN,
-    link VARCHAR(255)
+    link TEXT
 ) AS $$
 DECLARE
     employer_match RECORD;
@@ -260,7 +260,7 @@ RETURNS TABLE(
     total_views INTEGER,
     tags VARCHAR(255)[],
     live BOOLEAN,
-    link VARCHAR(255)
+    link TEXT
 ) AS $$
 BEGIN
     RETURN QUERY

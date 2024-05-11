@@ -78,6 +78,7 @@ export const jobTypeDef = gql`
 
 
     input JobFilterInput {
+        employer_id: ID
         location: String!
         job_type: JobTypeFilterInput!
         applicant_year: [Int]!
@@ -91,7 +92,7 @@ export const jobTypeDef = gql`
         getJobById(job_id: ID!): Job!
         getJobsByEmployerId(employer_id: ID!): [Job!]!
         getFeaturedJobs: [Job!]!
-        searchJobs(search: String!, location: [String], jobType: [String], graduationYear: [Int], categories: [String]): [JobSearch!]!
+        searchJobs(search: String!): [JobSearch!]!
         getNewJobs: [Job!]!
         getFavourites(scholar_id: ID!): [Job!]!
         getFilteredJobs(filter: JobFilterInput!): [Job]!

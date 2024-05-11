@@ -90,7 +90,7 @@ const jobResolver = {
             client.release()
             return resp.rows;
         },
-        searchJobs: async (_: any, { search, location, jobType, graduationYear, categories }: any, { dataSources }: any) => {
+        searchJobs: async (_: any, { search }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
             const query = `
@@ -167,6 +167,11 @@ const jobResolver = {
 
             // Initialize the query string
             let query = 'SELECT * FROM Job WHERE live = true';
+
+            if (filter.employer_id) {
+                query += ` AND employer_id = '${filter.employer_id}'`;
+                queryParams.push(filter.employer_id);
+            }
 
             // Filter by location
             if (filter.location) {

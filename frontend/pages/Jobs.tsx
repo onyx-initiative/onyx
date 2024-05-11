@@ -15,6 +15,7 @@ import Image from 'next/image'
 
 import { useRouter } from "next/router"
 import { GET_EMPLOYERS } from '../graphql/queries/employerQueries'
+import {GET_EMPLOYER_BY_NAME } from "../../frontend/graphql/queries/employerQueries";
 
 
 // Design Ref: https://dribbble.com/shots/19880852-Jobite-Freelancing-Marketplace
@@ -54,10 +55,12 @@ export default function Jobs() {
   const { data: jobData, loading: jobLoading } = useQuery(GET_JOBS)
   const { data: locationData, loading: locationLoading } = useQuery(GET_LOCATIONS)
   const {data: employerData, loading: loadingEmployers } = useQuery(GET_EMPLOYERS)
+  const {loading: employerIdLoading, data: employerId} = useQuery(GET_EMPLOYER_BY_NAME, {variables: {name: query.search }})
   const selectedJobId = query.job_id || null;
 
   const [filters, setFilters] = useState({
     // @todo: Update this list
+    employer_id: query.search ? query.search : null,
     location: [],
     job_type: [],
     applicant_year: [
@@ -113,7 +116,7 @@ export default function Jobs() {
           setJobs={setJobs}
         />
         <div className={styles.jobList}>
-          <SearchBar filtersSelected={selected} setJobs={setJobs} initialQuery={query.search as string} query={search} setSearch={setSearch}/>
+          <SearchBar setJobs={setJobs} initialQuery={query.search as string} query={search} setSearch={setSearch}/>
           {jobLoading ? 
             <div className={styles.loading}>
               <Image src={loading} alt="Loading..." width={80} height={80}/>

@@ -55,10 +55,16 @@ const JobCard = (props: any) => {
         // Ensure scholarId and jobId are integers before passing them to the mutation
         const scholarIdInt = parseInt(scholarData?.getScholarByEmail?.scholar_id, 10);
         const jobIdInt = parseInt(job.job_id, 10);
+        const currentDate = new Date();
+        console.log(session?.user?.name)
         await logJobClick({
           variables: { scholarId: scholarIdInt, jobId: jobIdInt }
         });
       } catch (err) {
+        const scholarIdInt = scholarData?.getScholarByEmail?.scholar_id
+        const jobIdInt = parseInt(job.job_id, 10);
+        console.log(scholarIdInt)
+        console.log(jobIdInt)
         console.error(err);
       }
     }
