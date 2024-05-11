@@ -6,16 +6,25 @@ import { job_type, Job } from '../../../../backend/src/types/db.types';
 import EmployerJobList from './EmployerJobList';
 import {Employer} from '../../../../backend/src/types/db.types'
 import { GET_EMPLOYER_BY_ID } from '../../../graphql/queries/employerQueries';
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_JOBS_BY_EMPLOYER_ID } from "../../../graphql/queries/jobQueries";
 import { getLogo, unsupportedCompanies } from "../../utils/microservices";
 import va from '@vercel/analytics';
 import { useMediaQuery } from "react-responsive";
+import { LOG_EMPLOYER_CLICK } from "../../../graphql/mutations/analyticsMutations";
+import { useSession } from "next-auth/react";
+import { GET_SCHOLAR_BY_EMAIL } from "../../../graphql/queries/scholarQueries";
+
 
 
 export const EmployerBlock = (props: any) => {
+  const { data: session } = useSession({ required: true })
     const { employer, jobs } = props
     const [opened, setOpened] = useState(false);
+    const [logEmployerClick] = useMutation(LOG_EMPLOYER_CLICK);
+    const { data: scholarData, loading: loadingScholar, error: scholarError } = useQuery(GET_SCHOLAR_BY_EMAIL, {
+      variables: { email: session?.user?.email }
+    })
 
     // const {data: JobList, loading: jobLoading, error}  = useQuery(GET_JOBS_BY_EMPLOYER_ID, {
     //   variables: { employerId: employer.employer_id}
@@ -33,6 +42,27 @@ export const EmployerBlock = (props: any) => {
     // }, [JobList, jobLoading]);)
 
     const isLargeScreen = useMediaQuery({ query: '(min-width: 800px)' })
+
+    const handleEmployerClick = async () => {
+      
+      setOpened(!opened);
+      try {
+        // Ensure scholarId and jobId are integers before passing them to the mutation
+        const scholarIdInt = parseInt(scholarData?.getScholarByEmail?.scholar_id, 10);
+        const EmployerIdInt = parseInt(employer.employer_id, 10);
+        const currentDate = new Date();
+        console.log(session?.user?.email)
+        await logEmployerClick({
+          variables: { scholarId: scholarIdInt, employerId: EmployerIdInt }
+        });
+      } catch (err) {
+        const scholarIdInt = scholarData?.getScholarByEmail?.scholar_id
+        const EmployerIdInt = parseInt(employer.employer_id, 10);
+        console.log(scholarIdInt)
+        console.log(EmployerIdInt)
+        console.error(err);
+      }
+    }
 
     return (
         
@@ -71,7 +101,7 @@ export const EmployerBlock = (props: any) => {
             padding: "0.5rem",
             alignItems: "center",
         }}>
-            <Button  className={styles.employerContainer} onClick={() => setOpened(true)}>
+            <Button  className={styles.employerContainer} onClick={handleEmployerClick}>
                 <div>
                     <Image src={employer.logo_url ? employer.logo_url : getLogo(employer.name)} 
                         alt="Company Logo" 

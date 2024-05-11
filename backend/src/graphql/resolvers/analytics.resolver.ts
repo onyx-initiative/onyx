@@ -1,6 +1,7 @@
 import { get } from 'lodash';
 import { establishConnection } from '../utils';
 import { print } from 'graphql';
+import { getEmployerByName } from '../../integration/mock-data/employerData';
 
 const analyticsResolver = {
     Query: {
@@ -571,11 +572,7 @@ const analyticsResolver = {
                 console.log("Received scholarId:", scholarId, "Received jobId:", jobId);  // Log received parameters
                 const query = `INSERT INTO job_clicks (scholar_id, job_id, click_time) VALUES ($1, $2, NOW()) RETURNING scholar_id, job_id, click_time`;
                 const resp = await client.query(query, [scholarId, jobId]);
-                return {
-                    scholarId: resp.rows[0].scholar_id,
-                    jobId: resp.rows[0].job_id,
-                    clickTime: resp.rows[0].click_time
-                };
+                console.log("Inserted job click:", resp.rows[0]);
             } catch (err) {
                 console.error("Error executing query:", err);
                 throw new Error("Failed to log job click");
