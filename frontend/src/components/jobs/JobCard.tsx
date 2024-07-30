@@ -55,7 +55,6 @@ const JobCard = (props: any) => {
       setOpened(!opened);
       try {
         // Ensure scholarId and jobId are integers before passing them to the mutation
-        console.log(job)
         const scholarIdInt = parseInt(scholarData?.getScholarByEmail?.scholar_id, 10);
         const jobIdInt = parseInt(job.job_id, 10);
         const currentDate = new Date();
@@ -307,32 +306,34 @@ const ApplyButton = (props: any) => {
       }}>
             <button 
               style={{ border: 'none', backgroundColor: 'transparent', padding: 0, margin: 0}}
+              onClick={async () => {
+                try {
+                  const scholarIdInt = parseInt(scholarData?.getScholarByEmail?.scholar_id, 10);
+                  const jobIdInt = parseInt(job.job_id, 10);
+                  console.log("SCHOLAR ID INT" + scholarIdInt);
+                  console.log("JOB ID INT" + jobIdInt);
+                  const currentDate = new Date();
+          
+                  if (!isNaN(scholarIdInt) && !isNaN(jobIdInt)) {
+                    console.log('Sending request with:', { scholarId: scholarIdInt, jobId: jobIdInt });
+                    await logApplyClick({
+                      variables: { scholarId: scholarIdInt, jobId: jobIdInt }
+                    });
+                  } else {
+                    console.error('Invalid scholarId or jobId');
+                  }
+          
+                  va.track("Apply", { link: link });
+                } catch (err) {
+                  console.error('Error logging apply click:', err);
+                }
+              }}
             >
               <a 
                 href={regex.test(link) ? link : "https://" + link} 
                 style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem'}} 
                 target='_blank' 
                 rel="noreferrer"
-                onClick={() => {
-                  try {
-                    // Ensure scholarId and jobId are integers before passing them to the mutation
-                    console.log(job)
-                    const scholarIdInt = parseInt(scholarData?.getScholarByEmail?.scholar_id, 10);
-                    const jobIdInt = parseInt(job.job_id, 10);
-                    const currentDate = new Date();
-                    console.log(session?.user?.name)
-                    logApplyClick({
-                      variables: { scholarId: scholarData?.getScholarByEmail?.scholar_id, jobId: job.job_id }
-                    });
-                  } catch (err) {
-                    const scholarIdInt = scholarData?.getScholarByEmail?.scholar_id
-                    const jobIdInt = parseInt(job.job_id, 10);
-                    console.log(scholarIdInt)
-                    console.log(jobIdInt)
-                    console.error(err);
-                  }
-                  va.track("Apply", { link: link });
-                }}
               >
                 Apply
               </a>
