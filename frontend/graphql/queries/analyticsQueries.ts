@@ -13,6 +13,19 @@ export const GET_JOB_CLICKS = gql`
     }
 `;
 
+// Query for getting apply clicks
+export const GET_APPLY_CLICKS = gql`
+    query GetApplyClicks {
+        getApplyClicks {
+            scholarId
+            jobId
+            clickTime
+            scholarName
+            scholarEmail
+        }
+    }
+`;
+
 // Query for getting employer clicks
 export const GET_EMPLOYER_CLICKS = gql`
     query GetEmployerClicks {

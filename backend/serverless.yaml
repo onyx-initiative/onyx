@@ -48,3 +48,18 @@ functions:
         method: get
         cors: true
         integration: lambda-proxy
+package:
+  patterns:
+    - '!node_modules/aws-sdk/**'
+    - '!node_modules/**/tests/**'
+    - '!node_modules/**/docs/**'
+    - '!node_modules/**/examples/**'
+    - '!src/**/*.test.js'
+    - '!src/**/*.spec.js'
+    - '!src/**/*.spec.ts'
+    - '!src/**/*.test.ts'
+    - '!README.md'
+    - '!node_modules/.bin/**'
+    - '!**/.git/**'
+    - '!**/.vscode/**'
+    - '!**/.DS_Store'

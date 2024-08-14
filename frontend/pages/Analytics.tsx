@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery } from '@apollo/client'
 import {
     GET_JOB_CLICKS,
+    GET_APPLY_CLICKS,
     GET_EMPLOYER_CLICKS,
     GET_JOB_CLICKS_RANKED,
     GET_JOB_TAG_RANKING,
@@ -26,6 +27,7 @@ import * as XLSX from 'xlsx';
 interface Props {}
 
 function AnalyticsPage(props: Props) {
+    const { data: applyClicksData, loading: applyClicksLoading, error: applyClicksError } = useQuery(GET_APPLY_CLICKS)
     const { data: jobClickData, loading: jobClickLoading, error: jobClickError } = useQuery(GET_JOB_CLICKS)
     const { data: employerClicksData, loading: employerClicksLoading, error: employerClicksError } = useQuery(GET_EMPLOYER_CLICKS)
     const { data: jobClicksRankedData, loading: jobClicksRankedLoading, error: jobClicksRankedError } = useQuery(GET_JOB_CLICKS_RANKED)
@@ -45,7 +47,7 @@ function AnalyticsPage(props: Props) {
     const { data: scholarClicksBySchoolData, loading: scholarClicksBySchoolLoading, error: scholarClicksBySchoolError } = useQuery(GET_SCHOLAR_CLICKS_BY_SCHOOL)
 
     // console.log(jobClickData)
-    console.log(employerClicksData)
+    console.log(applyClicksData)
 
     const date = new Date();
 
@@ -85,6 +87,9 @@ function AnalyticsPage(props: Props) {
         XLSX.utils.book_append_sheet(workbook, worksheet16, "PopularJobTagsByEmployer");
         const worksheet17 = XLSX.utils.json_to_sheet(scholarClicksBySchoolData.getScholarClicksBySchool);
         XLSX.utils.book_append_sheet(workbook, worksheet17, "Scholar Clicks By School");
+        console.log(applyClicksData.getApplyClicks)
+        const worksheet18 = XLSX.utils.json_to_sheet(applyClicksData.getApplyClicks);
+        XLSX.utils.book_append_sheet(workbook, worksheet18, "Apply Clicks");
 
         // Buffer to store the generated Excel file
         const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
