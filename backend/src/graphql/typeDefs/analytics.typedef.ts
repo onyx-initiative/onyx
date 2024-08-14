@@ -4,6 +4,7 @@ export const analyticsTypeDefs = gql`
 
     type Query {
     getJobClicks: [JobClick]
+    getApplyClicks: [ApplyClicks]
     getEmployerClicks: [EmployerClick]
     getJobClicksRanked: [RankedJobClick]
     getEmployerClicksRanked: [RankedEmployerClick]
@@ -28,6 +29,14 @@ export const analyticsTypeDefs = gql`
     logJobClick(scholarId: Int!, jobId: Int!): JobClick
     logEmployerClick(scholarId: Int!, employerId: Int!): EmployerClick
     logApplyClick(scholarId: Int!, jobId: Int!): ApplyClick
+    }
+
+    type ApplyClicks {
+        scholarId: Int
+        jobId: Int
+        clickTime: String
+        scholarEmail: String
+        scholarName: String
     }
 
     type ApplyClick {

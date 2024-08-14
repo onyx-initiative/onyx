@@ -31,6 +31,32 @@ const analyticsResolver = {
                 client.release();
             }
         },
+        getApplyClicks: async (_: any, args: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `SELECT * FROM apply_clicks JOIN scholar ON apply_clicks.scholar_id = scholar.scholar_id JOIN job ON apply_clicks.job_id = job.job_id`;
+            try {
+                const resp = await client.query(query);
+                console.log(resp.rows);
+                const formattedRows = resp.rows.map((row:any) => ({
+                    scholarId: row.scholar_id,
+                    jobId: row.job_id,
+                    scholarName: row.name,
+                    scholarEmail: row.email,
+                    clickTime: new Date(row.click_time).toISOString() // Convert timestamp to ISO string
+                  }));
+                  
+                return formattedRows;
+            }
+            catch (err) {
+                console.error("Error executing query:", err);
+                throw new Error("Failed to get apply clicks");
+            }
+            finally {
+                client.release();
+            }
+        },
+
 
         getScholarsRankedByMajor: async (_: any,args: any, { dataSources }: any) => {
             const { db } = dataSources;
