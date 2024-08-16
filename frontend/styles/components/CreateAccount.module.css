@@ -45,6 +45,21 @@
     margin-bottom: 1rem;
 }
 
+.gradyeardropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width: 80%;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    color:white;
+}
+
+
 .inputContainer > input {
     border: none;
     background-color: white;
