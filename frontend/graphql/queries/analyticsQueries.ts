@@ -9,6 +9,8 @@ export const GET_JOB_CLICKS = gql`
             employerName
             jobId
             clickTime
+            scholarName
+            scholarEmail
         }
     }
 `;
@@ -22,6 +24,8 @@ export const GET_APPLY_CLICKS = gql`
             clickTime
             scholarName
             scholarEmail
+            jobTitle
+            employerName
         }
     }
 `;
@@ -34,6 +38,8 @@ export const GET_EMPLOYER_CLICKS = gql`
             employerId
             employerName
             clickTime
+            scholarName
+            scholarEmail
         }
     }
 `;
