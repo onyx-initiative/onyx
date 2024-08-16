@@ -37,6 +37,8 @@ export const analyticsTypeDefs = gql`
         clickTime: String
         scholarEmail: String
         scholarName: String
+        jobTitle: String
+        employerName: String
     }
 
     type ApplyClick {
@@ -112,6 +114,8 @@ export const analyticsTypeDefs = gql`
     jobTitle: String
     employerName: String
     clickTime: String
+    scholarName: String
+    scholarEmail: String
     }
 
     type RankedJobClick {
@@ -159,5 +163,7 @@ export const analyticsTypeDefs = gql`
     employerId: Int
     employerName: String
     clickTime: String
+    scholarName: String
+    scholarEmail: String
     }
 `
