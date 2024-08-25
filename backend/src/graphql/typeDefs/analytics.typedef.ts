@@ -23,12 +23,68 @@ export const analyticsTypeDefs = gql`
     getEmployerJobPostingsRanking: [EmployerJobPostingRank]
     getNumDaysSinceLastJobPostByEmployer: [EmployerLastJobPost]
     getMostPopularJobTagsByEmployer: [EmployerJobTagRanking]
+    getJobClicksForScholar(scholarId: Int): [ScholarJobClicks]
+    getApplyClicksForScholar(scholarId: Int): [ScholarApplyClicks]
+    getEmployerClicksForScholar(scholarId: Int): [ScholarEmployerClicks]
+    getCountJobClicksLastWeek: ClickCount
+    getCountApplyClicksLastWeek: ClickCount
+    getCountEmployerClicksLastWeek: ClickCount
+    getCountJobClicksLastMonth: ClickCount
+    getCountApplyClicksLastMonth: ClickCount
+    getCountEmployerClicksLastMonth: ClickCount
+    getCountJobClicksLastYear: ClickCount
+    getCountApplyClicksLastYear: ClickCount
+    getCountEmployerClicksLastYear: ClickCount
+
     }
 
     type Mutation {
     logJobClick(scholarId: Int!, jobId: Int!): JobClick
     logEmployerClick(scholarId: Int!, employerId: Int!): EmployerClick
     logApplyClick(scholarId: Int!, jobId: Int!): ApplyClick
+    }
+
+    type ClickCount {
+        count: Int
+    }
+
+    type JobClicksLastWeek {
+        scholarId: Int
+        jobId: Int
+        clickTime: String
+        scholarEmail: String
+        scholarName: String
+        jobTitle: String
+        employerName: String
+    }
+
+    type ScholarJobClicks {
+        scholarId: Int
+        jobId: Int
+        clickTime: String
+        scholarEmail: String
+        scholarName: String
+        jobTitle: String
+        employerName: String
+    }
+
+    type ScholarApplyClicks {
+        scholarId: Int
+        jobId: Int
+        clickTime: String
+        scholarEmail: String
+        scholarName: String
+        jobTitle: String
+        employerName: String
+    }
+
+    type ScholarEmployerClicks {
+        scholarId: Int
+        employerId: Int
+        clickTime: String
+        scholarEmail: String
+        scholarName: String
+        employerName: String
     }
 
     type ApplyClicks {
