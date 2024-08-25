@@ -1077,6 +1077,8 @@ const analyticsResolver = {
       } catch (err) {
         console.error("Error executing query:", err);
         throw new Error("Failed to get custom analytics");
+      } finally {
+        client.release();
       }
     },
   },
