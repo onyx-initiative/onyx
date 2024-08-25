@@ -14,9 +14,10 @@
 .adminFunctionButton {
     color: #806E53;
     background-color: white;
-    height: 5rem;
+    height: 3rem;
     font-weight: bold;
-    font-size: 2rem;
+    margin-right: 1rem;
+    font-size: 1rem;
     border-radius: 10px;
 
 
@@ -39,12 +40,12 @@
 }
 
 .submitButton {
-    background-color: #806E53;
-    color: white;
+    background-color: white;
+    color: #806E53;
     font-weight: bold;
     margin-top: 1rem;
     padding: 1rem;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 1rem;
     border: none;
     width: 100%
