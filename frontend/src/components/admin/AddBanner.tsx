@@ -30,13 +30,14 @@ export default function AddBanner() {
                 className={styles.button}
                 onClick={() => setOpened(true)}
                 style={{
-                    height: "2rem",
-                    borderRadius: "0.25rem",
+                    height: "3rem",
+                    borderRadius: "10px",
+                    marginRight: "1rem",
                     border: "1px solid #ced4da",
                     backgroundColor: "white",
-                    color: "black",
                     fontWeight: "bold",
                     fontSize: "1rem",
+                    color: "#806E53",
                 }}
             >
                 Add new banner

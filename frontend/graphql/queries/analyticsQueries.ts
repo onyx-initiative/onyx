@@ -234,3 +234,63 @@ export const GET_ALL_CLICK_COUNTS = gql`
     }
   }
 `;
+
+export const GET_JOB_CLICKS_FOR_SCHOLAR = gql`
+  query GetJobClicksForScholar($scholarId: Int!) {
+    getJobClicksForScholar(scholarId: $scholarId) {
+      jobId
+      clickTime
+      scholarEmail
+      scholarName
+      jobTitle
+      employerName
+    }
+  }
+`;
+
+
+export const GET_APPLY_CLICKS_FOR_SCHOLAR = gql`
+  query GetApplyClicksForScholar($scholarId: Int!) {
+    getApplyClicksForScholar(scholarId: $scholarId) {
+      jobId
+      clickTime
+      scholarEmail
+      scholarName
+      jobTitle
+      employerName
+    }
+  }
+`;
+
+export const GET_EMPLOYER_CLICKS_FOR_SCHOLAR = gql`
+  query GetEmployerClicksForScholar($scholarId: Int!) {
+    getEmployerClicksForScholar(scholarId: $scholarId) {
+      employerId
+      clickTime
+      scholarEmail
+      scholarName
+      employerName
+    }
+  }
+`;
+
+export const GET_NUMBER_OF_ACTIVE_SCHOLARS = gql`
+  query GetNumberOfActiveScholars {
+    getNumberOfActiveScholars
+  }
+`;
+
+export const GET_NUMBER_OF_ALLOWED_SCHOLARS = gql`
+  query GetNumberOfAllowedScholars {
+    getNumberOfAllowedScholars
+  }
+`;
+
+export const GET_CLICKS_CUSTOM_ANALYTICS = gql`
+    query GetClicksCustomAnalytics($startDate: Date!, $endDate: Date!, $interval: String!, $clickType: String!) {
+        getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: $interval, clickType: $clickType) {
+        date
+        count
+        }
+    }
+    `;
