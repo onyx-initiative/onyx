@@ -273,3 +273,24 @@ export const GET_EMPLOYER_CLICKS_FOR_SCHOLAR = gql`
     }
   }
 `;
+
+export const GET_NUMBER_OF_ACTIVE_SCHOLARS = gql`
+  query GetNumberOfActiveScholars {
+    getNumberOfActiveScholars
+  }
+`;
+
+export const GET_NUMBER_OF_ALLOWED_SCHOLARS = gql`
+  query GetNumberOfAllowedScholars {
+    getNumberOfAllowedScholars
+  }
+`;
+
+export const GET_CLICKS_CUSTOM_ANALYTICS = gql`
+    query GetClicksCustomAnalytics($startDate: Date!, $endDate: Date!, $interval: String!, $clickType: String!) {
+        getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: $interval, clickType: $clickType) {
+        date
+        count
+        }
+    }
+    `;

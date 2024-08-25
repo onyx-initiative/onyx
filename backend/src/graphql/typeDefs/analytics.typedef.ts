@@ -35,13 +35,20 @@ export const analyticsTypeDefs = gql`
     getCountJobClicksLastYear: ClickCount
     getCountApplyClicksLastYear: ClickCount
     getCountEmployerClicksLastYear: ClickCount
-
+    getNumberOfActiveScholars: Int
+    getNumberOfAllowedScholars: Int
+    getClicksCustomAnalytics(startDate: Date, endDate: Date, interval: String, clickType: String): [CustomAnalytics]
     }
 
     type Mutation {
     logJobClick(scholarId: Int!, jobId: Int!): JobClick
     logEmployerClick(scholarId: Int!, employerId: Int!): EmployerClick
     logApplyClick(scholarId: Int!, jobId: Int!): ApplyClick
+    }
+
+    type CustomAnalytics {
+        date: Date
+        count: Int 
     }
 
     type ScholarJobClicks {
