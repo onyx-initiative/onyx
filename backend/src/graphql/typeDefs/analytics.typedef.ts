@@ -44,6 +44,32 @@ export const analyticsTypeDefs = gql`
     logApplyClick(scholarId: Int!, jobId: Int!): ApplyClick
     }
 
+    type ScholarJobClicks {
+    jobId: Int
+    clickTime: String
+    scholarEmail: String
+    scholarName: String
+    jobTitle: String
+    employerName: String
+    }
+
+    type ScholarApplyClicks {
+    jobId: Int
+    clickTime: String
+    scholarEmail: String
+    scholarName: String
+    jobTitle: String
+    employerName: String
+    }
+
+    type ScholarEmployerClicks {
+    employerId: Int
+    clickTime: String
+    scholarEmail: String
+    scholarName: String
+    employerName: String
+    }
+
     type ClickCount {
         count: Int
     }

@@ -234,3 +234,42 @@ export const GET_ALL_CLICK_COUNTS = gql`
     }
   }
 `;
+
+export const GET_JOB_CLICKS_FOR_SCHOLAR = gql`
+  query GetJobClicksForScholar($scholarId: Int!) {
+    getJobClicksForScholar(scholarId: $scholarId) {
+      jobId
+      clickTime
+      scholarEmail
+      scholarName
+      jobTitle
+      employerName
+    }
+  }
+`;
+
+
+export const GET_APPLY_CLICKS_FOR_SCHOLAR = gql`
+  query GetApplyClicksForScholar($scholarId: Int!) {
+    getApplyClicksForScholar(scholarId: $scholarId) {
+      jobId
+      clickTime
+      scholarEmail
+      scholarName
+      jobTitle
+      employerName
+    }
+  }
+`;
+
+export const GET_EMPLOYER_CLICKS_FOR_SCHOLAR = gql`
+  query GetEmployerClicksForScholar($scholarId: Int!) {
+    getEmployerClicksForScholar(scholarId: $scholarId) {
+      employerId
+      clickTime
+      scholarEmail
+      scholarName
+      employerName
+    }
+  }
+`;
