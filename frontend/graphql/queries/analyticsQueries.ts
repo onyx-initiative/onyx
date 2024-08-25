@@ -202,3 +202,35 @@ export const GET_SCHOLAR_CLICKS_BY_SCHOOL = gql`
         }
     }
 `;
+
+export const GET_ALL_CLICK_COUNTS = gql`
+  query GetAllClickCounts {
+    getCountJobClicksLastWeek {
+      count
+    }
+    getCountApplyClicksLastWeek {
+      count
+    }
+    getCountEmployerClicksLastWeek {
+      count
+    }
+    getCountJobClicksLastMonth {
+      count
+    }
+    getCountApplyClicksLastMonth {
+      count
+    }
+    getCountEmployerClicksLastMonth {
+      count
+    }
+    getCountJobClicksLastYear {
+      count
+    }
+    getCountApplyClicksLastYear {
+      count
+    }
+    getCountEmployerClicksLastYear {
+      count
+    }
+  }
+`;

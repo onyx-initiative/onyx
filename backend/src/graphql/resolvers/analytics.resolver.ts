@@ -2,6 +2,7 @@ import { get } from "lodash";
 import { establishConnection } from "../utils";
 import { print } from "graphql";
 import { getEmployerByName } from "../../integration/mock-data/employerData";
+import { format } from "path";
 
 const analyticsResolver = {
   Query: {
@@ -434,6 +435,131 @@ const analyticsResolver = {
         client.release();
       }
     },
+      getApplyClicksForScholar: async (_: any, { scholarId }: any, { dataSources }: any) => {
+        const { db } = dataSources;
+        const client = await establishConnection(db);
+        const query = `
+          SELECT 
+            apply_clicks.scholar_id AS "scholarId", 
+            apply_clicks.job_id AS "jobId", 
+            scholar.name AS "scholarName", 
+            scholar.email AS "scholarEmail", 
+            apply_clicks.click_time,
+            job.title AS "jobTitle", 
+            employer.name AS "employerName" 
+          FROM 
+            apply_clicks 
+          JOIN 
+            scholar ON apply_clicks.scholar_id = scholar.scholar_id 
+          JOIN 
+            job ON apply_clicks.job_id = job.job_id 
+          JOIN 
+            employer ON job.employer_id = employer.employer_id
+          WHERE 
+            apply_clicks.scholar_id = $1
+        `;
+  
+        try {
+          const resp = await client.query(query, [scholarId]);
+          const formattedRows = resp.rows.map((row: any) => ({
+            scholarId: row.scholarId,
+            scholarName: row.scholarName,
+            scholarEmail: row.scholarEmail,
+            jobId: row.jobId,
+            jobTitle: row.jobTitle,
+            employerName: row.employerName,
+            clickTime: new Date(row.click_time).toISOString(),
+          }));
+          return formattedRows;
+        } catch (err) {
+          console.error("Error executing query:", err);
+          throw new Error("Failed to get apply clicks for scholar");
+        } finally {
+          client.release();
+        }
+      },
+      getEmployerClicksForScholar: async (_: any, { scholarId }: any, { dataSources }: any) => {
+        const { db } = dataSources;
+        const client = await establishConnection(db);
+        const query = `
+          SELECT 
+            employer_clicks.employer_id, 
+            employer.name AS "employerName",
+            employer_clicks.click_time,
+            employer_clicks.scholar_id,
+            scholar.name AS "scholarName",
+            scholar.email AS "scholarEmail"
+          FROM 
+            employer_clicks
+          JOIN 
+            employer ON employer_clicks.employer_id = employer.employer_id
+          JOIN 
+            scholar ON employer_clicks.scholar_id = scholar.scholar_id
+          WHERE 
+            employer_clicks.scholar_id = $1
+        `;
+  
+        try {
+          const resp = await client.query(query, [scholarId]);
+          const formattedRows = resp.rows.map((row: any) => ({
+            employerId: row.employer_id,
+            employerName: row.employerName,
+            clickTime: new Date(row.click_time).toISOString(),
+            scholarId: row.scholar_id,
+            scholarName: row.scholarName,
+            scholarEmail: row.scholarEmail,
+          }));
+          return formattedRows;
+        } catch (err) {
+          console.error("Error executing query:", err);
+          throw new Error("Failed to get employer clicks for scholar");
+        } finally {
+          client.release();
+        }
+      },
+      getJobClicksForScholar: async (_: any, { scholarId }: any, { dataSources }: any) => {
+        const { db } = dataSources;
+        const client = await establishConnection(db);
+        const query = `
+          SELECT 
+            job.job_id,
+            job.title AS "jobTitle",
+            job.employer_id,
+            employer.name AS "employerName",
+            job_clicks.click_time,
+            scholar.name AS "scholarName",
+            scholar.email AS "scholarEmail"
+          FROM 
+            job_clicks
+          JOIN 
+            job ON job_clicks.job_id = job.job_id
+          JOIN 
+            employer ON job.employer_id = employer.employer_id
+          JOIN 
+            scholar ON job_clicks.scholar_id = scholar.scholar_id
+          WHERE 
+            job_clicks.scholar_id = $1
+        `;
+  
+        try {
+          const resp = await client.query(query, [scholarId]);
+          const formattedRows = resp.rows.map((row: any) => ({
+            jobId: row.job_id,
+            jobTitle: row.jobTitle,
+            employerId: row.employer_id,
+            employerName: row.employerName,
+            clickTime: new Date(row.click_time).toISOString(),
+            scholarName: row.scholarName,
+            scholarEmail: row.scholarEmail,
+          }));
+          return formattedRows;
+        } catch (err) {
+          console.error("Error executing query:", err);
+          throw new Error("Failed to get job clicks for scholar");
+        } finally {
+          client.release();
+        }
+      },
 
     getJobLocationRanking: async (_: any, args: any, { dataSources }: any) => {
       const { db } = dataSources;
@@ -635,6 +761,162 @@ const analyticsResolver = {
         client.release();
       }
     },
+
+    getCountJobClicksLastWeek: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM job_clicks WHERE click_time >= NOW() - INTERVAL '1 week'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of job clicks in the last week");
+      } finally {
+        client.release();
+      }
+    },
+    getCountEmployerClicksLastWeek: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM employer_clicks WHERE click_time >= NOW() - INTERVAL '1 week'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of employer clicks in the last week");
+      } finally {
+        client.release();
+      }
+    },
+    getCountApplyClicksLastWeek: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM apply_clicks WHERE click_time >= NOW() - INTERVAL '1 week'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of apply clicks in the last week");
+      } finally {
+        client.release();
+      }
+    },
+    getCountJobClicksLastMonth: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM job_clicks WHERE click_time >= NOW() - INTERVAL '1 month'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of job clicks in the last month");
+      } finally {
+        client.release();
+      }
+    },
+    getCountEmployerClicksLastMonth: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM employer_clicks WHERE click_time >= NOW() - INTERVAL '1 month'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of employer clicks in the last month");
+      } finally {
+        client.release();
+      }
+    },
+    getCountApplyClicksLastMonth: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM apply_clicks WHERE click_time >= NOW() - INTERVAL '1 month'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+        
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of apply clicks in the last month");
+      } finally {
+        client.release();
+      }
+    },
+    getCountJobClicksLastYear: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM job_clicks WHERE click_time >= NOW() - INTERVAL '1 year'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of job clicks in the last year");
+      } finally {
+        client.release();
+      }
+    },
+    getCountEmployerClicksLastYear: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM employer_clicks WHERE click_time >= NOW() - INTERVAL '1 year'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of employer clicks in the last year");
+      } finally {
+        client.release();
+      }
+    },
+    getCountApplyClicksLastYear: async (  _: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      const query = `SELECT COUNT(*) FROM apply_clicks WHERE click_time >= NOW() - INTERVAL '1 year'`;
+      try {
+        const resp = await client.query(query);
+        const formatted_response = {
+          count: parseInt(resp.rows[0].count),
+        };
+        return formatted_response;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get count of apply clicks in the last year");
+      } finally {
+        client.release();
+      }
+    },
+
   },
 
   Mutation: {
