@@ -294,3 +294,119 @@ export const GET_CLICKS_CUSTOM_ANALYTICS = gql`
         }
     }
     `;
+
+export const GET_ANALYTICS_DASHBOARD_DATA = gql`
+  query GetAnalyticsDashboardData($startDate: Date!, $endDate: Date!) {
+    jobClicksDaily: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "daily", clickType: "job") {
+      date
+      count
+    }
+    jobClicksWeekly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "weekly", clickType: "job") {
+      date
+      count
+    }
+    jobClicksMonthly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "monthly", clickType: "job") {
+      date
+      count
+    }
+    jobClicksYearly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "yearly", clickType: "job") {
+      date
+      count
+    }
+    applyClicksDaily: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "daily", clickType: "apply") {
+      date
+      count
+    }
+    applyClicksWeekly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "weekly", clickType: "apply") {
+      date
+      count
+    }
+    applyClicksMonthly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "monthly", clickType: "apply") {
+      date
+      count
+    }
+    applyClicksYearly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "yearly", clickType: "apply") {
+      date
+      count
+    }
+    employerClicksDaily: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "daily", clickType: "employer") {
+      date
+      count
+    }
+    employerClicksWeekly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "weekly", clickType: "employer") {
+      date
+      count
+    }
+    employerClicksMonthly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "monthly", clickType: "employer") {
+      date
+      count
+    }
+    employerClicksYearly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "yearly", clickType: "employer") {
+      date
+      count
+    }
+  }
+`;
+
+export const GET_DASHBOARD_JOB_CLICKS = gql`
+  query GetDashboardJobClicks($startDate: Date!, $endDate: Date!) {
+    daily: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "daily", clickType: "job") {
+      date
+      count
+    }
+    weekly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "weekly", clickType: "job") {
+      date
+      count
+    }
+    jobClicksMonthly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "monthly", clickType: "job") {
+      date
+      count
+    }
+    jobClicksYearly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "yearly", clickType: "job") {
+      date
+      count
+    }
+  }
+`;
+
+export const GET_DASHBOARD_APPLY_CLICKS = gql`
+  query GetDashboardApplyClicks($startDate: Date!, $endDate: Date!) {
+    daily: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "daily", clickType: "apply") {
+      date
+      count
+    }
+    weekly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "weekly", clickType: "apply") {
+      date
+      count
+    }
+    monthly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "monthly", clickType: "apply") {
+      date
+      count
+    }
+    yearly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "yearly", clickType: "apply") {
+      date
+      count
+    }
+  }
+`;
+
+export const GET_DASHBOARD_EMPLOYER_CLICKS = gql`
+  query GetDashboardEmployerClicks($startDate: Date!, $endDate: Date!) {
+    daily: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "daily", clickType: "employer") {
+      date
+      count
+    }
+    weekly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "weekly", clickType: "employer") {
+      date
+      count
+    }
+    monthly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "monthly", clickType: "employer") {
+      date
+      count
+    }
+    yearly: getClicksCustomAnalytics(startDate: $startDate, endDate: $endDate, interval: "yearly", clickType: "employer") {
+      date
+      count
+    }
+  }
+`;

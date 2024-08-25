@@ -14,6 +14,7 @@ import EditJobButton from "../src/components/admin/EditJobButton";
 import { Analytics } from "@vercel/analytics/react";
 import AnalyticsPage from "./Analytics";
 import AnalyticsButton from "../src/components/admin/AnalyticsButton";
+import DashboardButton from "../src/components/admin/DashboardButton";
 
 
 // To ensure unauthenticated people don't access
@@ -75,7 +76,8 @@ export default function Admin() {
           <div>
             <h1>Analytics</h1>
             <div style={{ display: "flex" }}>
-              <AnalyticsButton text="Analytics" link="/Analytics" />
+                <AnalyticsButton text="Analytics" link="/Analytics" />
+                <DashboardButton text="Dashboard" link="/Dashboard" />
             </div>
           </div>
         </div>
