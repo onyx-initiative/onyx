@@ -19,7 +19,7 @@ function Dashboard() {
     for (const interval of intervals) {
       const dataKey = `${type.toLowerCase()}Clicks${interval}`
       const clickCounts = [
-        ['Date', `${interval} ${type} Count`],
+        ['Date', `${interval} ${type} Click Count`],
         ...data[dataKey].map((item: any) => [item.date, item.count]),
       ]
       const chartOptions = {
@@ -45,6 +45,7 @@ function Dashboard() {
           },
           slantedText: false,
           maxAlternation: 1,
+          format: 'short',
         },
         hAxis: {
           textPosition: 'out',
@@ -53,6 +54,7 @@ function Dashboard() {
           },
           slantedText: false,
           maxAlternation: 1,
+          format: 'short',
         },
         crosshair: {
           trigger: 'focus',
@@ -74,15 +76,17 @@ function Dashboard() {
       <main className={styles.wrapper}>
         <div className={styles.charts}>
           {clickChartsIntervals.map((item: any) => (
-            <div key={item.chartOptions.title} className={styles.chartContainer}>
-              <Chart
-                chartType='AreaChart'
-                width='100%'
-                height='100%'
-                data={item.clickCounts}
-                options={item.chartOptions}
-                className={styles.chart}
-              />
+            <div key={item.chartOptions.title} className={styles.chart}>
+              <h2 className={styles.chartTitle}>{item.chartOptions.title}</h2>
+              <div className={styles.googleChartContainer}>
+                <Chart
+                  chartType='AreaChart'
+                  width='100%'
+                  height='100%'
+                  data={item.clickCounts}
+                  options={item.chartOptions}
+                />
+              </div>
             </div>
           ))}
         </div>
