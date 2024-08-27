@@ -40,10 +40,30 @@ function Dashboard() {
       <Navbar />
       <main className={styles.wrapper}>
         <form className={styles.dateLimitsForm}>
-          <input type='date' value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-          <input type='date' value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-          <button type='button' onClick={() => getPageData({ variables: { startDate, endDate } })}>
-            Get Data
+          <label className={styles.dateLimitInputContainer}>
+            <span className={styles.dateLimitInputLabel}>Start Date</span>
+            <input
+              type='date'
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className={styles.dateLimitInput}
+            />
+          </label>
+          <label className={styles.dateLimitInputContainer}>
+            <span className={styles.dateLimitInputLabel}>End Date</span>
+            <input
+              type='date'
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className={styles.dateLimitInput}
+            />
+          </label>
+          <button
+            type='button'
+            onClick={() => getPageData({ variables: { startDate, endDate } })}
+            className={styles.dateLimitSubmit}
+          >
+            Get Analytics
           </button>
         </form>
         <div className={styles.charts}>
