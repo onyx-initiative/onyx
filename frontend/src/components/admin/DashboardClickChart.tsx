@@ -64,9 +64,13 @@ export default function DashboardClickChart({ data, interval, type }: ClickChart
   return (
     <div className={styles.chart}>
       <h2 className={styles.chartTitle}>{title}</h2>
-      <div className={styles.googleChartContainer}>
-        <Chart chartType='AreaChart' width='100%' height='100%' data={clickCounts} options={chartOptions} />
-      </div>
+      {data.length ? (
+        <div className={styles.googleChartContainer}>
+          <Chart chartType='AreaChart' width='100%' height='100%' data={clickCounts} options={chartOptions} />
+        </div>
+      ) : (
+        <div className={styles.noDataMessage}>No data</div>
+      )}
     </div>
   )
 }

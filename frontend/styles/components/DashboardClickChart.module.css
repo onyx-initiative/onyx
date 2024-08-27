@@ -35,3 +35,7 @@
 .googleChartContainer :global(div.google-visualization-tooltip > ul > li > span) {
   color: white !important;
 }
+
+.noDataMessage {
+  padding-bottom: 1rem;
+}

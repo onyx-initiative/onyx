@@ -6,12 +6,14 @@ import DashboardClickChart from '../src/components/admin/DashboardClickChart'
 import { useEffect, useState } from 'react'
 
 function Dashboard() {
-  const currentYear = new Date().getFullYear()
+  const currentDateObj = new Date()
+  const currentDate = currentDateObj.toISOString().split('T')[0]
+  const currentYear = currentDateObj.getFullYear()
+
   const [startDate, setStartDate] = useState(`${currentYear}-01-01`)
   const [endDate, setEndDate] = useState(`${currentYear}-12-31`)
   const [getPageData, { data: pageData, loading: pageLoading, error: pageError, called: hasPageFetchedOnce }] =
     useLazyQuery(GET_ANALYTICS_DASHBOARD_DATA)
-
   useEffect(() => {
     if (!hasPageFetchedOnce) {
       getPageData({ variables: { startDate, endDate } })
@@ -32,14 +34,14 @@ function Dashboard() {
 
   if (pageLoading || !hasPageFetchedOnce) return <div>loading</div>
   if (pageError) {
-    console.log(pageError.message)
+    console.error(pageError.message)
     return <div>error</div>
   }
   return (
     <>
       <Navbar />
       <main className={styles.wrapper}>
-        <form className={styles.dateLimitsForm}>
+        <form action='' className={styles.dateLimitsForm}>
           <label className={styles.dateLimitInputContainer}>
             <span className={styles.dateLimitInputLabel}>Start Date</span>
             <input
@@ -47,6 +49,7 @@ function Dashboard() {
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               className={styles.dateLimitInput}
+              max={currentDate}
             />
           </label>
           <label className={styles.dateLimitInputContainer}>
@@ -56,6 +59,8 @@ function Dashboard() {
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
               className={styles.dateLimitInput}
+              min={startDate}
+              max={currentDate}
             />
           </label>
           <button
