@@ -1,0 +1,47 @@
+.dataTable table,
+.dataTable thead,
+.dataTable tbody {
+  display: block;
+  width: 100%;
+}
+
+.dataTable tr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dataTable thead tr {
+  border: #333 1px solid;
+  border-radius: 1rem 1rem 0 0;
+  padding: 1.5rem 1rem;
+}
+
+.dataTable th:last-child {
+  font-weight: normal;
+  color: #888;
+  font-size: 0.9em;
+}
+
+.dataTable tbody {
+  border: #333 1px solid;
+  border-radius: 0 0 1rem 1rem;
+  padding: 1rem;
+}
+
+.dataTable tbody tr {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.dataTable tbody tr:last-child {
+  padding-bottom: 0;
+}
+
+.dataTable tbody tr:first-child {
+  padding-top: 0;
+}
+
+.dataTable td:last-child {
+  font-weight: bold;
+}

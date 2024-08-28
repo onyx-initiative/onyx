@@ -3,14 +3,9 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-bottom: 4rem;
   padding: 1rem 2rem;
   border: #333 1px solid;
   border-radius: 1rem;
-}
-
-.chart:last-child {
-  margin-bottom: 0;
 }
 
 .chartTitle {

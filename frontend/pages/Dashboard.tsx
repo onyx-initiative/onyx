@@ -1,9 +1,15 @@
-import { useLazyQuery, useQuery } from '@apollo/client'
-import { GET_ANALYTICS_DASHBOARD_DATA } from '../graphql/queries/analyticsQueries'
-import styles from '../styles/Dashboard.module.css'
-import Navbar from '../src/components/general/Navbar'
-import DashboardClickChart from '../src/components/admin/DashboardClickChart'
+import { useLazyQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
+import { GET_ANALYTICS_DASHBOARD_DATA } from '../graphql/queries/analyticsQueries'
+import DashboardClickChart from '../src/components/admin/DashboardClickChart'
+import Navbar from '../src/components/general/Navbar'
+import styles from '../styles/Dashboard.module.css'
+import DashboardTwoItemTable from '../src/components/admin/DashboardTwoItemTable'
+
+type DashboardPageDatum = {
+  date: string
+  count: number
+}
 
 function Dashboard() {
   const currentDateObj = new Date()
@@ -22,7 +28,7 @@ function Dashboard() {
 
   const types = ['Job', 'Apply', 'Employer']
   const intervals = ['Daily', 'Weekly', 'Monthly', 'Yearly']
-  const typeIntervalClickCharts = types.flatMap((type) =>
+  const typeIntervalClickGroups = types.flatMap((type) =>
     intervals.map((interval) => {
       return {
         type,
@@ -37,6 +43,13 @@ function Dashboard() {
     console.error(pageError.message)
     return <div>error</div>
   }
+
+  const typeClickTableBodyData = types.map((type) => {
+    const dataKey = `${type.toLowerCase()}Clicks${intervals[0]}` // can be any interval since they all have same amount of total clicks
+    const totalClicks = pageData[dataKey].reduce((prev: number, cur: DashboardPageDatum) => prev + cur.count, 0)
+    return [type, totalClicks]
+  })
+
   return (
     <>
       <Navbar />
@@ -71,14 +84,14 @@ function Dashboard() {
             Get Analytics
           </button>
         </form>
-        <div className={styles.charts}>
-          {typeIntervalClickCharts.map((chart) => (
-            <DashboardClickChart
-              key={chart.dataKey}
-              data={pageData[chart.dataKey]}
-              interval={chart.interval}
-              type={chart.type}
-            />
+        <div className={styles.quickStats}>
+          <DashboardTwoItemTable firstHeading='Click Type' secondHeading='TOTAL CLICKS' data={typeClickTableBodyData} />
+        </div>
+        <div>
+          {typeIntervalClickGroups.map((chart) => (
+            <div key={chart.dataKey} className={styles.chartContainer}>
+              <DashboardClickChart data={pageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
+            </div>
           ))}
         </div>
       </main>

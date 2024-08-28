@@ -5,12 +5,12 @@ import Chart from 'react-google-charts'
 type ClickChartProps = {
   data: [
     {
-      date: String
-      count: String
+      date: string
+      count: number
     }
   ]
-  interval: String
-  type: String
+  interval: string
+  type: string
 }
 
 export default function DashboardClickChart({ data, interval, type }: ClickChartProps) {
