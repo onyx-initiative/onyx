@@ -18,8 +18,15 @@ function Dashboard() {
 
   const [startDate, setStartDate] = useState(`${currentYear}-01-01`)
   const [endDate, setEndDate] = useState(`${currentYear}-12-31`)
+  const [fetchedStartDate, setFetchedStartDate] = useState(startDate)
+  const [fetchedEndDate, setFetchedEndDate] = useState(endDate)
   const [getPageData, { data: pageData, loading: pageLoading, error: pageError, called: hasPageFetchedOnce }] =
-    useLazyQuery(GET_ANALYTICS_DASHBOARD_DATA)
+    useLazyQuery(GET_ANALYTICS_DASHBOARD_DATA, {
+      onCompleted: () => {
+        setFetchedStartDate(startDate)
+        setFetchedEndDate(endDate)
+      },
+    })
   useEffect(() => {
     if (!hasPageFetchedOnce) {
       getPageData({ variables: { startDate, endDate } })
@@ -56,7 +63,7 @@ function Dashboard() {
       <main className={styles.wrapper}>
         <div className={styles.titleRow}>
           <h1 className={styles.mainTitle}>
-            Analytics for {startDate} to {endDate}
+            Analytics for {fetchedStartDate} to {fetchedEndDate}
           </h1>
           <form action='' className={styles.dateLimitsForm}>
             <label className={styles.dateLimitInputContainer}>
