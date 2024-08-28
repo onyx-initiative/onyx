@@ -7,13 +7,26 @@
   margin: 0 auto;
 }
 
+.titleRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.mainTitle {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: left;
+}
+
 .dateLimitsForm {
   display: flex;
   justify-content: right;
   align-items: end;
-  padding-left: 4rem;
-  padding-right: 4rem;
-  margin-bottom: 1rem;
 }
 
 .dateLimitInputContainer {
@@ -88,4 +101,12 @@
 
 .chartContainer:last-child {
   margin-bottom: 0;
+}
+
+@media screen and (min-width: 1064px) {
+  .titleRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

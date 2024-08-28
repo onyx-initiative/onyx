@@ -3,13 +3,13 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 2rem 2rem 1rem;
   border: #333 1px solid;
   border-radius: 1rem;
 }
 
 .chartTitle {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-bottom: 2rem;
   font-weight: bold;
 }

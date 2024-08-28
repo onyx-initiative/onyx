@@ -54,36 +54,41 @@ function Dashboard() {
     <>
       <Navbar />
       <main className={styles.wrapper}>
-        <form action='' className={styles.dateLimitsForm}>
-          <label className={styles.dateLimitInputContainer}>
-            <span className={styles.dateLimitInputLabel}>Start Date</span>
-            <input
-              type='date'
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className={styles.dateLimitInput}
-              max={currentDate}
-            />
-          </label>
-          <label className={styles.dateLimitInputContainer}>
-            <span className={styles.dateLimitInputLabel}>End Date</span>
-            <input
-              type='date'
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className={styles.dateLimitInput}
-              min={startDate}
-              max={currentDate}
-            />
-          </label>
-          <button
-            type='button'
-            onClick={() => getPageData({ variables: { startDate, endDate } })}
-            className={styles.dateLimitSubmit}
-          >
-            Get Analytics
-          </button>
-        </form>
+        <div className={styles.titleRow}>
+          <h1 className={styles.mainTitle}>
+            Analytics for {startDate} to {endDate}
+          </h1>
+          <form action='' className={styles.dateLimitsForm}>
+            <label className={styles.dateLimitInputContainer}>
+              <span className={styles.dateLimitInputLabel}>Start Date</span>
+              <input
+                type='date'
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className={styles.dateLimitInput}
+                max={currentDate}
+              />
+            </label>
+            <label className={styles.dateLimitInputContainer}>
+              <span className={styles.dateLimitInputLabel}>End Date</span>
+              <input
+                type='date'
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className={styles.dateLimitInput}
+                min={startDate}
+                max={currentDate}
+              />
+            </label>
+            <button
+              type='button'
+              onClick={() => getPageData({ variables: { startDate, endDate } })}
+              className={styles.dateLimitSubmit}
+            >
+              Get Analytics
+            </button>
+          </form>
+        </div>
         <div className={styles.quickStats}>
           <DashboardTwoItemTable firstHeading='Click Type' secondHeading='TOTAL CLICKS' data={typeClickTableBodyData} />
         </div>
