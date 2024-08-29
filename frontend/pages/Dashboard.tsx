@@ -39,8 +39,11 @@ function Dashboard() {
     return <div>error</div>
   }
 
-  const jobTagRankingsByClicks = pageData['jobTagRankingsByClicks']
-  const jobTagRankingsTableBodyData = jobTagRankingsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
+  const scholarsByMajor: [{ major: string; scholar_count: string }] = pageData['scholarsRankedByMajor']
+  const scholarsByMajorTableBodyData = scholarsByMajor.map((ranking) => [ranking.major, ranking.scholar_count])
+
+  const jobTagsByClicks: [{ tag: string; click_count: string }] = pageData['jobTagRankingsByClicks']
+  const jobTagsTableBodyData = jobTagsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
 
   const types = ['Job', 'Apply', 'Employer']
   const intervals = ['Daily', 'Weekly', 'Monthly', 'Yearly']
@@ -65,9 +68,16 @@ function Dashboard() {
       <Navbar />
       <main className={styles.wrapper}>
         <div className={styles.titleRow}>
-          <h1 className={styles.mainTitle}>
-            Analytics for {fetchedStartDate} to {fetchedEndDate}
-          </h1>
+          <h2 className={styles.mainTitle}>Scholar and Job Counts</h2>
+        </div>
+        <div className={styles.quickStats}>
+          <DashboardTwoItemTable firstHeading='MAJOR' secondHeading='SCHOLARS' data={scholarsByMajorTableBodyData} />
+          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='JOBS' data={scholarsByMajorTableBodyData} />
+        </div>
+        <div className={styles.titleRow}>
+          <h2 className={styles.mainTitle}>
+            Click Counts from {fetchedStartDate} to {fetchedEndDate}
+          </h2>
           <form action='' className={styles.dateLimitsForm}>
             <label className={styles.dateLimitInputContainer}>
               <span className={styles.dateLimitInputLabel}>Start Date</span>
@@ -95,19 +105,14 @@ function Dashboard() {
               onClick={() => getPageData({ variables: { startDate, endDate } })}
               className={styles.dateLimitSubmit}
             >
-              Get Analytics
+              Get Clicks
             </button>
           </form>
         </div>
         <div className={styles.quickStats}>
-          <DashboardTwoItemTable firstHeading='CLICK TYPE' secondHeading='TOTAL CLICKS' data={typeClickTableBodyData} />
-          <DashboardTwoItemTable
-            firstHeading='JOB TAG'
-            secondHeading='TOTAL CLICKS'
-            data={jobTagRankingsTableBodyData}
-          />
+          <DashboardTwoItemTable firstHeading='CLICK TYPE' secondHeading='CLICKS' data={typeClickTableBodyData} />
+          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='CLICKS' data={jobTagsTableBodyData} />
         </div>
-
         <div>
           {typeIntervalClickGroups.map((chart) => (
             <div key={chart.dataKey} className={styles.chartContainer}>

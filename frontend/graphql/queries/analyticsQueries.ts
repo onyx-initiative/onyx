@@ -408,5 +408,13 @@ export const GET_ANALYTICS_DASHBOARD_DATA = gql`
       tag
       click_count
     }
+    jobTagRankings: getJobTagRanking {
+      tag
+      job_count
+    }
+    scholarsRankedByMajor: getScholarsRankedByMajor {
+      major
+      scholar_count
+    }
   }
 `
