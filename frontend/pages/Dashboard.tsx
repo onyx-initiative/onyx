@@ -6,7 +6,7 @@ import Navbar from '../src/components/general/Navbar'
 import styles from '../styles/Dashboard.module.css'
 import DashboardTwoItemTable from '../src/components/admin/DashboardTwoItemTable'
 
-type DashboardPageDatum = {
+type TypeClickDatum = {
   date: string
   count: number
 }
@@ -15,11 +15,11 @@ function Dashboard() {
   const currentDateObj = new Date()
   const currentDate = currentDateObj.toISOString().split('T')[0]
   const currentYear = currentDateObj.getFullYear()
-
   const [startDate, setStartDate] = useState(`${currentYear}-01-01`)
   const [endDate, setEndDate] = useState(`${currentYear}-12-31`)
   const [fetchedStartDate, setFetchedStartDate] = useState(startDate)
   const [fetchedEndDate, setFetchedEndDate] = useState(endDate)
+
   const [getPageData, { data: pageData, loading: pageLoading, error: pageError, called: hasPageFetchedOnce }] =
     useLazyQuery(GET_ANALYTICS_DASHBOARD_DATA, {
       onCompleted: () => {
@@ -33,6 +33,15 @@ function Dashboard() {
     }
   }, [endDate, getPageData, hasPageFetchedOnce, startDate])
 
+  if (pageLoading || !hasPageFetchedOnce) return <div>loading</div>
+  if (pageError) {
+    console.error(pageError.message)
+    return <div>error</div>
+  }
+
+  const jobTagRankingsByClicks = pageData['jobTagRankingsByClicks']
+  const jobTagRankingsTableBodyData = jobTagRankingsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
+
   const types = ['Job', 'Apply', 'Employer']
   const intervals = ['Daily', 'Weekly', 'Monthly', 'Yearly']
   const typeIntervalClickGroups = types.flatMap((type) =>
@@ -45,15 +54,9 @@ function Dashboard() {
     })
   )
 
-  if (pageLoading || !hasPageFetchedOnce) return <div>loading</div>
-  if (pageError) {
-    console.error(pageError.message)
-    return <div>error</div>
-  }
-
   const typeClickTableBodyData = types.map((type) => {
     const dataKey = `${type.toLowerCase()}Clicks${intervals[0]}` // can be any interval since they all have same amount of total clicks
-    const totalClicks = pageData[dataKey].reduce((prev: number, cur: DashboardPageDatum) => prev + cur.count, 0)
+    const totalClicks = pageData[dataKey].reduce((prev: number, cur: TypeClickDatum) => prev + cur.count, 0)
     return [type, totalClicks]
   })
 
@@ -98,7 +101,13 @@ function Dashboard() {
         </div>
         <div className={styles.quickStats}>
           <DashboardTwoItemTable firstHeading='CLICK TYPE' secondHeading='TOTAL CLICKS' data={typeClickTableBodyData} />
+          <DashboardTwoItemTable
+            firstHeading='JOB TAG'
+            secondHeading='TOTAL CLICKS'
+            data={jobTagRankingsTableBodyData}
+          />
         </div>
+
         <div>
           {typeIntervalClickGroups.map((chart) => (
             <div key={chart.dataKey} className={styles.chartContainer}>

@@ -1,8 +1,15 @@
 .dataTable {
   overflow-x: auto;
+  display: flex;
+  align-items: stretch;
 }
 
-.dataTable table,
+.dataTable table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .dataTable thead,
 .dataTable tbody {
   display: block;
@@ -26,6 +33,9 @@
   border: #333 1px solid;
   border-radius: 0 0 1rem 1rem;
   padding: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 .dataTable tbody tr {
