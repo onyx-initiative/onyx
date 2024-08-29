@@ -37,8 +37,11 @@ function Dashboard() {
   const scholarsByMajor: [{ major: string; scholar_count: string }] = pageData['scholarsRankedByMajor']
   const scholarsByMajorTableBodyData = scholarsByMajor.map((ranking) => [ranking.major, ranking.scholar_count])
 
+  const jobTagRankings: [{ tag: string; job_count: string }] = pageData['jobTagRankings']
+  const jobTagRankingsTableBodyData = jobTagRankings.map((ranking) => [ranking.tag, ranking.job_count])
+
   const jobTagsByClicks: [{ tag: string; click_count: string }] = pageData['jobTagRankingsByClicks']
-  const jobTagsTableBodyData = jobTagsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
+  const jobTagsByClicksTableBodyData = jobTagsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
 
   const types = ['Job', 'Apply', 'Employer']
   const intervals = ['Daily', 'Weekly', 'Monthly', 'Yearly']
@@ -76,7 +79,7 @@ function Dashboard() {
         </div>
         <div className={styles.quickStats}>
           <DashboardTwoItemTable firstHeading='MAJOR' secondHeading='SCHOLARS' data={scholarsByMajorTableBodyData} />
-          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='JOBS' data={scholarsByMajorTableBodyData} />
+          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='JOBS' data={jobTagRankingsTableBodyData} />
         </div>
         <div className={styles.titleRow}>
           <h2 className={styles.mainTitle}>
@@ -115,7 +118,7 @@ function Dashboard() {
         </div>
         <div className={styles.quickStats}>
           <DashboardTwoItemTable firstHeading='CLICK TYPE' secondHeading='CLICKS' data={typeClickTableBodyData} />
-          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='CLICKS' data={jobTagsTableBodyData} />
+          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='CLICKS' data={jobTagsByClicksTableBodyData} />
         </div>
         <div>
           {typeIntervalClickGroups.map((chart) => (
