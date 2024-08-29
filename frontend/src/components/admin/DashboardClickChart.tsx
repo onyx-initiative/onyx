@@ -21,6 +21,7 @@ export default function DashboardClickChart({ data, interval, type }: ClickChart
     titlePosition: 'none',
     legend: 'none',
     backgroundColor: 'transparent',
+    pointSize: 6,
     chartArea: {
       width: '100%',
       height: '100%',
