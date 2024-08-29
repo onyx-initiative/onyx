@@ -97,7 +97,7 @@ function Dashboard() {
           </form>
         </div>
         <div className={styles.quickStats}>
-          <DashboardTwoItemTable firstHeading='Click Type' secondHeading='TOTAL CLICKS' data={typeClickTableBodyData} />
+          <DashboardTwoItemTable firstHeading='CLICK TYPE' secondHeading='TOTAL CLICKS' data={typeClickTableBodyData} />
         </div>
         <div>
           {typeIntervalClickGroups.map((chart) => (

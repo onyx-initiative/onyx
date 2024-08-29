@@ -22,12 +22,6 @@
   padding: 1.5rem 1rem;
 }
 
-.dataTable th:last-child {
-  font-weight: normal;
-  color: #888;
-  font-size: 0.9em;
-}
-
 .dataTable tbody {
   border: #333 1px solid;
   border-radius: 0 0 1rem 1rem;
@@ -45,8 +39,4 @@
 
 .dataTable tbody tr:first-child {
   padding-top: 0;
-}
-
-.dataTable td:last-child {
-  font-weight: bold;
 }
