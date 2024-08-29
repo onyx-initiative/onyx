@@ -404,7 +404,7 @@ export const GET_ANALYTICS_DASHBOARD_DATA = gql`
       date
       count
     }
-    jobTagRankingsByClicks: getJobTagRankingByClicks {
+    jobTagRankingsByClicks: getJobTagRankingByClicksWithDateRange(startDate: $startDate, endDate: $endDate) {
       tag
       click_count
     }

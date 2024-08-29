@@ -435,6 +435,31 @@ const analyticsResolver = {
         client.release();
       }
     },
+    getJobTagRankingByClicksWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources
+      const client = await establishConnection(db)
+      try {
+        const query = `
+          SELECT unnest(tags) AS tag, COUNT(*) AS click_count
+          FROM job_clicks
+          JOIN job ON job_clicks.job_id = job.job_id
+          WHERE tags IS NOT NULL and click_time BETWEEN $1 AND $2
+          GROUP BY tag
+          ORDER BY click_count DESC
+        `
+        const resp = await client.query(query, [startDate, endDate])
+        const formattedRows = resp.rows.map((row: any) => ({
+          tag: row.tag,
+          click_count: parseInt(row.click_count),
+        }))
+        return formattedRows
+      } catch (err) {
+        console.error('Error executing query:', err)
+        throw new Error('Failed to get job tag ranking by clicks with date range')
+      } finally {
+        client.release()
+      }
+    },
     getApplyClicksForScholar: async (
       _: any,
       { scholarId }: any,
