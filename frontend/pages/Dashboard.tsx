@@ -6,11 +6,6 @@ import Navbar from '../src/components/general/Navbar'
 import styles from '../styles/Dashboard.module.css'
 import DashboardTwoItemTable from '../src/components/admin/DashboardTwoItemTable'
 
-type TypeClickDatum = {
-  date: string
-  count: number
-}
-
 function Dashboard() {
   const currentDateObj = new Date()
   const currentDate = currentDateObj.toISOString().split('T')[0]
@@ -59,7 +54,16 @@ function Dashboard() {
 
   const typeClickTableBodyData = types.map((type) => {
     const dataKey = `${type.toLowerCase()}Clicks${intervals[0]}` // can be any interval since they all have same amount of total clicks
-    const totalClicks = pageData[dataKey].reduce((prev: number, cur: TypeClickDatum) => prev + cur.count, 0)
+    const totalClicks = pageData[dataKey].reduce(
+      (
+        prev: number,
+        cur: {
+          date: string
+          count: number
+        }
+      ) => prev + cur.count,
+      0
+    )
     return [type, totalClicks]
   })
 
