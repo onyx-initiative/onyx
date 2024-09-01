@@ -15,65 +15,62 @@ function Dashboard() {
   const [fetchedStartDate, setFetchedStartDate] = useState(startDate)
   const [fetchedEndDate, setFetchedEndDate] = useState(endDate)
 
-  const [getPageData, { data: pageData, loading: pageLoading, error: pageError, called: hasPageFetchedOnce }] =
-    useLazyQuery(GET_ANALYTICS_DASHBOARD_DATA, {
-      onCompleted: () => {
-        setFetchedStartDate(startDate)
-        setFetchedEndDate(endDate)
-      },
-    })
+  const [
+    getPageData,
+    { previousData: previousPageData, data: pageData, loading: pageLoading, error: pageError, called: pageCalled },
+  ] = useLazyQuery(GET_ANALYTICS_DASHBOARD_DATA, {
+    onCompleted: () => {
+      setFetchedStartDate(startDate)
+      setFetchedEndDate(endDate)
+    },
+  })
   useEffect(() => {
-    if (!hasPageFetchedOnce) {
+    if (!pageCalled) {
       getPageData({ variables: { startDate, endDate } })
     }
-  }, [endDate, getPageData, hasPageFetchedOnce, startDate])
+  }, [endDate, getPageData, pageCalled, startDate])
 
-  if (pageLoading || !hasPageFetchedOnce) return <div>loading</div>
-  if (pageError) {
-    console.error(pageError.message)
-    return <div>error</div>
-  }
+  let DashboardContent = <div>Loading...</div>
+  const currentPageData = pageData ? pageData : previousPageData
+  if (currentPageData) {
+    const scholarsByMajor: [{ major: string; scholar_count: string }] = currentPageData['scholarsRankedByMajor']
+    const scholarsByMajorTableBodyData = scholarsByMajor.map((ranking) => [ranking.major, ranking.scholar_count])
 
-  const scholarsByMajor: [{ major: string; scholar_count: string }] = pageData['scholarsRankedByMajor']
-  const scholarsByMajorTableBodyData = scholarsByMajor.map((ranking) => [ranking.major, ranking.scholar_count])
+    const jobTagRankings: [{ tag: string; job_count: string }] = currentPageData['jobTagRankings']
+    const jobTagRankingsTableBodyData = jobTagRankings.map((ranking) => [ranking.tag, ranking.job_count])
 
-  const jobTagRankings: [{ tag: string; job_count: string }] = pageData['jobTagRankings']
-  const jobTagRankingsTableBodyData = jobTagRankings.map((ranking) => [ranking.tag, ranking.job_count])
+    const jobTagsByClicks: [{ tag: string; click_count: string }] = currentPageData['jobTagRankingsByClicks']
+    const jobTagsByClicksTableBodyData = jobTagsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
 
-  const jobTagsByClicks: [{ tag: string; click_count: string }] = pageData['jobTagRankingsByClicks']
-  const jobTagsByClicksTableBodyData = jobTagsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
-
-  const types = ['Job', 'Apply', 'Employer']
-  const intervals = ['Daily', 'Weekly', 'Monthly', 'Yearly']
-  const typeIntervalClickGroups = types.flatMap((type) =>
-    intervals.map((interval) => {
-      return {
-        type,
-        interval,
-        dataKey: `${type.toLowerCase()}Clicks${interval}`,
-      }
-    })
-  )
-
-  const typeClickTableBodyData = types.map((type) => {
-    const dataKey = `${type.toLowerCase()}Clicks${intervals[0]}` // can be any interval since they all have same amount of total clicks
-    const totalClicks = pageData[dataKey].reduce(
-      (
-        prev: number,
-        cur: {
-          date: string
-          count: number
+    const types = ['Job', 'Apply', 'Employer']
+    const intervals = ['Daily', 'Weekly', 'Monthly', 'Yearly']
+    const typeIntervalClickGroups = types.flatMap((type) =>
+      intervals.map((interval) => {
+        return {
+          type,
+          interval,
+          dataKey: `${type.toLowerCase()}Clicks${interval}`,
         }
-      ) => prev + cur.count,
-      0
+      })
     )
-    return [type, totalClicks]
-  })
 
-  return (
-    <>
-      <Navbar />
-      <main className={styles.wrapper}>
+    const typeClickTableBodyData = types.map((type) => {
+      const dataKey = `${type.toLowerCase()}Clicks${intervals[0]}` // can be any interval
+      const totalClicks = currentPageData[dataKey].reduce(
+        (
+          prev: number,
+          cur: {
+            date: string
+            count: number
+          }
+        ) => prev + cur.count,
+        0
+      )
+      return [type, totalClicks]
+    })
+
+    DashboardContent = (
+      <>
         <div className={styles.titleRow}>
           <h2 className={styles.mainTitle}>Scholar and Job Counts</h2>
         </div>
@@ -94,6 +91,7 @@ function Dashboard() {
                 onChange={(e) => setStartDate(e.target.value)}
                 className={styles.dateLimitInput}
                 max={currentDate}
+                disabled={pageLoading}
               />
             </label>
             <label className={styles.dateLimitInputContainer}>
@@ -105,14 +103,16 @@ function Dashboard() {
                 className={styles.dateLimitInput}
                 min={startDate}
                 max={currentDate}
+                disabled={pageLoading}
               />
             </label>
             <button
               type='button'
               onClick={() => getPageData({ variables: { startDate, endDate } })}
               className={styles.dateLimitSubmit}
+              disabled={pageLoading}
             >
-              Get Clicks
+              {pageLoading ? <div>Loading</div> : 'Get Clicks'}
             </button>
           </form>
         </div>
@@ -123,11 +123,18 @@ function Dashboard() {
         <div>
           {typeIntervalClickGroups.map((chart) => (
             <div key={chart.dataKey} className={styles.chartContainer}>
-              <DashboardClickChart data={pageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
+              <DashboardClickChart data={currentPageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
             </div>
           ))}
         </div>
-      </main>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <Navbar />
+      <main className={styles.wrapper}>{pageError ? <div>Error: {pageError.message}</div> : DashboardContent}</main>
     </>
   )
 }

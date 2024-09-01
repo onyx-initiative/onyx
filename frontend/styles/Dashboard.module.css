@@ -74,6 +74,7 @@
 }
 
 .dateLimitSubmit {
+  min-width: 9rem;
   height: 2.2rem;
   padding: 0 2rem;
   cursor: pointer;
