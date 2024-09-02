@@ -2,7 +2,6 @@ import styles from '../../../styles/components/FancySpinner.module.css'
 
 type SpinnerProps = {
   size?: number
-  thickness?: number
 }
 
 export default function FancySpinner({ size = 100 }: SpinnerProps) {

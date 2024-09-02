@@ -8,7 +8,7 @@ import DashboardTwoItemTable from '../src/components/admin/DashboardTwoItemTable
 import Spinner from '../src/components/admin/Spinner'
 import FancySpinner from '../src/components/admin/FancySpinner'
 
-function Dashboard() {
+export default function Dashboard() {
   const currentDateObj = new Date()
   const currentDate = currentDateObj.toISOString().split('T')[0]
   const currentYear = currentDateObj.getFullYear()
@@ -39,11 +39,33 @@ function Dashboard() {
   )
   const currentPageData = pageData ? pageData : previousPageData
   if (currentPageData) {
+    const jobTagRankings: [{ tag: string; job_count: string }] = currentPageData['jobTagRankings']
+    const jobTagRankingsTableBodyData = jobTagRankings.map((ranking) => [ranking.tag, ranking.job_count])
+
+    const jobLocationRankings: [{ location: string; job_count: string }] = currentPageData['jobLocationRankings']
+    const jobLocationRankingsTableBodyData = jobLocationRankings.map((ranking) => [ranking.location, ranking.job_count])
+
+    const jobDeadlineRankingsByMonth: [{ month: string; job_count: string }] =
+      currentPageData['jobDeadlineRankingsByMonth']
+    const jobDeadlineRankingsByMonthTableBodyData = jobDeadlineRankingsByMonth.map((ranking) => [
+      ranking.month,
+      ranking.job_count,
+    ])
+
+    const daysSinceLastJobPostByEmployer: [{ employerName: string; days_since_last_post: string }] =
+      currentPageData['daysSinceLastJobPostByEmployer']
+    const daysSinceLastJobPostByEmployerTableBodyData = daysSinceLastJobPostByEmployer.map((ranking) => [
+      ranking.employerName,
+      ranking.days_since_last_post,
+    ])
+
+    daysSinceLastJobPostByEmployer
+
     const scholarsByMajor: [{ major: string; scholar_count: string }] = currentPageData['scholarsRankedByMajor']
     const scholarsByMajorTableBodyData = scholarsByMajor.map((ranking) => [ranking.major, ranking.scholar_count])
 
-    const jobTagRankings: [{ tag: string; job_count: string }] = currentPageData['jobTagRankings']
-    const jobTagRankingsTableBodyData = jobTagRankings.map((ranking) => [ranking.tag, ranking.job_count])
+    const scholarsByYear: [{ year: string; scholar_count: string }] = currentPageData['scholarsRankedByYear']
+    const scholarsByYearTableBodyData = scholarsByYear.map((ranking) => [ranking.year, ranking.scholar_count])
 
     const jobTagsByClicks: [{ tag: string; click_count: string }] = currentPageData['jobTagRankingsByClicks']
     const jobTagsByClicksTableBodyData = jobTagsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
@@ -78,11 +100,35 @@ function Dashboard() {
     DashboardContent = (
       <>
         <div className={styles.titleRow}>
-          <h2 className={styles.mainTitle}>Scholar and Job Counts</h2>
+          <h2 className={styles.mainTitle}>General Counts</h2>
         </div>
         <div className={styles.quickStats}>
-          <DashboardTwoItemTable firstHeading='MAJOR' secondHeading='SCHOLARS' data={scholarsByMajorTableBodyData} />
           <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='JOBS' data={jobTagRankingsTableBodyData} />
+          <DashboardTwoItemTable
+            firstHeading='JOB LOCATION'
+            secondHeading='JOBS'
+            data={jobLocationRankingsTableBodyData}
+          />
+          <DashboardTwoItemTable
+            firstHeading='JOB DEADLINE (MONTH)'
+            secondHeading='JOBS'
+            data={jobDeadlineRankingsByMonthTableBodyData}
+          />
+          <DashboardTwoItemTable
+            firstHeading='EMPLOYER NAME'
+            secondHeading='DAYS SINCE LAST JOB POST'
+            data={daysSinceLastJobPostByEmployerTableBodyData}
+          />
+          <DashboardTwoItemTable
+            firstHeading='SCHOLAR MAJOR'
+            secondHeading='SCHOLARS'
+            data={scholarsByMajorTableBodyData}
+          />
+          <DashboardTwoItemTable
+            firstHeading='SCHOLAR YEAR'
+            secondHeading='SCHOLARS'
+            data={scholarsByYearTableBodyData}
+          />
         </div>
         <div className={styles.titleRow}>
           <h2 className={styles.mainTitle}>
@@ -152,5 +198,3 @@ function Dashboard() {
     </>
   )
 }
-
-export default Dashboard

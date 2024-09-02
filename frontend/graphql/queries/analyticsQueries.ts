@@ -412,8 +412,24 @@ export const GET_ANALYTICS_DASHBOARD_DATA = gql`
       tag
       job_count
     }
+    jobLocationRankings: getJobLocationRanking {
+      location
+      job_count
+    }
+    jobDeadlineRankingsByMonth: getJobDeadlineRankingByMonth {
+      month
+      job_count
+    }
+    daysSinceLastJobPostByEmployer: getNumDaysSinceLastJobPostByEmployer {
+      employerName
+      days_since_last_post
+    }
     scholarsRankedByMajor: getScholarsRankedByMajor {
       major
+      scholar_count
+    }
+    scholarsRankedByYear: getScholarsRankedByYear {
+      year
       scholar_count
     }
   }
