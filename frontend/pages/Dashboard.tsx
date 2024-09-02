@@ -5,6 +5,8 @@ import DashboardClickChart from '../src/components/admin/DashboardClickChart'
 import Navbar from '../src/components/general/Navbar'
 import styles from '../styles/Dashboard.module.css'
 import DashboardTwoItemTable from '../src/components/admin/DashboardTwoItemTable'
+import Spinner from '../src/components/admin/Spinner'
+import FancySpinner from '../src/components/admin/FancySpinner'
 
 function Dashboard() {
   const currentDateObj = new Date()
@@ -30,7 +32,11 @@ function Dashboard() {
     }
   }, [endDate, getPageData, pageCalled, startDate])
 
-  let DashboardContent = <div>Loading...</div>
+  let DashboardContent = (
+    <div className={styles.center}>
+      <FancySpinner />
+    </div>
+  )
   const currentPageData = pageData ? pageData : previousPageData
   if (currentPageData) {
     const scholarsByMajor: [{ major: string; scholar_count: string }] = currentPageData['scholarsRankedByMajor']
@@ -112,7 +118,7 @@ function Dashboard() {
               className={styles.dateLimitSubmit}
               disabled={pageLoading}
             >
-              {pageLoading ? <div>Loading</div> : 'Get Clicks'}
+              {pageLoading ? <Spinner size={16} thickness={3} /> : 'Get Clicks'}
             </button>
           </form>
         </div>
@@ -134,7 +140,15 @@ function Dashboard() {
   return (
     <>
       <Navbar />
-      <main className={styles.wrapper}>{pageError ? <div>Error: {pageError.message}</div> : DashboardContent}</main>
+      <main className={styles.wrapper}>
+        {pageError ? (
+          <div>
+            <strong>Error:</strong> {pageError.message}
+          </div>
+        ) : (
+          DashboardContent
+        )}
+      </main>
     </>
   )
 }
