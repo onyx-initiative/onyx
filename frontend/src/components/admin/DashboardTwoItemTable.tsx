@@ -26,9 +26,7 @@ export default function DashboardTwoItemTable({ firstHeading, secondHeading, dat
             ))
           ) : (
             <tr>
-              <td>
-                <i>No Data</i>
-              </td>
+              <td className={styles.noDataCell}>No Data</td>
               <td />
             </tr>
           )}

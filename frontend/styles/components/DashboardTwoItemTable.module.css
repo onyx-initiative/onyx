@@ -50,3 +50,7 @@
 .dataTable tbody tr:first-child {
   padding-top: 0;
 }
+
+.dataTable .noDataCell {
+  font-style: italic;
+}
