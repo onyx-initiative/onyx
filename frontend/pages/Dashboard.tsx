@@ -39,15 +39,22 @@ export default function Dashboard() {
   )
   const currentPageData = pageData ? pageData : previousPageData
   if (currentPageData) {
-    const jobTagRankings: [{ tag: string; job_count: string }] = currentPageData['jobTagRankings']
-    const jobTagRankingsTableBodyData = jobTagRankings.map((ranking) => [ranking.tag, ranking.job_count])
+    const jobTagsRankedByJobCount: [{ tag: string; job_count: string }] = currentPageData['jobTagsRankedByJobCount']
+    const jobTagsRankedByJobCountTableBodyData = jobTagsRankedByJobCount.map((ranking) => [
+      ranking.tag,
+      ranking.job_count,
+    ])
 
-    const jobLocationRankings: [{ location: string; job_count: string }] = currentPageData['jobLocationRankings']
-    const jobLocationRankingsTableBodyData = jobLocationRankings.map((ranking) => [ranking.location, ranking.job_count])
+    const jobLocationsRankedByJobCount: [{ location: string; job_count: string }] =
+      currentPageData['jobLocationsRankedByJobCount']
+    const jobLocationsRankedByJobCountTableBodyData = jobLocationsRankedByJobCount.map((ranking) => [
+      ranking.location,
+      ranking.job_count,
+    ])
 
-    const jobDeadlineRankingsByMonth: [{ month: string; job_count: string }] =
-      currentPageData['jobDeadlineRankingsByMonth']
-    const jobDeadlineRankingsByMonthTableBodyData = jobDeadlineRankingsByMonth.map((ranking) => [
+    const jobDeadlinesAsMonthRankedByJobCount: [{ month: string; job_count: string }] =
+      currentPageData['jobDeadlinesAsMonthRankedByJobCount']
+    const jobDeadlinesAsMonthRankedByJobCountTableBodyData = jobDeadlinesAsMonthRankedByJobCount.map((ranking) => [
       ranking.month,
       ranking.job_count,
     ])
@@ -59,20 +66,16 @@ export default function Dashboard() {
       ranking.days_since_last_post,
     ])
 
-    daysSinceLastJobPostByEmployer
-
     const scholarsByMajor: [{ major: string; scholar_count: string }] = currentPageData['scholarsRankedByMajor']
     const scholarsByMajorTableBodyData = scholarsByMajor.map((ranking) => [ranking.major, ranking.scholar_count])
 
     const scholarsByYear: [{ year: string; scholar_count: string }] = currentPageData['scholarsRankedByYear']
     const scholarsByYearTableBodyData = scholarsByYear.map((ranking) => [ranking.year, ranking.scholar_count])
 
-    const jobTagsByClicks: [{ tag: string; click_count: string }] = currentPageData['jobTagRankingsByClicks']
-    const jobTagsByClicksTableBodyData = jobTagsByClicks.map((ranking) => [ranking.tag, ranking.click_count])
-
-    const types = ['Job', 'Apply', 'Employer']
+    // Get click counts for each main type of link
+    const linkTypes = ['Job', 'Apply', 'Employer']
     const intervals = ['Daily', 'Weekly', 'Monthly', 'Yearly']
-    const typeIntervalClickGroups = types.flatMap((type) =>
+    const linkTypeIntervalClickGroups = linkTypes.flatMap((type) =>
       intervals.map((interval) => {
         return {
           type,
@@ -81,8 +84,7 @@ export default function Dashboard() {
         }
       })
     )
-
-    const typeClickTableBodyData = types.map((type) => {
+    const linkTypeClicksTableBodyData = linkTypes.map((type) => {
       const dataKey = `${type.toLowerCase()}Clicks${intervals[0]}` // can be any interval
       const totalClicks = currentPageData[dataKey].reduce(
         (
@@ -97,22 +99,59 @@ export default function Dashboard() {
       return [type, totalClicks]
     })
 
+    const jobTagClicks: [{ tag: string; click_count: string }] = currentPageData['jobTagClicks']
+    const jobTagClicksTableBodyData = jobTagClicks.map((ranking) => [ranking.tag, ranking.click_count])
+
+    const employerJobPostingClicks: [{ employerName: string; job_posting_click_count: string }] =
+      currentPageData['employerJobPostingClicks']
+    const employerJobPostingClicksTableBodyData = employerJobPostingClicks.map((ranking) => [
+      ranking.employerName,
+      ranking.job_posting_click_count,
+    ])
+
+    const scholarClicksBySchool: [{ school: string; scholar_click_count: string }] =
+      currentPageData['scholarClicksBySchool']
+    const scholarClicksBySchoolTableBodyData = scholarClicksBySchool.map((ranking) => [
+      ranking.school,
+      ranking.scholar_click_count,
+    ])
+
+    const scholarJobClicks: [{ scholarName: string; job_count: string }] = currentPageData['scholarJobClicks']
+    const scholarJobClicksTableBodyData = scholarJobClicks.map((ranking) => [ranking.scholarName, ranking.job_count])
+
+    const scholarApplyClicks: [{ scholarName: string; apply_count: string }] = currentPageData['scholarApplyClicks']
+    const scholarApplyClicksTableBodyData = scholarApplyClicks.map((ranking) => [
+      ranking.scholarName,
+      ranking.apply_count,
+    ])
+
+    const scholarEmployerClicks: [{ scholarName: string; employer_count: string }] =
+      currentPageData['scholarEmployerClicks']
+    const scholarEmployerClicksTableBodyData = scholarEmployerClicks.map((ranking) => [
+      ranking.scholarName,
+      ranking.employer_count,
+    ])
+
     DashboardContent = (
       <>
         <div className={styles.titleRow}>
           <h2 className={styles.mainTitle}>General Counts</h2>
         </div>
         <div className={styles.quickStats}>
-          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='JOBS' data={jobTagRankingsTableBodyData} />
+          <DashboardTwoItemTable
+            firstHeading='JOB TAG'
+            secondHeading='JOBS'
+            data={jobTagsRankedByJobCountTableBodyData}
+          />
           <DashboardTwoItemTable
             firstHeading='JOB LOCATION'
             secondHeading='JOBS'
-            data={jobLocationRankingsTableBodyData}
+            data={jobLocationsRankedByJobCountTableBodyData}
           />
           <DashboardTwoItemTable
             firstHeading='JOB DEADLINE (MONTH)'
             secondHeading='JOBS'
-            data={jobDeadlineRankingsByMonthTableBodyData}
+            data={jobDeadlinesAsMonthRankedByJobCountTableBodyData}
           />
           <DashboardTwoItemTable
             firstHeading='EMPLOYER NAME'
@@ -169,11 +208,36 @@ export default function Dashboard() {
           </form>
         </div>
         <div className={styles.quickStats}>
-          <DashboardTwoItemTable firstHeading='CLICK TYPE' secondHeading='CLICKS' data={typeClickTableBodyData} />
-          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='CLICKS' data={jobTagsByClicksTableBodyData} />
+          <DashboardTwoItemTable firstHeading='LINK TYPE' secondHeading='CLICKS' data={linkTypeClicksTableBodyData} />
+          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='CLICKS' data={jobTagClicksTableBodyData} />
+          <DashboardTwoItemTable
+            firstHeading='EMPLOYER NAME'
+            secondHeading='JOB POSTING CLICKS'
+            data={employerJobPostingClicksTableBodyData}
+          />
+          <DashboardTwoItemTable
+            firstHeading='SCHOOL NAME'
+            secondHeading='SCHOLAR CLICKS'
+            data={scholarClicksBySchoolTableBodyData}
+          />
+          <DashboardTwoItemTable
+            firstHeading='SCHOLAR NAME'
+            secondHeading='JOB CLICKS'
+            data={scholarJobClicksTableBodyData}
+          />
+          <DashboardTwoItemTable
+            firstHeading='SCHOLAR NAME'
+            secondHeading='APPLY CLICKS'
+            data={scholarApplyClicksTableBodyData}
+          />
+          <DashboardTwoItemTable
+            firstHeading='SCHOLAR NAME'
+            secondHeading='EMPLOYER CLICKS'
+            data={scholarEmployerClicksTableBodyData}
+          />
         </div>
         <div>
-          {typeIntervalClickGroups.map((chart) => (
+          {linkTypeIntervalClickGroups.map((chart) => (
             <div key={chart.dataKey} className={styles.chartContainer}>
               <DashboardClickChart data={currentPageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
             </div>

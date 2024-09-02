@@ -296,6 +296,54 @@ export const GET_CLICKS_CUSTOM_ANALYTICS = gql`
 
 export const GET_ANALYTICS_DASHBOARD_DATA = gql`
   query GetAnalyticsDashboardData($startDate: Date!, $endDate: Date!) {
+    jobTagsRankedByJobCount: getJobTagRanking {
+      tag
+      job_count
+    }
+    jobLocationsRankedByJobCount: getJobLocationRanking {
+      location
+      job_count
+    }
+    jobDeadlinesAsMonthRankedByJobCount: getJobDeadlineRankingByMonth {
+      month
+      job_count
+    }
+    daysSinceLastJobPostByEmployer: getNumDaysSinceLastJobPostByEmployer {
+      employerName
+      days_since_last_post
+    }
+    scholarsRankedByMajor: getScholarsRankedByMajor {
+      major
+      scholar_count
+    }
+    scholarsRankedByYear: getScholarsRankedByYear {
+      year
+      scholar_count
+    }
+    jobTagClicks: getJobTagRankingByClicksWithDateRange(startDate: $startDate, endDate: $endDate) {
+      tag
+      click_count
+    }
+    employerJobPostingClicks: getEmployerJobPostingsRanking {
+      employerName
+      job_posting_click_count
+    }
+    scholarClicksBySchool: getScholarClicksBySchool {
+      school
+      scholar_click_count
+    }
+    scholarJobClicks: getScholarJobClicksRanked {
+      scholarName
+      job_count
+    }
+    scholarApplyClicks: getScholarApplyClicksRanked {
+      scholarName
+      apply_count
+    }
+    scholarEmployerClicks: getScholarEmployerClicksRanked {
+      scholarName
+      employer_count
+    }
     jobClicksDaily: getClicksCustomAnalytics(
       startDate: $startDate
       endDate: $endDate
@@ -403,34 +451,6 @@ export const GET_ANALYTICS_DASHBOARD_DATA = gql`
     ) {
       date
       count
-    }
-    jobTagRankingsByClicks: getJobTagRankingByClicksWithDateRange(startDate: $startDate, endDate: $endDate) {
-      tag
-      click_count
-    }
-    jobTagRankings: getJobTagRanking {
-      tag
-      job_count
-    }
-    jobLocationRankings: getJobLocationRanking {
-      location
-      job_count
-    }
-    jobDeadlineRankingsByMonth: getJobDeadlineRankingByMonth {
-      month
-      job_count
-    }
-    daysSinceLastJobPostByEmployer: getNumDaysSinceLastJobPostByEmployer {
-      employerName
-      days_since_last_post
-    }
-    scholarsRankedByMajor: getScholarsRankedByMajor {
-      major
-      scholar_count
-    }
-    scholarsRankedByYear: getScholarsRankedByYear {
-      year
-      scholar_count
     }
   }
 `

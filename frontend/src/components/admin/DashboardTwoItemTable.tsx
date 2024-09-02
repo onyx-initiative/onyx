@@ -17,12 +17,21 @@ export default function DashboardTwoItemTable({ firstHeading, secondHeading, dat
           </tr>
         </thead>
         <tbody>
-          {data.map((row) => (
-            <tr key={row[0]}>
-              <td>{row[0]}</td>
-              <td>{row[1]}</td>
+          {data.length ? (
+            data.map((row) => (
+              <tr key={row[0]}>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td>
+                <i>No Data</i>
+              </td>
+              <td />
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
