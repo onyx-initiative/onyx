@@ -1,12 +1,10 @@
 import styles from '../../../styles/components/Spinner.module.css'
 
 type SpinnerProps = {
-  size?: number
-  thickness?: number
+  size?: string
+  thickness?: string
 }
 
-export default function Spinner({ size = 80, thickness = 6 }: SpinnerProps) {
-  return (
-    <div style={{ width: `${size}px`, height: `${size}px`, borderWidth: `${thickness}px` }} className={styles.loader} />
-  )
+export default function Spinner({ size = '1em', thickness = '0.2em' }: SpinnerProps) {
+  return <div style={{ width: size, height: size, borderWidth: thickness }} className={styles.loader} />
 }

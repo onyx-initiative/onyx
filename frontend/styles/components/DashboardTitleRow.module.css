@@ -1,0 +1,23 @@
+.titleRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: left;
+}
+
+@media screen and (min-width: 1064px) {
+  .titleRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

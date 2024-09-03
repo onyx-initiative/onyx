@@ -2,11 +2,14 @@ import { useLazyQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { GET_ANALYTICS_DASHBOARD_DATA } from '../graphql/queries/analyticsQueries'
 import DashboardClickChart from '../src/components/admin/DashboardClickChart'
+import DashboardDateLimitInput from '../src/components/admin/DashboardDateLimitInput'
+import DashboardDateLimitSubmit from '../src/components/admin/DashboardDateLimitSubmit'
+import DashboardErrorMessage from '../src/components/admin/DashboardErrorMessage'
+import DashboardTitleRow from '../src/components/admin/DashboardTitleRow'
+import DashboardTwoItemTable from '../src/components/admin/DashboardTwoItemTable'
+import FancySpinner from '../src/components/admin/FancySpinner'
 import Navbar from '../src/components/general/Navbar'
 import styles from '../styles/Dashboard.module.css'
-import DashboardTwoItemTable from '../src/components/admin/DashboardTwoItemTable'
-import Spinner from '../src/components/admin/Spinner'
-import FancySpinner from '../src/components/admin/FancySpinner'
 
 export default function Dashboard() {
   const currentDateObj = new Date()
@@ -37,7 +40,7 @@ export default function Dashboard() {
       <FancySpinner />
     </div>
   )
-  const currentPageData = pageData ? pageData : previousPageData
+  const currentPageData = pageData ? pageData : previousPageData // shows old data while new date range is being fetched
   if (currentPageData) {
     const jobTagsRankedByJobCount: [{ tag: string; job_count: string }] = currentPageData['jobTagsRankedByJobCount']
     const jobTagsRankedByJobCountTableBodyData = jobTagsRankedByJobCount.map((ranking) => [
@@ -134,9 +137,7 @@ export default function Dashboard() {
 
     DashboardContent = (
       <>
-        <div className={styles.titleRow}>
-          <h2 className={styles.mainTitle}>General Counts</h2>
-        </div>
+        <DashboardTitleRow title='General Counts' />
         <div className={styles.quickStats}>
           <DashboardTwoItemTable
             firstHeading='JOB TAG'
@@ -169,26 +170,20 @@ export default function Dashboard() {
             data={scholarsByYearTableBodyData}
           />
         </div>
-        <div className={styles.titleRow}>
-          <h2 className={styles.mainTitle}>
-            Click Counts from {fetchedStartDate} to {fetchedEndDate}
-          </h2>
-          <form action='' className={styles.dateLimitsForm}>
-            <label className={styles.dateLimitInputContainer}>
-              <span className={styles.dateLimitInputLabel}>Start Date</span>
-              <input
-                type='date'
+        <DashboardTitleRow
+          title={`Click Counts from ${fetchedStartDate} to ${fetchedEndDate}`}
+          rightComponent={
+            <form action='' className={styles.dateLimitsForm}>
+              <DashboardDateLimitInput
+                label='Start Date'
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 className={styles.dateLimitInput}
                 max={currentDate}
                 disabled={pageLoading}
               />
-            </label>
-            <label className={styles.dateLimitInputContainer}>
-              <span className={styles.dateLimitInputLabel}>End Date</span>
-              <input
-                type='date'
+              <DashboardDateLimitInput
+                label='End Date'
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 className={styles.dateLimitInput}
@@ -196,17 +191,16 @@ export default function Dashboard() {
                 max={currentDate}
                 disabled={pageLoading}
               />
-            </label>
-            <button
-              type='button'
-              onClick={() => getPageData({ variables: { startDate, endDate } })}
-              className={styles.dateLimitSubmit}
-              disabled={pageLoading}
-            >
-              {pageLoading ? <Spinner size={16} thickness={3} /> : 'Get Clicks'}
-            </button>
-          </form>
-        </div>
+              <DashboardDateLimitSubmit
+                onClick={() => getPageData({ variables: { startDate, endDate } })}
+                loading={pageLoading}
+                disabled={pageLoading}
+              >
+                Get Clicks
+              </DashboardDateLimitSubmit>
+            </form>
+          }
+        />
         <div className={styles.quickStats}>
           <DashboardTwoItemTable firstHeading='LINK TYPE' secondHeading='CLICKS' data={linkTypeClicksTableBodyData} />
           <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='CLICKS' data={jobTagClicksTableBodyData} />
@@ -236,13 +230,11 @@ export default function Dashboard() {
             data={scholarEmployerClicksTableBodyData}
           />
         </div>
-        <div>
-          {linkTypeIntervalClickGroups.map((chart) => (
-            <div key={chart.dataKey} className={styles.chartContainer}>
-              <DashboardClickChart data={currentPageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
-            </div>
-          ))}
-        </div>
+        {linkTypeIntervalClickGroups.map((chart) => (
+          <div key={chart.dataKey} className={styles.chartContainer}>
+            <DashboardClickChart data={currentPageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
+          </div>
+        ))}
       </>
     )
   }
@@ -251,13 +243,7 @@ export default function Dashboard() {
     <>
       <Navbar />
       <main className={styles.wrapper}>
-        {pageError ? (
-          <div>
-            <strong>Error:</strong> {pageError.message}
-          </div>
-        ) : (
-          DashboardContent
-        )}
+        {pageError ? <DashboardErrorMessage message={pageError.message} /> : DashboardContent}
       </main>
     </>
   )
