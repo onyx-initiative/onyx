@@ -9,17 +9,23 @@ export const analyticsTypeDefs = gql`
     getEmployerClicksRanked: [RankedEmployerClick]
     getJobTagRanking: [JobTagRanking]
     getJobTagRankingByClicks: [JobTagRankingByClick]
+    getJobTagRankingByClicksWithDateRange(startDate: Date, endDate: Date): [JobTagRankingByClick]
     getJobLocationRanking: [JobLocationRanking]
     getJobDeadlineRankingByMonth: [JobDeadlineRanking]
     getScholarsRankedByMajor: [MajorRanking]
     getScholarsRankedByYear: [YearRanking]
     getPercentageOfScholarsWithAllowedNotifications: Int
     getScholarApplyClicksRanked: [ApplyClickRank]
+    getScholarApplyClicksRankedWithDateRange(startDate: Date, endDate: Date): [ApplyClickRank]
     getScholarJobClicksRanked: [JobClickRank]
+    getScholarJobClicksRankedWithDateRange(startDate: Date, endDate: Date): [JobClickRank]
     getScholarEmployerClicksRanked: [EmployerClickRank]
+    getScholarEmployerClicksRankedWithDateRange(startDate: Date, endDate: Date): [EmployerClickRank]
     getJobClicksRankedByApply: [RankedJobClick]
     getScholarClicksBySchool: [ScholarClicksBySchool]
+    getScholarClicksBySchoolWithDateRange(startDate: Date, endDate: Date): [ScholarClicksBySchool]
     getEmployerJobPostingsRanking: [EmployerJobPostingRank]
+    getEmployerJobPostingsRankingWithDateRange(startDate: Date, endDate: Date): [EmployerJobPostingRank]
     getNumDaysSinceLastJobPostByEmployer: [EmployerLastJobPost]
     getMostPopularJobTagsByEmployer: [EmployerJobTagRanking]
     getJobClicksForScholar(scholarId: Int): [ScholarJobClicks]
@@ -37,7 +43,6 @@ export const analyticsTypeDefs = gql`
     getNumberOfActiveScholars: Int
     getNumberOfAllowedScholars: Int
     getClicksCustomAnalytics(startDate: Date, endDate: Date, interval: String, clickType: String): [CustomAnalytics]
-    getJobTagRankingByClicksWithDateRange(startDate: Date, endDate: Date): [JobTagRankingByClick]
   }
 
   type Mutation {

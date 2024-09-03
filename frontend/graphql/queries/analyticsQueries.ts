@@ -324,23 +324,23 @@ export const GET_ANALYTICS_DASHBOARD_DATA = gql`
       tag
       click_count
     }
-    employerJobPostingClicks: getEmployerJobPostingsRanking {
+    employerJobPostingClicks: getEmployerJobPostingsRankingWithDateRange(startDate: $startDate, endDate: $endDate) {
       employerName
       job_posting_click_count
     }
-    scholarClicksBySchool: getScholarClicksBySchool {
+    scholarClicksBySchool: getScholarClicksBySchoolWithDateRange(startDate: $startDate, endDate: $endDate) {
       school
       scholar_click_count
     }
-    scholarJobClicks: getScholarJobClicksRanked {
+    scholarJobClicks: getScholarJobClicksRankedWithDateRange(startDate: $startDate, endDate: $endDate) {
       scholarName
       job_count
     }
-    scholarApplyClicks: getScholarApplyClicksRanked {
+    scholarApplyClicks: getScholarApplyClicksRankedWithDateRange(startDate: $startDate, endDate: $endDate) {
       scholarName
       apply_count
     }
-    scholarEmployerClicks: getScholarEmployerClicksRanked {
+    scholarEmployerClicks: getScholarEmployerClicksRankedWithDateRange(startDate: $startDate, endDate: $endDate) {
       scholarName
       employer_count
     }
