@@ -241,7 +241,9 @@ export default function Dashboard() {
 
   return (
     <>
-      <Navbar />
+      <div className={styles.noPrint}>
+        <Navbar />
+      </div>
       <main className={styles.wrapper}>
         {pageError ? <DashboardErrorMessage message={pageError.message} /> : DashboardContent}
       </main>

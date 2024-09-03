@@ -6,6 +6,7 @@
   padding: 2rem 2rem 1rem;
   border: #333 1px solid;
   border-radius: 1rem;
+  break-inside: avoid;
 }
 
 .chartTitle {
@@ -34,4 +35,21 @@
 .noDataMessage {
   padding-bottom: 1rem;
   font-style: italic;
+}
+
+.chartImageContainer {
+  display: none;
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+@media print {
+  .googleChartContainer {
+    display: none;
+  }
+
+  .chartImageContainer {
+    display: block;
+  }
 }

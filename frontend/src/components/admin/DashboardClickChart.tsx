@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../../../styles/components/DashboardClickChart.module.css'
 import Chart from 'react-google-charts'
+import Image from 'next/image'
 
 type ClickChartProps = {
   data: [
@@ -62,16 +63,39 @@ export default function DashboardClickChart({ data, interval, type }: ClickChart
     axisTitlesPosition: 'none',
   }
 
+  // Get chart PNG for printing
+  const [chartWrapper, setChartWrapper] = useState<any>(null)
+  const [chartImageURI, setChartImageURI] = useState('')
+  useEffect(() => {
+    if (chartWrapper !== null) {
+      setChartImageURI(chartWrapper.getChart().getImageURI())
+    }
+  }, [chartWrapper])
+
   return (
-    <div className={styles.chart}>
-      <div className={styles.chartTitle}>{title}</div>
-      {data.length ? (
-        <div className={styles.googleChartContainer}>
-          <Chart chartType='AreaChart' width='100%' height='100%' data={clickCounts} options={chartOptions} />
-        </div>
-      ) : (
-        <div className={styles.noDataMessage}>No data</div>
-      )}
-    </div>
+    <>
+      <div className={styles.chart}>
+        <div className={styles.chartTitle}>{title}</div>
+        {data.length ? (
+          <>
+            <div className={styles.googleChartContainer}>
+              <Chart
+                chartType='AreaChart'
+                width='100%'
+                height='100%'
+                data={clickCounts}
+                options={chartOptions}
+                getChartWrapper={(wrapper) => setChartWrapper(wrapper)}
+              />
+            </div>
+            <div className={styles.chartImageContainer}>
+              <Image src={chartImageURI} alt={`${title} Chart`} layout='fill' />
+            </div>
+          </>
+        ) : (
+          <div className={styles.noDataMessage}>No data</div>
+        )}
+      </div>
+    </>
   )
 }

@@ -2,6 +2,7 @@
   overflow-x: auto;
   display: flex;
   align-items: stretch;
+  break-inside: avoid;
 }
 
 .dataTable table {

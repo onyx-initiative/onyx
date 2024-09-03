@@ -53,3 +53,10 @@
     align-items: end;
   }
 }
+
+@media print {
+  .noPrint,
+  .dateLimitsForm {
+    display: none;
+  }
+}
