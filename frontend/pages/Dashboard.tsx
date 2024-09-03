@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [endDate, setEndDate] = useState(`${currentYear}-12-31`)
   const [fetchedStartDate, setFetchedStartDate] = useState(startDate)
   const [fetchedEndDate, setFetchedEndDate] = useState(endDate)
+  const [dateRangeFormError, setDateRangeFormError] = useState('')
 
   const [
     getPageData,
@@ -34,6 +35,29 @@ export default function Dashboard() {
       getPageData({ variables: { startDate, endDate } })
     }
   }, [endDate, getPageData, pageCalled, startDate])
+
+  const hasDateRangeFormError = () => {
+    setDateRangeFormError('')
+
+    const validDateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
+    if (!validDateRegex.test(startDate)) {
+      setDateRangeFormError('Start date is invalid.')
+      return true
+    }
+    if (!validDateRegex.test(endDate)) {
+      setDateRangeFormError('End date is invalid.')
+      return true
+    }
+
+    return false
+  }
+  const submitGetPageDataForm = () => {
+    if (hasDateRangeFormError()) {
+      return
+    }
+
+    getPageData({ variables: { startDate, endDate } })
+  }
 
   let DashboardContent = (
     <div className={styles.center}>
@@ -173,32 +197,41 @@ export default function Dashboard() {
         <DashboardTitleRow
           title={`Click Counts from ${fetchedStartDate} to ${fetchedEndDate}`}
           rightComponent={
-            <form action='' className={styles.dateLimitsForm}>
-              <DashboardDateLimitInput
-                label='Start Date'
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className={styles.dateLimitInput}
-                max={currentDate}
-                disabled={pageLoading}
-              />
-              <DashboardDateLimitInput
-                label='End Date'
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className={styles.dateLimitInput}
-                min={startDate}
-                max={currentDate}
-                disabled={pageLoading}
-              />
-              <DashboardDateLimitSubmit
-                onClick={() => getPageData({ variables: { startDate, endDate } })}
-                loading={pageLoading}
-                disabled={pageLoading}
-              >
-                Get Clicks
-              </DashboardDateLimitSubmit>
-            </form>
+            <div>
+              <form action='' className={styles.dateLimitsForm}>
+                <DashboardDateLimitInput
+                  label='Start Date'
+                  value={startDate}
+                  onChange={(e) => {
+                    setStartDate(e.target.value)
+                    hasDateRangeFormError()
+                  }}
+                  onFocus={hasDateRangeFormError}
+                  onBlur={hasDateRangeFormError}
+                  className={styles.dateLimitInput}
+                  max={currentDate}
+                  disabled={pageLoading}
+                />
+                <DashboardDateLimitInput
+                  label='End Date'
+                  value={endDate}
+                  onChange={(e) => {
+                    setEndDate(e.target.value)
+                    hasDateRangeFormError()
+                  }}
+                  onFocus={hasDateRangeFormError}
+                  onBlur={hasDateRangeFormError}
+                  className={styles.dateLimitInput}
+                  min={startDate}
+                  max={currentDate}
+                  disabled={pageLoading}
+                />
+                <DashboardDateLimitSubmit onClick={submitGetPageDataForm} loading={pageLoading} disabled={pageLoading}>
+                  Get Clicks
+                </DashboardDateLimitSubmit>
+              </form>
+              {dateRangeFormError ? <div className={styles.dateLimitsFormError}>{dateRangeFormError}</div> : null}
+            </div>
           }
         />
         <div className={styles.quickStats}>

@@ -26,6 +26,12 @@
   gap: 1rem;
 }
 
+.dateLimitsFormError {
+  color: #ef8b8b;
+  padding: 1rem 0;
+  text-align: center;
+}
+
 .quickStats {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
