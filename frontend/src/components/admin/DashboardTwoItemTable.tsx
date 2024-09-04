@@ -19,7 +19,7 @@ export default function DashboardTwoItemTable({ firstHeading, secondHeading, dat
         <tbody>
           {data.length ? (
             data.map((row) => (
-              <tr key={row[0]}>
+              <tr key={firstHeading + secondHeading + row[0] + row[1]}>
                 <td>{row[0]}</td>
                 <td>{row[1]}</td>
               </tr>

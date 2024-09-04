@@ -88,9 +88,11 @@ export default function DashboardClickChart({ data, interval, type }: ClickChart
                 getChartWrapper={(wrapper) => setChartWrapper(wrapper)}
               />
             </div>
-            <div className={styles.chartImageContainer}>
-              <Image src={chartImageURI} alt={`${title} Chart`} layout='fill' />
-            </div>
+            {chartImageURI ? (
+              <div className={styles.chartImageContainer}>
+                <Image src={chartImageURI} alt={`${title} Chart`} layout='fill' />
+              </div>
+            ) : null}
           </>
         ) : (
           <div className={styles.noDataMessage}>No data</div>
