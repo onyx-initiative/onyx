@@ -70,7 +70,7 @@ export default function DashboardClickChart({ data, interval, type }: ClickChart
     if (chartWrapper !== null) {
       setChartImageURI(chartWrapper.getChart().getImageURI())
     }
-  }, [chartWrapper])
+  }, [chartWrapper, data])
 
   return (
     <>
