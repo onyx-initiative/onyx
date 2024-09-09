@@ -69,6 +69,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .printSection:not(:first-child) {
+    margin-top: 3rem;
+  }
+
   .wrapper {
     color: black;
   }
