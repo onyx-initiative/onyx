@@ -25,6 +25,7 @@ export default function Dashboard() {
     getPageData,
     { previousData: previousPageData, data: pageData, loading: pageLoading, error: pageError, called: pageCalled },
   ] = useLazyQuery(GET_ANALYTICS_DASHBOARD_DATA, {
+    fetchPolicy: 'cache-and-network',
     onCompleted: () => {
       setFetchedStartDate(startDate)
       setFetchedEndDate(endDate)

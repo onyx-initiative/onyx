@@ -68,7 +68,7 @@ export default function DashboardClickChart({ data, interval, type }: ClickChart
   const [chartImageURI, setChartImageURI] = useState('')
   useEffect(() => {
     if (chartWrapper !== null) {
-      setChartImageURI(chartWrapper.getChart().getImageURI())
+      setChartImageURI(chartWrapper.getChart()?.getImageURI())
     }
   }, [chartWrapper, data, interval, type])
 
