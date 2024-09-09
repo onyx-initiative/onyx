@@ -263,11 +263,13 @@ export default function Dashboard() {
             data={scholarEmployerClicksTableBodyData}
           />
         </div>
-        {linkTypeIntervalClickGroups.map((chart) => (
-          <div key={chart.dataKey} className={styles.chartContainer}>
-            <DashboardClickChart data={currentPageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
-          </div>
-        ))}
+        <div className={styles.charts}>
+          {linkTypeIntervalClickGroups.map((chart) => (
+            <div key={chart.dataKey} className={styles.chartContainer}>
+              <DashboardClickChart data={currentPageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
+            </div>
+          ))}
+        </div>
       </>
     )
   }

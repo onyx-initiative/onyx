@@ -39,6 +39,10 @@
   margin-bottom: 3rem;
 }
 
+.charts {
+  break-inside: avoid;
+}
+
 .chartContainer {
   margin-bottom: 3rem;
 }
@@ -61,6 +65,10 @@
 }
 
 @media print {
+  .quickStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .wrapper {
     color: black;
   }
