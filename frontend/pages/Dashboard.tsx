@@ -162,109 +162,118 @@ export default function Dashboard() {
 
     DashboardContent = (
       <>
-        <DashboardTitleRow title='General Counts' />
-        <div className={styles.quickStats}>
-          <DashboardTwoItemTable
-            firstHeading='JOB TAG'
-            secondHeading='JOBS'
-            data={jobTagsRankedByJobCountTableBodyData}
-          />
-          <DashboardTwoItemTable
-            firstHeading='JOB LOCATION'
-            secondHeading='JOBS'
-            data={jobLocationsRankedByJobCountTableBodyData}
-          />
-          <DashboardTwoItemTable
-            firstHeading='JOB DEADLINE (MONTH)'
-            secondHeading='JOBS'
-            data={jobDeadlinesAsMonthRankedByJobCountTableBodyData}
-          />
-          <DashboardTwoItemTable
-            firstHeading='EMPLOYER NAME'
-            secondHeading='DAYS SINCE LAST JOB POST'
-            data={daysSinceLastJobPostByEmployerTableBodyData}
-          />
-          <DashboardTwoItemTable
-            firstHeading='SCHOLAR MAJOR'
-            secondHeading='SCHOLARS'
-            data={scholarsByMajorTableBodyData}
-          />
-          <DashboardTwoItemTable
-            firstHeading='SCHOLAR YEAR'
-            secondHeading='SCHOLARS'
-            data={scholarsByYearTableBodyData}
-          />
+        <div className={styles.printSection}>
+          <DashboardTitleRow title='General Counts' />
+          <div className={styles.quickStats}>
+            <DashboardTwoItemTable
+              firstHeading='JOB TAG'
+              secondHeading='JOBS'
+              data={jobTagsRankedByJobCountTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='JOB LOCATION'
+              secondHeading='JOBS'
+              data={jobLocationsRankedByJobCountTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='JOB DEADLINE (MONTH)'
+              secondHeading='JOBS'
+              data={jobDeadlinesAsMonthRankedByJobCountTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='EMPLOYER NAME'
+              secondHeading='DAYS SINCE LAST JOB POST'
+              data={daysSinceLastJobPostByEmployerTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='SCHOLAR MAJOR'
+              secondHeading='SCHOLARS'
+              data={scholarsByMajorTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='SCHOLAR YEAR'
+              secondHeading='SCHOLARS'
+              data={scholarsByYearTableBodyData}
+            />
+          </div>
         </div>
-        <DashboardTitleRow
-          title={`Click Counts from ${fetchedStartDate} to ${fetchedEndDate}`}
-          rightComponent={
-            <div>
-              <form action='' className={styles.dateLimitsForm}>
-                <DashboardDateLimitInput
-                  label='Start Date'
-                  value={startDate}
-                  onChange={(e) => {
-                    setStartDate(e.target.value)
-                    hasDateRangeFormError()
-                  }}
-                  onFocus={hasDateRangeFormError}
-                  onBlur={hasDateRangeFormError}
-                  className={styles.dateLimitInput}
-                  max={currentDate}
-                  disabled={pageLoading}
-                />
-                <DashboardDateLimitInput
-                  label='End Date'
-                  value={endDate}
-                  onChange={(e) => {
-                    setEndDate(e.target.value)
-                    hasDateRangeFormError()
-                  }}
-                  onFocus={hasDateRangeFormError}
-                  onBlur={hasDateRangeFormError}
-                  className={styles.dateLimitInput}
-                  min={startDate}
-                  max={currentDate}
-                  disabled={pageLoading}
-                />
-                <DashboardDateLimitSubmit onClick={submitGetPageDataForm} loading={pageLoading} disabled={pageLoading}>
-                  Get Clicks
-                </DashboardDateLimitSubmit>
-              </form>
-              {dateRangeFormError ? <div className={styles.dateLimitsFormError}>{dateRangeFormError}</div> : null}
-            </div>
-          }
-        />
-        <div className={styles.quickStats}>
-          <DashboardTwoItemTable firstHeading='LINK TYPE' secondHeading='CLICKS' data={linkTypeClicksTableBodyData} />
-          <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='CLICKS' data={jobTagClicksTableBodyData} />
-          <DashboardTwoItemTable
-            firstHeading='EMPLOYER NAME'
-            secondHeading='JOB POSTING CLICKS'
-            data={employerJobPostingClicksTableBodyData}
+        <div className={styles.printSection}>
+          <DashboardTitleRow
+            title={`Click Counts from ${fetchedStartDate} to ${fetchedEndDate}`}
+            rightComponent={
+              <div>
+                <form action='' className={styles.dateLimitsForm}>
+                  <DashboardDateLimitInput
+                    label='Start Date'
+                    value={startDate}
+                    onChange={(e) => {
+                      setStartDate(e.target.value)
+                      hasDateRangeFormError()
+                    }}
+                    onFocus={hasDateRangeFormError}
+                    onBlur={hasDateRangeFormError}
+                    className={styles.dateLimitInput}
+                    max={currentDate}
+                    disabled={pageLoading}
+                  />
+                  <DashboardDateLimitInput
+                    label='End Date'
+                    value={endDate}
+                    onChange={(e) => {
+                      setEndDate(e.target.value)
+                      hasDateRangeFormError()
+                    }}
+                    onFocus={hasDateRangeFormError}
+                    onBlur={hasDateRangeFormError}
+                    className={styles.dateLimitInput}
+                    min={startDate}
+                    max={currentDate}
+                    disabled={pageLoading}
+                  />
+                  <DashboardDateLimitSubmit
+                    onClick={submitGetPageDataForm}
+                    loading={pageLoading}
+                    disabled={pageLoading}
+                  >
+                    Get Clicks
+                  </DashboardDateLimitSubmit>
+                </form>
+                {dateRangeFormError ? <div className={styles.dateLimitsFormError}>{dateRangeFormError}</div> : null}
+              </div>
+            }
           />
-          <DashboardTwoItemTable
-            firstHeading='SCHOOL NAME'
-            secondHeading='SCHOLAR CLICKS'
-            data={scholarClicksBySchoolTableBodyData}
-          />
-          <DashboardTwoItemTable
-            firstHeading='SCHOLAR NAME'
-            secondHeading='JOB CLICKS'
-            data={scholarJobClicksTableBodyData}
-          />
-          <DashboardTwoItemTable
-            firstHeading='SCHOLAR NAME'
-            secondHeading='APPLY CLICKS'
-            data={scholarApplyClicksTableBodyData}
-          />
-          <DashboardTwoItemTable
-            firstHeading='SCHOLAR NAME'
-            secondHeading='EMPLOYER CLICKS'
-            data={scholarEmployerClicksTableBodyData}
-          />
+
+          <div className={styles.quickStats}>
+            <DashboardTwoItemTable firstHeading='LINK TYPE' secondHeading='CLICKS' data={linkTypeClicksTableBodyData} />
+            <DashboardTwoItemTable firstHeading='JOB TAG' secondHeading='CLICKS' data={jobTagClicksTableBodyData} />
+            <DashboardTwoItemTable
+              firstHeading='EMPLOYER NAME'
+              secondHeading='JOB POSTING CLICKS'
+              data={employerJobPostingClicksTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='SCHOOL NAME'
+              secondHeading='SCHOLAR CLICKS'
+              data={scholarClicksBySchoolTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='SCHOLAR NAME'
+              secondHeading='JOB CLICKS'
+              data={scholarJobClicksTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='SCHOLAR NAME'
+              secondHeading='APPLY CLICKS'
+              data={scholarApplyClicksTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading='SCHOLAR NAME'
+              secondHeading='EMPLOYER CLICKS'
+              data={scholarEmployerClicksTableBodyData}
+            />
+          </div>
         </div>
-        <div className={styles.charts}>
+        <div className={styles.printSection}>
           {linkTypeIntervalClickGroups.map((chart) => (
             <div key={chart.dataKey} className={styles.chartContainer}>
               <DashboardClickChart data={currentPageData[chart.dataKey]} interval={chart.interval} type={chart.type} />
