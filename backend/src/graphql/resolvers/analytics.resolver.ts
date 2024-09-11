@@ -163,6 +163,35 @@ const analyticsResolver = {
       }
     },
 
+    getScholarApplyClicksRankedWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources
+      const client = await establishConnection(db)
+      try {
+        const query = `
+                    SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
+                    FROM apply_clicks 
+                    JOIN scholar ON apply_clicks.scholar_id = scholar.scholar_id
+                    WHERE apply_clicks.click_time BETWEEN $1 AND $2
+                    GROUP BY scholar.scholar_id, scholar.name, scholar.email
+                    ORDER BY clicks DESC
+                `
+        const resp = await client.query(query, [startDate, endDate])
+        console.log(resp.rows)
+        const formattedRows = resp.rows.map((row: any) => ({
+          scholarId: row.scholar_id,
+          apply_count: parseInt(row.clicks),
+          scholarName: row.name,
+          scholarEmail: row.email,
+        }))
+        return formattedRows
+      } catch (err) {
+        console.error(err)
+        throw new Error('Failed to fetch scholar job clicks with date range')
+      } finally {
+        client.release()
+      }
+    },
+
     getScholarJobClicksRanked: async (
       _: any,
       args: any,
@@ -195,6 +224,35 @@ const analyticsResolver = {
       }
     },
 
+    getScholarJobClicksRankedWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources
+      const client = await establishConnection(db)
+      try {
+        const query = `
+                    SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
+                    FROM job_clicks 
+                    JOIN scholar ON job_clicks.scholar_id = scholar.scholar_id
+                    WHERE job_clicks.click_time BETWEEN $1 AND $2
+                    GROUP BY scholar.scholar_id, scholar.name, scholar.email
+                    ORDER BY clicks DESC
+                `
+        const resp = await client.query(query, [startDate, endDate])
+        console.log(resp.rows)
+        const formattedRows = resp.rows.map((row: any) => ({
+          scholarId: row.scholar_id,
+          job_count: parseInt(row.clicks),
+          scholarName: row.name,
+          scholarEmail: row.email,
+        }))
+        return formattedRows
+      } catch (err) {
+        console.error(err)
+        throw new Error('Failed to fetch scholar job clicks with date range')
+      } finally {
+        client.release()
+      }
+    },
+
     getScholarClicksBySchool: async (
       _: any,
       args: any,
@@ -221,6 +279,32 @@ const analyticsResolver = {
         throw new Error("Failed to get scholar clicks by school");
       } finally {
         client.release();
+      }
+    },
+
+    getScholarClicksBySchoolWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources
+      const client = await establishConnection(db)
+      try {
+        const query = `
+                    SELECT school, COUNT(*) AS scholar_click_count
+                    FROM job_clicks JOIN scholar ON job_clicks.scholar_id = scholar.scholar_id
+                    WHERE job_clicks.click_time BETWEEN $1 AND $2
+                    GROUP BY school
+                    ORDER BY scholar_click_count DESC
+                `
+        const resp = await client.query(query, [startDate, endDate])
+        console.log(resp.rows)
+        const formattedRows = resp.rows.map((row: any) => ({
+          school: row.school,
+          scholar_click_count: parseInt(row.scholar_click_count),
+        }))
+        return formattedRows
+      } catch (err) {
+        console.error('Error executing query:', err)
+        throw new Error('Failed to get scholar clicks by school with date range')
+      } finally {
+        client.release()
       }
     },
 
@@ -253,6 +337,35 @@ const analyticsResolver = {
         throw new Error("Failed to fetch scholar employer clicks");
       } finally {
         client.release();
+      }
+    },
+
+    getScholarEmployerClicksRankedWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources
+      const client = await establishConnection(db)
+      try {
+        const query = `
+                    SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
+                    FROM employer_clicks 
+                    JOIN scholar ON employer_clicks.scholar_id = scholar.scholar_id
+                    WHERE employer_clicks.click_time BETWEEN $1 AND $2
+                    GROUP BY scholar.scholar_id, scholar.name, scholar.email
+                    ORDER BY clicks DESC
+                `
+        const resp = await client.query(query, [startDate, endDate])
+        console.log(resp.rows)
+        const formattedRows = resp.rows.map((row: any) => ({
+          scholarId: row.scholar_id,
+          employer_count: parseInt(row.clicks),
+          scholarName: row.name,
+          scholarEmail: row.email,
+        }))
+        return formattedRows
+      } catch (err) {
+        console.error(err)
+        throw new Error('Failed to fetch scholar employer clicks with date range')
+      } finally {
+        client.release()
       }
     },
 
@@ -435,6 +548,33 @@ const analyticsResolver = {
         client.release();
       }
     },
+
+    getJobTagRankingByClicksWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources
+      const client = await establishConnection(db)
+      try {
+        const query = `
+          SELECT unnest(tags) AS tag, COUNT(*) AS click_count
+          FROM job_clicks
+          JOIN job ON job_clicks.job_id = job.job_id
+          WHERE tags IS NOT NULL and click_time BETWEEN $1 AND $2
+          GROUP BY tag
+          ORDER BY click_count DESC
+        `
+        const resp = await client.query(query, [startDate, endDate])
+        const formattedRows = resp.rows.map((row: any) => ({
+          tag: row.tag,
+          click_count: parseInt(row.click_count),
+        }))
+        return formattedRows
+      } catch (err) {
+        console.error('Error executing query:', err)
+        throw new Error('Failed to get job tag ranking by clicks with date range')
+      } finally {
+        client.release()
+      }
+    },
+
     getApplyClicksForScholar: async (
       _: any,
       { scholarId }: any,
@@ -703,6 +843,33 @@ const analyticsResolver = {
         throw new Error("Failed to get employer job postings ranking");
       } finally {
         client.release();
+      }
+    },
+
+    getEmployerJobPostingsRankingWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources
+      const client = await establishConnection(db)
+      try {
+        const query = `
+                    SELECT employer.name, employer.employer_id, COUNT(*) AS job_click_count
+                    FROM job JOIN job_clicks ON job.job_id = job_clicks.job_id JOIN employer ON job.employer_id = employer.employer_id
+                    WHERE live = true AND job_clicks.click_time BETWEEN $1 AND $2
+                    GROUP BY employer.employer_id
+                    ORDER BY job_click_count DESC
+                `
+        const resp = await client.query(query, [startDate, endDate])
+        console.log(resp.rows)
+        const formattedRows = resp.rows.map((row: any) => ({
+          employerName: row.name,
+          employerId: row.employer_id,
+          job_posting_click_count: parseInt(row.job_click_count),
+        }))
+        return formattedRows
+      } catch (err) {
+        console.error('Error executing query:', err)
+        throw new Error('Failed to get employer job postings ranking with date range')
+      } finally {
+        client.release()
       }
     },
 
@@ -1077,6 +1244,8 @@ const analyticsResolver = {
       } catch (err) {
         console.error("Error executing query:", err);
         throw new Error("Failed to get custom analytics");
+      } finally {
+        client.release();
       }
     },
   },

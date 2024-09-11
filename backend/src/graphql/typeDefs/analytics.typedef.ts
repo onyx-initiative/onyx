@@ -1,8 +1,7 @@
-import {gql} from "apollo-server-lambda";
+import { gql } from 'apollo-server-lambda'
 
 export const analyticsTypeDefs = gql`
-
-    type Query {
+  type Query {
     getJobClicks: [JobClick]
     getApplyClicks: [ApplyClicks]
     getEmployerClicks: [EmployerClick]
@@ -10,17 +9,23 @@ export const analyticsTypeDefs = gql`
     getEmployerClicksRanked: [RankedEmployerClick]
     getJobTagRanking: [JobTagRanking]
     getJobTagRankingByClicks: [JobTagRankingByClick]
+    getJobTagRankingByClicksWithDateRange(startDate: Date, endDate: Date): [JobTagRankingByClick]
     getJobLocationRanking: [JobLocationRanking]
     getJobDeadlineRankingByMonth: [JobDeadlineRanking]
     getScholarsRankedByMajor: [MajorRanking]
     getScholarsRankedByYear: [YearRanking]
     getPercentageOfScholarsWithAllowedNotifications: Int
     getScholarApplyClicksRanked: [ApplyClickRank]
+    getScholarApplyClicksRankedWithDateRange(startDate: Date, endDate: Date): [ApplyClickRank]
     getScholarJobClicksRanked: [JobClickRank]
+    getScholarJobClicksRankedWithDateRange(startDate: Date, endDate: Date): [JobClickRank]
     getScholarEmployerClicksRanked: [EmployerClickRank]
+    getScholarEmployerClicksRankedWithDateRange(startDate: Date, endDate: Date): [EmployerClickRank]
     getJobClicksRankedByApply: [RankedJobClick]
     getScholarClicksBySchool: [ScholarClicksBySchool]
+    getScholarClicksBySchoolWithDateRange(startDate: Date, endDate: Date): [ScholarClicksBySchool]
     getEmployerJobPostingsRanking: [EmployerJobPostingRank]
+    getEmployerJobPostingsRankingWithDateRange(startDate: Date, endDate: Date): [EmployerJobPostingRank]
     getNumDaysSinceLastJobPostByEmployer: [EmployerLastJobPost]
     getMostPopularJobTagsByEmployer: [EmployerJobTagRanking]
     getJobClicksForScholar(scholarId: Int): [ScholarJobClicks]
@@ -38,166 +43,166 @@ export const analyticsTypeDefs = gql`
     getNumberOfActiveScholars: Int
     getNumberOfAllowedScholars: Int
     getClicksCustomAnalytics(startDate: Date, endDate: Date, interval: String, clickType: String): [CustomAnalytics]
-    }
+  }
 
-    type Mutation {
+  type Mutation {
     logJobClick(scholarId: Int!, jobId: Int!): JobClick
     logEmployerClick(scholarId: Int!, employerId: Int!): EmployerClick
     logApplyClick(scholarId: Int!, jobId: Int!): ApplyClick
-    }
+  }
 
-    type CustomAnalytics {
-        date: Date
-        count: Int 
-    }
+  type CustomAnalytics {
+    date: Date
+    count: Int
+  }
 
-    type ScholarJobClicks {
+  type ScholarJobClicks {
     jobId: Int
     clickTime: String
     scholarEmail: String
     scholarName: String
     jobTitle: String
     employerName: String
-    }
+  }
 
-    type ScholarApplyClicks {
+  type ScholarApplyClicks {
     jobId: Int
     clickTime: String
     scholarEmail: String
     scholarName: String
     jobTitle: String
     employerName: String
-    }
+  }
 
-    type ScholarEmployerClicks {
+  type ScholarEmployerClicks {
     employerId: Int
     clickTime: String
     scholarEmail: String
     scholarName: String
     employerName: String
-    }
+  }
 
-    type ClickCount {
-        count: Int
-    }
+  type ClickCount {
+    count: Int
+  }
 
-    type JobClicksLastWeek {
-        scholarId: Int
-        jobId: Int
-        clickTime: String
-        scholarEmail: String
-        scholarName: String
-        jobTitle: String
-        employerName: String
-    }
-
-    type ScholarJobClicks {
-        scholarId: Int
-        jobId: Int
-        clickTime: String
-        scholarEmail: String
-        scholarName: String
-        jobTitle: String
-        employerName: String
-    }
-
-    type ScholarApplyClicks {
-        scholarId: Int
-        jobId: Int
-        clickTime: String
-        scholarEmail: String
-        scholarName: String
-        jobTitle: String
-        employerName: String
-    }
-
-    type ScholarEmployerClicks {
-        scholarId: Int
-        employerId: Int
-        clickTime: String
-        scholarEmail: String
-        scholarName: String
-        employerName: String
-    }
-
-    type ApplyClicks {
-        scholarId: Int
-        jobId: Int
-        clickTime: String
-        scholarEmail: String
-        scholarName: String
-        jobTitle: String
-        employerName: String
-    }
-
-    type ApplyClick {
+  type JobClicksLastWeek {
     scholarId: Int
     jobId: Int
     clickTime: String
-    }
+    scholarEmail: String
+    scholarName: String
+    jobTitle: String
+    employerName: String
+  }
 
-    type EmployerJobTagRanking {
+  type ScholarJobClicks {
+    scholarId: Int
+    jobId: Int
+    clickTime: String
+    scholarEmail: String
+    scholarName: String
+    jobTitle: String
+    employerName: String
+  }
+
+  type ScholarApplyClicks {
+    scholarId: Int
+    jobId: Int
+    clickTime: String
+    scholarEmail: String
+    scholarName: String
+    jobTitle: String
+    employerName: String
+  }
+
+  type ScholarEmployerClicks {
+    scholarId: Int
+    employerId: Int
+    clickTime: String
+    scholarEmail: String
+    scholarName: String
+    employerName: String
+  }
+
+  type ApplyClicks {
+    scholarId: Int
+    jobId: Int
+    clickTime: String
+    scholarEmail: String
+    scholarName: String
+    jobTitle: String
+    employerName: String
+  }
+
+  type ApplyClick {
+    scholarId: Int
+    jobId: Int
+    clickTime: String
+  }
+
+  type EmployerJobTagRanking {
     employer: String
     tag: String
     job_count: Int
-    }
+  }
 
-    type EmployerJobPostingRank {
+  type EmployerJobPostingRank {
     employerName: String
     employerId: String
     job_posting_click_count: Int
-    }
+  }
 
-    type EmployerLastJobPost {
+  type EmployerLastJobPost {
     employerName: String
     employerId: String
     days_since_last_post: Int
-    }
+  }
 
-    scalar Date
-    
-    type MajorRanking {
+  scalar Date
+
+  type MajorRanking {
     major: String
     scholar_count: Int
-    }
+  }
 
-    type ScholarClicksBySchool {
+  type ScholarClicksBySchool {
     school: String
     scholar_click_count: Int
-    }
+  }
 
-    type YearRanking {
+  type YearRanking {
     year: Int
     scholar_count: Int
-    }
+  }
 
-    type JobApplyClickRank {
+  type JobApplyClickRank {
     jobId: Int
     apply_count: Int
-    }
+  }
 
-    type ApplyClickRank {
+  type ApplyClickRank {
     scholarId: Int
     apply_count: Int
     scholarName: String
     scholarEmail: String
-    }
+  }
 
-    type JobClickRank {
+  type JobClickRank {
     scholarId: Int
     job_count: Int
     scholarName: String
     scholarEmail: String
-    }
+  }
 
-    type EmployerClickRank {
-        scholarId: Int
+  type EmployerClickRank {
+    scholarId: Int
     employer_count: Int
     scholarName: String
     scholarEmail: String
-    }
+  }
 
-    type JobClick {
+  type JobClick {
     employerId: Int
     jobId: Int
     jobTitle: String
@@ -205,54 +210,54 @@ export const analyticsTypeDefs = gql`
     clickTime: String
     scholarName: String
     scholarEmail: String
-    }
+  }
 
-    type RankedJobClick {
+  type RankedJobClick {
     employerId: Int
     jobId: Int
     jobTitle: String
     employerName: String
     click_count: Int
-    }
+  }
 
-    type RankedEmployerClick {
+  type RankedEmployerClick {
     employerId: Int
     employerName: String
     click_count: Int
-    }
+  }
 
-    type ApplyClick {
+  type ApplyClick {
     scholarId: Int
     jobId: Int
     clickTime: String
-    }
+  }
 
-    type JobTagRanking {
+  type JobTagRanking {
     tag: String
     job_count: Int
-    }
+  }
 
-    type JobTagRankingByClick {
+  type JobTagRankingByClick {
     tag: String
     click_count: Int
-    }
+  }
 
-    type JobLocationRanking {
+  type JobLocationRanking {
     location: String
     job_count: Int
-    }
+  }
 
-    type JobDeadlineRanking {
+  type JobDeadlineRanking {
     month: String
     job_count: Int
-    }
-    
-    type EmployerClick {
+  }
+
+  type EmployerClick {
     scholarId: Int
     employerId: Int
     employerName: String
     clickTime: String
     scholarName: String
     scholarEmail: String
-    }
+  }
 `

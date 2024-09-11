@@ -1,0 +1,84 @@
+.wrapper {
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  max-width: 1554px;
+  margin: 0 auto;
+}
+
+.center {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dateLimitsForm {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  align-items: end;
+  gap: 1rem;
+}
+
+.dateLimitsFormError {
+  color: #ef8b8b;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.quickStats {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.printSection {
+  break-inside: avoid;
+}
+
+.chartContainer {
+  margin-bottom: 3rem;
+}
+
+.chartContainer:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 1064px) {
+  .quickStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .dateLimitsForm {
+    justify-content: right;
+    align-items: end;
+  }
+}
+
+@media print {
+  .quickStats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .printSection:not(:first-child) {
+    margin-top: 3rem;
+  }
+
+  .wrapper {
+    color: black;
+  }
+
+  .noPrint,
+  .dateLimitsForm {
+    display: none;
+  }
+}
