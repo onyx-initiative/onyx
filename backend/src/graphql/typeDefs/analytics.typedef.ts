@@ -43,6 +43,8 @@ export const analyticsTypeDefs = gql`
     getNumberOfActiveScholars: Int
     getNumberOfAllowedScholars: Int
     getClicksCustomAnalytics(startDate: Date, endDate: Date, interval: String, clickType: String): [CustomAnalytics]
+    getNumJobPostsWithDateRange(startDate: Date, endDate: Date): Int
+    getNumActiveJobsWithDateRange(startDate: Date, endDate: Date): Int
   }
 
   type Mutation {
