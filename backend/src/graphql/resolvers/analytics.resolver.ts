@@ -713,6 +713,46 @@ const analyticsResolver = {
       }
     },
 
+    getNumActiveJobsWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      try {const query = `
+      SELECT count(*)
+      FROM job
+      WHERE job.deadline BETWEEN $1 AND $2
+      `
+      const resp = await client.query(query, [startDate, endDate])
+        console.log(resp)
+        return parseInt(resp.rows[0]['count'])
+      } catch (err) {
+        console.error('Error executing query:', err)
+        throw new Error('Failed to active jobs with date range')
+      } finally {
+        client.release()
+      }
+    },
+
+    getNumJobPostsWithDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      try {const query = `
+      SELECT count(*)
+      FROM job
+      WHERE job.date_posted BETWEEN $1 AND $2
+      `
+      const resp = await client.query(query, [startDate, endDate])
+        console.log(resp)
+        return parseInt(resp.rows[0]['count'])
+      } catch (err) {
+        console.error('Error executing query:', err)
+        throw new Error('Failed to active jobs with date range')
+      } finally {
+        client.release()
+      }
+    },
+
+
+
     getJobLocationRanking: async (_: any, args: any, { dataSources }: any) => {
       const { db } = dataSources;
       const client = await establishConnection(db);
@@ -858,7 +898,6 @@ const analyticsResolver = {
                     ORDER BY job_click_count DESC
                 `
         const resp = await client.query(query, [startDate, endDate])
-        console.log(resp.rows)
         const formattedRows = resp.rows.map((row: any) => ({
           employerName: row.name,
           employerId: row.employer_id,

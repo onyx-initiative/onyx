@@ -320,6 +320,10 @@ export const GET_ANALYTICS_DASHBOARD_DATA = gql`
       year
       scholar_count
     }
+    numJobPosts: getNumJobPostsWithDateRange(startDate: $startDate, endDate: $endDate)
+    numActiveJobs: getNumActiveJobsWithDateRange(startDate: $startDate, endDate: $endDate)
+    numActiveScholars: getNumberOfActiveScholars
+    numAllowedScholars: getNumberOfAllowedScholars
     jobTagClicks: getJobTagRankingByClicksWithDateRange(startDate: $startDate, endDate: $endDate) {
       tag
       click_count
