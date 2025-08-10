@@ -1,285 +1,288 @@
-import React, {useEffect, useState} from "react";
-import styles from "../styles/components/AddJobForm.module.css";
-import { Checkbox } from "@mantine/core";
-import { CREATE_JOB } from "../graphql/mutations/jobMutations";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import Image from 'next/image';
-import {GET_EMPLOYER_BY_NAME, GET_EMPLOYERS} from "../../frontend/graphql/queries/employerQueries";
-import {Select, MultiSelect, Button} from '@mantine/core';
+import Image from "next/image";
+import { Checkbox, Select, MultiSelect, Button, TextInput, Textarea, Alert } from "@mantine/core";
+import { IconAlertCircle } from "@tabler/icons-react";
+import styles from "../styles/components/AddJobForm.module.css";
 import BackButton from "../src/components/admin/BackButton";
-import { job_type, Job, Employer } from "../../backend/src/types/db.types";
-
-
-
+import { CREATE_JOB } from "../graphql/mutations/jobMutations";
+import { GET_EMPLOYERS, GET_EMPLOYER_BY_NAME } from "../../frontend/graphql/queries/employerQueries";
+import { job_type, Employer } from "../../backend/src/types/db.types";
 
 type JobInfo = {
-    employerId: string,
-    adminId: string,
-    title: string,
-    description: string,
-    longDescription: string
-    requirements: string,
-    experience: string,
-    education: string,
-    howToApply: string,
-    additionalInfo: string | null,
-    employerIndustries: string,
-    jobFunction: string,
-    contactEmail: string
-    jobType: string,
-    term: string,
-    location: string,
-    applicantYear: number[],
-    deadline: string | null,
-    tags: string[], 
-    link: string,
-}
-
+  employerId: string;
+  adminId: string;
+  title: string;
+  description: string;
+  longDescription: string;
+  requirements: string;
+  experience: string;
+  education: string;
+  howToApply: string;
+  additionalInfo: string | null;
+  contactEmail: string;
+  jobType: string;
+  term: string;
+  location: string;
+  applicantYear: number[];
+  deadline: string | null;
+  tags: string[];
+  link: string;
+  live?: boolean;
+};
 
 export default function AddJob() {
-    const [JobInfo, setJobInfo] = useState({
-        deadline: "",
-    } as JobInfo)
-    const [checked, setChecked] = useState(false)
-    const [createJob, {data: jobData, loading, error}] = useMutation(CREATE_JOB, {variables: {
-        employerId: JobInfo.employerId,
-        adminId:JobInfo.adminId,
-        title:JobInfo.title,
-        description: JobInfo.description,
-        jobType: JobInfo.jobType,
-        term: JobInfo.term,
-        location: JobInfo.location,
-        applicantYear: JobInfo.applicantYear,
-        deadline: JobInfo.deadline !== "" ?  JobInfo.deadline : "2100-01-01",
-        tags: JobInfo.tags,
-        live: !checked,
-        contactEmail: JobInfo.contactEmail,
-        longDescription: JobInfo.longDescription,
-        requirements: JobInfo.requirements,
-        experience: JobInfo.experience,
-        education: JobInfo.education,
-        howToApply: JobInfo.howToApply,
-        additionalInfo: JobInfo.additionalInfo ? JobInfo.additionalInfo : null,
-        link: JobInfo.link
-    }})
-    const router = useRouter()
-    const [completed, setCompleted] = useState(null as boolean | null)
+  const router = useRouter();
 
-  
+  // Job state
+  const [jobInfo, setJobInfo] = useState<JobInfo>({
+    employerId: "",
+    adminId: "1",
+    title: "",
+    description: "",
+    longDescription: "",
+    requirements: "",
+    experience: "",
+    education: "",
+    howToApply: "",
+    additionalInfo: null,
+    contactEmail: "",
+    jobType: "",
+    term: "",
+    location: "",
+    applicantYear: [],
+    deadline: "",
+    tags: [],
+    link: "",
+  });
 
-  const handleSubmit = () => {
-    if (
-      !JobInfo.employerId ||
-      !JobInfo.adminId ||
-      !JobInfo.title ||
-      !JobInfo.description ||
-      !JobInfo.jobType ||
-      !JobInfo.location ||
-      !JobInfo.deadline
-    ) {alert("Please fill out all required fields before submitting.");
-      return;
-    }
-    createJob()
-      .catch((err) => {
-        console.error("Error creating job:", err); // Log the error message
-        alert("Error creating job. Please check that all fields were correctly filled out and try again.");
-      });
-    router.push('/Admin');
-  }
+  // Validation errors
+  const [errors, setErrors] = useState<{ [K in keyof JobInfo]?: string }>({});
+  const [formError, setFormError] = useState<string>("");
 
-  const { data: employerData, loading: employerLoading, } = useQuery(GET_EMPLOYERS)
+  // GraphQL hooks
+  const [createJob, { loading: submitting }] = useMutation(CREATE_JOB);
+  const { data: employerData, loading: employerLoading } = useQuery(GET_EMPLOYERS);
+  const { loading: employerIdLoading, data: employerIdData } = useQuery(GET_EMPLOYER_BY_NAME, {
+    variables: { name: jobInfo.employerId },
+    skip: !jobInfo.employerId,
+  });
 
-  const [empData, setEmpData] = useState([])
-
-  useEffect(() => {
-    if (completed) {
-      var result = confirm("Are you sure you want to add this Job?");
-        if (result == true) {
-          handleSubmit();
-    } else {
-      console.log("Create Job Aborted")
-    }}
-  }, [completed])
+  // Employer dropdown data
+  const [empData, setEmpData] = useState<Employer[]>([]);
 
   useEffect(() => {
     if (!employerLoading) {
-      setEmpData(employerData?.getEmployers)
+      setEmpData(employerData?.getEmployers || []);
     }
-    // Ignore, this is intentional
-  }, [empData, employerLoading])
+  }, [employerData, employerLoading]);
 
-  const current_year= new Date().getFullYear()
+  // Real-time validation
+  const validateField = (name: keyof JobInfo, value: any) => {
+    let message = "";
+    if (
+      ["title", "description", "jobType", "location", "longDescription"].includes(name) &&
+      !value?.trim()
+    ) {
+      message = `${name} is required.`;
+    }
+    if (name === "deadline" && value && !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      message = "Deadline must be in YYYY-MM-DD format.";
+    }
+    if (name === "contactEmail" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      message = "Invalid email format.";
+    }
+    setErrors((prev) => ({ ...prev, [name]: message }));
+  };
 
-  const [searchValue, onSearchChange] = useState('');
-  const [applicationYearSearchValue, onSearchApplicationYear] = useState('');
-  const [tagSearchValue, onSearchTag] = useState('');
-  const [tagData, setTagData] = useState([{ value: 'Technology', label:  'Technology' },
-    { value: 'Business ', label: 'Business' }, { value: 'Marketing', label:  'Marketing' }, { value: 'Engineering', label:  'Engineering' }, { value: 'Finance', label:  'Finance' }, { value: 'HR', label:  'HR' }, { value: 'IT', label:  'IT' }, { value: 'Research', label:  'Research' }, { value: 'Sales', label:  'Sales' }, { value: 'Security', label:  'Security' }, { value: 'Accounting', label:  'Accounting' }, { value: 'Administration', label:  'Administration' }, { value: 'Automotive', label:  'Automotive' }, { value: 'Arts&Entertainment', label:  'Arts&Entertainment' }, { value: 'Communication', label:  'Communication' }, { value: 'Design', label:  'Design' }, { value: 'Gaming', label:  'Gaming' }, { value: 'Healthcare', label:  'HealthCare' }, { value: 'Mathematics', label:  'Mathematics' }, { value: 'Telecommunications', label:  'Telecommunications'},{ value: 'Default', label:  'Default' }
-    ])
-    const sortedTagData = tagData.slice().sort((a, b) => a.label.localeCompare(b.label));
-  
+  const handleChange = (name: keyof JobInfo, value: any) => {
+    const safeValue = typeof value === "string" ? value.replace(/[<>]/g, "") : value; // basic sanitization
+    setJobInfo((prev) => ({ ...prev, [name]: safeValue }));
+    validateField(name, safeValue);
+  };
 
-    const {loading: employerIdLoading, data: employerId} = useQuery(GET_EMPLOYER_BY_NAME, {variables: {name: searchValue}})
-
-    const initialJobTypes: job_type[] = ["Full Time", "Part Time", "Internship", "New Grad"];
-    const [jobTypes, setJobTypes] = useState(initialJobTypes);
-
-  
-    useEffect(() => {
-      console.log(applicationYearSearchValue)
-      if(!employerIdLoading && searchValue != "") {
-        JobInfo.employerId = employerId?.getEmployerByName?.employer_id
-        JobInfo.adminId = "1"
-      }
-    }, [searchValue, employerIdLoading])
-
+  // Check if form is valid
+  const isFormValid = () => {
     return (
-      <div className={styles.container}>
-        <div className={styles.logo}>
-          <BackButton />
-          <Image src="https://onyxinitiative.org/assets/img/onyxlogo_nav.png" alt="Onyx Logo" width={250} height={100} />
-        </div>
-        <div className={styles.formContainer}> 
-          <h1> Create a Job!</h1>
-          <InputElement label="title" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <Select className={styles.inputContainer} label="Employer Name" placeholder="Pick one" dropdownComponent="div" searchable clearable onSearchChange={onSearchChange} searchValue={searchValue} nothingFound="No options" data={formatEmpData(empData)}/>
-          <InputElement label="location" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <MultiSelect className={styles.inputContainer} label="applicantYear" placeholder="Pick one" searchable clearable onSearchChange={onSearchApplicationYear} searchValue={applicationYearSearchValue} nothingFound="No options" dropdownPosition="bottom" data={[
-              (current_year-3).toString(),
-              (current_year-2).toString(),
-              (current_year-1).toString(),
-              current_year.toString(),
-              (current_year+1).toString(),
-              (current_year+2).toString(),
-              (current_year+3).toString(),
-              (current_year+4).toString()
-            ]}
-            onChange={(query) => {
-              let x: number[] = [];
-              for (let i = 0; i < query.length; i++) {
-                x.push(parseInt(query[i]))
-              }
-              console.log(x)
-              setJobInfo(state => ({...state, applicantYear: x}))
-            }}
-          />
-          <InputElement label="deadline" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElement label="description" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="longDescription" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="requirements" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElement label="contactEmail" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElement label="link" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <InputElementLong label="howToApply" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <Select className={styles.inputContainer} label="jobType" placeholder="Pick one" searchable clearable creatable data={jobTypes} nothingFound="No options" onChange={(query: any) => setJobInfo(state => ({...state, jobType: query}))}/>
-          <InputElement label="term" JobInfo={JobInfo} setJobInfo={setJobInfo} />
-          <MultiSelect className={styles.inputContainer} label="tags" placeholder="Pick one" searchable clearable creatable onSearchChange={onSearchTag} getCreateLabel={(query) => `+ Create ${query}`} onCreate={(query) => { const item = { value: query, label: query }; setTagData((current) => [...current, item]); return item; }} searchValue={tagSearchValue} nothingFound="No options" data={sortedTagData} onChange={(query) => setJobInfo(state => ({...state, tags: query}))} />
-          <Checkbox label="Save to Drafts?" color="dark" size="md" checked={checked} onChange={() => setChecked(!checked)}/>
-          <Button color="dark" onClick={() => {console.log(checkCompletion(JobInfo, setCompleted));}}>Create Job</Button>
-        </div>
+      Object.values(errors).every((err) => !err) &&
+      ["title", "description", "jobType", "location", "longDescription"].every(
+        (field) => jobInfo[field as keyof JobInfo]?.toString().trim() !== ""
+      )
+    );
+  };
+
+  // Submit
+  const handleSubmit = async () => {
+    setFormError("");
+    try {
+      await createJob({
+        variables: {
+          ...jobInfo,
+          deadline: jobInfo.deadline || "2100-01-01",
+          live: true,
+        },
+      });
+      router.push("/Admin");
+    } catch (err: any) {
+      console.error(err);
+      setFormError(err.message || "An unexpected error occurred.");
+    }
+  };
+
+  const sortedTagData = [
+    "Technology",
+    "Business",
+    "Marketing",
+    "Engineering",
+    "Finance",
+    "HR",
+    "IT",
+    "Research",
+    "Sales",
+    "Security",
+    "Accounting",
+    "Administration",
+    "Automotive",
+    "Arts&Entertainment",
+    "Communication",
+    "Design",
+    "Gaming",
+    "Healthcare",
+    "Mathematics",
+    "Telecommunications",
+    "Default",
+  ]
+    .map((tag) => ({ value: tag, label: tag }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+
+  const current_year = new Date().getFullYear();
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.logo}>
+        <BackButton />
+        <Image
+          src="https://onyxinitiative.org/assets/img/onyxlogo_nav.png"
+          alt="Onyx Logo"
+          width={250}
+          height={100}
+        />
       </div>
-      
-    )
-  }
-  
+      <div className={styles.formContainer}>
+        <h1>Create a Job!</h1>
 
-export type InputElementProps = {
-  label: string;
-  JobInfo: JobInfo | {};
-  setJobInfo: any;
-}
+        {formError && (
+          <Alert icon={<IconAlertCircle size={16} />} title="Error" color="red">
+            {formError}
+          </Alert>
+        )}
 
-export const InputElementLong = ({label, JobInfo, setJobInfo}: InputElementProps) => {
-  const [inputValue, setInputValue] = useState("")
+        <TextInput
+          label="Title"
+          value={jobInfo.title}
+          onChange={(e) => handleChange("title", e.target.value)}
+          error={errors.title}
+        />
 
-  useEffect(() => {
-    setJobInfo({ ...JobInfo, [label]: inputValue } as JobInfo)
-    // Ignore warning, this is intentional
-  }, [inputValue])
+        <Select
+          label="Employer Name"
+          placeholder="Pick one"
+          searchable
+          data={empData.map((e) => ({ value: e.employer_id.toString(), label: e.name }))}
+          onChange={(val) => handleChange("employerId", val)}
+        />
 
-  return (
-    <div className={styles.inputContainerLarge}>
-      <h3 className={styles.inputText}>{label}</h3>
-      <textarea rows={5}
-        className={styles.inputForm} 
-        id={label} 
-        placeholder={label}
-        value={inputValue}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}
-      ></textarea>
+        <TextInput
+          label="Location"
+          value={jobInfo.location}
+          onChange={(e) => handleChange("location", e.target.value)}
+          error={errors.location}
+        />
+
+        <MultiSelect
+          label="Applicant Year"
+          data={Array.from({ length: 8 }, (_, i) => `${current_year - 3 + i}`)}
+          onChange={(vals) => handleChange("applicantYear", vals.map((v) => parseInt(v)))}
+        />
+
+        <TextInput
+          label="Deadline"
+          value={jobInfo.deadline || ""}
+          onChange={(e) => handleChange("deadline", e.target.value)}
+          error={errors.deadline}
+        />
+
+        <Textarea
+          label="Description"
+          value={jobInfo.description}
+          onChange={(e) => handleChange("description", e.target.value)}
+          error={errors.description}
+        />
+
+        <Textarea
+          label="Long Description"
+          value={jobInfo.longDescription}
+          onChange={(e) => handleChange("longDescription", e.target.value)}
+          error={errors.longDescription}
+        />
+
+        <TextInput
+          label="Contact Email"
+          value={jobInfo.contactEmail}
+          onChange={(e) => handleChange("contactEmail", e.target.value)}
+          error={errors.contactEmail}
+        />
+
+        <TextInput
+          label="Link"
+          value={jobInfo.link}
+          onChange={(e) => handleChange("link", e.target.value)}
+        />
+
+        <Textarea
+          label="How to Apply"
+          value={jobInfo.howToApply}
+          onChange={(e) => handleChange("howToApply", e.target.value)}
+        />
+
+        <Select
+          label="Job Type"
+          data={["Full Time", "Part Time", "Internship", "New Grad"]}
+          onChange={(val) => handleChange("jobType", val)}
+          error={errors.jobType}
+        />
+
+        <TextInput
+          label="Term"
+          value={jobInfo.term}
+          onChange={(e) => handleChange("term", e.target.value)}
+        />
+
+        <MultiSelect
+          label="Tags"
+          data={sortedTagData}
+          creatable
+          onCreate={(query) => ({ value: query, label: query })}
+          onChange={(vals) => handleChange("tags", vals)}
+        />
+
+        <Checkbox
+          label="Save to Drafts?"
+          checked={!jobInfo["live"]}
+          onChange={(e) => handleChange("live" as any, !e.currentTarget.checked)}
+        />
+
+        <Button
+          color="dark"
+          onClick={handleSubmit}
+          disabled={!isFormValid() || submitting}
+          loading={submitting}
+        >
+          Create Job
+        </Button>
+      </div>
     </div>
-  )
+  );
 }
-
-
-export const InputElement = ({label, JobInfo, setJobInfo}: InputElementProps) => {
-  const [inputValue, setInputValue] = useState("")
-
-  useEffect(() => {
-    setJobInfo({ ...JobInfo, [label]: inputValue } as JobInfo)
-    // Ignore warning, this is intentional
-  }, [inputValue])
-
-  return (
-    <div className={styles.inputContainer}>
-      <h3 className={styles.inputText}>{label}</h3>
-      <input 
-        className={styles.inputForm}
-        type="text" 
-        id={label} 
-        placeholder={label}
-        value={inputValue}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}
-      />
-    </div>
-  )
-}
-
-const formatEmpData = (empData: Employer[]): string[] => {
-  const formatted = empData
-    .map((employer) => employer.name)
-    .sort((a, b) => a.localeCompare(b));
-
-  return formatted;
-};
-
-const validateJobInfo = (jobInfo: JobInfo) => {
-  const errors = [];
-  if (!jobInfo.title) {
-    errors.push("Title is required.");
-  }
-  if (!jobInfo.description) {
-    errors.push("Description is required.");
-  }
-  if (!jobInfo.jobType) {
-    errors.push("Job type is required.");
-  }
-  if (!jobInfo.location) {
-    errors.push("Location is required.");
-  }
-  if (!jobInfo.longDescription) {
-    errors.push("Long description is required.");
-  }
-  const deadlineRegex = /^\d{4}-\d{2}-\d{2}$/;
-  if (jobInfo.deadline !== "" && jobInfo.deadline != null && !deadlineRegex.test(jobInfo.deadline)) {
-    errors.push("Deadline format should be YYYY-MM-DD");
-  }
-  return errors;
-};
-
-const checkCompletion = async (jobInfo: JobInfo, setCompleted: any) => {
-  const errors = validateJobInfo(jobInfo);
-
-  if (errors.length === 0) {
-    setCompleted(true);
-  } else {
-    setCompleted(false);
-    alert("Please fix the following issues:\n" + errors.join("\n"));
-  }
-};
-
 
