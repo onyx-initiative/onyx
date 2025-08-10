@@ -76,7 +76,7 @@ const ExcelReader: React.FC = () => {
           }
         }).catch((err) => {
           alert('Error creating jobs. Please make sure all employer names are exactly as they appear in the database and check the fields.');
-          console.log(err);
+          console.log(`Error creating jobs: ${err}`);
         })
       }}
       >
