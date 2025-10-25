@@ -25,9 +25,9 @@ export default function Jobs() {
   const router = useRouter();
   const { query } = router;
   const [search, setSearch] = useState("");
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [allJobs, setAllJobs] = useState([]);
+  const [allJobs, setAllJobs] = useState<Job[]>([]);
   const {
     data: jobData,
     loading: jobLoading,
