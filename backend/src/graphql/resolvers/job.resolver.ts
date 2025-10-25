@@ -6,10 +6,10 @@ const jobResolver = {
             const date = new Date();
             const { db } = dataSources;
             const client = await establishConnection(db);
-            const query = `SELECT * FROM job 
+            const query = `SELECT * FROM job
                            WHERE NOT EXISTS (
-                                SELECT job_id 
-                                FROM Archive 
+                                SELECT job_id
+                                FROM Archive
                                 WHERE job.job_id = Archive.job_id
                             )
                             AND live = true
@@ -33,8 +33,8 @@ const jobResolver = {
             if (active) {
                 query = `SELECT * FROM job
                         WHERE NOT EXISTS (
-                            SELECT job_id 
-                            FROM Archive 
+                            SELECT job_id
+                            FROM Archive
                             WHERE job.job_id = Archive.job_id
                         )
                         AND live = $1`;
@@ -80,7 +80,7 @@ const jobResolver = {
             const client = await establishConnection(db);
             const query = `SELECT *
                            FROM job, featured
-                           WHERE job.job_id = featured.job_id 
+                           WHERE job.job_id = featured.job_id
                            AND job.job_id NOT IN (SELECT job_id FROM archive)`;
             const resp = await client.query(query ).catch((err: any) => {
                 console.error(err);
@@ -102,6 +102,22 @@ const jobResolver = {
                 return [];
             });
             client.release()
+            return resp.rows;
+        },
+        searchArchivedJobs: async (_: any, { search, limit = 50, offset = 0 }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+            const query = `
+                SELECT * FROM search_archived_jobs_trgm($1)
+                LIMIT $2 OFFSET $3;
+            `;
+            const resp = await client.query(query, [search, limit, offset]).catch((err: any) => {
+                console.error('searchArchivedJobs error:', err);
+                client.release()
+                return { rows: [] };
+            });
+            client.release()
+            console.log(`searchArchivedJobs found ${resp.rows.length} results for "${search}"`);
             return resp.rows;
         },
         getNewJobs: async (_: any, __: any, { dataSources }: any) => {
@@ -161,7 +177,7 @@ const jobResolver = {
         getFilteredJobs: async (_: any, { filter }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
-            
+
             // Initialize an array to store query parameters
             const queryParams = [];
 
@@ -215,25 +231,28 @@ const jobResolver = {
             } else if (filter.sort === 'Oldest') {
                 query += ' ORDER BY date_posted ASC';
             }
-            
+
             console.log(query)
             // Execute the query
             const result = await client.query(query);
             return result.rows;
         },
-        viewArchivedJobs: async (_: any, __: any, { dataSources }: any) => {
+        viewArchivedJobs: async (_: any, { limit = 50, offset = 0 }: any, { dataSources }: any) => {
             const date = new Date();
             const { db } = dataSources;
             const client = await establishConnection(db);
-            const query = `SELECT * FROM job 
+            const query = `SELECT * FROM job
                            WHERE EXISTS (
-                                SELECT job_id 
-                                FROM Archive 
+                                SELECT job_id
+                                FROM Archive
                                 WHERE job.job_id = Archive.job_id
-                            )`;
-            const resp = await client.query(query).catch((err: any) => {
+                            )
+                           ORDER BY date_posted DESC
+                           LIMIT $1 OFFSET $2`;
+            const resp = await client.query(query, [limit, offset]).catch((err: any) => {
                 console.error(err);
                 client.release()
+                return { rows: [] };
             });
 
             client.release()
@@ -241,7 +260,7 @@ const jobResolver = {
         }
     },
     Mutation: {
-        createJob: async (_: any, { 
+        createJob: async (_: any, {
             employer_id,
             admin_id,
             title,
@@ -266,9 +285,9 @@ const jobResolver = {
             const client = await establishConnection(db);
 
             // Check that Job doesnt already exist
-            const currentJobs = await client.query(`SELECT * 
-                                                    FROM job 
-                                                    WHERE title = $1 AND employer_id = $2;`, 
+            const currentJobs = await client.query(`SELECT *
+                                                    FROM job
+                                                    WHERE title = $1 AND employer_id = $2;`,
                                 [title, employer_id]).catch((err: any) => {
                                     console.log(err);
                                     client.release()
@@ -279,7 +298,7 @@ const jobResolver = {
             }
 
             let query;
-            
+
             query = `INSERT INTO job(
                 employer_id,
                 admin_id,
@@ -301,7 +320,7 @@ const jobResolver = {
                 link,
                 contact_email
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING *;`;
-            await client.query(query, 
+            await client.query(query,
                 [
                 employer_id,
                 admin_id,
@@ -315,7 +334,7 @@ const jobResolver = {
                 additional_info,
                 job_type.toLowerCase(),
                 term,
-                location,   
+                location,
                 applicant_year,
                 deadline,
                 tags,
@@ -327,7 +346,7 @@ const jobResolver = {
                 client.release()
                 return false;
             });
-            
+
             client.release()
             return true;
         },
@@ -356,7 +375,7 @@ const jobResolver = {
             for (let i = 0; i < jobs.length; i++) {
                 // Get the employer id
                 const employer = await client.query(`SELECT employer_id
-                                                    FROM employer   
+                                                    FROM employer
                                                     WHERE name = $1;`,
                     [jobs[i].employer_name]).catch((err: any) => {
                         console.log(err);
@@ -365,7 +384,7 @@ const jobResolver = {
                     });
                 const job = jobs[i];
                 job.deadline == null ? job.deadline = "2100-01-01" : job.deadline = job.deadline;
-                await client.query(query, 
+                await client.query(query,
                     [
                     employer.rows[0].employer_id,
                     admin_id,
@@ -377,7 +396,7 @@ const jobResolver = {
                     job.contact_email,
                     job.job_type.toLowerCase(),
                     job.term,
-                    job.location,   
+                    job.location,
                     job.applicant_year,
                     job.deadline,
                     job.tags,
@@ -390,7 +409,7 @@ const jobResolver = {
             }
             client.release()
             return true;
-        },    
+        },
         // @todo: Make this a cron to run sunday every 2 weeks
         archiveJob: async (_: any, { job_id }: any, { dataSources }: any) => {
             const date = new Date();

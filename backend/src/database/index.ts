@@ -15,6 +15,9 @@ const client = new Pool({
     password: cred.DB_PASSWORD as string,
     host: cred.PROD_HOST as string,
     port: cred.DB_PORT as number,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 export default client;
