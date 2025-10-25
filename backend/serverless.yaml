@@ -3,7 +3,7 @@
 service: apollo-lambda
 plugins:
   - serverless-plugin-typescript
-  - serverless-offline
+  # - serverless-offline  # Commented out for deployment - only needed for local dev
   - serverless-dotenv-plugin
 useDotenv: true
 provider:
@@ -38,28 +38,28 @@ functions:
     environment:
       SLS_DEBUG: true
     events:
-    - http:
-        path: /graphql
-        method: post
-        cors: true
-        integration: lambda-proxy
-    - http:
-        path: /graphql
-        method: get
-        cors: true
-        integration: lambda-proxy
+      - http:
+          path: /graphql
+          method: post
+          cors: true
+          integration: lambda-proxy
+      - http:
+          path: /graphql
+          method: get
+          cors: true
+          integration: lambda-proxy
 package:
   patterns:
-    - '!node_modules/aws-sdk/**'
-    - '!node_modules/**/tests/**'
-    - '!node_modules/**/docs/**'
-    - '!node_modules/**/examples/**'
-    - '!src/**/*.test.js'
-    - '!src/**/*.spec.js'
-    - '!src/**/*.spec.ts'
-    - '!src/**/*.test.ts'
-    - '!README.md'
-    - '!node_modules/.bin/**'
-    - '!**/.git/**'
-    - '!**/.vscode/**'
-    - '!**/.DS_Store'
+    - "!node_modules/aws-sdk/**"
+    - "!node_modules/**/tests/**"
+    - "!node_modules/**/docs/**"
+    - "!node_modules/**/examples/**"
+    - "!src/**/*.test.js"
+    - "!src/**/*.spec.js"
+    - "!src/**/*.spec.ts"
+    - "!src/**/*.test.ts"
+    - "!README.md"
+    - "!node_modules/.bin/**"
+    - "!**/.git/**"
+    - "!**/.vscode/**"
+    - "!**/.DS_Store"
