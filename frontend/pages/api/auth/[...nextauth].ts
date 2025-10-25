@@ -6,7 +6,7 @@ import { compare, hash } from 'bcrypt'
 import AzureADProvider from "next-auth/providers/azure-ad";
 import AppleProvider from "next-auth/providers/apple";
 
-export interface Admin extends User { 
+export interface Admin extends User {
     admin: boolean
 }
 
@@ -127,7 +127,7 @@ export default NextAuth({
                     if (!isValid) {
                         throw new Error('Wrong credentials. Try again.')
                     }
-              
+
                     return { id: admin.admin_id, email: email, admin: true };
                 }
             }
@@ -161,7 +161,7 @@ export default NextAuth({
         maxAge: 60 * 60 * 2, // 2 hours
 
         updateAge: 60 * 60 * 2, // 2 hours
-        
+
         generateSessionToken: () => {
             return randomUUID?.() ?? randomBytes(32).toString("hex")
         },

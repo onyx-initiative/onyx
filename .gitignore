@@ -5,3 +5,4 @@ node_modules/
 
 backend/src/database/index.ts
 *.env
+.DS_Store

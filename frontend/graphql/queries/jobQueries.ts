@@ -314,18 +314,17 @@ export const GET_FILTERED_JOBS = gql`
 
 export const GET_LOCATIONS = gql`
     query GetJobs {
-        getJobs { 
+        getJobs {
             location
         }
     }
 `
 
 export const VIEW_ARCHIVED_JOBS = gql`
-    query ViewArchivedJobs {
-        viewArchivedJobs {
+    query ViewArchivedJobs($limit: Int, $offset: Int) {
+        viewArchivedJobs(limit: $limit, offset: $offset) {
             job_id
             employer_id
-            admin_id
             title
             description
             long_description
@@ -341,7 +340,26 @@ export const VIEW_ARCHIVED_JOBS = gql`
             total_views
             tags
             link
-            live
+        }
+    }
+`
+
+export const SEARCH_ARCHIVED_JOBS = gql`
+    query SearchArchivedJobs($search: String!, $limit: Int, $offset: Int) {
+        searchArchivedJobs(search: $search, limit: $limit, offset: $offset) {
+            job_id
+            employer_id
+            name
+            title
+            description
+            job_type
+            term
+            location
+            applicant_year
+            deadline
+            date_posted
+            tags
+            link
         }
     }
 `
