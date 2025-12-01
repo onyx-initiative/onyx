@@ -96,3 +96,14 @@ export const ADD_BANNER = gql`
         }
     }
 `
+
+export const UPLOAD_ALLOWED_SCHOLARS = gql`
+    mutation UploadAllowedScholars($emails: [String!]!) {
+        uploadAllowedScholars(emails: $emails) {
+            success
+            added_count
+            duplicate_count
+            message
+        }
+    }
+`

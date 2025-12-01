@@ -5,6 +5,7 @@ import AddEmployerButton from "../src/components/admin/AddEmployerButton";
 import RemoveJobButton from "../src/components/admin/RemoveJobButton";
 import styles from "../styles/components/AdminPageButtons.module.css";
 import ExcelReader from "../src/components/admin/ExcelReader";
+import UploadAllowedScholars from "../src/components/admin/UploadAllowedScholars";
 import RemoveEmployerButton from "../src/components/admin/RemoveEmployerButton";
 import UpdateLogo from "../src/components/admin/UpdateLogo";
 import BarChart from "../src/components/admin/BarChart";
@@ -15,7 +16,6 @@ import { Analytics } from "@vercel/analytics/react";
 import AnalyticsPage from "./Analytics";
 import AnalyticsButton from "../src/components/admin/AnalyticsButton";
 import DashboardButton from "../src/components/admin/DashboardButton";
-
 
 // To ensure unauthenticated people don't access
 // import getServerProps from "../src/utils/getServerProps";
@@ -62,22 +62,22 @@ export default function Admin() {
             <h1>Batch Actions</h1>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <ExcelReader />
-              
+              <UploadAllowedScholars />
             </div>
             <div
-            style={{
-              width: "100%",
-              height: "0.1rem",
-              backgroundColor: "white",
-              marginTop: "1rem",
-            }}
-          ></div>
+              style={{
+                width: "100%",
+                height: "0.1rem",
+                backgroundColor: "white",
+                marginTop: "1rem",
+              }}
+            ></div>
           </div>
           <div>
             <h1>Analytics</h1>
             <div style={{ display: "flex" }}>
-                <AnalyticsButton text="Analytics" link="/Analytics" />
-                <DashboardButton text="Dashboard" link="/Dashboard" />
+              <AnalyticsButton text="Analytics" link="/Analytics" />
+              <DashboardButton text="Dashboard" link="/Dashboard" />
             </div>
           </div>
         </div>
