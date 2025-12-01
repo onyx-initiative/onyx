@@ -54,15 +54,15 @@ const scholarResolver = {
             const makeView = `
                 DROP VIEW IF EXISTS recommended_jobs;
                 CREATE VIEW recommended_jobs AS
-                SELECT scholar.name as scholar, scholar.email as email, scholar.scholar_id, view_name, 
-                employer.name as employer, job.job_id, job.title, job.description, job.job_type, 
+                SELECT scholar.name as scholar, scholar.email as email, scholar.scholar_id, view_name,
+                employer.name as employer, job.job_id, job.title, job.description, job.job_type,
                 job.location, job.deadline, job.link
-                FROM employer JOIN job ON employer.employer_id = job.employer_id 
+                FROM employer JOIN job ON employer.employer_id = job.employer_id
                 JOIN job_search ON job_search.job_id = job.job_id,
                 scholar JOIN filterview ON filterview.scholar_id = scholar.scholar_id
-                WHERE document @@ plainto_tsquery(array_to_string(filterview.criteria, ' & ')) AND 
+                WHERE document @@ plainto_tsquery(array_to_string(filterview.criteria, ' & ')) AND
                 scholar.notifications = true
-                GROUP BY scholar.scholar_id, view_name, employer.name, job.title, job.description, 
+                GROUP BY scholar.scholar_id, view_name, employer.name, job.title, job.description,
                 job.job_type, job.location, job.deadline, job.job_id;
             `
             await client.query(makeView).catch((err: any) => {
@@ -70,8 +70,8 @@ const scholarResolver = {
                 client.release()
                 return [];
             });
-            const query = `                
-                SELECT scholar, email, scholar_id, view_name, employer, 
+            const query = `
+                SELECT scholar, email, scholar_id, view_name, employer,
                 title, description, job_type, location, deadline, link
                 FROM recommended_jobs
                 WHERE job_id IN (
@@ -81,7 +81,7 @@ const scholarResolver = {
                     LIMIT 5
                 );
             `;
-            
+
             // Returns a list of jobs for each scholar, grouped by scholar
             const resp = await client.query(query).catch((err: any) => {
                 console.error(err);
@@ -99,7 +99,7 @@ const scholarResolver = {
         getBookmarkedJobs: async (_: any, { scholar_id }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
-            const query = `                
+            const query = `
                 SELECT *
                 FROM jobs
                 WHERE job_id IN (
@@ -120,7 +120,7 @@ const scholarResolver = {
         checkBookmark: async (_: any, { job_id, email }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
-            const query = `                
+            const query = `
                 SELECT *
                 FROM Saved, Scholar
                 WHERE Saved.job_id = $1 AND Scholar.email = $2
@@ -173,7 +173,7 @@ const scholarResolver = {
             }: any, { dataSources }: any) => {
             const { db } = dataSources;
             const client = await establishConnection(db);
-            const query = `INSERT INTO scholar (name, email, year, school, major, status, notifications) 
+            const query = `INSERT INTO scholar (name, email, year, school, major, status, notifications)
                            VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
             const resp = await client.query(query, [
                 name,
@@ -245,7 +245,7 @@ const scholarResolver = {
             const query = `INSERT INTO favourites (job_id, scholar_id) VALUES ($1, $2)`;
             const resp = await client.query(query, [job_id
                 , scholar_id]).catch((err: any) => {
-                console.error(err); 
+                console.error(err);
                 client.release()
                 return false;
             });
@@ -258,7 +258,7 @@ const scholarResolver = {
             const query = `DELETE FROM Favourites WHERE job_id = $1 AND scholar_id = $2`;
             const resp = await client.query(query, [job_id
                 , scholar_id]).catch((err: any) => {
-                console.error(err); 
+                console.error(err);
                 client.release()
                 return false;
             });
@@ -271,7 +271,7 @@ const scholarResolver = {
 
             // Check if the job is already bookmarked
             const query = `
-                SELECT Saved.scholar_id 
+                SELECT Saved.scholar_id
                 FROM Saved JOIN Scholar ON Saved.scholar_id = Scholar.scholar_id
                 WHERE Scholar.email = $1
                 AND job_id = $2 AND Saved.scholar_id = Scholar.scholar_id;`;
@@ -294,7 +294,7 @@ const scholarResolver = {
 
             // If the job is not bookmarked, add it to the table
             const insert = `INSERT INTO Saved (job_id, scholar_id) VALUES ($1, $2)`;
-            const scholar_id = await client.query(`SELECT scholar_id FROM Scholar WHERE email = $1`, 
+            const scholar_id = await client.query(`SELECT scholar_id FROM Scholar WHERE email = $1`,
             [email]).catch((err: any) => {
                 console.log(err);
                 client.release()
@@ -320,6 +320,64 @@ const scholarResolver = {
             });
             client.release()
             return resp.rows[0];
+        },
+        uploadAllowedScholars: async (_: any, { emails }: any, { dataSources }: any) => {
+            const { db } = dataSources;
+            const client = await establishConnection(db);
+
+            try {
+                if (!emails || emails.length === 0) {
+                    client.release();
+                    return {
+                        success: false,
+                        added_count: 0,
+                        duplicate_count: 0,
+                        message: 'No valid emails provided'
+                    };
+                }
+
+                // Insert emails into AllowedScholars table, ignoring duplicates
+                let added_count = 0;
+                let duplicate_count = 0;
+
+                for (const email of emails) {
+                    const insertQuery = `
+                        INSERT INTO AllowedScholars (email)
+                        VALUES ($1)
+                        ON CONFLICT (email) DO NOTHING
+                        RETURNING email;
+                    `;
+                    const result = await client.query(insertQuery, [email.toLowerCase().trim()]).catch((err: any) => {
+                        console.error(`Error inserting email ${email}:`, err);
+                        return { rows: [] };
+                    });
+
+                    if (result.rows.length > 0) {
+                        added_count++;
+                    } else {
+                        duplicate_count++;
+                    }
+                }
+
+                client.release();
+
+                return {
+                    success: true,
+                    added_count,
+                    duplicate_count,
+                    message: `Successfully added ${added_count} scholar(s). ${duplicate_count} duplicate(s) skipped.`
+                };
+
+            } catch (error) {
+                console.error('Error processing emails:', error);
+                client.release();
+                return {
+                    success: false,
+                    added_count: 0,
+                    duplicate_count: 0,
+                    message: `Error processing emails: ${error}`
+                };
+            }
         }
     }
 }
