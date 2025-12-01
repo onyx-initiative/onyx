@@ -6,7 +6,7 @@ service: apollo-lambda
 useDotenv: true
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs22.x
   region: ca-central-1
   environment:
     DB_USER: ${self:custom.DB_USER}
@@ -20,6 +20,9 @@ build:
   esbuild:
     bundle: true
     minify: false
+    sourcemap: true
+    exclude:
+      - aws-sdk
     external:
       - pg-native
       - aws-sdk
@@ -39,7 +42,7 @@ resources:
     ServerlessVPC: ${file(./resources/serverlessVPC.yml)}
 functions:
   graphql:
-    handler: src/index.handler
+    handler: build/index.handler
     environment:
       SLS_DEBUG: true
     events:
