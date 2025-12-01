@@ -14,6 +14,7 @@ import { LOG_APPLY_CLICK } from "../../../graphql/mutations/analyticsMutations";
 import { LOG_JOB_CLICK } from "../../../graphql/mutations/analyticsMutations";
 import { useRouter } from "next/router";
 import { GET_SCHOLAR_BY_EMAIL } from "../../../graphql/queries/scholarQueries";
+import { sanitizeText } from "../../utils/textSanitizer";
 
 type JobCardProps = {
   job: any;
@@ -40,7 +41,7 @@ const JobCard = (props: any) => {
   const [bookmarked, setBookmarked] = useState(false);
   const [opened, setOpened] = useState(false);
   const [logo, setLogo] = useState(
-    "https://logo.clearbit.com/www.onyxinitiative.org/"
+    "https://logo.clearbit.com/www.onyxinitiative.org/",
   );
   const [employerName, setEmployerName] = useState("");
 
@@ -51,13 +52,13 @@ const JobCard = (props: any) => {
     if (employerData) {
       setLogo(
         employerData?.getEmployers?.find(
-          (employer: any) => employer.employer_id === job.employer_id
-        ).logo_url
+          (employer: any) => employer.employer_id === job.employer_id,
+        ).logo_url,
       );
       setEmployerName(
         employerData?.getEmployers?.find(
-          (employer: any) => employer.employer_id === job.employer_id
-        ).name
+          (employer: any) => employer.employer_id === job.employer_id,
+        ).name,
       );
     }
   }, [employerData, job.employer_id]);
@@ -69,7 +70,7 @@ const JobCard = (props: any) => {
       // Ensure scholarId and jobId are integers before passing them to the mutation
       const scholarIdInt = parseInt(
         scholarData?.getScholarByEmail?.scholar_id,
-        10
+        10,
       );
       const jobIdInt = parseInt(job.job_id, 10);
       const currentDate = new Date();
@@ -128,7 +129,7 @@ const JobCard = (props: any) => {
             {job.applicant_year && job.applicant_year.length > 0 ? (
               <h4>{"Graduation Years: " + formatYears(job.applicant_year)}</h4>
             ) : null}
-            <p>{job.description}</p>
+            <p>{sanitizeText(job.description)}</p>
           </div>
           {job.tags ? (
             <div className={styles.jobTags}>
@@ -207,23 +208,23 @@ const JobCard = (props: any) => {
             ) : null}
             <div>
               <h4>Job Description</h4>
-              <p>{formatText(job.long_description)}</p>
+              <p>{formatText(sanitizeText(job.long_description))}</p>
               {job.requirements ? (
                 <div>
                   <h4>Resposibilities & Requirements</h4>
-                  {formatText(job.requirements)}
+                  {formatText(sanitizeText(job.requirements))}
                 </div>
               ) : null}
               {job.experience ? (
                 <div>
                   <h4>Experience</h4>
-                  <p>{job.experience}</p>
+                  <p>{sanitizeText(job.experience)}</p>
                 </div>
               ) : null}
               {job.education ? (
                 <div>
                   <h4>Education</h4>
-                  {formatText(job.education)}
+                  {formatText(sanitizeText(job.education))}
                 </div>
               ) : null}
             </div>
@@ -232,7 +233,7 @@ const JobCard = (props: any) => {
                 <p style={{ fontWeight: "bold", marginRight: "0.3rem" }}>
                   Term:{" "}
                 </p>
-                <p>{job.term}</p>
+                <p>{sanitizeText(job.term)}</p>
               </div>
             ) : null}
             {job.contact_email ? (
@@ -241,13 +242,13 @@ const JobCard = (props: any) => {
             {job.additional_info ? (
               <div>
                 <h5>Additional Information</h5>
-                <p>{job.additional_info}</p>
+                <p>{sanitizeText(job.additional_info)}</p>
               </div>
             ) : null}
             {job.how_to_apply ? (
               <div>
                 <h4>How to Apply</h4>
-                <p>{job.how_to_apply}</p>
+                <p>{sanitizeText(job.how_to_apply)}</p>
               </div>
             ) : null}
             <div style={{ display: "flex" }}>
@@ -363,7 +364,7 @@ const ApplyButton = (props: any) => {
           try {
             const scholarIdInt = parseInt(
               scholarData?.getScholarByEmail?.scholar_id,
-              10
+              10,
             );
             const jobIdInt = parseInt(job.job_id, 10);
             console.log("SCHOLAR ID INT" + scholarIdInt);
