@@ -2,12 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { Checkbox, Select, MultiSelect, Button, TextInput, Textarea, Alert } from "@mantine/core";
+import {
+  Checkbox,
+  Select,
+  MultiSelect,
+  Button,
+  TextInput,
+  Textarea,
+  Alert,
+} from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
 import styles from "../styles/components/AddJobForm.module.css";
 import BackButton from "../src/components/admin/BackButton";
 import { CREATE_JOB } from "../graphql/mutations/jobMutations";
-import { GET_EMPLOYERS, GET_EMPLOYER_BY_NAME } from "../../frontend/graphql/queries/employerQueries";
+import {
+  GET_EMPLOYERS,
+  GET_EMPLOYER_BY_NAME,
+} from "../../frontend/graphql/queries/employerQueries";
 import { job_type, Employer } from "../../backend/src/types/db.types";
 
 type JobInfo = {
@@ -63,11 +74,15 @@ export default function AddJob() {
 
   // GraphQL hooks
   const [createJob, { loading: submitting }] = useMutation(CREATE_JOB);
-  const { data: employerData, loading: employerLoading } = useQuery(GET_EMPLOYERS);
-  const { loading: employerIdLoading, data: employerIdData } = useQuery(GET_EMPLOYER_BY_NAME, {
-    variables: { name: jobInfo.employerId },
-    skip: !jobInfo.employerId,
-  });
+  const { data: employerData, loading: employerLoading } =
+    useQuery(GET_EMPLOYERS);
+  const { loading: employerIdLoading, data: employerIdData } = useQuery(
+    GET_EMPLOYER_BY_NAME,
+    {
+      variables: { name: jobInfo.employerId },
+      skip: !jobInfo.employerId,
+    },
+  );
 
   // Employer dropdown data
   const [empData, setEmpData] = useState<Employer[]>([]);
@@ -82,7 +97,13 @@ export default function AddJob() {
   const validateField = (name: keyof JobInfo, value: any) => {
     let message = "";
     if (
-      ["title", "description", "jobType", "location", "longDescription"].includes(name) &&
+      [
+        "title",
+        "description",
+        "jobType",
+        "location",
+        "longDescription",
+      ].includes(name) &&
       !value?.trim()
     ) {
       message = `${name} is required.`;
@@ -90,14 +111,19 @@ export default function AddJob() {
     if (name === "deadline" && value && !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
       message = "Deadline must be in YYYY-MM-DD format.";
     }
-    if (name === "contactEmail" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    if (
+      name === "contactEmail" &&
+      value &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+    ) {
       message = "Invalid email format.";
     }
     setErrors((prev) => ({ ...prev, [name]: message }));
   };
 
   const handleChange = (name: keyof JobInfo, value: any) => {
-    const safeValue = typeof value === "string" ? value.replace(/[<>]/g, "") : value; // basic sanitization
+    const safeValue =
+      typeof value === "string" ? value.replace(/[<>]/g, "") : value; // basic sanitization
     setJobInfo((prev) => ({ ...prev, [name]: safeValue }));
     validateField(name, safeValue);
   };
@@ -107,7 +133,7 @@ export default function AddJob() {
     return (
       Object.values(errors).every((err) => !err) &&
       ["title", "description", "jobType", "location", "longDescription"].every(
-        (field) => jobInfo[field as keyof JobInfo]?.toString().trim() !== ""
+        (field) => jobInfo[field as keyof JobInfo]?.toString().trim() !== "",
       )
     );
   };
@@ -189,7 +215,10 @@ export default function AddJob() {
           label="Employer Name"
           placeholder="Pick one"
           searchable
-          data={empData.map((e) => ({ value: e.employer_id.toString(), label: e.name }))}
+          data={empData.map((e) => ({
+            value: e.employer_id.toString(),
+            label: e.name,
+          }))}
           onChange={(val) => handleChange("employerId", val)}
         />
 
@@ -203,7 +232,12 @@ export default function AddJob() {
         <MultiSelect
           label="Applicant Year"
           data={Array.from({ length: 8 }, (_, i) => `${current_year - 3 + i}`)}
-          onChange={(vals) => handleChange("applicantYear", vals.map((v) => parseInt(v)))}
+          onChange={(vals) =>
+            handleChange(
+              "applicantYear",
+              vals.map((v) => parseInt(v)),
+            )
+          }
         />
 
         <TextInput
@@ -225,6 +259,12 @@ export default function AddJob() {
           value={jobInfo.longDescription}
           onChange={(e) => handleChange("longDescription", e.target.value)}
           error={errors.longDescription}
+        />
+
+        <Textarea
+          label="Responsibilities & Requirements"
+          value={jobInfo.requirements}
+          onChange={(e) => handleChange("requirements", e.target.value)}
         />
 
         <TextInput
@@ -270,7 +310,9 @@ export default function AddJob() {
         <Checkbox
           label="Save to Drafts?"
           checked={!jobInfo["live"]}
-          onChange={(e) => handleChange("live" as any, !e.currentTarget.checked)}
+          onChange={(e) =>
+            handleChange("live" as any, !e.currentTarget.checked)
+          }
         />
 
         <Button
@@ -285,4 +327,3 @@ export default function AddJob() {
     </div>
   );
 }
-
