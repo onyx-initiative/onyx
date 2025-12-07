@@ -76,11 +76,11 @@ export default function Dashboard() {
     const jobTagsRankedByJobCount: [{ tag: string; job_count: string }] =
       currentPageData["jobTagsRankedByJobCount"];
     const jobTagsRankedByJobCountTableBodyData = jobTagsRankedByJobCount.map(
-      (ranking) => [ranking.tag, ranking.job_count]
+      (ranking) => [ranking.tag, ranking.job_count],
     );
 
     const jobLocationsRankedByJobCount: [
-      { location: string; job_count: string }
+      { location: string; job_count: string },
     ] = currentPageData["jobLocationsRankedByJobCount"];
     const jobLocationsRankedByJobCountTableBodyData =
       jobLocationsRankedByJobCount.map((ranking) => [
@@ -88,8 +88,14 @@ export default function Dashboard() {
         ranking.job_count,
       ]);
 
+    const jobTypesRankedByJobCount: [{ job_type: string; job_count: string }] =
+      currentPageData["jobTypesRankedByJobCount"];
+    const jobTypesRankedByJobCountTableBodyData = jobTypesRankedByJobCount.map(
+      (ranking) => [ranking.job_type, ranking.job_count],
+    );
+
     const jobDeadlinesAsMonthRankedByJobCount: [
-      { month: string; job_count: string }
+      { month: string; job_count: string },
     ] = currentPageData["jobDeadlinesAsMonthRankedByJobCount"];
     const jobDeadlinesAsMonthRankedByJobCountTableBodyData =
       jobDeadlinesAsMonthRankedByJobCount.map((ranking) => [
@@ -98,7 +104,7 @@ export default function Dashboard() {
       ]);
 
     const daysSinceLastJobPostByEmployer: [
-      { employerName: string; days_since_last_post: string }
+      { employerName: string; days_since_last_post: string },
     ] = currentPageData["daysSinceLastJobPostByEmployer"];
     const daysSinceLastJobPostByEmployerTableBodyData =
       daysSinceLastJobPostByEmployer.map((ranking) => [
@@ -130,7 +136,7 @@ export default function Dashboard() {
           interval,
           dataKey: `${type.toLowerCase()}Clicks${interval}`,
         };
-      })
+      }),
     );
     const linkTypeClicksTableBodyData = linkTypes.map((type) => {
       const dataKey = `${type.toLowerCase()}Clicks${intervals[0]}`; // can be any interval
@@ -140,9 +146,9 @@ export default function Dashboard() {
           cur: {
             date: string;
             count: number;
-          }
+          },
         ) => prev + cur.count,
-        0
+        0,
       );
       return [type, totalClicks];
     });
@@ -160,17 +166,17 @@ export default function Dashboard() {
     const numAllowedScholars = currentPageData["numAllowedScholars"];
 
     const employerJobPostingClicks: [
-      { employerName: string; job_posting_click_count: string }
+      { employerName: string; job_posting_click_count: string },
     ] = currentPageData["employerJobPostingClicks"];
     const employerJobPostingClicksTableBodyData = employerJobPostingClicks.map(
-      (ranking) => [ranking.employerName, ranking.job_posting_click_count]
+      (ranking) => [ranking.employerName, ranking.job_posting_click_count],
     );
 
     const scholarClicksBySchool: [
-      { school: string; scholar_click_count: string }
+      { school: string; scholar_click_count: string },
     ] = currentPageData["scholarClicksBySchool"];
     const scholarClicksBySchoolTableBodyData = scholarClicksBySchool.map(
-      (ranking) => [ranking.school, ranking.scholar_click_count]
+      (ranking) => [ranking.school, ranking.scholar_click_count],
     );
 
     const scholarJobClicks: [{ scholarName: string; job_count: string }] =
@@ -183,14 +189,14 @@ export default function Dashboard() {
     const scholarApplyClicks: [{ scholarName: string; apply_count: string }] =
       currentPageData["scholarApplyClicks"];
     const scholarApplyClicksTableBodyData = scholarApplyClicks.map(
-      (ranking) => [ranking.scholarName, ranking.apply_count]
+      (ranking) => [ranking.scholarName, ranking.apply_count],
     );
 
     const scholarEmployerClicks: [
-      { scholarName: string; employer_count: string }
+      { scholarName: string; employer_count: string },
     ] = currentPageData["scholarEmployerClicks"];
     const scholarEmployerClicksTableBodyData = scholarEmployerClicks.map(
-      (ranking) => [ranking.scholarName, ranking.employer_count]
+      (ranking) => [ranking.scholarName, ranking.employer_count],
     );
 
     DashboardContent = (
@@ -215,6 +221,11 @@ export default function Dashboard() {
               firstHeading="JOB LOCATION"
               secondHeading="JOBS"
               data={jobLocationsRankedByJobCountTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading="JOB TYPE"
+              secondHeading="JOBS"
+              data={jobTypesRankedByJobCountTableBodyData}
             />
             <DashboardTwoItemTable
               firstHeading="JOB DEADLINE (MONTH)"
