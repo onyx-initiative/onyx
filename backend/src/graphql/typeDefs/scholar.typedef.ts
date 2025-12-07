@@ -84,6 +84,12 @@ export const scholarTypeDef = gql`
         message: String!
     }
 
+    input ScholarInput {
+        firstName: String!
+        lastName: String!
+        email: String!
+    }
+
     type Mutation {
         createScholar(
             name: String!
@@ -101,6 +107,6 @@ export const scholarTypeDef = gql`
         deleteScholar(scholar_id: ID!): Boolean!
         bookmarkJob(email: String!, job_id: ID!): Boolean
         addBanner(banner_text: String!, start_date: String!, end_date: String!): Banner!
-        uploadAllowedScholars(emails: [String!]!): UploadScholarsResult!
+        uploadAllowedScholars(scholars: [ScholarInput!]!): UploadScholarsResult!
     }
 `

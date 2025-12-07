@@ -1,4 +1,5 @@
 import { establishConnection } from '../utils';
+import { sendBulkInviteEmails } from '../../email/emailService';
 
 const scholarResolver = {
     Query: {
@@ -321,26 +322,34 @@ const scholarResolver = {
             client.release()
             return resp.rows[0];
         },
-        uploadAllowedScholars: async (_: any, { emails }: any, { dataSources }: any) => {
+        uploadAllowedScholars: async (_: any, { scholars }: any, { dataSources }: any) => {
+            console.log('=== uploadAllowedScholars called ===');
+            console.log('Received scholars:', scholars);
+
             const { db } = dataSources;
             const client = await establishConnection(db);
 
             try {
-                if (!emails || emails.length === 0) {
+                if (!scholars || scholars.length === 0) {
+                    console.log('No scholars provided, returning early');
                     client.release();
                     return {
                         success: false,
                         added_count: 0,
                         duplicate_count: 0,
-                        message: 'No valid emails provided'
+                        message: 'No valid scholars provided'
                     };
                 }
 
-                // Insert emails into AllowedScholars table, ignoring duplicates
+                // Insert scholars into AllowedScholars table, ignoring duplicates
                 let added_count = 0;
                 let duplicate_count = 0;
+                const newlyAddedScholars: Array<{ firstName: string; email: string }> = [];
 
-                for (const email of emails) {
+                console.log(`Processing ${scholars.length} scholar(s)...`);
+
+                for (const scholar of scholars) {
+                    const { firstName, lastName, email } = scholar;
                     const insertQuery = `
                         INSERT INTO AllowedScholars (email)
                         VALUES ($1)
@@ -354,12 +363,33 @@ const scholarResolver = {
 
                     if (result.rows.length > 0) {
                         added_count++;
+                        newlyAddedScholars.push({
+                            firstName: firstName.trim(),
+                            email: email.toLowerCase().trim()
+                        });
+                        console.log(`✓ Added: ${firstName} ${lastName} (${email})`);
                     } else {
                         duplicate_count++;
+                        console.log(`- Duplicate skipped: ${firstName} ${lastName} (${email})`);
                     }
                 }
 
+                console.log(`Database operations complete. Added: ${added_count}, Duplicates: ${duplicate_count}`);
+                console.log(`Newly added scholars array:`, newlyAddedScholars);
                 client.release();
+
+                // Send invitation emails to newly added scholars
+                if (newlyAddedScholars.length > 0) {
+                    console.log(`Sending invitation emails to ${newlyAddedScholars.length} scholars...`);
+                    const emailResult = await sendBulkInviteEmails(newlyAddedScholars).catch((err: any) => {
+                        console.error('Error sending invitation emails:', err);
+                        // Don't fail the mutation if email sending fails
+                        return { successful: 0, failed: newlyAddedScholars.length };
+                    });
+                    console.log(`Email results: ${emailResult.successful} sent, ${emailResult.failed} failed`);
+                } else {
+                    console.log(`No new scholars to send invitations to (all were duplicates or none provided)`);
+                }
 
                 return {
                     success: true,

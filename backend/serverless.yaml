@@ -16,6 +16,7 @@ provider:
     PROD_HOST: ${self:custom.PROD_HOST}
     DB_PORT: ${env:DB_PORT}
     NODE_ENV: ${env:NODE_ENV}
+    RESEND_API_KEY: ${env:RESEND_API_KEY}
 build:
   esbuild:
     bundle: true

@@ -18,6 +18,7 @@
     "@babel/core": "^7.18.13",
     "@babel/node": "^7.18.10",
     "@types/express": "^4.17.13",
+    "@types/lodash": "^4.17.21",
     "@types/node": "^18.7.13",
     "esbuild": "^0.16.17",
     "nodemon": "^2.0.19",
@@ -52,6 +53,7 @@
     "njwt": "^2.0.0",
     "node-fetch": "^2.6.1",
     "pg": "^8.8.0",
+    "resend": "^6.5.2",
     "serverless-postgres": "^1.10.3",
     "sls": "^0.1.0",
     "ts-jest": "^29.0.1"
