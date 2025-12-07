@@ -302,8 +302,13 @@ export default function AddJob() {
         <MultiSelect
           label="Tags"
           data={sortedTagData}
+          searchable
           creatable
-          onCreate={(query) => ({ value: query, label: query })}
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => {
+            const item = { value: query, label: query };
+            return item;
+          }}
           onChange={(vals) => handleChange("tags", vals)}
         />
 

@@ -121,8 +121,8 @@ export default function CreateAccount() {
             data={viewInfo}
             maxSelectedValues={5}
             placeholder="Select keywords"
-            creatable
             searchable
+            creatable
             getCreateLabel={(query) => `+ Create ${query}`}
             onCreate={(query) => {
               const item = { value: query, label: query };

@@ -304,6 +304,10 @@ export const GET_ANALYTICS_DASHBOARD_DATA = gql`
       location
       job_count
     }
+    jobTypesRankedByJobCount: getJobTypeRanking {
+      job_type
+      job_count
+    }
     jobDeadlinesAsMonthRankedByJobCount: getJobDeadlineRankingByMonth {
       month
       job_count
