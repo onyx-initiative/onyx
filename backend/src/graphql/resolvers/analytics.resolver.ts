@@ -37,21 +37,21 @@ const analyticsResolver = {
       const { db } = dataSources;
       const client = await establishConnection(db);
       const query = `
-        SELECT 
-            apply_clicks.scholar_id AS "scholarId", 
-            apply_clicks.job_id AS "jobId", 
-            scholar.name AS "scholarName", 
-            scholar.email AS "scholarEmail", 
+        SELECT
+            apply_clicks.scholar_id AS "scholarId",
+            apply_clicks.job_id AS "jobId",
+            scholar.name AS "scholarName",
+            scholar.email AS "scholarEmail",
             apply_clicks.click_time,
-            job.title AS "jobTitle", 
-            employer.name AS "employerName" 
-        FROM 
-            apply_clicks 
-        JOIN 
-            scholar ON apply_clicks.scholar_id = scholar.scholar_id 
-        JOIN 
-            job ON apply_clicks.job_id = job.job_id 
-        JOIN 
+            job.title AS "jobTitle",
+            employer.name AS "employerName"
+        FROM
+            apply_clicks
+        JOIN
+            scholar ON apply_clicks.scholar_id = scholar.scholar_id
+        JOIN
+            job ON apply_clicks.job_id = job.job_id
+        JOIN
             employer ON job.employer_id = employer.employer_id`;
       try {
         const resp = await client.query(query);
@@ -141,7 +141,7 @@ const analyticsResolver = {
       try {
         const query = `
                     SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
-                    FROM apply_clicks 
+                    FROM apply_clicks
                     JOIN scholar ON apply_clicks.scholar_id = scholar.scholar_id
                     GROUP BY scholar.scholar_id, scholar.name, scholar.email
                     ORDER BY clicks DESC
@@ -169,7 +169,7 @@ const analyticsResolver = {
       try {
         const query = `
                     SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
-                    FROM apply_clicks 
+                    FROM apply_clicks
                     JOIN scholar ON apply_clicks.scholar_id = scholar.scholar_id
                     WHERE apply_clicks.click_time BETWEEN $1 AND $2
                     GROUP BY scholar.scholar_id, scholar.name, scholar.email
@@ -202,7 +202,7 @@ const analyticsResolver = {
       try {
         const query = `
                     SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
-                    FROM job_clicks 
+                    FROM job_clicks
                     JOIN scholar ON job_clicks.scholar_id = scholar.scholar_id
                     GROUP BY scholar.scholar_id, scholar.name, scholar.email
                     ORDER BY clicks DESC
@@ -230,7 +230,7 @@ const analyticsResolver = {
       try {
         const query = `
                     SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
-                    FROM job_clicks 
+                    FROM job_clicks
                     JOIN scholar ON job_clicks.scholar_id = scholar.scholar_id
                     WHERE job_clicks.click_time BETWEEN $1 AND $2
                     GROUP BY scholar.scholar_id, scholar.name, scholar.email
@@ -318,7 +318,7 @@ const analyticsResolver = {
       try {
         const query = `
                     SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
-                    FROM employer_clicks 
+                    FROM employer_clicks
                     JOIN scholar ON employer_clicks.scholar_id = scholar.scholar_id
                     GROUP BY scholar.scholar_id, scholar.name, scholar.email
                     ORDER BY clicks DESC
@@ -346,7 +346,7 @@ const analyticsResolver = {
       try {
         const query = `
                     SELECT scholar.scholar_id, scholar.name, scholar.email, COUNT(*) AS clicks
-                    FROM employer_clicks 
+                    FROM employer_clicks
                     JOIN scholar ON employer_clicks.scholar_id = scholar.scholar_id
                     WHERE employer_clicks.click_time BETWEEN $1 AND $2
                     GROUP BY scholar.scholar_id, scholar.name, scholar.email
@@ -583,23 +583,23 @@ const analyticsResolver = {
       const { db } = dataSources;
       const client = await establishConnection(db);
       const query = `
-          SELECT 
-            apply_clicks.scholar_id AS "scholarId", 
-            apply_clicks.job_id AS "jobId", 
-            scholar.name AS "scholarName", 
-            scholar.email AS "scholarEmail", 
+          SELECT
+            apply_clicks.scholar_id AS "scholarId",
+            apply_clicks.job_id AS "jobId",
+            scholar.name AS "scholarName",
+            scholar.email AS "scholarEmail",
             apply_clicks.click_time,
-            job.title AS "jobTitle", 
-            employer.name AS "employerName" 
-          FROM 
-            apply_clicks 
-          JOIN 
-            scholar ON apply_clicks.scholar_id = scholar.scholar_id 
-          JOIN 
-            job ON apply_clicks.job_id = job.job_id 
-          JOIN 
+            job.title AS "jobTitle",
+            employer.name AS "employerName"
+          FROM
+            apply_clicks
+          JOIN
+            scholar ON apply_clicks.scholar_id = scholar.scholar_id
+          JOIN
+            job ON apply_clicks.job_id = job.job_id
+          JOIN
             employer ON job.employer_id = employer.employer_id
-          WHERE 
+          WHERE
             apply_clicks.scholar_id = $1
         `;
 
@@ -630,20 +630,20 @@ const analyticsResolver = {
       const { db } = dataSources;
       const client = await establishConnection(db);
       const query = `
-          SELECT 
-            employer_clicks.employer_id, 
+          SELECT
+            employer_clicks.employer_id,
             employer.name AS "employerName",
             employer_clicks.click_time,
             employer_clicks.scholar_id,
             scholar.name AS "scholarName",
             scholar.email AS "scholarEmail"
-          FROM 
+          FROM
             employer_clicks
-          JOIN 
+          JOIN
             employer ON employer_clicks.employer_id = employer.employer_id
-          JOIN 
+          JOIN
             scholar ON employer_clicks.scholar_id = scholar.scholar_id
-          WHERE 
+          WHERE
             employer_clicks.scholar_id = $1
         `;
 
@@ -673,7 +673,7 @@ const analyticsResolver = {
       const { db } = dataSources;
       const client = await establishConnection(db);
       const query = `
-          SELECT 
+          SELECT
             job.job_id,
             job.title AS "jobTitle",
             job.employer_id,
@@ -681,15 +681,15 @@ const analyticsResolver = {
             job_clicks.click_time,
             scholar.name AS "scholarName",
             scholar.email AS "scholarEmail"
-          FROM 
+          FROM
             job_clicks
-          JOIN 
+          JOIN
             job ON job_clicks.job_id = job.job_id
-          JOIN 
+          JOIN
             employer ON job.employer_id = employer.employer_id
-          JOIN 
+          JOIN
             scholar ON job_clicks.scholar_id = scholar.scholar_id
-          WHERE 
+          WHERE
             job_clicks.scholar_id = $1
         `;
 
@@ -779,6 +779,32 @@ const analyticsResolver = {
       }
     },
 
+    getJobTypeRanking: async (_: any, args: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      try {
+        const query = `
+                    SELECT job_type, COUNT(*) AS job_count
+                    FROM job
+                    WHERE job_type IS NOT NULL
+                    GROUP BY job_type
+                    ORDER BY job_count DESC
+                `;
+        const resp = await client.query(query);
+        console.log(resp.rows);
+        const formattedRows = resp.rows.map((row: any) => ({
+          job_type: row.job_type,
+          job_count: parseInt(row.job_count),
+        }));
+        return formattedRows;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get job type ranking");
+      } finally {
+        client.release();
+      }
+    },
+
     getJobDeadlineRankingByMonth: async (
       _: any,
       args: any,
@@ -788,8 +814,8 @@ const analyticsResolver = {
       const client = await establishConnection(db);
       try {
         const query = `
-                SELECT 
-                CASE 
+                SELECT
+                CASE
                     WHEN EXTRACT(MONTH FROM deadline) = 1 THEN 'January'
                     WHEN EXTRACT(MONTH FROM deadline) = 2 THEN 'February'
                     WHEN EXTRACT(MONTH FROM deadline) = 3 THEN 'March'
@@ -802,17 +828,17 @@ const analyticsResolver = {
                     WHEN EXTRACT(MONTH FROM deadline) = 10 THEN 'October'
                     WHEN EXTRACT(MONTH FROM deadline) = 11 THEN 'November'
                     WHEN EXTRACT(MONTH FROM deadline) = 12 THEN 'December'
-                END AS month_name, 
+                END AS month_name,
                 COUNT(*) AS job_count
-            FROM 
+            FROM
                 job
-            WHERE 
+            WHERE
                 deadline IS NOT NULL
-            GROUP BY 
+            GROUP BY
                 month_name
-            ORDER BY 
+            ORDER BY
                 job_count DESC;
-            
+
                 `;
         const resp = await client.query(query);
         console.log(resp.rows);
@@ -921,7 +947,7 @@ const analyticsResolver = {
       const client = await establishConnection(db);
       try {
         const query = `
-                    SELECT employer.employer_id, employer.name AS employer_name, 
+                    SELECT employer.employer_id, employer.name AS employer_name,
                     EXTRACT(DAY FROM NOW() - MAX(job.date_posted)) AS days_since_last_post
                     FROM employer
                     JOIN job ON employer.employer_id = job.employer_id
@@ -1261,7 +1287,7 @@ const analyticsResolver = {
             "Invalid click type. Choose from 'job', 'employer', or 'apply'."
           );
       }
-      
+
       const query = `SELECT
                     TO_CHAR(click_time, $3) as date,
                     count(*) as count

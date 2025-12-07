@@ -11,6 +11,7 @@ export const analyticsTypeDefs = gql`
     getJobTagRankingByClicks: [JobTagRankingByClick]
     getJobTagRankingByClicksWithDateRange(startDate: Date, endDate: Date): [JobTagRankingByClick]
     getJobLocationRanking: [JobLocationRanking]
+    getJobTypeRanking: [JobTypeRanking]
     getJobDeadlineRankingByMonth: [JobDeadlineRanking]
     getScholarsRankedByMajor: [MajorRanking]
     getScholarsRankedByYear: [YearRanking]
@@ -246,6 +247,11 @@ export const analyticsTypeDefs = gql`
 
   type JobLocationRanking {
     location: String
+    job_count: Int
+  }
+
+  type JobTypeRanking {
+    job_type: String
     job_count: Int
   }
 

@@ -378,18 +378,18 @@ const scholarResolver = {
                 console.log(`Newly added scholars array:`, newlyAddedScholars);
                 client.release();
 
-                // Send invitation emails to newly added scholars
-                if (newlyAddedScholars.length > 0) {
-                    console.log(`Sending invitation emails to ${newlyAddedScholars.length} scholars...`);
-                    const emailResult = await sendBulkInviteEmails(newlyAddedScholars).catch((err: any) => {
-                        console.error('Error sending invitation emails:', err);
-                        // Don't fail the mutation if email sending fails
-                        return { successful: 0, failed: newlyAddedScholars.length };
-                    });
-                    console.log(`Email results: ${emailResult.successful} sent, ${emailResult.failed} failed`);
-                } else {
-                    console.log(`No new scholars to send invitations to (all were duplicates or none provided)`);
-                }
+                // // Send invitation emails to newly added scholars
+                // if (newlyAddedScholars.length > 0) {
+                //     console.log(`Sending invitation emails to ${newlyAddedScholars.length} scholars...`);
+                //     const emailResult = await sendBulkInviteEmails(newlyAddedScholars).catch((err: any) => {
+                //         console.error('Error sending invitation emails:', err);
+                //         // Don't fail the mutation if email sending fails
+                //         return { successful: 0, failed: newlyAddedScholars.length };
+                //     });
+                //     console.log(`Email results: ${emailResult.successful} sent, ${emailResult.failed} failed`);
+                // } else {
+                //     console.log(`No new scholars to send invitations to (all were duplicates or none provided)`);
+                // }
 
                 return {
                     success: true,
