@@ -333,7 +333,6 @@ export default function AddJob() {
 
         <DatePickerInput
           label="Deadline"
-          placeholder="Pick a deadline date"
           value={
             jobInfo.deadline ? new Date(jobInfo.deadline + "T00:00:00") : null
           }

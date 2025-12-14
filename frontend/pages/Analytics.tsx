@@ -315,7 +315,6 @@ function AnalyticsPage(props: Props) {
           <div>
             <DatePickerInput
               label="Start Date"
-              placeholder="Pick a start date"
               value={
                 startDate
                   ? new Date(startDate.toDateString() + " 00:00:00")
@@ -338,7 +337,6 @@ function AnalyticsPage(props: Props) {
           <div>
             <DatePickerInput
               label="End Date"
-              placeholder="Pick an end date"
               value={
                 endDate ? new Date(endDate.toDateString() + " 00:00:00") : null
               }
