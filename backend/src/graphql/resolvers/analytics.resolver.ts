@@ -518,6 +518,34 @@ const analyticsResolver = {
       }
     },
 
+    getJobTagRankingByDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      try {
+        const query = `
+                    SELECT unnest(tags) AS tag, COUNT(*) AS job_count
+                    FROM job
+                    WHERE tags IS NOT NULL
+                    AND date_posted >= $1
+                    AND date_posted <= $2
+                    GROUP BY tag
+                    ORDER BY job_count DESC
+                `;
+        const resp = await client.query(query, [startDate, endDate]);
+        console.log('Job tag ranking by date range:', resp.rows);
+        const formattedRows = resp.rows.map((row: any) => ({
+          tag: row.tag,
+          job_count: parseInt(row.job_count),
+        }));
+        return formattedRows;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get job tag ranking by date range");
+      } finally {
+        client.release();
+      }
+    },
+
     getJobTagRankingByClicks: async (
       _: any,
       args: any,
@@ -779,6 +807,34 @@ const analyticsResolver = {
       }
     },
 
+    getJobLocationRankingByDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      try {
+        const query = `
+                    SELECT location, COUNT(*) AS job_count
+                    FROM job
+                    WHERE location IS NOT NULL
+                    AND date_posted >= $1
+                    AND date_posted <= $2
+                    GROUP BY location
+                    ORDER BY job_count DESC
+                `;
+        const resp = await client.query(query, [startDate, endDate]);
+        console.log('Job location ranking by date range:', resp.rows);
+        const formattedRows = resp.rows.map((row: any) => ({
+          location: row.location,
+          job_count: parseInt(row.job_count),
+        }));
+        return formattedRows;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get job location ranking by date range");
+      } finally {
+        client.release();
+      }
+    },
+
     getJobTypeRanking: async (_: any, args: any, { dataSources }: any) => {
       const { db } = dataSources;
       const client = await establishConnection(db);
@@ -800,6 +856,34 @@ const analyticsResolver = {
       } catch (err) {
         console.error("Error executing query:", err);
         throw new Error("Failed to get job type ranking");
+      } finally {
+        client.release();
+      }
+    },
+
+    getJobTypeRankingByDateRange: async (_: any, { startDate, endDate }: any, { dataSources }: any) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      try {
+        const query = `
+                    SELECT job_type, COUNT(*) AS job_count
+                    FROM job
+                    WHERE job_type IS NOT NULL
+                    AND date_posted >= $1
+                    AND date_posted <= $2
+                    GROUP BY job_type
+                    ORDER BY job_count DESC
+                `;
+        const resp = await client.query(query, [startDate, endDate]);
+        console.log('Job type ranking by date range:', resp.rows);
+        const formattedRows = resp.rows.map((row: any) => ({
+          job_type: row.job_type,
+          job_count: parseInt(row.job_count),
+        }));
+        return formattedRows;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get job type ranking by date range");
       } finally {
         client.release();
       }
@@ -855,7 +939,59 @@ const analyticsResolver = {
       }
     },
 
-    getEmployerClicks: async (_: any, args: any, { dataSources }: any) => {
+    getJobDeadlineRankingByMonthWithDateRange: async (
+      _: any,
+      { startDate, endDate }: any,
+      { dataSources }: any
+    ) => {
+      const { db } = dataSources;
+      const client = await establishConnection(db);
+      try {
+        const query = `
+                SELECT
+                CASE
+                    WHEN EXTRACT(MONTH FROM deadline) = 1 THEN 'January'
+                    WHEN EXTRACT(MONTH FROM deadline) = 2 THEN 'February'
+                    WHEN EXTRACT(MONTH FROM deadline) = 3 THEN 'March'
+                    WHEN EXTRACT(MONTH FROM deadline) = 4 THEN 'April'
+                    WHEN EXTRACT(MONTH FROM deadline) = 5 THEN 'May'
+                    WHEN EXTRACT(MONTH FROM deadline) = 6 THEN 'June'
+                    WHEN EXTRACT(MONTH FROM deadline) = 7 THEN 'July'
+                    WHEN EXTRACT(MONTH FROM deadline) = 8 THEN 'August'
+                    WHEN EXTRACT(MONTH FROM deadline) = 9 THEN 'September'
+                    WHEN EXTRACT(MONTH FROM deadline) = 10 THEN 'October'
+                    WHEN EXTRACT(MONTH FROM deadline) = 11 THEN 'November'
+                    WHEN EXTRACT(MONTH FROM deadline) = 12 THEN 'December'
+                END AS month_name,
+                COUNT(*) AS job_count
+            FROM
+                job
+            WHERE
+                deadline IS NOT NULL
+                AND date_posted >= $1
+                AND date_posted <= $2
+            GROUP BY
+                month_name
+            ORDER BY
+                job_count DESC;
+
+                `;
+        const resp = await client.query(query, [startDate, endDate]);
+        console.log(resp.rows);
+        const formattedRows = resp.rows.map((row: any) => ({
+          month: row.month_name,
+          job_count: parseInt(row.job_count),
+        }));
+        return formattedRows;
+      } catch (err) {
+        console.error("Error executing query:", err);
+        throw new Error("Failed to get job deadline ranking by month with date range");
+      } finally {
+        client.release();
+      }
+    },
+
+getEmployerClicks: async (_: any, args: any, { dataSources }: any) => {
       const { db } = dataSources;
       const client = await establishConnection(db);
       const query = `SELECT  employer_clicks.employer_id, employer.name, employer_clicks.click_time, employer_clicks.scholar_id, scholar.name as "scholar", scholar.email FROM employer_clicks

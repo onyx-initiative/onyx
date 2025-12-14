@@ -291,10 +291,11 @@ const jobResolver = {
                                 [title, employer_id]).catch((err: any) => {
                                     console.log(err);
                                     client.release()
+                                    throw new Error('Database error while checking for duplicate jobs');
                                 });
             if (currentJobs.rows.length > 0) {
                 client.release()
-                return false;
+                throw new Error(`A job with the title "${title}" already exists for this employer. Please use a different title.`);
             }
 
             let query;
@@ -342,9 +343,9 @@ const jobResolver = {
                 link,
                 contact_email
             ]).catch((err: any) => {
-                console.log(err);
+                console.error('Error creating job:', err);
                 client.release()
-                return false;
+                throw new Error(`Failed to create job: ${err.message || 'Unknown database error'}`);
             });
 
             client.release()

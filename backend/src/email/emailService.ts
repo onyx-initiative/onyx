@@ -40,7 +40,7 @@ export const sendInviteEmail = async ({ to, firstName }: SendInviteEmailParams) 
         });
 
         const result = await resend.emails.send({
-            from: process.env.FROM_EMAIL || 'Onyx Initiative <mike@joinaerium.com>',
+            from: process.env.FROM_EMAIL || 'Onyx Initiative <cole.purboo@onyxinitiative.org>',
             to: [to],
             subject: 'You\'re Invited to Join the Onyx Initiative Job Board!',
             html: emailHtml,
