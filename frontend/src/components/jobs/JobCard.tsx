@@ -4,6 +4,7 @@ import { IoLocationSharp, IoTimeSharp, IoBagSharp } from "react-icons/io5";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useMutation, useQuery } from "@apollo/client";
 import Image from "next/image";
+import DOMPurify from "dompurify";
 import styles from "../../../styles/components/Jobs.module.css";
 import { BOOKMARK_JOB } from "../../../graphql/mutations/scholarMutations";
 import { useSession } from "next-auth/react";
@@ -208,11 +209,19 @@ const JobCard = (props: any) => {
             ) : null}
             <div>
               <h4>Job Description</h4>
-              <p>{formatText(sanitizeText(job.long_description))}</p>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(job.long_description || ""),
+                }}
+              />
               {job.requirements ? (
                 <div>
                   <h4>Resposibilities & Requirements</h4>
-                  {formatText(sanitizeText(job.requirements))}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(job.requirements),
+                    }}
+                  />
                 </div>
               ) : null}
               {job.experience ? (
@@ -248,7 +257,11 @@ const JobCard = (props: any) => {
             {job.how_to_apply ? (
               <div>
                 <h4>How to Apply</h4>
-                <p>{sanitizeText(job.how_to_apply)}</p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(job.how_to_apply || ""),
+                  }}
+                />
               </div>
             ) : null}
             <div style={{ display: "flex" }}>

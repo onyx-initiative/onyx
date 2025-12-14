@@ -11,6 +11,13 @@ import {
   Textarea,
   Alert,
 } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
+import { RichTextEditor, Link } from "@mantine/tiptap";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TiptapLink from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
 import { IconAlertCircle } from "@tabler/icons-react";
 import styles from "../styles/components/AddJobForm.module.css";
 import BackButton from "../src/components/admin/BackButton";
@@ -66,6 +73,56 @@ export default function AddJob() {
     deadline: "",
     tags: [],
     link: "",
+    live: true,
+  });
+
+  // Rich text editors
+  const longDescEditor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      TiptapLink.configure({ openOnClick: false }),
+      Placeholder.configure({
+        placeholder: "Enter detailed job description...",
+      }),
+    ],
+    content: jobInfo.longDescription,
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      setJobInfo((prev) => ({ ...prev, longDescription: html }));
+    },
+  });
+
+  const requirementsEditor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      TiptapLink.configure({ openOnClick: false }),
+      Placeholder.configure({
+        placeholder: "Enter responsibilities and requirements...",
+      }),
+    ],
+    content: jobInfo.requirements,
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      setJobInfo((prev) => ({ ...prev, requirements: html }));
+    },
+  });
+
+  const howToApplyEditor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      TiptapLink.configure({ openOnClick: false }),
+      Placeholder.configure({
+        placeholder: "Enter application instructions...",
+      }),
+    ],
+    content: jobInfo.howToApply,
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      setJobInfo((prev) => ({ ...prev, howToApply: html }));
+    },
   });
 
   // Validation errors
@@ -122,8 +179,17 @@ export default function AddJob() {
   };
 
   const handleChange = (name: keyof JobInfo, value: any) => {
-    const safeValue =
-      typeof value === "string" ? value.replace(/[<>]/g, "") : value; // basic sanitization
+    // Skip sanitization for HTML fields (already handled by Tiptap)
+    const isHtmlField = [
+      "longDescription",
+      "requirements",
+      "howToApply",
+    ].includes(name);
+    const safeValue = isHtmlField
+      ? value
+      : typeof value === "string"
+        ? value.replace(/[<>]/g, "")
+        : value;
     setJobInfo((prev) => ({ ...prev, [name]: safeValue }));
     validateField(name, safeValue);
   };
@@ -132,7 +198,14 @@ export default function AddJob() {
   const isFormValid = () => {
     return (
       Object.values(errors).every((err) => !err) &&
-      ["title", "description", "jobType", "location", "longDescription"].every(
+      [
+        "title",
+        "description",
+        "jobType",
+        "location",
+        "longDescription",
+        "employerId",
+      ].every(
         (field) => jobInfo[field as keyof JobInfo]?.toString().trim() !== "",
       )
     );
@@ -146,13 +219,31 @@ export default function AddJob() {
         variables: {
           ...jobInfo,
           deadline: jobInfo.deadline || "2100-01-01",
-          live: true,
+          live: jobInfo.live,
         },
       });
       router.push("/Admin");
     } catch (err: any) {
-      console.error(err);
-      setFormError(err.message || "An unexpected error occurred.");
+      console.error("Job creation error:", err);
+
+      // Extract the most helpful error message
+      let errorMessage = "An unexpected error occurred.";
+
+      if (err.graphQLErrors && err.graphQLErrors.length > 0) {
+        // GraphQL errors from backend
+        errorMessage = err.graphQLErrors.map((e: any) => e.message).join(", ");
+      } else if (err.networkError) {
+        // Network errors
+        errorMessage = `Network error: ${err.networkError.message}`;
+      } else if (err.message) {
+        // Generic error message
+        errorMessage = err.message;
+      }
+
+      setFormError(errorMessage);
+
+      // Scroll to top so user sees the error
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -240,11 +331,26 @@ export default function AddJob() {
           }
         />
 
-        <TextInput
+        <DatePickerInput
           label="Deadline"
-          value={jobInfo.deadline || ""}
-          onChange={(e) => handleChange("deadline", e.target.value)}
+          placeholder="Pick a deadline date"
+          value={
+            jobInfo.deadline ? new Date(jobInfo.deadline + "T00:00:00") : null
+          }
+          onChange={(date) => {
+            if (!date) {
+              handleChange("deadline", null);
+              return;
+            }
+            // Format date in local timezone to avoid date shifting
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+            const formattedDate = `${year}-${month}-${day}`;
+            handleChange("deadline", formattedDate);
+          }}
           error={errors.deadline}
+          clearable
         />
 
         <Textarea
@@ -254,18 +360,87 @@ export default function AddJob() {
           error={errors.description}
         />
 
-        <Textarea
-          label="Long Description"
-          value={jobInfo.longDescription}
-          onChange={(e) => handleChange("longDescription", e.target.value)}
-          error={errors.longDescription}
-        />
+        <div style={{ marginBottom: "1rem" }}>
+          <label
+            style={{
+              fontWeight: 500,
+              fontSize: "14px",
+              marginBottom: "4px",
+              display: "block",
+            }}
+          >
+            Long Description *
+          </label>
+          <RichTextEditor editor={longDescEditor}>
+            <RichTextEditor.Toolbar sticky stickyOffset={60}>
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Bold />
+                <RichTextEditor.Italic />
+                <RichTextEditor.Underline />
+                <RichTextEditor.Strikethrough />
+              </RichTextEditor.ControlsGroup>
 
-        <Textarea
-          label="Responsibilities & Requirements"
-          value={jobInfo.requirements}
-          onChange={(e) => handleChange("requirements", e.target.value)}
-        />
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.H1 />
+                <RichTextEditor.H2 />
+                <RichTextEditor.H3 />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.BulletList />
+                <RichTextEditor.OrderedList />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Link />
+                <RichTextEditor.Unlink />
+              </RichTextEditor.ControlsGroup>
+            </RichTextEditor.Toolbar>
+
+            <RichTextEditor.Content style={{ minHeight: "200px" }} />
+          </RichTextEditor>
+          {errors.longDescription && (
+            <div
+              style={{ color: "#fa5252", fontSize: "12px", marginTop: "4px" }}
+            >
+              {errors.longDescription}
+            </div>
+          )}
+        </div>
+
+        <div style={{ marginBottom: "1rem" }}>
+          <label
+            style={{
+              fontWeight: 500,
+              fontSize: "14px",
+              marginBottom: "4px",
+              display: "block",
+            }}
+          >
+            Responsibilities & Requirements
+          </label>
+          <RichTextEditor editor={requirementsEditor}>
+            <RichTextEditor.Toolbar sticky stickyOffset={60}>
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Bold />
+                <RichTextEditor.Italic />
+                <RichTextEditor.Underline />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.BulletList />
+                <RichTextEditor.OrderedList />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Link />
+                <RichTextEditor.Unlink />
+              </RichTextEditor.ControlsGroup>
+            </RichTextEditor.Toolbar>
+
+            <RichTextEditor.Content style={{ minHeight: "200px" }} />
+          </RichTextEditor>
+        </div>
 
         <TextInput
           label="Contact Email"
@@ -280,11 +455,39 @@ export default function AddJob() {
           onChange={(e) => handleChange("link", e.target.value)}
         />
 
-        <Textarea
-          label="How to Apply"
-          value={jobInfo.howToApply}
-          onChange={(e) => handleChange("howToApply", e.target.value)}
-        />
+        <div style={{ marginBottom: "1rem" }}>
+          <label
+            style={{
+              fontWeight: 500,
+              fontSize: "14px",
+              marginBottom: "4px",
+              display: "block",
+            }}
+          >
+            How to Apply
+          </label>
+          <RichTextEditor editor={howToApplyEditor}>
+            <RichTextEditor.Toolbar sticky stickyOffset={60}>
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Bold />
+                <RichTextEditor.Italic />
+                <RichTextEditor.Underline />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.BulletList />
+                <RichTextEditor.OrderedList />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Link />
+                <RichTextEditor.Unlink />
+              </RichTextEditor.ControlsGroup>
+            </RichTextEditor.Toolbar>
+
+            <RichTextEditor.Content style={{ minHeight: "150px" }} />
+          </RichTextEditor>
+        </div>
 
         <Select
           label="Job Type"

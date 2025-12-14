@@ -202,7 +202,7 @@ export default function Dashboard() {
     DashboardContent = (
       <>
         <div className={styles.printSection}>
-          <DashboardTitleRow title="General Counts" />
+          <DashboardTitleRow title="General Counts (All Time)" />
           <p>
             <strong>Number of Active Scholars: </strong>
             {numActiveScholars}
@@ -213,31 +213,6 @@ export default function Dashboard() {
           </p>
           <div className={styles.quickStats}>
             <DashboardTwoItemTable
-              firstHeading="JOB TAG"
-              secondHeading="JOBS"
-              data={jobTagsRankedByJobCountTableBodyData}
-            />
-            <DashboardTwoItemTable
-              firstHeading="JOB LOCATION"
-              secondHeading="JOBS"
-              data={jobLocationsRankedByJobCountTableBodyData}
-            />
-            <DashboardTwoItemTable
-              firstHeading="JOB TYPE"
-              secondHeading="JOBS"
-              data={jobTypesRankedByJobCountTableBodyData}
-            />
-            <DashboardTwoItemTable
-              firstHeading="JOB DEADLINE (MONTH)"
-              secondHeading="JOBS"
-              data={jobDeadlinesAsMonthRankedByJobCountTableBodyData}
-            />
-            <DashboardTwoItemTable
-              firstHeading="EMPLOYER NAME"
-              secondHeading="DAYS SINCE LAST JOB POST"
-              data={daysSinceLastJobPostByEmployerTableBodyData}
-            />
-            <DashboardTwoItemTable
               firstHeading="SCHOLAR MAJOR"
               secondHeading="SCHOLARS"
               data={scholarsByMajorTableBodyData}
@@ -247,11 +222,16 @@ export default function Dashboard() {
               secondHeading="SCHOLARS"
               data={scholarsByYearTableBodyData}
             />
+            <DashboardTwoItemTable
+              firstHeading="EMPLOYER NAME"
+              secondHeading="DAYS SINCE LAST JOB POST"
+              data={daysSinceLastJobPostByEmployerTableBodyData}
+            />
           </div>
         </div>
         <div className={styles.printSection}>
           <DashboardTitleRow
-            title={`Data from from ${fetchedStartDate} to ${fetchedEndDate}`}
+            title={`Date-Filtered Data (${fetchedStartDate} to ${fetchedEndDate})`}
             rightComponent={
               <div>
                 <form action="" className={styles.dateLimitsForm}>
@@ -287,7 +267,7 @@ export default function Dashboard() {
                     loading={pageLoading}
                     disabled={pageLoading}
                   >
-                    Get Clicks
+                    Refresh
                   </DashboardDateLimitSubmit>
                 </form>
                 {dateRangeFormError ? (
@@ -308,6 +288,26 @@ export default function Dashboard() {
               <strong>Number of Active Jobs: </strong>
               {numActiveJobsDateRange}
             </p>
+            <DashboardTwoItemTable
+              firstHeading="JOB TAG"
+              secondHeading="JOBS"
+              data={jobTagsRankedByJobCountTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading="JOB LOCATION"
+              secondHeading="JOBS"
+              data={jobLocationsRankedByJobCountTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading="JOB TYPE"
+              secondHeading="JOBS"
+              data={jobTypesRankedByJobCountTableBodyData}
+            />
+            <DashboardTwoItemTable
+              firstHeading="JOB DEADLINE (MONTH)"
+              secondHeading="JOBS"
+              data={jobDeadlinesAsMonthRankedByJobCountTableBodyData}
+            />
             <DashboardTwoItemTable
               firstHeading="LINK TYPE"
               secondHeading="CLICKS"

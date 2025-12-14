@@ -1,28 +1,40 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: "Montserrat", sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-
-  html {
+html {
     color-scheme: dark;
-  }
-  body {
+}
+body {
     color: white;
     background: black;
-  }
+}
 
 input {
-  outline: none;
+    outline: none;
+}
+
+/* Rich Text Editor selection highlight */
+.ProseMirror ::selection,
+.ProseMirror::selection {
+    background-color: #806e54;
+    color: white;
+}
+
+.ProseMirror ::-moz-selection,
+.ProseMirror::-moz-selection {
+    background-color: #806e54;
+    color: white;
 }

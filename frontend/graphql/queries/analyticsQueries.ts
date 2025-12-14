@@ -294,21 +294,30 @@ export const GET_CLICKS_CUSTOM_ANALYTICS = gql`
   }
 `
 
-export const GET_ANALYTICS_DASHBOARD_DATA = gql`
-  query GetAnalyticsDashboardData($startDate: Date!, $endDate: Date!) {
-    jobTagsRankedByJobCount: getJobTagRanking {
-      tag
-      job_count
-    }
-    jobLocationsRankedByJobCount: getJobLocationRanking {
-      location
-      job_count
-    }
-    jobTypesRankedByJobCount: getJobTypeRanking {
+export const GET_JOB_TYPE_RANKING_BY_DATE_RANGE = gql`
+  query GetJobTypeRankingByDateRange($startDate: Date!, $endDate: Date!) {
+    getJobTypeRankingByDateRange(startDate: $startDate, endDate: $endDate) {
       job_type
       job_count
     }
-    jobDeadlinesAsMonthRankedByJobCount: getJobDeadlineRankingByMonth {
+  }
+`
+
+export const GET_ANALYTICS_DASHBOARD_DATA = gql`
+  query GetAnalyticsDashboardData($startDate: Date!, $endDate: Date!) {
+    jobTagsRankedByJobCount: getJobTagRankingByDateRange(startDate: $startDate, endDate: $endDate) {
+      tag
+      job_count
+    }
+    jobLocationsRankedByJobCount: getJobLocationRankingByDateRange(startDate: $startDate, endDate: $endDate) {
+      location
+      job_count
+    }
+    jobTypesRankedByJobCount: getJobTypeRankingByDateRange(startDate: $startDate, endDate: $endDate) {
+      job_type
+      job_count
+    }
+    jobDeadlinesAsMonthRankedByJobCount: getJobDeadlineRankingByMonthWithDateRange(startDate: $startDate, endDate: $endDate) {
       month
       job_count
     }
