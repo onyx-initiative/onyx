@@ -87,8 +87,17 @@ export default function AddJob() {
     ) {
       message = `${name} is required.`;
     }
-    if (name === "deadline" && value && !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-      message = "Deadline must be in YYYY-MM-DD format.";
+    if (name === "deadline" && value) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        message = "Deadline must be in YYYY-MM-DD format.";
+      } else {
+        const deadlineDate = new Date(value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (deadlineDate < today) {
+          message = "Deadline cannot be in the past.";
+        }
+      }
     }
     if (name === "contactEmail" && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       message = "Invalid email format.";
