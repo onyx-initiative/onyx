@@ -57,6 +57,9 @@ serverless deploy
 # Run integration tests
 npm test
 
+# Run a single test file
+npx jest src/integration/__tests__/job.tests.ts
+
 # Build TypeScript
 npm run build
 ```
@@ -110,6 +113,8 @@ Required variables:
 - `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `PROD_HOST`, `DB_PORT`
 - `DB_ID` (database identifier)
 - `NODE_ENV` (set to "dev" for development features like GraphQL introspection)
+- `RESEND_API_KEY`: API key for the Resend email service (used to send scholar invite emails)
+- `FROM_EMAIL` (optional): Sender address for invite emails; defaults to `cole.purboo@onyxinitiative.org`
 
 ### Frontend (`frontend/.env.local`)
 Required:
@@ -141,6 +146,16 @@ Jobs support two search modes:
 
 Both respect the Archive table - archived jobs are excluded from standard search but can be searched separately.
 
+## Email Service
+
+Scholar invitations are sent via the Resend API (`backend/src/email/emailService.ts`). When adding scholars to the allow-list, `sendInviteEmail` or `sendBulkInviteEmails` are called automatically from the relevant admin resolver.
+
 ## Testing
 
-Backend integration tests in `backend/src/integration/__tests__/` run via Jest with config in `backend/jest.config.ts`.
+Backend integration tests in `backend/src/integration/__tests__/` run via Jest with config in `backend/jest.config.ts`. Tests are integration-level and require a real database connection — do not mock the database layer.
+
+## Other Notes
+
+- `backend/src/graphql/utils.ts`: Shared GraphQL resolver utilities
+- `backend/src/types/db.types.ts`: TypeScript types for raw DB row shapes
+- Frontend uses `@vercel/analytics` (injected in `_app.tsx`) — no config needed beyond the Vercel deployment
