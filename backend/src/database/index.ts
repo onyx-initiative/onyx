@@ -17,7 +17,10 @@ const client = new Pool({
     port: cred.DB_PORT as number,
     ssl: {
         rejectUnauthorized: false
-    }
+    },
+    max: 1,
+    idleTimeoutMillis: 10000,
+    connectionTimeoutMillis: 10000,
 });
 
 export default client;
